@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cashtime.cashtimefinal.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:layout_margin="10dp"
+            android:digits="0123456789"
+            />
+
+        <EditText
+            android:id="@+id/etHousehold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_margin="10dp"
+            android:hint="Household Composition"
+            android:digits="0123456789"/>
+
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Age"
+            android:layout_margin="10dp"
+            android:digits="0123456789" />
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/sexSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Gender"
+            android:layout_margin="10dp"/>
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/spinnerEducationLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Level Of Education"
+            android:layout_margin="10dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/tvCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Enter your country of birth"
+            android:layout_margin="10dp"
+            android:digits="abcdefghijklmnopqrstuvwxyz" />
+
+
+        <Button
+            android:id="@+id/btnProceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Proceed"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>

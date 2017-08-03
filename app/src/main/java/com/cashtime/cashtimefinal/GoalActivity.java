@@ -24,7 +24,7 @@ public class GoalActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GoalActivity.this, AddIncomeActvity.class);
+                Intent intent = new Intent(GoalActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

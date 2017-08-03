@@ -25,7 +25,7 @@ public class AddIncomeActvity extends AppCompatActivity {
         btnOther = (Button) findViewById(R.id.btnOther);
         btnInvestment = (Button) findViewById(R.id.btnInvestment);
 
-        totalIncome = 100000;
+        totalIncome = 100000 + IncomeSourceActivity.addedIncome;
 
         tvTotalIncome.setText(String.valueOf(totalIncome));
 

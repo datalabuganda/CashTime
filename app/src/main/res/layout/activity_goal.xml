@@ -33,7 +33,6 @@
         android:layout_marginTop="190dp"
         android:textStyle="italic"
         android:textColor="#000"
-        android:lineSpacingMultiplier="1.2"
         android:text="@string/no_goals_yet"
         android:textSize="18sp" />
 

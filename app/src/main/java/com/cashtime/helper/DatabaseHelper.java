@@ -43,6 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EXPENDITURE_EDUCATION = "expenditure_education";
     public static final String COLUMN_EXPENDITURE_TRANSPORT = "expenditure_transport";
     public static final String COLUMN_EXPENDITURE_HEALTH = "expenditure_health";
+    public static final String COLUMN_EXPENDITURE_HOMENEEDS = "expenditure_home_needs";
     public static final String COLUMN_EXPENDITURE_SAVINGS = "expenditure_savings";
     public static final String COLUMN_EXPENDITURE_OTHERS = "expenditure_others";
 
@@ -61,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Variable to create Person_table
     private static final String SQL_CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + "("
@@ -93,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_EXPENDITURE_EDUCATION + " INTEGER, "
             + COLUMN_EXPENDITURE_TRANSPORT + " INTEGER, "
             + COLUMN_EXPENDITURE_HEALTH + " INTEGER, "
+            + COLUMN_EXPENDITURE_HOMENEEDS + " INTEGER, "
             + COLUMN_EXPENDITURE_SAVINGS + " INTEGER, "
             + COLUMN_EXPENDITURE_OTHERS + " INTEGER "
             + ");";

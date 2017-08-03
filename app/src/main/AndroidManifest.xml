@@ -23,7 +23,6 @@
         <activity android:name=".IncomeActivity" />
         <activity android:name=".AnalyticsActivity" />
         <activity android:name=".ExpenditureActivity" />
-        <activity android:name=".MainActivity" />
         <!-- <activity android:name=".AddSavingActivity" /> -->
         <activity android:name=".SavingTotalActivity" />
         <activity android:name=".RegisterActivity" />

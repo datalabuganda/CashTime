@@ -27,7 +27,8 @@
         <activity android:name=".SavingTotalActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddIncomeActvity" />
-        <activity android:name=".IncomeSourceActivity"></activity>
+        <activity android:name=".IncomeSourceActivity" />
+        <activity android:name=".HomeActivity"></activity>
     </application>
 
 </manifest>

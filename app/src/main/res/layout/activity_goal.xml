@@ -31,8 +31,11 @@
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="190dp"
-        android:text="No Goals added yet, Please Click + button below to  add a personal goal you want to save for to continue."
-        android:textSize="24sp" />
+        android:textStyle="italic"
+        android:textColor="#000"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/no_goals_yet"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

@@ -61,7 +61,7 @@
         android:longClickable="false"
         android:onClick="setDate"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="date" />
 
     <Button
         android:id="@+id/btnAddGoal"

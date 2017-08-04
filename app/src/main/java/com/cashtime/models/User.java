@@ -10,8 +10,8 @@ public class User {
     String sex, educationLevel, nationality, phoneNumber;
 
     public User() {
-
     }
+
 
     public long getId() {
         return id;

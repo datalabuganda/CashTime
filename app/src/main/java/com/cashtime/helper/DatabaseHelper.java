@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "DatabaseHelper";
 
-    // Columns of Person table
+    // Columns of User table
     public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "user_id";
     public static final String COLUMN_USER_HOUSEHOLD = "household_composition";

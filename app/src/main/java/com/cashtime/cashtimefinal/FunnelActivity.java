@@ -3,17 +3,9 @@ package com.cashtime.cashtimefinal;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.cashtime.helper.PersonCrud;
 import com.cashtime.helper.SavingCrud2;
-import com.cashtime.models.Person;
-import com.cashtime.models.Saving;
-import com.numetriclabz.numandroidcharts.ChartData;
 import com.numetriclabz.numandroidcharts.FunnelChart;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FunnelActivity extends AppCompatActivity {
 

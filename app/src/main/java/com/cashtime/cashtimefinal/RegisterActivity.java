@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.cashtime.helper.PersonCrud;
-import com.cashtime.models.Person;
+import com.cashtime.helper.UserCrud;
+import com.cashtime.models.User;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public static final String PREF_NAME = "registerPreference";
 
 
-    private PersonCrud mPersonCrud;
+    private UserCrud mUserCrud;
 
     public static String[] gender = {"Male", "Female"};
     public static String[] educationLevel = {"Primary", "O'Level", "A'level", "Institution"};
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvCountry = (AutoCompleteTextView) findViewById(R.id.tvCountry);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         btnProceed = (Button) findViewById(R.id.btnProceed);
-        mPersonCrud = new PersonCrud(this);
+        mUserCrud = new UserCrud(this);
 
         // adapter for gender
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(
@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         !TextUtils.isEmpty(phoneNumber)){
 
                     // add the person to database
-                    Person createdPerson = mPersonCrud.createPerson(
+                    User createdUser = mUserCrud.createPerson(
                             Integer.parseInt(household.toString()),
                             sex.toString(),
                             Integer.parseInt(age.toString()),
@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     editor.putBoolean("isRegistered", true);
                     editor.commit();
 
-                    Log.d(TAG, "added Person : " + createdPerson.getId());
+                    Log.d(TAG, "added User : " + createdUser.getId());
 
                     Intent intent =  new Intent(RegisterActivity.this, GoalActivity.class);
                     intent.putExtra("points", 0);
@@ -142,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPersonCrud.close();
+        mUserCrud.close();
     }
 
     @Override

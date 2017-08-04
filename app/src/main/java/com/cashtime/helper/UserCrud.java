@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.cashtime.models.Goal;
 import com.cashtime.models.User;
 
 import java.util.ArrayList;
@@ -38,87 +39,100 @@ public class UserCrud {
     public UserCrud(Context context) {
         this.mContext = context;
         mDatabaseHelper = new DatabaseHelper(context);
-
-        // open the database
-        try {
-            open();
-        } catch (SQLException e){
-            Log.e(TAG, "SQLException on opening the database " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void open() throws SQLException{
         mDatabase = mDatabaseHelper.getWritableDatabase();
     }
 
-    public void close(){
-        mDatabaseHelper.close();
-    }
-
-    public User createPerson(int household, String sex, int age, String educationLevel, String nationality, String phoneNumber, long points){
+    public void createUser(User user){
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_USER_HOUSEHOLD, household);
-        values.put(DatabaseHelper.COLUMN_USER_SEX, sex);
-        values.put(DatabaseHelper.COLUMN_USER_AGE, age);
-        values.put(DatabaseHelper.COLUMN_USER_LEVEL_EDUCATION, educationLevel);
-        values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, nationality);
-        values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, phoneNumber);
-        values.put(DatabaseHelper.COLUMN_USER_POINTS, points);
+        values.put(DatabaseHelper.COLUMN_USER_HOUSEHOLD, user.getHousehold());
+        values.put(DatabaseHelper.COLUMN_USER_SEX, user.getSex());
+        values.put(DatabaseHelper.COLUMN_USER_AGE, user.getAge());
+        values.put(DatabaseHelper.COLUMN_USER_LEVEL_EDUCATION, user.getEducationLevel());
+        values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
+        values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhoneNumber());
+        values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
 
-        long insertedId = mDatabase.insert(DatabaseHelper.TABLE_USER, null, values);
-        Cursor cursor = mDatabase.query(DatabaseHelper.TABLE_USER,
-                mAllColumns, DatabaseHelper.COLUMN_USER_ID + " = " + insertedId, null, null, null, null);
-        cursor.moveToFirst();
-        User newUser = cursorToPerson(cursor);
-        cursor.close();
-        return newUser;
+        mDatabase.insert(DatabaseHelper.TABLE_USER, null, values);
     }
 
+    public void updateUser(User user){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_USER_HOUSEHOLD, user.getHousehold());
+        values.put(DatabaseHelper.COLUMN_USER_SEX, user.getSex());
+        values.put(DatabaseHelper.COLUMN_USER_AGE, user.getAge());
+        values.put(DatabaseHelper.COLUMN_USER_LEVEL_EDUCATION, user.getEducationLevel());
+        values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
+        values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhoneNumber());
+        values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
 
-
-    public void deletePerson(User user){
-        long id = user.getId();
-
-        // delete all information about this user
-        // ....
-
-        System.out.println("the deleted user has the id: " + id);
-        mDatabase.delete(DatabaseHelper.TABLE_USER, DatabaseHelper.COLUMN_USER_ID
-                + " = " + id, null );
-
+        mDatabase.update(DatabaseHelper.TABLE_USER,
+                values,
+                DatabaseHelper.COLUMN_USER_ID + " = ?",
+                new String[]{String.valueOf(user.getId())});
+        mDatabase.close();
     }
 
-    public List<User> getAllPeople(){
-        List<User> listPeople = new ArrayList<User>();
+    public void deleteUser(User user){
+        mDatabase.delete(DatabaseHelper.TABLE_USER,
+                DatabaseHelper.COLUMN_USER_ID + " = ?",
+                new String[]{String.valueOf(user.getId())});
+        mDatabase.close();
+    }
 
-        Cursor cursor = mDatabase.query(DatabaseHelper.TABLE_USER, mAllColumns,
-                null, null, null, null, null);
-        if (cursor != null){
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
-                User user = cursorToPerson(cursor);
-                listPeople.add(user);
+    public ArrayList<User> getAllUsers(){
+        Cursor cursor = mDatabase.query(DatabaseHelper.TABLE_USER, null, null, null, null, null, null);
+        ArrayList<User> userArrayList = new ArrayList<>();
+        User user;
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
                 cursor.moveToNext();
+                user = new User();
+                user.setId(cursor.getLong(0));
+                user.setHousehold(cursor.getInt(1));
+                user.setSex(cursor.getString(2));
+                user.setAge(cursor.getInt(3));
+                user.setEducationLevel(cursor.getString(4));
+                user.setNationality(cursor.getString(5));
+                user.setPhoneNumber(cursor.getString(6));
+                user.setPoints(cursor.getLong(7));
+
+                userArrayList.add(user);
             }
-            // close cursor
-            cursor.close();
         }
-        return listPeople;
+        return userArrayList;
+
     }
+
 
     public User getPersonById(long id){
         Cursor cursor = mDatabase.query(DatabaseHelper.TABLE_USER, mAllColumns,
-                DatabaseHelper.COLUMN_USER_ID + " ? =",
+                DatabaseHelper.COLUMN_USER_ID + " = ?",
                 new String[] {String.valueOf(id)}, null, null, null);
-        if (cursor != null){
+
+        User user = null;
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            user = cursorToPerson(cursor);
+        }
+        return user;
+    }
+
+    public User getLastUserInserted(){
+
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        String selectQuery = "select * from "+DatabaseHelper.TABLE_USER+
+                " order by "+DatabaseHelper.COLUMN_USER_ID+" desc "+
+                " limit 1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
         }
 
         User user = cursorToPerson(cursor);
         return user;
     }
-
     protected User cursorToPerson(Cursor cursor){
         User user = new User();
         user.setId(cursor.getLong(0));

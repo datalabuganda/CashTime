@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     private UserCrud mUserCrud;
+    User user;
 
     public static String[] gender = {"Male", "Female"};
     public static String[] educationLevel = {"Primary", "O'Level", "A'level", "Institution"};
@@ -53,7 +54,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvCountry = (AutoCompleteTextView) findViewById(R.id.tvCountry);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         btnProceed = (Button) findViewById(R.id.btnProceed);
+
         mUserCrud = new UserCrud(this);
+        user = new User();
 
         // adapter for gender
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(
@@ -104,15 +107,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         !TextUtils.isEmpty(nationality) &&
                         !TextUtils.isEmpty(phoneNumber)){
 
-                    // add the person to database
-                    User createdUser = mUserCrud.createPerson(
-                            Integer.parseInt(household.toString()),
-                            sex.toString(),
-                            Integer.parseInt(age.toString()),
-                            educationLevel.toString(),
-                            nationality.toString(),
-                            phoneNumber.toString(),
-                            0L);
+                    int user_household = Integer.parseInt(household.toString());
+                    String user_sex = sex.toString();
+                    int user_age = Integer.parseInt(age.toString());
+                    String user_level_education = educationLevel.toString();
+                    String user_nationality = nationality.toString();
+                    String user_phoneNumber = phoneNumber.toString();
+                    long user_points = 0L;
+
+                    // set attributes of user object with use input
+                    user.setHousehold(user_household);
+                    user.setSex(user_sex);
+                    user.setAge(user_age);
+                    user.setEducationLevel(user_level_education);
+                    user.setNationality(user_nationality);
+                    user.setPhoneNumber(user_phoneNumber);
+                    user.setPoints(user_points);
+
+
+                    // add the user to database
+                    mUserCrud.createUser(user);
 
                     Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_LONG).show();
 
@@ -123,7 +137,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     editor.putBoolean("isRegistered", true);
                     editor.commit();
 
-                    Log.d(TAG, "added User : " + createdUser.getId());
 
                     Intent intent =  new Intent(RegisterActivity.this, GoalActivity.class);
                     intent.putExtra("points", 0);
@@ -142,7 +155,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUserCrud.close();
     }
 
     @Override

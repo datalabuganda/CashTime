@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.cashtime.models.Goal;
 import com.cashtime.models.User;
@@ -15,6 +16,9 @@ import java.util.ArrayList;
  */
 
 public class GoalCrud {
+
+    private static final String TAG = "GoalCrud";
+
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
     private Context context;
@@ -33,7 +37,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
 
         database.insert(DatabaseHelper.TABLE_GOAL, null, values);
-        database.close();
+//        database.close();
     }
 
     public void updateGoal(Goal goal){
@@ -66,9 +70,11 @@ public class GoalCrud {
                 goal.setAmount(cursor.getInt(2));
                 goal.setStartDate(cursor.getString(3));
                 goal.setEndDate(cursor.getString(4));
+//                goal.setUser(cursor.getColumnIndex(DatabaseHelper.COLUMN_GOAL_USER_ID));
 
                 // get user id
                 long userId = cursor.getLong(5);
+
                 UserCrud userCrud = new UserCrud(context);
                 User user = userCrud.getPersonById(userId);
                 if (user != null){
@@ -78,8 +84,6 @@ public class GoalCrud {
 
             }
         }
-        cursor.close();
-        database.close();
         return goalArrayList;
     }
 }

@@ -98,7 +98,6 @@ public class AddGoalActivity extends AppCompatActivity {
 //                            Log.d(TAG, "This is " + i);
 //                        }
 //                    }
-
                     Intent intent = new Intent(AddGoalActivity.this, HomeActivity.class);
                     startActivity(intent);
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();

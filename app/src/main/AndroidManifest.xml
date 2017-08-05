@@ -31,7 +31,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".AddGoalActivity" />
         <activity android:name=".ReportActivity" />
-        <activity android:name="com.cashtime.TipsActivity"></activity>
+        <activity android:name=".TipsActivity"></activity>
     </application>
 
 </manifest>

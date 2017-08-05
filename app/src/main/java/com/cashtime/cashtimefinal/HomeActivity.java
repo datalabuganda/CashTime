@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cashtime.TipsActivity;
-
 public class HomeActivity extends AppCompatActivity {
 
     ImageView imgIncome, imgExpenditure, imgGoal, imgAnalytics, imgReports, imgTips;

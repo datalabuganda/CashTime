@@ -31,7 +31,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".AddGoalActivity" />
         <activity android:name=".ReportActivity" />
-        <activity android:name=".TipsActivity"></activity>
+        <activity android:name=".TipsActivity" />
+        <activity android:name=".GoalDetailActivity"></activity>
     </application>
 
 </manifest>

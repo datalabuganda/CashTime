@@ -91,13 +91,7 @@ public class AddGoalActivity extends AppCompatActivity {
                     goal.setUser(user);
 
                     goalCrud.createGoal(goal);
-//
-//                    ArrayList<Goal> goalList = goalCrud.getAllGoals();
-//                    if (goalList.size() > 0){
-//                        for (int i = 0; i < goalList.size(); i++){
-//                            Log.d(TAG, "This is " + i);
-//                        }
-//                    }
+
                     Intent intent = new Intent(AddGoalActivity.this, HomeActivity.class);
                     startActivity(intent);
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();

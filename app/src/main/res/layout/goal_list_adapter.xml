@@ -2,15 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:paddingLeft="10dp"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tvGoalName"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:textAlignment="center"
         android:paddingTop="10dp"
-        android:textSize="18dp"
+        android:textSize="24sp"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:ellipsize="end"
+        android:textColor="#000"
+        android:textStyle="bold"
         android:text="GoalName" />
 
     <LinearLayout
@@ -35,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingTop="10dp"
-            android:layout_weight="50"
+            android:layout_weight="40"
+            android:textColor="#000"
             android:textSize="18dp"
             android:text="Goal Amount" />
 
@@ -45,6 +52,8 @@
         android:id="@+id/ratingBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:numStars="5"
+        android:isIndicator="true"
         android:clickable="false"/>
 
 

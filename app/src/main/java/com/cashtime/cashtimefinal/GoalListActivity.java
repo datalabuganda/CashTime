@@ -1,8 +1,11 @@
 package com.cashtime.cashtimefinal;
 
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 
@@ -33,6 +36,14 @@ public class GoalListActivity extends AppCompatActivity {
 
         GoalListAdapter goalListAdapter = new GoalListAdapter(this, R.layout.goal_list_adapter, goalArrayList);
         listView.setAdapter(goalListAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(GoalListActivity.this, GoalDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

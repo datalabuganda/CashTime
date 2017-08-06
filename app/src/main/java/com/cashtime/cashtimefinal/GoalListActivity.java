@@ -37,13 +37,14 @@ public class GoalListActivity extends AppCompatActivity {
         GoalListAdapter goalListAdapter = new GoalListAdapter(this, R.layout.goal_list_adapter, goalArrayList);
         listView.setAdapter(goalListAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(GoalListActivity.this, GoalDetailActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
+
 
     }
 }

@@ -33,10 +33,13 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
 
     DecimalFormat formatter;
 
+    private UserCrud userCrud;
+
     public GoalListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<Goal> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
+        userCrud = new UserCrud(context);
 
     }
 
@@ -51,6 +54,8 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         final String goal_amount = formatter.format(getItem(position).getAmount());
         final String goal_endDate = getItem(position).getEndDate();
 
+        final String user_points = String.valueOf(userCrud.getLastUserInserted().getPoints());
+
        /* // create Goal object with above information
         Goal goal = new Goal(goal_name, goal_amount, goal_endDate);*/
 
@@ -61,7 +66,8 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         TextView tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
         TextView tvGoalAmount = (TextView) convertView.findViewById(R.id.tvGoalAmount);
 
-        tvGoalName.setText(goal_name);
+
+        tvGoalName.setText(goal_name + user_points);
         tvEndDate.setText("By: " + goal_endDate);
         tvGoalAmount.setText("Shs: " + goal_amount);
 

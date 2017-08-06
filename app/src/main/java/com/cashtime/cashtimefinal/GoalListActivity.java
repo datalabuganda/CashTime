@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.cashtime.helper.GoalCrud;
 import com.cashtime.helper.GoalListAdapter;
+import com.cashtime.helper.UserCrud;
 import com.cashtime.models.Goal;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class GoalListActivity extends AppCompatActivity {
     private static final String TAG = "GoalActivity";
 
     private GoalCrud goalCrud;
+
 
     ListView listView;
 

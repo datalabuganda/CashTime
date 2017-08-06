@@ -42,6 +42,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private GoalCrud goalCrud;
     private UserCrud userCrud;
     private Goal goal;
+    private User user;
 
     SimpleDateFormat simpleDateFormat;
 
@@ -59,6 +60,7 @@ public class AddGoalActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
         goalCrud = new GoalCrud(this);
         goal = new Goal();
+        user = new User();
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -93,8 +95,16 @@ public class AddGoalActivity extends AppCompatActivity {
                     goalCrud.createGoal(goal);
 
                     Intent intent = new Intent(AddGoalActivity.this, HomeActivity.class);
-                    startActivity(intent);
+
+                    // award a user points
+                    user.setPoints(2);
+
+                    // add point earned by user to database
+                    userCrud.updateUser(user);
+
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+
                 }
                 else {
                     Toast.makeText(AddGoalActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.cashtime.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.cashtime.cashtimefinal.GoalDetailActivity;
 import com.cashtime.cashtimefinal.R;
 import com.cashtime.models.Goal;
 
@@ -45,9 +47,9 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
 
         formatter = new DecimalFormat("#,###,###");
 
-        String goal_name = getItem(position).getName();
-        String goal_amount = formatter.format(getItem(position).getAmount());
-        String goal_endDate = getItem(position).getEndDate();
+        final String goal_name = getItem(position).getName();
+        final String goal_amount = formatter.format(getItem(position).getAmount());
+        final String goal_endDate = getItem(position).getEndDate();
 
        /* // create Goal object with above information
         Goal goal = new Goal(goal_name, goal_amount, goal_endDate);*/
@@ -63,6 +65,25 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         tvEndDate.setText("By: " + goal_endDate);
         tvGoalAmount.setText("Shs: " + goal_amount);
 
+        // goal click listener
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGoalDetail(goal_name, goal_amount, goal_endDate);
+            }
+        });
+
         return convertView;
+    }
+
+    private void openGoalDetail(String goal_name, String goal_amount, String goal_endDate){
+        Intent intent = new Intent(mContext, GoalDetailActivity.class);
+        // PACK DATA
+        intent.putExtra("GOAL_NAME", goal_name);
+        intent.putExtra("GOAL_AMOUNT", goal_amount);
+        intent.putExtra("GOAL_ENDDATE", goal_endDate);
+
+        // OPEN ACTIVITY
+        mContext.startActivity(intent);
     }
 }

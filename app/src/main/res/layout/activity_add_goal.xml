@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:layout_height="match_parent"
-    tools:context="com.cashtime.cashtimefinal.AddGoalActivity"
+    tools:context="com.cashtime.activities.AddGoalActivity"
     android:weightSum="1">
 
     <TextView

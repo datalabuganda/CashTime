@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import org.junit.Test;
 

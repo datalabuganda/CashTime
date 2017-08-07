@@ -1,13 +1,13 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ExpenditureActivity extends AppCompatActivity {
+public class IncomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expenditure2);
+        setContentView(R.layout.activity_income);
     }
 }

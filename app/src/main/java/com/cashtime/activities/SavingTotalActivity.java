@@ -1,19 +1,10 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cashtime.helper.DatabaseHelper;
-import com.cashtime.helper.SavingCrud;
 import com.cashtime.helper.SavingCrud2;
-import com.cashtime.models.Saving;
-
-import java.util.ArrayList;
 
 public class SavingTotalActivity extends AppCompatActivity {
 

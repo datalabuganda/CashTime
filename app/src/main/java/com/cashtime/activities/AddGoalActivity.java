@@ -1,11 +1,10 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,14 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.cashtime.helper.DatabaseHelper;
 import com.cashtime.helper.GoalCrud;
 import com.cashtime.helper.UserCrud;
 import com.cashtime.models.Goal;
@@ -104,6 +101,7 @@ public class AddGoalActivity extends AppCompatActivity {
 
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+
 
                 }
                 else {

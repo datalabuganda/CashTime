@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

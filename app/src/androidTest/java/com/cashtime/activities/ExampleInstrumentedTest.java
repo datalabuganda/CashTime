@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

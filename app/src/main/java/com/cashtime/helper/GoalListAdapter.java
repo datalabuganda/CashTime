@@ -9,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.cashtime.cashtimefinal.GoalDetailActivity;
-import com.cashtime.cashtimefinal.R;
+import com.cashtime.activities.GoalDetailActivity;
+import com.cashtime.activities.R;
 import com.cashtime.models.Goal;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by probuse on 8/5/17.
@@ -51,9 +49,10 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         formatter = new DecimalFormat("#,###,###");
 
         final String goal_name = getItem(position).getName();
-        final String goal_amount = formatter.format(getItem(position).getAmount());
+        final int goal_amount = getItem(position).getAmount();
         final String goal_endDate = getItem(position).getEndDate();
 
+        // get user points
         final String user_points = String.valueOf(userCrud.getLastUserInserted().getPoints());
 
        /* // create Goal object with above information
@@ -69,7 +68,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
 
         tvGoalName.setText(goal_name + user_points);
         tvEndDate.setText("By: " + goal_endDate);
-        tvGoalAmount.setText("Shs: " + goal_amount);
+        tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
 
         // goal click listener
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +81,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         return convertView;
     }
 
-    private void openGoalDetail(String goal_name, String goal_amount, String goal_endDate){
+    private void openGoalDetail(String goal_name, int goal_amount, String goal_endDate){
         Intent intent = new Intent(mContext, GoalDetailActivity.class);
         // PACK DATA
         intent.putExtra("GOAL_NAME", goal_name);

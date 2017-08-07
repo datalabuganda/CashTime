@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -29,19 +29,18 @@ public class GoalDetailActivity extends AppCompatActivity {
         // Receive Data from Intent
         Intent intent = this.getIntent();
         String goal_name = intent.getExtras().getString("GOAL_NAME");
-        String goal_amount = intent.getExtras().getString("GOAL_AMOUNT");
+        int goal_amount = intent.getExtras().getInt("GOAL_AMOUNT");
         String goal_endDate = intent.getExtras().getString("GOAL_ENDDATE");
 
+
         // Amount saved on goal so far
-        String goal_savings = String.valueOf(formatter.format(1000000));
-//        String goal_amount_remaining = String.valueOf(
-//                Integer.parseInt(goal_amount) - Integer.parseInt(goal_savings)
-//        );
+        int goal_savings = 1000000;
+        int goal_amount_remaining =  goal_amount - goal_savings;
 
         tvGoalName.setText(goal_name);
         tvEndDate.setText("By: " + goal_endDate);
-        tvGoalAmount.setText("Goal Cost:  " + goal_amount);
-        tvAmountSaved.setText("Amount Saved So far: " + goal_savings);
-//        tvAmountRemaining.setText("Amount remaining: " + goal_amount_remaining);
+        tvGoalAmount.setText("Goal Cost  Shs: " + formatter.format(goal_amount));
+        tvAmountSaved.setText("Amount Saved So far Shs: " + formatter.format(goal_savings));
+        tvAmountRemaining.setText("Amount remaining: Shs:" + formatter.format(goal_amount_remaining));
     }
 }

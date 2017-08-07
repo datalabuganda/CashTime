@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;

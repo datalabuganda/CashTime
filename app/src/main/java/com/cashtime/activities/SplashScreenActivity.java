@@ -1,4 +1,4 @@
-package com.cashtime.cashtimefinal;
+package com.cashtime.activities;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -19,7 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
-                .withSplashTimeOut(5000)
+                .withSplashTimeOut(2000)
                 .withTargetActivity(RegisterActivity.class)
                 .withBackgroundColor(Color.parseColor("#074E72"))
                // .withLogo(R.mipmap.ic_launcher_round)
@@ -32,7 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         boolean isRegistered = preferences.getBoolean("isRegistered", false);
 
         if (isRegistered){
-            config.withTargetActivity(GoalActivity.class);
+            config.withTargetActivity(HomeActivity.class);
         }
 
         // set Text Color

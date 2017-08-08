@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.IncomeActivity">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barchart"
+        android:layout_width="374dp"
+        android:layout_height="367dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="30dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_alignParentBottom="true" />
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/barchart"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="76dp"
+        android:id="@+id/linearLayout5">
+
+        <ImageView
+            android:id="@+id/imgLoan"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/loans"
+            android:layout_alignTop="@+id/imgSalary"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView19"
+            android:layout_alignStart="@+id/textView19"
+            android:layout_below="@+id/imgLoan"
+            android:text="Loan"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:id="@+id/imgOthers"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignLeft="@+id/imgLoan"
+            android:layout_alignStart="@+id/imgLoan"
+            android:layout_alignTop="@+id/imgInvestment"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/others" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView17"
+            android:layout_alignBottom="@+id/textView17"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:text="Others"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/linearLayout5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+
+        <ImageView
+            android:id="@+id/imgSalary"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            android:layout_above="@+id/imgOthers"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/salary" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_alignLeft="@+id/imgSalary"
+            android:layout_alignStart="@+id/imgSalary"
+            android:layout_below="@+id/imgSalary"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="24dp"
+            android:text="Salary"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imgInvestment"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignLeft="@+id/imgSalary"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/imgSalary"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.03"
+            app:srcCompat="@drawable/investment" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/imgInvestment"
+            android:layout_alignRight="@+id/imgInvestment"
+            android:layout_alignTop="@+id/textView13"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.13"
+            android:text="Investment"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/barchart"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Total Income:"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/txtTotalIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shs"
+            android:layout_marginLeft="4dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20dp"/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/txtTotalIncome"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@android:color/holo_red_dark"-->
+            <!--android:textSize="24sp"-->
+            <!--android:layout_alignBottom="@+id/textView13"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginRight="46dp"-->
+            <!--android:layout_marginEnd="46dp" />-->
+    </LinearLayout>
+
+
+</RelativeLayout>

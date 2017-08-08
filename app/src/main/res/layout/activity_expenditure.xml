@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.ExpenditureActivity">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barchart"
+        android:layout_width="374dp"
+        android:layout_height="367dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="30dp"
+        tools:layout_editor_absoluteY="136dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/linearLayout7"
+        android:layout_toStartOf="@+id/linearLayout7" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout6"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imgSavings"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/savings" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Savings"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/imgTransport"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/transport1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Transport"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/imgHealth"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/hospital" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medical"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout7"
+        android:layout_alignTop="@+id/linearLayout6"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp">
+
+
+        <ImageView
+            android:id="@+id/imgHomeneeds"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/imgEducation"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/home" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home needs"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+
+
+        <ImageView
+            android:id="@+id/imgEducation"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/imgOthers"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/education2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Education"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/imgOthers"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/otherss"
+            android:layout_alignBottom="@+id/linearLayout6"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18dp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remaing Income:"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/txtRemainingIncome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shs"
+            android:layout_marginLeft="2dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/holo_red_dark"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

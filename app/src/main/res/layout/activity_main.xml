@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.MainActivity">
+
+    <EditText
+        android:id="@+id/edtTransport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Transport"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="57dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/edtEducation"
+        android:layout_alignStart="@+id/edtEducation"
+        android:layout_marginTop="78dp" />
+
+    <EditText
+        android:id="@+id/edtEducation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Education"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="135dp"
+        android:layout_alignBottom="@+id/btnEducation"
+        android:layout_toLeftOf="@+id/btnEducation"
+        android:layout_toStartOf="@+id/btnEducation"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp" />
+
+    <Button
+        android:id="@+id/btnTransport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        tools:layout_editor_absoluteX="253dp"
+        tools:layout_editor_absoluteY="57dp"
+        android:layout_alignTop="@+id/edtTransport"
+        android:layout_alignLeft="@+id/btnEducation"
+        android:layout_alignStart="@+id/btnEducation" />
+
+    <Button
+        android:id="@+id/btnEducation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Education"
+        tools:layout_editor_absoluteX="251dp"
+        tools:layout_editor_absoluteY="128dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/btnTransport"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/btnSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:text="Sum"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/btnLoans"
+        android:layout_alignStart="@+id/btnLoans" />
+
+    <EditText
+        android:id="@+id/edtHealth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtEducation"
+        android:layout_alignStart="@+id/edtEducation"
+        android:layout_below="@+id/edtEducation"
+        android:layout_marginTop="31dp"
+        android:ems="10"
+        android:hint="Health"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnHealth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edtHealth"
+        android:layout_alignEnd="@+id/btnEducation"
+        android:layout_alignRight="@+id/btnEducation"
+        android:text="Health" />
+
+    <EditText
+        android:id="@+id/edtSavings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtHealth"
+        android:layout_alignStart="@+id/edtHealth"
+        android:layout_below="@+id/edtHealth"
+        android:layout_marginTop="31dp"
+        android:ems="10"
+        android:hint="Savings"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edtLoans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtSavings"
+        android:layout_alignStart="@+id/edtSavings"
+        android:layout_below="@+id/edtSavings"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="Others"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/btnSavings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edtSavings"
+        android:layout_alignEnd="@+id/btnHealth"
+        android:layout_alignRight="@+id/btnHealth"
+        android:text="Savings" />
+
+    <Button
+        android:id="@+id/btnLoans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnSavings"
+        android:layout_alignStart="@+id/btnSavings"
+        android:layout_alignTop="@+id/edtLoans"
+        android:text="Others" />
+
+</RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.eq62roket.CashTime">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.SplashScreenActivity"
+            android:label="CashTime">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.ReportActivity"
+            android:label="Report"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.AnalysisActivity"
+            android:label="Analysis"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity android:name="com.example.eq62roket.CashTime.activities.MainActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.GoalActivity"
+            android:label="Goal"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity android:name="com.example.eq62roket.CashTime.activities.GoalCreateActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.GoalsListActivity"
+            android:label="Goals"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.IncomeActivity"
+            android:label="Income"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.ExpenditureActivity"
+            android:label="Expenditure"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.AnalyticsActivity"
+            android:label="Analysis"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.TipsActivity"
+            android:label="Tips"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.HomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.LoanActivity"
+            android:label="Loan"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.IncomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.SalaryActivity"
+            android:label="Salary"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.IncomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.InvestmentActivity"
+            android:label="Investment"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.IncomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.OtherIncomesActivity"
+            android:label="Others"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.IncomeActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.SavingsActivity"
+            android:label="Savings"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.TransportActivity"
+            android:label="Transport"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.EducationActivity"
+            android:label="Education"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.HomeneedsActivity"
+            android:label="Home needs"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.HealthActivity"
+            android:label="Medical"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.GoalDetailActivity"
+            android:label="Goal Detail"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.OthersActivity"
+            android:label="Others"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity android:name="com.example.eq62roket.CashTime.activities.AddGoalActivity"
+            android:label="Add your goal"/>
+        <activity android:name="com.example.eq62roket.CashTime.activities.RegisterActivity"
+            android:label="Registration"/>
+        <activity android:name="com.example.eq62roket.CashTime.activities.HomeActivity"
+            android:label="CashTime"/>
+    </application>
+
+</manifest>

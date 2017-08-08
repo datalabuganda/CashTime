@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.GoalDetailActivity">
+
+
+    <TextView
+        android:id="@+id/tvGoalName"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textAlignment="center"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:maxLines="2"
+        android:singleLine="false"
+        android:ellipsize="end"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:text="GoalName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:layout_weight="50" />
+
+        <TextView
+            android:id="@+id/tvEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="10dp"
+            android:layout_weight="50"
+            android:layout_marginRight="10dp"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:text="End Date" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvGoalAmount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:text="Goal Amount" />
+
+    <TextView
+        android:id="@+id/tvAmountSaved"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:paddingTop="10dp"
+        android:text="Amount Saved"
+        android:textSize="18dp" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvAmountRemaining"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:textSize="18dp"-->
+        <!--android:text="Amount Remaining" />-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:layout_marginTop="20dp"
+            android:text="Your Score"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:clickable="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cooking"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="6dp"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="Soak your beans before cooking. Soaked beans do no take long to get ready. This helps to reduce charcoal wastage saving alot of money."
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

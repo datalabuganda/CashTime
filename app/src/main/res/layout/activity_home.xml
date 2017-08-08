@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout16"
+        android:layout_marginLeft="53dp"
+        android:layout_marginStart="50dp"
+        android:layout_alignTop="@+id/linearLayout4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imgGoals"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/goals" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif"
+            android:text="Goals"
+            android:textStyle="bold"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:id="@+id/imgExpenditure"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/textView8"
+            android:layout_toLeftOf="@+id/textView12"
+            android:layout_toStartOf="@+id/textView12"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/expenditure" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expenditure"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:textSize="24sp" />
+
+
+        <ImageView
+            android:id="@+id/imgAnalytics"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/textView10"
+            android:layout_toEndOf="@+id/linearLayout3"
+            android:layout_toRightOf="@+id/linearLayout3"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/analytics" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Analysis"
+            android:textStyle="bold"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="5dp"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_toRightOf="@+id/linearLayout16"
+        android:layout_toEndOf="@+id/linearLayout16"
+        android:id="@+id/linearLayout4">
+
+        <ImageView
+            android:id="@+id/imgIncome"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignLeft="@+id/imgReport"
+            android:layout_alignStart="@+id/imgReport"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/wallet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Income"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"
+            android:textSize="24dp"/>
+
+        <ImageView
+            android:id="@+id/imgReport"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignLeft="@+id/linearLayout2"
+            android:layout_alignStart="@+id/linearLayout2"
+            android:layout_alignTop="@+id/imgTips"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/reports" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reports"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"
+            android:textSize="24dp"/>
+
+
+        <ImageView
+            android:id="@+id/imgTips"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignBottom="@+id/linearLayout16"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/background_light"
+            app:srcCompat="@drawable/tips" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:text="Tips"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:textSize="24dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

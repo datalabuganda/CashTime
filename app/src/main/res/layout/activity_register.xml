@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:maxLength="2"
             android:layout_margin="10dp"
             android:hint="Household Composition"
             android:digits="0123456789"/>
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:maxLength="2"
             android:hint="Age"
             android:layout_margin="10dp"
             android:digits="0123456789" />

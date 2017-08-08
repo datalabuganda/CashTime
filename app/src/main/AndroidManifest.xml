@@ -85,13 +85,17 @@
             android:label="Home needs"
             android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
         <activity
-            android:name="com.example.eq62roket.CashTime.activities.HealthActivity"
-            android:label="Medical"
-            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+            android:name="com.example.eq62roket.CashTime.activities.EditGoalActivity"
+            android:label="Edit Goal"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
         <activity
             android:name="com.example.eq62roket.CashTime.activities.GoalDetailActivity"
             android:label="Goal Detail"
             android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.HealthActivity"
+            android:label="Medical"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
         <activity
             android:name="com.example.eq62roket.CashTime.activities.OthersActivity"
             android:label="Others"

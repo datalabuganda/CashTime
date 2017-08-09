@@ -91,12 +91,14 @@ public class AddGoalActivity extends AppCompatActivity {
                     goalCrud.createGoal(goal);
 
                     Intent intent = new Intent(AddGoalActivity.this, HomeActivity.class);
-                    startActivity(intent);
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+
                 }
                 else {
                     Toast.makeText(AddGoalActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

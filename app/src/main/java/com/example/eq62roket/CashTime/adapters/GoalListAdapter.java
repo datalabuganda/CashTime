@@ -58,7 +58,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         final long goal_id = getItem(position).getId();
 
         // get user points
-        final String user_points = String.valueOf(userCrud.getLastUserInserted().getPoints());
+        final long user_points = userCrud.getLastUserInserted().getPoints();
 
        /* // create Goal object with above information
         Goal goal = new Goal(goal_name, goal_amount, goal_endDate);*/
@@ -70,30 +70,33 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         TextView tvGoalName = (TextView) convertView.findViewById(R.id.tvGoalName);
         TextView tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
         TextView tvGoalAmount = (TextView) convertView.findViewById(R.id.tvGoalAmount);
+        TextView tvUserPoints = (TextView) convertView.findViewById(R.id.tvUserPoints);
 
 
-        tvGoalName.setText(goal_name + goal_id);
+        tvGoalName.setText(goal_name);
         tvEndDate.setText("By: " + goal_endDate);
         tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
+        tvUserPoints.setText("Your Current points are: "+ user_points);
 
         // goal click listener
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGoalDetail(goal_name, goal_amount, goal_endDate, goal_id);
+                openGoalDetail(goal_name, goal_amount, goal_endDate, goal_id, user_points);
             }
         });
 
         return convertView;
     }
 
-    private void openGoalDetail(String goal_name, int goal_amount, String goal_endDate, long goal_id){
+    private void openGoalDetail(String goal_name, int goal_amount, String goal_endDate, long goal_id, long user_points){
         Intent intent = new Intent(mContext, GoalDetailActivity.class);
         // PACK DATA
         intent.putExtra("GOAL_NAME", goal_name);
         intent.putExtra("GOAL_AMOUNT", goal_amount);
         intent.putExtra("GOAL_ENDDATE", goal_endDate);
         intent.putExtra("GOAL_ID", goal_id);
+        intent.putExtra("USER_POINTS", user_points);
 
         // OPEN ACTIVITY
         mContext.startActivity(intent);

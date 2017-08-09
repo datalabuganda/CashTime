@@ -37,7 +37,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         // set Text Color
-        config.getHeaderTextView().setTextColor(Color.WHITE);
         config.getFooterTextView().setTextColor(Color.WHITE);
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
         config.getBeforeLogoTextView().setTextColor(Color.WHITE);

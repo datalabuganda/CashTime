@@ -85,4 +85,38 @@ public class GoalCrud {
         return goalArrayList;
     }
 
+    public Goal getLastInsertedGoal() {
+        String selectQuery = "select * from " + DatabaseHelper.TABLE_GOAL +
+                " order by " + DatabaseHelper.COLUMN_GOAL_ID + " desc " +
+                " limit 1";
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+        }
+
+        Goal goal = cursorToGoal(cursor);
+        return goal;
+
+    }
+
+    protected Goal cursorToGoal(Cursor cursor){
+        Goal goal = new Goal();
+        goal.setId(cursor.getLong(0));
+        goal.setName(cursor.getString(1));
+        goal.setAmount(cursor.getInt(2));
+        goal.setStartDate(cursor.getString(3));
+        goal.setEndDate(cursor.getString(4));
+
+
+        // get user id
+        long userId = cursor.getLong(5);
+        UserCrud userCrud = new UserCrud(context);
+        User user = userCrud.getPersonById(userId);
+        if (user != null){
+            goal.setUser(user);
+        }
+        return goal;
+    }
+
 }

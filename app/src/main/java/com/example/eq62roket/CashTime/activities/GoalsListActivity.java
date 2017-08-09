@@ -56,7 +56,6 @@ public class GoalsListActivity extends AppCompatActivity {
                     Toast.makeText(GoalsListActivity.this,
                             "You must complete the current goal to set another goal.",
                             Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "alive");
                 }
                 else {
                     Intent intent = new Intent(GoalsListActivity.this, AddGoalActivity.class);

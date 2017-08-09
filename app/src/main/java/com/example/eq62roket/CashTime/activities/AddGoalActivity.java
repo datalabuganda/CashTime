@@ -82,6 +82,10 @@ public class AddGoalActivity extends AppCompatActivity {
                     String end_date = chooseDate.toString();
                     User user = userCrud.getLastUserInserted();
 
+                    // if user creates goal for the first time, award them 3 points
+                    user.setPoints(3);
+                    userCrud.updateUser(user);
+
                     goal.setName(goal_name);
                     goal.setAmount(goal_amount);
                     goal.setStartDate(start_date);

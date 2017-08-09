@@ -44,7 +44,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_3, transport);
         long result = db.insert(TABLE_NAME1, null, contentValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -55,7 +55,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues educationValues = new ContentValues();
         educationValues.put(COL_4, amount);
         long result = db.insert(TABLE_NAME1, null, educationValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -66,7 +66,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues healthValues = new ContentValues();
         healthValues.put(COL_6, health);
         long result = db.insert(TABLE_NAME1, null, healthValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -77,7 +77,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues savingsValues = new ContentValues();
         savingsValues.put(COL_8, savings);
         long result = db.insert(TABLE_NAME1, null, savingsValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -88,7 +88,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues othersValues = new ContentValues();
         othersValues.put(COL_10, others);
         long result = db.insert(TABLE_NAME1, null, othersValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -99,7 +99,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues homeneedsValues = new ContentValues();
         homeneedsValues.put(COL_11, homeneeds);
         long result = db.insert(TABLE_NAME1, null, homeneedsValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;

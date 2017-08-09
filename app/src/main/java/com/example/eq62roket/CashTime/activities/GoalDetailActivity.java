@@ -18,7 +18,7 @@ public class GoalDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "GoalDetailActivity";
 
-    TextView tvGoalName, tvEndDate, tvGoalAmount, tvAmountSaved, tvAmountRemaining;
+    TextView tvGoalName, tvEndDate, tvGoalAmount, tvAmountSaved, tvAmountRemaining, tvUserPoints;
     FloatingActionButton edit;
 
     DecimalFormat formatter;
@@ -34,6 +34,7 @@ public class GoalDetailActivity extends AppCompatActivity {
         tvGoalAmount = (TextView) findViewById(R.id.tvGoalAmount);
         tvAmountSaved = (TextView) findViewById(R.id.tvAmountSaved);
         tvAmountRemaining = (TextView) findViewById(R.id.tvAmountRemaining);
+        tvUserPoints = (TextView) findViewById(R.id.tvUserPoints);
 
         edit = (FloatingActionButton) findViewById(R.id.edit);
 
@@ -46,6 +47,7 @@ public class GoalDetailActivity extends AppCompatActivity {
         final int goal_amount = intent.getIntExtra("GOAL_AMOUNT", 0);
         final String goal_endDate = intent.getStringExtra("GOAL_ENDDATE");
         final long goal_id = intent.getLongExtra("GOAL_ID", 0);
+        final long user_points = intent.getLongExtra("USER_POINTS", 0);
 
 
         // Amount saved on goal so far
@@ -57,6 +59,7 @@ public class GoalDetailActivity extends AppCompatActivity {
         tvGoalAmount.setText("Goal Cost  Shs: " + formatter.format(goal_amount));
         tvAmountSaved.setText("Amount Saved So far Shs: " + formatter.format(goal_savings));
         tvAmountRemaining.setText("Amount remaining Shs: " + formatter.format(goal_amount_remaining));
+        tvUserPoints.setText("Your Current points are: " + user_points);
 
         // starts edit goal activity
         edit.setOnClickListener(new View.OnClickListener() {

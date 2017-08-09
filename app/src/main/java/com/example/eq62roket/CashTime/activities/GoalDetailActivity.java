@@ -1,6 +1,7 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,9 @@ public class GoalDetailActivity extends AppCompatActivity {
 
     DecimalFormat formatter;
     SQLiteHelper sqLiteHelper;
+
+    SharedPreferences preferences;
+    public static final String PREF_NAME = "GoalDetailPreference";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,15 @@ public class GoalDetailActivity extends AppCompatActivity {
         // Amount saved on goal so far
         int goal_savings = sqLiteHelper.addAllSavings();
         int goal_amount_remaining =  goal_amount - goal_savings;
+
+        if (goal_amount_remaining != 0) {
+            // goal not achieved yet
+            preferences = getSharedPreferences(GoalDetailActivity.PREF_NAME, 0);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putBoolean("goalOngoing", true);
+            editor.commit();
+        }
 
         tvGoalName.setText(goal_name);
         tvEndDate.setText("By: " + goal_endDate);

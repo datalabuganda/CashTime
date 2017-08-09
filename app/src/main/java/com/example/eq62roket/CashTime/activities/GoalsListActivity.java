@@ -5,7 +5,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.adapters.GoalListAdapter;
@@ -19,6 +21,9 @@ public class GoalsListActivity extends AppCompatActivity {
     private static final String TAG = "GoalActivity";
 
     private GoalCrud goalCrud;
+    TextView txtPoints;
+    Button btnPoints;
+    int counter = 0;
 
     ListView listView;
 
@@ -29,6 +34,8 @@ public class GoalsListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listView = (ListView) findViewById(R.id.listView);
+        txtPoints = (TextView) findViewById(R.id.txtPoints);
+        btnPoints = (Button) findViewById(R.id.btnSavings);
         goalCrud = new GoalCrud(this);
 
         ArrayList<Goal> goalArrayList = new ArrayList<>();
@@ -54,5 +61,15 @@ public class GoalsListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void Add(){
+        btnPoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                counter+=2;
+                txtPoints.setText(Integer.toString(counter));
+            }
+        });
     }
 }

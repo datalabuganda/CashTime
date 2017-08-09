@@ -49,6 +49,7 @@ public class TransportActivity extends AppCompatActivity {
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
                                 userCrud.updateUser(user);
+
                                 Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
                                 Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
                                 TransportActivity.this.startActivity(Transportintent);

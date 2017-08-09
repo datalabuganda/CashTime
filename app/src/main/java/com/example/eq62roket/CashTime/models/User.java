@@ -25,7 +25,7 @@ public class User {
     }
 
     public void setPoints(long points) {
-        this.points = points;
+        this.points += points;
     }
 
     public int getHousehold() {

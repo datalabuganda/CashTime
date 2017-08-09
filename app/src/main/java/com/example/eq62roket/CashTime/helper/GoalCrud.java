@@ -11,7 +11,7 @@ import com.example.eq62roket.CashTime.models.User;
 import java.util.ArrayList;
 
 /**
- * Created by eq62roket on 8/5/17.
+ * Created by cashtime on 8/5/17.
  */
 
 public class GoalCrud {

@@ -21,13 +21,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(RegisterActivity.class)
-                .withSplashTimeOut(5000)
+                .withSplashTimeOut(3000)
                 .withBackgroundColor(Color.parseColor("#074E72"))
 //                .withLogo(R.mipmap.logo)
-                .withHeaderText("Welcome")
                 .withFooterText("Copyright CashTime 2017")
                 .withBeforeLogoText("CashTime")
-                .withAfterLogoText("Track Your Expenses");
+                .withAfterLogoText("Track Your Expenses Visually");
 
         preferences = getSharedPreferences(RegisterActivity.PREF_NAME, 0);
         boolean isRegistered = preferences.getBoolean("isRegistered", false);
@@ -38,7 +37,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         // set Text Color
-        config.getHeaderTextView().setTextColor(Color.WHITE);
         config.getFooterTextView().setTextColor(Color.WHITE);
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
         config.getBeforeLogoTextView().setTextColor(Color.WHITE);

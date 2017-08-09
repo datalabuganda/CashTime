@@ -15,6 +15,15 @@ public class Goal {
     public Goal() {
     }
 
+    public Goal(long id, String name, int amount, String startDate, String endDate, User user) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.user = user;
+    }
+
     public long getId() {
         return id;
     }

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:weightSum="1"
-    tools:context="com.example.eq62roket.CashTime.activities.AddGoalActivity">
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.CashTime.activities.EditGoalActivity"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/textView2"
@@ -19,7 +19,7 @@
         android:background="#000"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/add_a_goal"
+        android:text="Edit Goal"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,8 +32,7 @@
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:hint="e.g buy a goat" />
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/etGoalAmount"
@@ -44,19 +43,17 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:textAlignment="center"
-        android:hint="Amount"
         android:ems="10"
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/etChooDate"
+        android:id="@+id/etChooseDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:textAlignment="center"
-        android:hint="Goal Deadline"
         android:editable="false"
         android:focusable="false"
         android:longClickable="false"
@@ -65,12 +62,13 @@
         android:inputType="date" />
 
     <Button
-        android:id="@+id/btnAddGoal"
+        android:id="@+id/btnUpdateGoal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
         android:layout_marginTop="30dp"
         android:textStyle="bold"
-        android:text="Add Goal" />
+        android:text="Update Goal" />
+
 
 </LinearLayout>

@@ -3,12 +3,9 @@ package com.example.eq62roket.CashTime.activities;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,87 +22,81 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddGoalActivity extends AppCompatActivity {
 
-    private static final String TAG = "AddGoalActivity";
+public class EditGoalActivity extends AppCompatActivity {
+
+    private static final String TAG = "EditGoalActivity";
 
     EditText etGoalName, etGoalAmount, etChooseDate;
-    Button btnAddGoal;
+    Button btnUpdateGoal;
 
     private DatePicker datePicker;
     private Calendar calendar;
     private int year, month, day;
 
+    Goal goal;
+
     private GoalCrud goalCrud;
     private UserCrud userCrud;
-    private Goal goal;
 
     SimpleDateFormat simpleDateFormat;
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_goal);
+        setContentView(R.layout.activity_edit_goal);
 
-        etGoalName = (EditText) findViewById(R.id.etGoalName);
+        etGoalName =(EditText) findViewById(R.id.etGoalName);
         etGoalAmount = (EditText) findViewById(R.id.etGoalAmount);
-        etChooseDate = (EditText) findViewById(R.id.etChooDate);
-        btnAddGoal = (Button) findViewById(R.id.btnAddGoal);
+        etChooseDate = (EditText) findViewById(R.id.etChooseDate);
+        btnUpdateGoal = (Button) findViewById(R.id.btnUpdateGoal);
 
         userCrud = new UserCrud(this);
         goalCrud = new GoalCrud(this);
-        goal = new Goal();
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        // Receive Data from Intent
+        Intent intent = this.getIntent();
+        final long goal_id = intent.getExtras().getLong("GOAL_ID");
+        String goal_name = intent.getExtras().getString("GOAL_NAME");
+        int goal_amount = intent.getExtras().getInt("GOAL_AMOUNT");
+        String goal_enddate = intent.getExtras().getString("GOAL_ENDDATE");
 
-        btnAddGoal.setOnClickListener(new View.OnClickListener() {
+        final String goal_startdate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        final User goal_user = userCrud.getLastUserInserted();
+
+        etGoalName.setText(goal_name);
+        etGoalAmount.setText("" + goal_amount);
+        etChooseDate.setText(goal_enddate);
+
+
+
+//        // update the database
+//        goalCrud.updateGoal(goal);
+
+        btnUpdateGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Editable goalName = etGoalName.getText();
-                Editable goalAmount = etGoalAmount.getText();
-                Editable chooseDate = etChooseDate.getText();
+                String new_goal_name = String.valueOf(etGoalName.getText());
+                int new_goal_amount = Integer.parseInt(etGoalAmount.getText().toString());
+                String new_goal_enddate = String.valueOf(etChooseDate.getText());
 
-                if (!TextUtils.isEmpty(goalName) &&
-                        !TextUtils.isEmpty(goalAmount) &&
-                        !TextUtils.isEmpty(chooseDate))
-                {
-                    String goal_name = goalName.toString();
-                    int goal_amount = Integer.parseInt(goalAmount.toString());
-                    String start_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-                    String end_date = chooseDate.toString();
-                    User user = userCrud.getLastUserInserted();
+                // create a goal instance with the above information
+                goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user);
 
-                    // if user creates goal for the first time, award them 3 points
-                    user.setPoints(3);
-                    userCrud.updateUser(user);
+                Intent updateIntent = new Intent(EditGoalActivity.this, GoalsListActivity.class);
 
-                    goal.setName(goal_name);
-                    goal.setAmount(goal_amount);
-                    goal.setStartDate(start_date);
-                    goal.setEndDate(end_date);
-                    goal.setUser(user);
-
-                    goalCrud.createGoal(goal);
-
-                    Intent intent = new Intent(AddGoalActivity.this, HomeActivity.class);
-                    Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-
-                }
-                else {
-                    Toast.makeText(AddGoalActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-                }
-
+                // update the database
+                goalCrud.updateGoal(goal);
+                Toast.makeText(EditGoalActivity.this, "Goal updated to " + goal.getName(),  Toast.LENGTH_SHORT).show();
+                startActivity(updateIntent);
             }
         });
-
     }
 
     @SuppressWarnings("deprecation")
@@ -133,5 +124,4 @@ public class AddGoalActivity extends AppCompatActivity {
         etChooseDate.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
     }
-
 }

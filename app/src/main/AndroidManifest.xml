@@ -85,15 +85,29 @@
             android:label="Home needs"
             android:parentActivityName=".activities.ExpenditureActivity" />
         <activity
+<<<<<<< HEAD
             android:name=".activities.HealthActivity"
             android:label="Medical"
             android:parentActivityName=".activities.ExpenditureActivity" />
+=======
+            android:name="com.example.eq62roket.CashTime.activities.EditGoalActivity"
+            android:label="Edit Goal"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
+>>>>>>> origin/master
         <activity
             android:name=".activities.GoalDetailActivity"
             android:label="Goal Detail"
             android:parentActivityName=".activities.GoalsListActivity" />
         <activity
+<<<<<<< HEAD
             android:name=".activities.OthersActivity"
+=======
+            android:name="com.example.eq62roket.CashTime.activities.HealthActivity"
+            android:label="Medical"
+            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+        <activity
+            android:name="com.example.eq62roket.CashTime.activities.OthersActivity"
+>>>>>>> origin/master
             android:label="Others"
             android:parentActivityName=".activities.ExpenditureActivity" />
         <activity

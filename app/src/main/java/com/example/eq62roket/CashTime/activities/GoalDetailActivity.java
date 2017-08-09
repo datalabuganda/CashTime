@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 import java.text.DecimalFormat;
 
@@ -17,6 +18,7 @@ public class GoalDetailActivity extends AppCompatActivity {
     FloatingActionButton edit;
 
     DecimalFormat formatter;
+    SQLiteHelper sqLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class GoalDetailActivity extends AppCompatActivity {
         edit = (FloatingActionButton) findViewById(R.id.edit);
 
         formatter = new DecimalFormat("#,###,###");
+        sqLiteHelper = new SQLiteHelper(this);
 
         // Receive Data from Intent
         Intent intent = this.getIntent();
@@ -42,7 +45,7 @@ public class GoalDetailActivity extends AppCompatActivity {
 
 
         // Amount saved on goal so far
-        int goal_savings = 1000000;
+        int goal_savings = sqLiteHelper.addAllSavings();
         int goal_amount_remaining =  goal_amount - goal_savings;
 
         tvGoalName.setText(goal_name);

@@ -24,10 +24,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 .withSplashTimeOut(3000)
                 .withBackgroundColor(Color.parseColor("#074E72"))
 //                .withLogo(R.mipmap.logo)
-                .withHeaderText("Welcome")
                 .withFooterText("Copyright CashTime 2017")
                 .withBeforeLogoText("CashTime")
-                .withAfterLogoText("Track Your Expenses");
+                .withAfterLogoText("Track Your Expenses Visually");
 
         preferences = getSharedPreferences(RegisterActivity.PREF_NAME, 0);
         boolean isRegistered = preferences.getBoolean("isRegistered", false);

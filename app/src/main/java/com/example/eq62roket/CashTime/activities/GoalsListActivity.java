@@ -1,11 +1,13 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.adapters.GoalListAdapter;
@@ -19,6 +21,8 @@ public class GoalsListActivity extends AppCompatActivity {
     private static final String TAG = "GoalActivity";
 
     private GoalCrud goalCrud;
+
+    SharedPreferences preferences;
 
     ListView listView;
 
@@ -37,20 +41,22 @@ public class GoalsListActivity extends AppCompatActivity {
         GoalListAdapter goalListAdapter = new GoalListAdapter(this, R.layout.goal_list_adapter, goalArrayList);
         listView.setAdapter(goalListAdapter);
 
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(GoalsListActivity.this, GoalDetailActivity.class);
-                startActivity(intent);
-            }
-        });*/
+        preferences = getSharedPreferences(GoalDetailActivity.PREF_NAME, 0);
+        final boolean goalOngoing = preferences.getBoolean("goalOngoing", false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GoalsListActivity.this, AddGoalActivity.class);
-                startActivity(intent);
+                if (goalOngoing){
+                    Toast.makeText(GoalsListActivity.this,
+                            "You must complete the current goal to set another goal.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(GoalsListActivity.this, AddGoalActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

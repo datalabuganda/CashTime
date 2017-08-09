@@ -12,7 +12,7 @@
         android:layout_height="367dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="60dp"
         tools:layout_editor_absoluteY="136dp"
         tools:layout_editor_absoluteX="8dp"
         android:layout_alignParentBottom="true" />
@@ -24,11 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignTop="@+id/barchart"
+        android:id="@+id/linearLayout5"
+        android:layout_alignBottom="@+id/barchart"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="76dp"
-        android:id="@+id/linearLayout5">
+        android:layout_alignParentEnd="true">
 
         <ImageView
             android:id="@+id/imgLoan"
@@ -85,10 +84,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignTop="@+id/linearLayout5"
+        android:id="@+id/linearLayout"
+        android:layout_alignBottom="@+id/barchart"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/imgSalary"

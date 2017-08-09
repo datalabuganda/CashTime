@@ -33,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         boolean isRegistered = preferences.getBoolean("isRegistered", false);
 
         if (isRegistered) {
-            config.withTargetActivity(HomeActivity.class);
+            config.withTargetActivity(HomeDrawerActivity.class);
         }
 
 

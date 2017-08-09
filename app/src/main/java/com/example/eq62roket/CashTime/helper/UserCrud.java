@@ -100,7 +100,6 @@ public class UserCrud {
 
     }
 
-
     public User getPersonById(long id){
         Cursor cursor = mDatabase.query(DatabaseHelper.TABLE_USER, mAllColumns,
                 DatabaseHelper.COLUMN_USER_ID + " = ?",
@@ -129,6 +128,7 @@ public class UserCrud {
         User user = cursorToPerson(cursor);
         return user;
     }
+
     protected User cursorToPerson(Cursor cursor){
         User user = new User();
         user.setId(cursor.getLong(0));

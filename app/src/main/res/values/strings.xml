@@ -4,4 +4,10 @@
     <string name="title_activity_add_income">AddIncomeActivity</string>
     <string name="no_goals_yet">No Goals added yet, Please Click + to add a goal</string>
     <string name="add_a_goal">Add a goal</string>
+    <string name="title_activity_home_drawer">HomeDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

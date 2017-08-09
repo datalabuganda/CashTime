@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
@@ -23,7 +26,11 @@ public class GoalsListActivity extends AppCompatActivity {
     private static final String TAG = "GoalActivity";
 
     private GoalCrud goalCrud;
+    TextView txtPoints;
+    Button btnPoints;
+
     SQLiteHelper sqliteHelper;
+
 
     ListView listView;
 
@@ -34,6 +41,8 @@ public class GoalsListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listView = (ListView) findViewById(R.id.listView);
+        txtPoints = (TextView) findViewById(R.id.txtPoints);
+        btnPoints = (Button) findViewById(R.id.btnSavings);
         goalCrud = new GoalCrud(this);
         sqliteHelper = new SQLiteHelper(this);
 
@@ -65,4 +74,5 @@ public class GoalsListActivity extends AppCompatActivity {
         });
 
     }
+
 }

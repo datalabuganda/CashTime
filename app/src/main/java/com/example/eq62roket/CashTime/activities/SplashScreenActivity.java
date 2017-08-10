@@ -21,7 +21,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(RegisterActivity.class)
-                .withSplashTimeOut(3000)
+                .withSplashTimeOut(2000)
                 .withBackgroundColor(Color.parseColor("#074E72"))
 //                .withLogo(R.mipmap.logo)
                 .withFooterText("Copyright CashTime 2017")

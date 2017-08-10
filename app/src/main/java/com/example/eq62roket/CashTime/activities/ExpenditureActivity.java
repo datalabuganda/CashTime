@@ -114,17 +114,17 @@ public class ExpenditureActivity extends AppCompatActivity {
         BarDataSet dataset = new BarDataSet(entries, "Expenditure");
 
         ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Expenditure");
+        labels.add("");
 
 
         BarData data = new BarData(labels, dataset);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
         barChart.setData(data);
-        barChart.animateY(5000);
+        barChart.animateY(50);
     }
 
     public int remainingIncome(){

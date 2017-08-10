@@ -51,7 +51,7 @@ public class SalaryActivity extends AppCompatActivity {
                             int yVal = Integer.parseInt(String.valueOf(edtSalary.getText()));
                             boolean isInseted = myHelper.insertSalary(yVal);
                             if (isInseted) {
-                                // if user spends on any expense, award them 2 points
+                                // if user adds income, award them 2 points
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
                                 userCrud.updateUser(user);

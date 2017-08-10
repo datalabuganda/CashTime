@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.User;
 
 public class EducationActivity extends AppCompatActivity {
 
     SQLiteHelper myHelper;
     EditText edtEducation;
     Button btnEducation;
+    UserCrud userCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,30 @@ public class EducationActivity extends AppCompatActivity {
         btnEducation = (Button) findViewById(R.id.btnEducation);
         myHelper = new SQLiteHelper(this);
 
+        userCrud = new UserCrud(this);
+
         btnEducation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int yVal = Integer.parseInt(String.valueOf(edtEducation.getText()));
-                if (edtEducation.length() != 0){
-                    AddEducation(yVal);
-                    edtEducation.setText("");
+                if (!edtEducation.getText().toString().equals("")){
+                    int yVal = Integer.parseInt(String.valueOf(edtEducation.getText()));
+                    boolean isInseted = myHelper.insertEducation(yVal);
+                    if (isInseted) {
+                        // if user spends on any expense, award them 2 points
+                        User user = userCrud.getLastUserInserted();
+                        user.setPoints(2);
+                        userCrud.updateUser(user);
+
+                        Intent Educationintent = new Intent(EducationActivity.this, ExpenditureActivity.class);
+                        EducationActivity.this.startActivity(Educationintent);
+                        Toast.makeText(EducationActivity.this, "Education costs have been stored", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();
+                    }
+
                 }else{
-                    Toast.makeText(EducationActivity.this, "Fill in your amount", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EducationActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -43,14 +61,4 @@ public class EducationActivity extends AppCompatActivity {
 
     }
 
-    public void AddEducation(int yVal){
-
-                        boolean isInseted = myHelper.insertEducation(yVal);
-                        if (isInseted = true)
-                            Toast.makeText(EducationActivity.this, "Education costs have been stored", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();
-                        Intent Educationintent = new Intent(EducationActivity.this, ExpenditureActivity.class);
-                        EducationActivity.this.startActivity(Educationintent);
-    }
 }

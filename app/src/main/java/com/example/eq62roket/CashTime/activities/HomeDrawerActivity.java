@@ -120,8 +120,9 @@ public class HomeDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_help) {
+            Intent helpIntent = new Intent(HomeDrawerActivity.this, HelpActivity.class);
+            startActivity(helpIntent);
         }
 
         return super.onOptionsItemSelected(item);

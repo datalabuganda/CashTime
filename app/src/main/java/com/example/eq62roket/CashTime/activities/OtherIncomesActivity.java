@@ -10,12 +10,16 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.User;
 
 public class OtherIncomesActivity extends AppCompatActivity {
 
     EditText edtOthers;
     Button btnOthers;
     IncomeSQLiteHelper myHelper;
+    UserCrud userCrud;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +30,15 @@ public class OtherIncomesActivity extends AppCompatActivity {
         edtOthers = (EditText) findViewById(R.id.edtOthers);
         myHelper = new IncomeSQLiteHelper(this);
 
-        btnOthers.setOnClickListener(new View.OnClickListener() {
+        userCrud = new UserCrud(this);
+
+       /* btnOthers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent Incomeintent = new Intent(OtherIncomesActivity.this, IncomeActivity.class);
                 OtherIncomesActivity.this.startActivity(Incomeintent);
             }
-        });
+        });*/
 
         AddOthers();
     }
@@ -42,20 +48,27 @@ public class OtherIncomesActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        if (edtOthers.equals("")){
+                        if (!edtOthers.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtOthers.getText()));
                             boolean isInseted = myHelper.insertOthers(yVal);
 
-                            if (isInseted = true)
+                            if (isInseted) {
+                                // if user adds income, award them 2 points
+                                User user = userCrud.getLastUserInserted();
+                                user.setPoints(2);
+                                userCrud.updateUser(user);
+
                                 Toast.makeText(OtherIncomesActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
-                            else
+                                Intent OtherIncomeintent = new Intent(OtherIncomesActivity.this, IncomeActivity.class);
+                                OtherIncomesActivity.this.startActivity(OtherIncomeintent);
+                            }
+                            else {
                                 Toast.makeText(OtherIncomesActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();
-                            Intent OtherIncomeintent = new Intent(OtherIncomesActivity.this, IncomeActivity.class);
-                            OtherIncomesActivity.this.startActivity(OtherIncomeintent);
+                            }
+
                         }
                         else
-                            Toast.makeText(OtherIncomesActivity.this, "Add Others", Toast.LENGTH_LONG).show();
+                            Toast.makeText(OtherIncomesActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
 
                     }
 

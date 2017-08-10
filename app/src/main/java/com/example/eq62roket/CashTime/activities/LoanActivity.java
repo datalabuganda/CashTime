@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.User;
 
 public class LoanActivity extends AppCompatActivity {
 
     EditText edtLoans;
     Button btnLoans;
     IncomeSQLiteHelper myHelper;
+    UserCrud userCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,15 @@ public class LoanActivity extends AppCompatActivity {
         btnLoans = (Button) findViewById(R.id.btnLoans);
         edtLoans = (EditText) findViewById(R.id.edtLoans);
 
-        btnLoans.setOnClickListener(new View.OnClickListener() {
+        userCrud = new UserCrud(this);
+
+       /* btnLoans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent Incomeintent = new Intent(LoanActivity.this, IncomeActivity.class);
                 LoanActivity.this.startActivity(Incomeintent);
             }
-        });
+        });*/
 
         AddLoan();
     }
@@ -43,14 +48,26 @@ public class LoanActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int yVal = Integer.parseInt(String.valueOf(edtLoans.getText()));
-                        boolean isInseted = myHelper.insertLoan(yVal);
-                        if (isInseted = true)
-                            Toast.makeText(LoanActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(LoanActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();
-                        Intent Loanintent = new Intent(LoanActivity.this, IncomeActivity.class);
-                        LoanActivity.this.startActivity(Loanintent);
+                        if (!edtLoans.getText().toString().equals("")) {
+                            int yVal = Integer.parseInt(String.valueOf(edtLoans.getText()));
+                            boolean isInseted = myHelper.insertLoan(yVal);
+                            if (isInseted) {
+                                // if user adds income, award them 2 points
+                                User user = userCrud.getLastUserInserted();
+                                user.setPoints(2);
+                                userCrud.updateUser(user);
+
+                                Toast.makeText(LoanActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
+                                Intent Loanintent = new Intent(LoanActivity.this, IncomeActivity.class);
+                                LoanActivity.this.startActivity(Loanintent);
+                            } else {
+                                Toast.makeText(LoanActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(LoanActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
+                        }
+
                     }
 
                 }

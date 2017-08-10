@@ -97,11 +97,11 @@ public class IncomeActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
         barChart.setData(data);
-        barChart.animateY(5000);
+        barChart.animateY(50);
     }
 
     public void sumAllIncomes(){

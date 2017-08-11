@@ -11,10 +11,9 @@ import android.widget.Toast;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-<<<<<<< HEAD
-=======
+
 import com.example.eq62roket.CashTime.models.User;
->>>>>>> origin/master
+
 
 public class LoanActivity extends AppCompatActivity {
 
@@ -33,11 +32,6 @@ public class LoanActivity extends AppCompatActivity {
         btnLoans = (Button) findViewById(R.id.btnLoans);
         edtLoans = (EditText) findViewById(R.id.edtLoans);
 
-<<<<<<< HEAD
-
-
-        btnLoans.setOnClickListener(new View.OnClickListener() {
-=======
         userCrud = new UserCrud(this);
 
        /* btnLoans.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +45,7 @@ public class LoanActivity extends AppCompatActivity {
 
         AddLoan();
     }
+
 
     public void AddLoan(){
         btnLoans.setOnClickListener(

@@ -42,17 +42,15 @@ public class TransportActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-<<<<<<< HEAD
 
-                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
-                        boolean isInseted = myHelper.insertTransport(yVal);
-                        if (isInseted = true)
-                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
-                        Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
-                        TransportActivity.this.startActivity(Transportintent);
-=======
+//                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
+//                        boolean isInseted = myHelper.insertTransport(yVal);
+//                        if (isInseted = true)
+//                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
+//                        else
+//                            Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
+//                        Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
+//                        TransportActivity.this.startActivity(Transportintent);
                         if (!edtTransport.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
                             boolean isInseted = myHelper.insertTransport(yVal);
@@ -74,7 +72,6 @@ public class TransportActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(TransportActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                         }
->>>>>>> origin/master
                     }
 
                 }

@@ -24,8 +24,6 @@ import com.example.eq62roket.CashTime.models.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import com.parse.Parse;
-import android.app.Application;
 
 public class AddGoalActivity extends AppCompatActivity {
 
@@ -49,7 +47,6 @@ public class AddGoalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Parse.initialize(this);
         setContentView(R.layout.activity_add_goal);
 
         etGoalName = (EditText) findViewById(R.id.etGoalName);

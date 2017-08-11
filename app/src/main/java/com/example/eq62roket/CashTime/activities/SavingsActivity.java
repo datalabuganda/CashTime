@@ -45,19 +45,13 @@ public class SavingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (  !edtSavings.getText().toString().equals("")  ){
-                            Log.d(TAG, "am here---" + edtSavings.getText()+"---");
-
+                        if (!edtSavings.getText().toString().equals("")){
                             int yVal = Integer.parseInt(String.valueOf(edtSavings.getText()));
-
                             boolean isInseted = myHelper.insertSavings(yVal);
-
-
                             if (isInseted) {
-
-                                // if user creates goal for the first time, award them 3 points
+                                // if user adds a saving, award them 5 points
                                 User user = userCrud.getLastUserInserted();
-                                user.setPoints(2);
+                                user.setPoints(5);
                                 userCrud.updateUser(user);
 
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();

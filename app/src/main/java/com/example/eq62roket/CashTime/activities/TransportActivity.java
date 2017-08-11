@@ -19,6 +19,7 @@ public class TransportActivity extends AppCompatActivity {
     SQLiteHelper myHelper;
     EditText edtTransport;
     Button btnTransport;
+    UserCrud userCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class TransportActivity extends AppCompatActivity {
         edtTransport = (EditText) findViewById(R.id.amtTransport);
         btnTransport = (Button) findViewById(R.id.btnTransport);
         myHelper = new SQLiteHelper(this);
+
+        userCrud = new UserCrud(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -39,6 +42,7 @@ public class TransportActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+<<<<<<< HEAD
 
                         int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
                         boolean isInseted = myHelper.insertTransport(yVal);
@@ -48,6 +52,29 @@ public class TransportActivity extends AppCompatActivity {
                             Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
                         Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
                         TransportActivity.this.startActivity(Transportintent);
+=======
+                        if (!edtTransport.getText().toString().equals("")) {
+                            int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
+                            boolean isInseted = myHelper.insertTransport(yVal);
+                            if (isInseted) {
+                                // if user spends on any expense, award them 2 points
+                                User user = userCrud.getLastUserInserted();
+                                user.setPoints(2);
+                                userCrud.updateUser(user);
+
+                                Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
+                                Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
+                                TransportActivity.this.startActivity(Transportintent);
+                            }
+                            else {
+                                Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                        else {
+                            Toast.makeText(TransportActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
+                        }
+>>>>>>> origin/master
                     }
 
                 }

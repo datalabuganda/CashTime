@@ -20,7 +20,10 @@ public class HomeneedsActivity extends AppCompatActivity {
     EditText edtHomeneeds;
     Button btnHomeneeds;
     UserCrud userCrud;
+<<<<<<< HEAD
     private static final String TAG = "SavingsActivity";
+=======
+>>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class HomeneedsActivity extends AppCompatActivity {
         edtHomeneeds = (EditText) findViewById(R.id.amtHomeneeds);
         btnHomeneeds = (Button) findViewById(R.id.btnHomeneeds);
         myHelper = new SQLiteHelper(this);
+
+        userCrud = new UserCrud(this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userCrud = new UserCrud(this);
 
@@ -42,6 +48,7 @@ public class HomeneedsActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+<<<<<<< HEAD
 
                         if (  !edtHomeneeds.getText().toString().equals("")  ){
                             Log.d(TAG, "am here---" + edtHomeneeds.getText()+"---");
@@ -54,22 +61,39 @@ public class HomeneedsActivity extends AppCompatActivity {
                             if (isInseted) {
 
                                 // if user creates goal for the first time, award them 3 points
+=======
+                        if (!edtHomeneeds.getText().toString().equals("")) {
+                            int yVal = Integer.parseInt(String.valueOf(edtHomeneeds.getText()));
+                            boolean isInseted = myHelper.insertHomeneeds(yVal);
+                            if (isInseted) {
+                                // if user spends on any expense, award them 2 points
+>>>>>>> origin/master
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
                                 userCrud.updateUser(user);
 
+<<<<<<< HEAD
                                 Toast.makeText(HomeneedsActivity.this, "Your Home needs have been stored", Toast.LENGTH_LONG).show();
                                 Intent Homeneeds = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
                                 HomeneedsActivity.this.startActivity(Homeneeds);
                             }
                             else {
                                 Toast.makeText(HomeneedsActivity.this, "Your Home needs have not been stored", Toast.LENGTH_LONG).show();
+=======
+                                Toast.makeText(HomeneedsActivity.this, "Your home needs costs have been stored", Toast.LENGTH_LONG).show();
+                                Intent Homeneedsintent = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
+                                HomeneedsActivity.this.startActivity(Homeneedsintent);
+                            }
+                            else {
+                                Toast.makeText(HomeneedsActivity.this, "Your home needs costs where not stored", Toast.LENGTH_LONG).show();
+>>>>>>> origin/master
                             }
                         }
                         else {
                             Toast.makeText(HomeneedsActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                         }
 
+<<<<<<< HEAD
 //                        int yVal = Integer.parseInt(String.valueOf(edtHomeneeds.getText()));
 //                        boolean isInseted = myHelper.insertHomeneeds(yVal);
 //                        if (isInseted = true)
@@ -78,6 +102,8 @@ public class HomeneedsActivity extends AppCompatActivity {
 //                            Toast.makeText(HomeneedsActivity.this, "Your home needs costs where not stored", Toast.LENGTH_LONG).show();
 //                        Intent Homeneedsintent = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
 //                        HomeneedsActivity.this.startActivity(Homeneedsintent);
+=======
+>>>>>>> origin/master
                     }
 
                 }

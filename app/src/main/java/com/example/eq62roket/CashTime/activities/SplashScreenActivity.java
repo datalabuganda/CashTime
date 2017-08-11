@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.graphics.Color;
 import android.view.View;
 
+import com.example.eq62roket.CashTime.helper.GoalCrud;
+
 import gr.net.maroulis.library.EasySplashScreen;
 
 
@@ -13,6 +15,7 @@ import gr.net.maroulis.library.EasySplashScreen;
 public class SplashScreenActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
+    GoalCrud goalCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(RegisterActivity.class)
-                .withSplashTimeOut(3000)
+                .withSplashTimeOut(2000)
                 .withBackgroundColor(Color.parseColor("#074E72"))
 //                .withLogo(R.mipmap.logo)
                 .withFooterText("Copyright CashTime 2017")
@@ -31,8 +34,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         preferences = getSharedPreferences(RegisterActivity.PREF_NAME, 0);
         boolean isRegistered = preferences.getBoolean("isRegistered", false);
 
+        goalCrud = new GoalCrud(this);
+
         if (isRegistered) {
-            config.withTargetActivity(HomeDrawerActivity.class);
+            if (goalCrud.getAllGoals().size() == 0){
+                config.withTargetActivity(AddGoalActivity.class);
+            }else {
+                config.withTargetActivity(HomeDrawerActivity.class);
+            }
+
         }
 
 

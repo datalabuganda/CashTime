@@ -123,8 +123,11 @@ dependencies {
 dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
+<<<<<<< HEAD
 dependencies {
     compile 'com.parse:parse-android:1.15.7'
 }
+=======
+>>>>>>> origin/master
 
 

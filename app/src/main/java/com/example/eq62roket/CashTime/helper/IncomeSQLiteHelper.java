@@ -42,7 +42,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         ContentValues salaryValues = new ContentValues();
         salaryValues.put(COL_3, salary);
         long result = db.insert(TABLE_NAME, null, salaryValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -53,7 +53,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         ContentValues loanValues = new ContentValues();
         loanValues.put(COL_4, loan);
         long result = db.insert(TABLE_NAME, null, loanValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -64,7 +64,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         ContentValues investmentValues = new ContentValues();
         investmentValues.put(COL_6, investment);
         long result = db.insert(TABLE_NAME, null, investmentValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;
@@ -75,7 +75,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         ContentValues othersValues = new ContentValues();
         othersValues.put(COL_8, others);
         long result = db.insert(TABLE_NAME, null, othersValues);
-        if (result == 1)
+        if (result == -1)
             return false;
         else
             return true;

@@ -3,6 +3,7 @@ package com.example.eq62roket.CashTime.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,9 +11,10 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.User;
 
 public class OthersActivity extends AppCompatActivity {
-
     SQLiteHelper myHelper;
     EditText edtOthers;
     Button btnOthers;
@@ -36,6 +38,7 @@ public class OthersActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         int yVal = Integer.parseInt(String.valueOf(edtOthers.getText()));
                         boolean isInseted = myHelper.insertOthers(yVal);
                         if (isInseted = true)

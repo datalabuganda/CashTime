@@ -120,11 +120,11 @@ public class ExpenditureActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+//        barChart.setTouchEnabled(true);
+//        barChart.setDragEnabled(true);
+//        barChart.setScaleEnabled(true);
         barChart.setData(data);
-        barChart.animateY(5000);
+   //     barChart.animateY(5000);
     }
 
     public int remainingIncome(){

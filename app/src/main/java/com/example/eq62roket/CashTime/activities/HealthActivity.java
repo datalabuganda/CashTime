@@ -11,7 +11,9 @@ import android.widget.Toast;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
+
 public class HealthActivity extends AppCompatActivity {
+    private static final String TAG = "SavingsActivity";
 
     SQLiteHelper myHelper;
     EditText edtHealth;

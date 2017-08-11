@@ -85,15 +85,12 @@
             android:label="Home needs"
             android:parentActivityName=".activities.ExpenditureActivity" />
         <activity
-
             android:name=".activities.HealthActivity"
             android:label="Medical"
             android:parentActivityName=".activities.ExpenditureActivity" />
-
-            android:name="com.example.eq62roket.CashTime.activities.EditGoalActivity"
-            android:label="Edit Goal"
-            android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
-
+        android:name="com.example.eq62roket.CashTime.activities.EditGoalActivity"
+        android:label="Edit Goal"
+        android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
         <activity
             android:name=".activities.GoalDetailActivity"
             android:label="Goal Detail"
@@ -101,7 +98,7 @@
         <activity
             android:name=".activities.OthersActivity"
             android:label="Medical"
-            android:parentActivityName="com.example.eq62roket.CashTime.activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity" />
         <activity
             android:name="activities.OthersActivity"
             android:label="Others"
@@ -118,7 +115,15 @@
         <activity
             android:name=".activities.HomeDrawerActivity"
             android:label="CashTime"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="462s45ze2vn6x2vrfyfenqmksngx5xbs" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="https://www.oxfamdataservice.org/parse/" />
+
     </application>
 
 </manifest>

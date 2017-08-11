@@ -53,23 +53,29 @@ public class AnalysisActivity extends AppCompatActivity {
         entries.add(new BarEntry(sumHomeneeds, 5));
 
 
+
         BarDataSet dataset = new BarDataSet(entries, "Expenditures");
+
 
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("Transport");
         labels.add("Education");
-        labels.add("Health");
+        labels.add("Medical");
         labels.add("Savings");
         labels.add("Others");
         labels.add("Home Needs");
 
+
         BarData data = new BarData(labels, dataset);
+
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+        //barChart.setTouchEnabled(true);
+        //barChart.setDragEnabled(true);
+        //barChart.setScaleEnabled(true);
+        barChart.setVisibleXRangeMaximum(1);
         barChart.setData(data);
         barChart.animateY(5000);
+
     }
 }

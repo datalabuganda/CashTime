@@ -268,7 +268,7 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="138dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.17"
             android:text="Total:"
@@ -278,9 +278,15 @@
             android:id="@+id/txtTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.62"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shs"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"/>
     </LinearLayout>
 
 

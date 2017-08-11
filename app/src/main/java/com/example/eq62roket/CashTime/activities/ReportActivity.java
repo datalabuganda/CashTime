@@ -1,5 +1,6 @@
 package com.example.eq62roket.CashTime.activities;
 
+import android.icu.text.NumberFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,11 +9,14 @@ import android.widget.TextView;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
+import java.text.DecimalFormat;
+
 public class ReportActivity extends AppCompatActivity {
 
     TextView txtTransport, txtEducation, txtHealth, txtSavings, txtOthers, txtTotal, txtHomeneeds;
     SQLiteHelper mySQLiteHelper;
     Button btnGraph;
+    DecimalFormat formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class ReportActivity extends AppCompatActivity {
 //            }
 //        });
 
+        formatter = new DecimalFormat("#,###,####");
         mySQLiteHelper = new SQLiteHelper(this);
 
         sumEducation();

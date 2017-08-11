@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.UserCrud;
 
 public class LoanActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class LoanActivity extends AppCompatActivity {
 
         btnLoans = (Button) findViewById(R.id.btnLoans);
         edtLoans = (EditText) findViewById(R.id.edtLoans);
+
+
 
         btnLoans.setOnClickListener(new View.OnClickListener() {
             @Override

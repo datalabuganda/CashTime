@@ -140,32 +140,32 @@ public class HomeDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_goals) {
             Intent goalslistIntent = new Intent(HomeDrawerActivity.this, GoalsListActivity.class);
             startActivity(goalslistIntent);
-            Toast.makeText(this, "Goals", Toast.LENGTH_LONG).show();
+           // Toast.makeText(this, "Goals", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_income) {
             Intent incomeIntent = new Intent(HomeDrawerActivity.this, IncomeActivity.class);
             startActivity(incomeIntent);
-            Toast.makeText(this, "Income", Toast.LENGTH_LONG).show();
+           // Toast.makeText(this, "Income", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_expenditure) {
             Intent expenditureIntent = new Intent(HomeDrawerActivity.this, ExpenditureActivity.class);
             startActivity(expenditureIntent);
-            Toast.makeText(this, "Expenditure", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Expenditure", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_reports) {
             Intent reportsIntent = new Intent(HomeDrawerActivity.this, ReportActivity.class);
             startActivity(reportsIntent);
-            Toast.makeText(this, "Reports", Toast.LENGTH_LONG).show();
+           // Toast.makeText(this, "Reports", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_analysis) {
             Intent analysisIntent = new Intent(HomeDrawerActivity.this, AnalysisActivity.class);
             startActivity(analysisIntent);
-            Toast.makeText(this, "Analysis", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Analysis", Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.nav_tips) {
             Intent tipsIntent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
             startActivity(tipsIntent);
-            Toast.makeText(this, "Tips", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Tips", Toast.LENGTH_LONG).show();
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

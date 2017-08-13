@@ -14,6 +14,7 @@ import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
 
 public class EducationActivity extends AppCompatActivity {
+    private static final String TAG = "SavingsActivity";
 
     SQLiteHelper myHelper;
     EditText edtEducation;

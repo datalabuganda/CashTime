@@ -3,6 +3,7 @@ package com.example.eq62roket.CashTime.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ public class HomeneedsActivity extends AppCompatActivity {
     EditText edtHomeneeds;
     Button btnHomeneeds;
     UserCrud userCrud;
+    private static final String TAG = "SavingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class HomeneedsActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        userCrud = new UserCrud(this);
 
         AddHomeneeds();
 
@@ -42,6 +45,9 @@ public class HomeneedsActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
+                                // if user creates goal for the first time, award them 3 points
                         if (!edtHomeneeds.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtHomeneeds.getText()));
                             boolean isInseted = myHelper.insertHomeneeds(yVal);
@@ -51,17 +57,17 @@ public class HomeneedsActivity extends AppCompatActivity {
                                 user.setPoints(2);
                                 userCrud.updateUser(user);
 
-                                Toast.makeText(HomeneedsActivity.this, "Your home needs costs have been stored", Toast.LENGTH_LONG).show();
-                                Intent Homeneedsintent = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
-                                HomeneedsActivity.this.startActivity(Homeneedsintent);
+                                Toast.makeText(HomeneedsActivity.this, "Your Home needs have been stored", Toast.LENGTH_LONG).show();
+                                Intent Homeneeds = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
+                                HomeneedsActivity.this.startActivity(Homeneeds);
+                            } else {
+                                Toast.makeText(HomeneedsActivity.this, "Your Home needs have not been stored", Toast.LENGTH_LONG).show();
                             }
+                        }
                             else {
                                 Toast.makeText(HomeneedsActivity.this, "Your home needs costs where not stored", Toast.LENGTH_LONG).show();
                             }
-                        }
-                        else {
-                            Toast.makeText(HomeneedsActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
-                        }
+
 
                     }
 

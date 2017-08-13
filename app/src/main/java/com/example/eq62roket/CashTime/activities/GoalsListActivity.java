@@ -26,7 +26,6 @@ public class GoalsListActivity extends AppCompatActivity {
     private static final String TAG = "GoalActivity";
 
     private GoalCrud goalCrud;
-    TextView txtPoints;
     Button btnPoints;
 
     SQLiteHelper sqliteHelper;
@@ -41,7 +40,6 @@ public class GoalsListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listView = (ListView) findViewById(R.id.listView);
-        txtPoints = (TextView) findViewById(R.id.txtPoints);
         btnPoints = (Button) findViewById(R.id.btnSavings);
         goalCrud = new GoalCrud(this);
         sqliteHelper = new SQLiteHelper(this);

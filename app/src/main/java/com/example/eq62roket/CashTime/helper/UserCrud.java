@@ -60,6 +60,7 @@ public class UserCrud {
         values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
         values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhonenumber());
         values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
+        values.put(DatabaseHelper.COLUMN_USER_PARSE_ID, user.getParseId());
 
         mDatabase.update(DatabaseHelper.TABLE_USER,
                 values,
@@ -141,6 +142,8 @@ public class UserCrud {
         user.setNationality(cursor.getString(5));
         user.setPhonenumber(cursor.getString(6));
         user.setPoints(cursor.getLong(7));
+        user.setParseId(cursor.getString(8));
+
 
         return user;
     }

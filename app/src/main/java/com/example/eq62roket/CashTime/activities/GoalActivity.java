@@ -4,17 +4,24 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 public class GoalActivity extends AppCompatActivity {
 
-    UserCrud userCrud;
+    private static final String TAG = "GoalActivity";
+
+    ParseConnector parseConnector;
 
 
     @Override
@@ -28,19 +35,9 @@ public class GoalActivity extends AppCompatActivity {
                 .build()
         );
 
-        userCrud = new UserCrud(this);
+        parseConnector = new ParseConnector(this);
+        parseConnector.addUser();
 
-        // Get the last inserted user
-        User lastInsertedUser = userCrud.getLastUserInserted();
-
-        // add details of this user to a ParseObject
-        ParseObject user = new ParseObject("TestUser");
-        user.put("HouseHoldComposition", lastInsertedUser.getHousehold());
-        user.put("Age", lastInsertedUser.getAge());
-        user.put("Sex", lastInsertedUser.getSex());
-        user.put("CountryOfBirth", lastInsertedUser.getNationality());
-        user.put("Points", lastInsertedUser.getPoints());
-        user.saveInBackground();
 
 
 

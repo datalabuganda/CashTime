@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
 
     // Columns of User table
     public static final String TABLE_USER = "user";
@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_LEVEL_EDUCATION = "level_of_education";
     public static final String COLUMN_USER_NATIONALITY = "nationality";
     public static final String COLUMN_USER_PHONE_NUMBER = "phone_number";
+    public static final String COLUMN_USER_PARSE_ID = "parse_id";
     public static final String COLUMN_USER_POINTS = "points";
 
 
@@ -36,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_STARTDATE = "goal_startDate";
     public static final String COLUMN_GOAL_ENDDATE = "goal_endDate  ";
     public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
+    public static final String COLUMN_GOAL_PARSE_ID = "goal_parseId";
 
 
     // expenditure table
@@ -73,7 +75,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_LEVEL_EDUCATION + " TEXT NOT NULL, "
             + COLUMN_USER_NATIONALITY + " TEXT NOT NULL, "
             + COLUMN_USER_PHONE_NUMBER + " TEXT NOT NULL, "
-            + COLUMN_USER_POINTS + " REAL NOT NULL "
+            + COLUMN_USER_POINTS + " REAL NOT NULL, "
+            + COLUMN_USER_PARSE_ID + " TEXT "
             + ");";
 
     // Variable to create Goal_table
@@ -83,7 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_AMOUNT + " INTEGER NOT NULL, "
             + COLUMN_GOAL_STARTDATE + " DATE NOT NULL, "
             + COLUMN_GOAL_ENDDATE + " DATE NOT NULL, "
-            + COLUMN_GOAL_USER_ID + " INTEGER "
+            + COLUMN_GOAL_USER_ID + " INTEGER, "
+            + COLUMN_GOAL_PARSE_ID + " TEXT "
             + ");";
 
     // Variable to create Expenditure_table

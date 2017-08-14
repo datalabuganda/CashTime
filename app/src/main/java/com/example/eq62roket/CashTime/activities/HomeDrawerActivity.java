@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,10 +18,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ParseConnector;
+import com.example.eq62roket.CashTime.helper.UserCrud;
 
 public class HomeDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "HomeDrawerActivity";
     ImageView imgGoal, imgIncome, imgExpenditure, imgAnalytics, imgReports, imgTips;
+
+    ParseConnector parseConnector;
+    UserCrud userCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,11 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgAnalytics = (ImageView) findViewById(R.id.imgAnalytics);
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
+
+        parseConnector = new ParseConnector(this);
+        userCrud = new UserCrud(this);
+
+        parseConnector.addGoal();
 
         imgGoal.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,7 +7,7 @@ package com.example.eq62roket.CashTime.models;
 public class User {
     long id, points;
     int household, age;
-    String sex, educationlevel, nationality, phonenumber;
+    String sex, educationlevel, nationality, phonenumber, parseId;
 
     public User() {
     }
@@ -18,6 +18,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public long getPoints() {

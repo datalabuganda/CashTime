@@ -69,10 +69,10 @@ public class AnalysisActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
 
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        //barChart.setTouchEnabled(true);
-        //barChart.setDragEnabled(true);
-        //barChart.setScaleEnabled(true);
+        barChart.getXAxis().setLabelsToSkip(0);
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
         barChart.setVisibleXRangeMaximum(1);
         barChart.setData(data);
         barChart.animateY(5000);

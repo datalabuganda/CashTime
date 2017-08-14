@@ -42,7 +42,7 @@ public class ReportActivity extends AppCompatActivity {
 //            }
 //        });
 
-        formatter = new DecimalFormat("#,###,####");
+        formatter = new DecimalFormat("#,###,###");
         mySQLiteHelper = new SQLiteHelper(this);
 
         sumEducation();
@@ -56,37 +56,37 @@ public class ReportActivity extends AppCompatActivity {
 
     public void sumTransport(){
         int sumTransport = mySQLiteHelper.addAllTransport();
-        txtTransport.setText(sumTransport+"");
+        txtTransport.setText(formatter.format(sumTransport));
     }
 
     public void sumEducation(){
         int sumEducation = mySQLiteHelper.addAllEducation();
-        txtEducation.setText(sumEducation+"");
+        txtEducation.setText(formatter.format(sumEducation));
     }
 
     public void sumHealth(){
         int sumHealth = mySQLiteHelper.addAllHealth();
-        txtHealth.setText(sumHealth+"");
+        txtHealth.setText(formatter.format(sumHealth));
     }
 
     public void sumSavings(){
         int sumSavings = mySQLiteHelper.addAllSavings();
-        txtSavings.setText(sumSavings+"");
+        txtSavings.setText(formatter.format(sumSavings));
     }
 
     public void sumOthers(){
         int sumOthers = mySQLiteHelper.addAllOthers();
-        txtOthers.setText(sumOthers+"");
+        txtOthers.setText(formatter.format(sumOthers));
     }
 
     public void sumTotal(){
         int sumTotal = mySQLiteHelper.addAllCategories();
-        txtTotal.setText(sumTotal+"");
+        txtTotal.setText(formatter.format(sumTotal));
     }
 
     public void sumHomeneeds(){
         int sumHomeneeds = mySQLiteHelper.addAllHomeneeds();
-        txtHomeneeds.setText(sumHomeneeds+"");
+        txtHomeneeds.setText(formatter.format(sumHomeneeds));
     }
 
 

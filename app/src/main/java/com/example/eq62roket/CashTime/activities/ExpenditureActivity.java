@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ExpenditureActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class ExpenditureActivity extends AppCompatActivity {
     IncomeSQLiteHelper incomeMyHelper;
     TextView txtRemainingIncome;
     int remainingIncome;
+    DecimalFormat formatter;
 
 
     @Override
@@ -44,6 +46,7 @@ public class ExpenditureActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new SQLiteHelper(this);
+        formatter = new DecimalFormat("#,###,###");
         incomeMyHelper = new IncomeSQLiteHelper(this);
 
 
@@ -139,7 +142,7 @@ public class ExpenditureActivity extends AppCompatActivity {
         int totalExpenditure = myHelper.addAllCategories();
 
         remainingIncome = totalIncome - totalExpenditure;
-        txtRemainingIncome.setText(remainingIncome+"");
+        txtRemainingIncome.setText(formatter.format(remainingIncome));
 
         return remainingIncome;
 

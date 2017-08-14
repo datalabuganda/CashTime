@@ -44,6 +44,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
         values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
 
         database.update(DatabaseHelper.TABLE_GOAL, values, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
         database.close();
@@ -107,10 +108,11 @@ public class GoalCrud {
         goal.setAmount(cursor.getInt(2));
         goal.setStartDate(cursor.getString(3));
         goal.setEndDate(cursor.getString(4));
+        goal.setParseId(cursor.getString(5));
 
 
         // get user id
-        long userId = cursor.getLong(5);
+        long userId = cursor.getLong(6);
         UserCrud userCrud = new UserCrud(context);
         User user = userCrud.getPersonById(userId);
         if (user != null){

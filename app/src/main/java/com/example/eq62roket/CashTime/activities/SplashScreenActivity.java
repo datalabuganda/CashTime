@@ -1,5 +1,6 @@
 package com.example.eq62roket.CashTime.activities;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import gr.net.maroulis.library.EasySplashScreen;
 
 
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends Activity {
 
     SharedPreferences preferences;
     GoalCrud goalCrud;
@@ -24,7 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(RegisterActivity.class)
-                .withSplashTimeOut(2000)
+                .withSplashTimeOut(500)
                 .withBackgroundColor(Color.parseColor("#074E72"))
 //                .withLogo(R.mipmap.logo)
                 .withFooterText("Copyright CashTime 2017")

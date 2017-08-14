@@ -174,14 +174,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
     public  int addAllCategories(){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        int totalOfAllCategories = 0;
-//        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_3) + ") + SUM(" + (COL_4) + ") + SUM(" + (COL_6) + ") + SUM(" + (COL_8) + ") + SUM(" + (COL_10) + ") + SUM(" + (COL_11) + ") FROM " + TABLE_NAME1, null);
-//        if (cursor.moveToFirst()){
-//            totalOfAllCategories = cursor.getInt(0);
-//        }
-//        cursor.close();
-//        return totalOfAllCategories;
         int Savings = addAllSavings();
         int Transport = addAllTransport();
         int Medical = addAllHealth();

@@ -6,6 +6,7 @@ package com.example.eq62roket.CashTime.models;
 
 public class Goal {
     private long id;
+    private String parseId;
     private String name;
     private int amount;
     private String startDate;
@@ -30,6 +31,14 @@ public class Goal {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getName() {

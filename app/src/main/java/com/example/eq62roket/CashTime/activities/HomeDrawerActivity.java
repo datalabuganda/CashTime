@@ -46,6 +46,13 @@ public class HomeDrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*
+        * If this activity is reached
+        * and new data has been added to db and
+        * there is an active internet connection
+        * send data to server
+        * */
+
         imgGoal = (ImageView) findViewById(R.id.imgGoals);
         imgIncome = (ImageView) findViewById(R.id.imgIncome);
         imgExpenditure = (ImageView) findViewById(R.id.imgExpenditure);
@@ -53,6 +60,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
 
+        // send goal details to server with an internet connection on device.
         parseConnector = new ParseConnector(this);
         userCrud = new UserCrud(this);
 

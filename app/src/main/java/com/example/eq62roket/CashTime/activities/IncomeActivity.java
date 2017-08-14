@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class IncomeActivity extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class IncomeActivity extends AppCompatActivity {
     BarChart barChart;
     IncomeSQLiteHelper myHelper;
     TextView totalIncome;
+    DecimalFormat formatter;
 
 
     @Override
@@ -38,6 +40,7 @@ public class IncomeActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        formatter = new DecimalFormat("#,###,###");
         myHelper = new IncomeSQLiteHelper(this);
 
 
@@ -83,7 +86,7 @@ public class IncomeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        int sumIncome = myHelper.addAllIncome();
+        long sumIncome = myHelper.addAllIncome();
 
         entries.add(new BarEntry(sumIncome, 0));
 
@@ -113,7 +116,7 @@ public class IncomeActivity extends AppCompatActivity {
     }
 
     public void sumAllIncomes(){
-        int sumIncome = myHelper.addAllIncome();
-        totalIncome.setText(sumIncome+"");
+        long sumIncome = myHelper.addAllIncome();
+        totalIncome.setText(formatter.format(sumIncome));
     }
 }

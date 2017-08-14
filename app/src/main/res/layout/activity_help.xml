@@ -12,7 +12,10 @@
         android:gravity="center"
         android:layout_margin="30dp"
         android:textColor="#000"
-        android:text="App Help Goes here"/>
+        android:text="App Help Goes here"
+        android:id="@+id/textView11" />
+
+
 
 
 </RelativeLayout>

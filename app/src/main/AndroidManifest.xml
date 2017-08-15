@@ -38,7 +38,7 @@
         <activity
             android:name=".activities.GoalsListActivity"
             android:label="Goals"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeDrawerActivity" />
         <activity
             android:name=".activities.IncomeActivity"
             android:label="Income"

@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.GoalCrud;
+import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.parse.Parse;
 
 public class HomeDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +32,8 @@ public class HomeDrawerActivity extends AppCompatActivity
 
     ParseConnector parseConnector;
     UserCrud userCrud;
+    GoalCrud goalCrud;
+    IncomeSQLiteHelper incomeSQLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +65,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
 
-        // send goal details to server with an internet connection on device.
-        parseConnector = new ParseConnector(this);
-        userCrud = new UserCrud(this);
 
-        parseConnector.addGoal();
 
         imgGoal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +114,55 @@ public class HomeDrawerActivity extends AppCompatActivity
                 HomeDrawerActivity.this.startActivity(HomeTipsintent);
             }
         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userCrud = new UserCrud(this);
+        parseConnector = new ParseConnector(this);
+        goalCrud = new GoalCrud(this);
+        incomeSQLiteHelper = new IncomeSQLiteHelper(this);
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
+                .server("https://oxfamdataservice.org/parse/")
+                .build()
+        );
+
+        int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
+        String userParseId = userCrud.getLastUserInserted().getParseId();
+
+        // check if last inserted user's information has already synced
+        if (userSyncStatus == 0){
+            if( userParseId == null){
+                parseConnector.addUserToParse();
+            }
+            else{
+                parseConnector.upDateUser(userParseId);
+            }
+            userCrud.getLastUserInserted().setSyncStatus(1);
+        }
+
+        int goalSyncStatus = goalCrud.getLastInsertedGoal().getSyncStatus();
+        String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+
+        if (goalSyncStatus == 0){
+            if (goalParseId == null){
+                parseConnector.addGoalToParse();
+            }
+            else{
+                parseConnector.upDateGoal(goalParseId);
+            }
+            goalCrud.getLastInsertedGoal().setSyncStatus(1);
+        }
+
+
+        // send expenditure details to server with an internet connection on device.
+        parseConnector.addExpenditureToParse();
+        parseConnector.addIncomeToParse();
 
     }
 

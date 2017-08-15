@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -29,6 +30,8 @@ public class ExpenditureActivity extends AppCompatActivity {
     int remainingIncome;
     DecimalFormat formatter;
 
+    ParseConnector parseConnector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,12 @@ public class ExpenditureActivity extends AppCompatActivity {
         imgOthers = (ImageView) findViewById(R.id.imgOthers);
         txtRemainingIncome = (TextView) findViewById(R.id.txtRemainingIncome);
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new SQLiteHelper(this);
         formatter = new DecimalFormat("#,###,###");
         incomeMyHelper = new IncomeSQLiteHelper(this);
-
 
         imgOthers.setOnClickListener(new View.OnClickListener() {
             @Override

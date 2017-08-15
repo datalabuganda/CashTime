@@ -123,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     user.setNationality(user_nationality);
                     user.setPhonenumber(user_phoneNumber);
                     user.setPoints(user_points);
+                    user.setSyncStatus(0);
 
 
                     // add the user to database

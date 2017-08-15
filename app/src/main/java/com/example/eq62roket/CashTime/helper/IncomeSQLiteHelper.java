@@ -13,9 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class IncomeSQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "INCOME";
     public static final String TABLE_NAME = "INCOMETABLE";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String COL_1 = "ID";
-    public static final String COL_2 = "AMOUNT";
+    public static final String COL_2 = "SYNC_STATUS";
     public static final String COL_3 = "SALARY";
     public static final String COL_4 = "LOAN";
     public static final String COL_6 = "INVESTMENT";
@@ -27,7 +27,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+ TABLE_NAME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, SALARY INTEGER, LOAN INTEGER, INVESTMENT INTEGER, OTHERS INTEGER)");
+        db.execSQL("create table "+ TABLE_NAME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, SALARY INTEGER, LOAN INTEGER, INVESTMENT INTEGER, OTHERS INTEGER, SYNC_STATUS INTEGER)");
 
     }
 
@@ -69,6 +69,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+
 
     public boolean insertOthers(int others){
         SQLiteDatabase db = this.getWritableDatabase();

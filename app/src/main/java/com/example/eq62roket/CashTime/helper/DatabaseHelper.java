@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by eq62roket on 8/5/17.
+ * Created by cashTime on 8/5/17.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 11;
 
     // Columns of User table
     public static final String TABLE_USER = "user";
@@ -27,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_PHONE_NUMBER = "phone_number";
     public static final String COLUMN_USER_PARSE_ID = "parse_id";
     public static final String COLUMN_USER_POINTS = "points";
+    public static final String COLUMN_USER_SYNCED = "user_synced";
 
 
     // goal table
@@ -36,8 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_AMOUNT = "goal_amount";
     public static final String COLUMN_GOAL_STARTDATE = "goal_startDate";
     public static final String COLUMN_GOAL_ENDDATE = "goal_endDate  ";
-    public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
     public static final String COLUMN_GOAL_PARSE_ID = "goal_parseId";
+    public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
+    public static final String COLUMN_GOAL_SYNCED = "goal_synced";
+
 
 
     // expenditure table
@@ -66,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INCOME_OTHERS = "income_others";
 
 
-    // Variable to create Person_table
+    // Variable to create User_table
     private static final String SQL_CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_USER_HOUSEHOLD + " INTEGER NOT NULL, "
@@ -76,7 +79,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_NATIONALITY + " TEXT NOT NULL, "
             + COLUMN_USER_PHONE_NUMBER + " TEXT NOT NULL, "
             + COLUMN_USER_POINTS + " REAL NOT NULL, "
-            + COLUMN_USER_PARSE_ID + " TEXT "
+            + COLUMN_USER_PARSE_ID + " TEXT, "
+            + COLUMN_USER_SYNCED + " INTEGER "
             + ");";
 
     // Variable to create Goal_table
@@ -86,8 +90,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_AMOUNT + " INTEGER NOT NULL, "
             + COLUMN_GOAL_STARTDATE + " DATE NOT NULL, "
             + COLUMN_GOAL_ENDDATE + " DATE NOT NULL, "
+            + COLUMN_GOAL_PARSE_ID + " TEXT, "
             + COLUMN_GOAL_USER_ID + " INTEGER, "
-            + COLUMN_GOAL_PARSE_ID + " TEXT "
+            + COLUMN_GOAL_SYNCED + " INTEGER "
             + ");";
 
     // Variable to create Expenditure_table
@@ -150,3 +155,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 }
+

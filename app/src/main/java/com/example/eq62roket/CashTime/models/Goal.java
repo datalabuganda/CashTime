@@ -8,7 +8,7 @@ public class Goal {
     private long id;
     private String parseId;
     private String name;
-    private int amount;
+    private int amount, syncStatus;
     private String startDate;
     private String endDate;
     private User user;
@@ -16,9 +16,10 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(long id, String name, int amount, String startDate, String endDate, User user) {
+    public Goal(long id, String name, int amount, String startDate, String endDate, User user, String parseId) {
         this.id = id;
         this.name = name;
+        this.parseId = parseId;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -39,6 +40,14 @@ public class Goal {
 
     public void setParseId(String parseId) {
         this.parseId = parseId;
+    }
+
+    public int getSyncStatus() {
+        return syncStatus;
+    }
+
+    public void setSyncStatus(int syncStatus) {
+        this.syncStatus = syncStatus;
     }
 
     public String getName() {

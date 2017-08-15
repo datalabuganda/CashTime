@@ -18,21 +18,31 @@ import com.parse.SaveCallback;
 public class ParseConnector {
 
     private static final String TAG = "ParseConnector";
+
+    Context context;
+
     UserCrud userCrud;
     GoalCrud goalCrud;
-    Context context;
+
+    SQLiteHelper sqLiteHelper;
+    IncomeSQLiteHelper incomeSQLiteHelper;
+
+    Goal lastInsertedGoal;
+    User lastInsertedUser;
 
 
     public ParseConnector(Context context) {
         this.context = context;
         userCrud = new UserCrud(context);
         goalCrud = new GoalCrud(context);
+        this.lastInsertedGoal = goalCrud.getLastInsertedGoal();
+        this.lastInsertedUser = userCrud.getLastUserInserted();
+
+        sqLiteHelper = new SQLiteHelper(context);
+        incomeSQLiteHelper = new IncomeSQLiteHelper(context);
     }
 
-    public ParseObject addUser(){
-        // Get the last inserted user
-        final User lastInsertedUser = userCrud.getLastUserInserted();
-
+    public void addUserToParse(){
         // add details of this user to a ParseObject
         final ParseObject user = new ParseObject("Users");
         user.put("HouseHoldComposition", lastInsertedUser.getHousehold());
@@ -48,31 +58,30 @@ public class ParseConnector {
                     lastInsertedUser.setParseId(userParseId);
                     userCrud.updateUser(lastInsertedUser);
                 }
+                else{
+                    // Error occured
+                }
             }
         });
-        return user;
+
 
     }
 
-    public void addGoal(){
+    public void addGoalToParse(){
         // get the user back from the database
         final String userParseId = userCrud.getLastUserInserted().getParseId();
-        final Goal lastInsertedGoal = goalCrud.getLastInsertedGoal();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null){
-                    // put user id in Users table
-                    object.put("UserId", userParseId);
-
                     // create a Goal table
                     final ParseObject goal = new ParseObject("Goal");
-                    goal.put("GoalName", goalCrud.getLastInsertedGoal().getName());
-                    goal.put("GoalAmount", goalCrud.getLastInsertedGoal().getAmount());
-                    goal.put("GoalStartDate", goalCrud.getLastInsertedGoal().getStartDate());
-                    goal.put("GoalEndDate", goalCrud.getLastInsertedGoal().getEndDate());
+                    goal.put("GoalName", lastInsertedGoal.getName());
+                    goal.put("GoalAmount", lastInsertedGoal.getAmount());
+                    goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
+                    goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
 
                     // link the user to this goal table
                     goal.put("parent", object);
@@ -90,22 +99,150 @@ public class ParseConnector {
                     });
 
                 }
+                else{
+                    // Error occured
+                }
             }
         });
-
     }
 
-   /* public void addExpenditure(){
-        final String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+
+    public void addExpenditureToParse(){
+       String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+        Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getParseId());
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Goal");
         query.getInBackground(goalParseId, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null){
-                    object.put("GoalId", goalParseId);
+                    ParseObject expenditure = new ParseObject("Expenditure");
+                    expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
+                    expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
+                    expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
+                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings());
+                    expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
+                    expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
+                    expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());
+
+                    // create a relationship between goal table and expenditure table
+                    expenditure.put("parent", object);
+
+                    expenditure.saveInBackground();
+                }
+                else{
+                    // Error occured
                 }
             }
         });
-    }*/
+    }
+
+    public void addIncomeToParse(){
+        String userParseId = userCrud.getLastUserInserted().getParseId();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+        query.getInBackground(userParseId, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    ParseObject income = new ParseObject("Income");
+                    income.put("TotalLoanIncome", incomeSQLiteHelper.addAllLoan());
+                    income.put("TotalSalaryIncome", incomeSQLiteHelper.addAllSalary());
+                    income.put("TotalInvestmentIncome", incomeSQLiteHelper.addAllInvestment());
+                    income.put("TotalOthersIncome", incomeSQLiteHelper.addAllOthers());
+                    income.put("TotalIncome", incomeSQLiteHelper.addAllIncome());
+
+                    // create a relationship between user table and income table
+                    income.put("parent", object);
+
+                    income.saveInBackground();
+                }
+                else{
+                    // error occured
+                }
+            }
+        });
+    }
+
+    public void upDateUser(String objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+
+        // Retrieve the object by id
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject user, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data.
+                    user.put("HouseHoldComposition", lastInsertedUser.getHousehold());
+                    user.put("Age", lastInsertedUser.getAge());
+                    user.put("Sex", lastInsertedUser.getSex());
+                    user.put("CountryOfBirth", lastInsertedUser.getNationality());
+                    user.put("Points", lastInsertedUser.getPoints());
+
+                    user.saveInBackground();
+                }
+            }
+        });
+    }
+
+    public void upDateGoal(String objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Goal");
+
+        // Retrieve the object by id
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject goal, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data.
+                    goal.put("GoalName", lastInsertedGoal.getName());
+                    goal.put("GoalAmount", lastInsertedGoal.getAmount());
+                    goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
+                    goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
+
+                    goal.saveInBackground();
+                }
+            }
+        });
+    }
+
+    public void upDateExpenditure(String objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Expenditure");
+
+        // Retrieve the object by id
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject expenditure, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data.
+                    expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
+                    expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
+                    expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
+                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings());
+                    expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
+                    expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
+                    expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());
+
+                    expenditure.saveInBackground();
+                }
+            }
+        });
+    }
+
+    public void upDateIncome(String objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Income");
+
+        // Retrieve the object by id
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject income, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data.
+                    income.put("TotalLoanIncome", incomeSQLiteHelper.addAllLoan());
+                    income.put("TotalSalaryIncome", incomeSQLiteHelper.addAllSalary());
+                    income.put("TotalInvestmentIncome", incomeSQLiteHelper.addAllInvestment());
+                    income.put("TotalOthersIncome", incomeSQLiteHelper.addAllOthers());
+                    income.put("TotalIncome", incomeSQLiteHelper.addAllIncome());
+
+                    income.saveInBackground();
+                }
+            }
+        });
+    }
+
 }

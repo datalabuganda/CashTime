@@ -38,7 +38,7 @@
         <activity
             android:name=".activities.GoalsListActivity"
             android:label="Goals"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeDrawerActivity" />
         <activity
             android:name=".activities.IncomeActivity"
             android:label="Income"
@@ -92,10 +92,6 @@
             android:label="Medical"
             android:parentActivityName=".activities.ExpenditureActivity" />
 
-        android:name="com.example.eq62roket.CashTime.activities.EditGoalActivity"
-        android:label="Edit Goal"
-        android:parentActivityName="com.example.eq62roket.CashTime.activities.GoalsListActivity" />
-
         <activity
             android:name=".activities.EditGoalActivity"
             android:label="Edit Goal"
@@ -128,13 +124,6 @@
             android:name=".activities.HomeDrawerActivity"
             android:label="CashTime"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <meta-data
-            android:name="com.parse.SERVER_URL"
-            android:value="462s45ze2vn6x2vrfyfenqmksngx5xbs" />
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="https://www.oxfamdataservice.org/parse/" />
 
         <activity
             android:name=".activities.HelpActivity"

@@ -49,6 +49,7 @@ public class IncomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Investmentintent = new Intent(IncomeActivity.this, InvestmentActivity.class);
                 IncomeActivity.this.startActivity(Investmentintent);
+                finish();
             }
         });
 
@@ -57,6 +58,7 @@ public class IncomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Salaryintent = new Intent(IncomeActivity.this, SalaryActivity.class);
                 IncomeActivity.this.startActivity(Salaryintent);
+                finish();
             }
         });
 
@@ -100,10 +102,6 @@ public class IncomeActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-
-//        barChart.setTouchEnabled(true);
-//        barChart.setDragEnabled(true);
-//        barChart.setScaleEnabled(true);
         barChart.setData(data);
 //        barChart.animateY(5000);
 

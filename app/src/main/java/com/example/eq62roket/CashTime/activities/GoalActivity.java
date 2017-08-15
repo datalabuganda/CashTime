@@ -21,23 +21,10 @@ public class GoalActivity extends AppCompatActivity {
 
     private static final String TAG = "GoalActivity";
 
-    ParseConnector parseConnector;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
-
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
-                .server("https://oxfamdataservice.org/parse/")
-                .build()
-        );
-
-        parseConnector = new ParseConnector(this);
-        parseConnector.addUser();
-
 
 
 
@@ -47,6 +34,7 @@ public class GoalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(GoalActivity.this, AddGoalActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

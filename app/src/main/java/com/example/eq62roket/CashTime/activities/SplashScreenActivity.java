@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.graphics.Color;
 import android.view.View;
 
+import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 
 import gr.net.maroulis.library.EasySplashScreen;
@@ -27,7 +28,7 @@ public class SplashScreenActivity extends Activity {
                 .withTargetActivity(RegisterActivity.class)
                 .withSplashTimeOut(500)
                 .withBackgroundColor(Color.parseColor("#074E72"))
-//                .withLogo(R.mipmap.logo)
+                .withLogo(R.mipmap.logoresized)
                 .withFooterText("Copyright CashTime 2017")
                 .withBeforeLogoText("CashTime")
                 .withAfterLogoText("Track Your Expenses Visually");

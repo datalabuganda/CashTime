@@ -97,6 +97,7 @@ public class AddGoalActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddGoalActivity.this, HomeDrawerActivity.class);
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    finish();
 
                 }
                 else {

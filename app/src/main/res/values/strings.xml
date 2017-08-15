@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReportActivity</string>
+    <string name="app_name">CashTime</string>
     <string name="empty_fields_message">One or more fields are empty</string>
     <string name="title_activity_add_income">AddIncomeActivity</string>
     <string name="no_goals_yet">No Goals added yet, Please add a goal to continue</string>

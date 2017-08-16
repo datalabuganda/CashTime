@@ -17,6 +17,14 @@ public class Income {
     public Income() {
     }
 
+
+    public Income(int salary, int loan, int investment, int other) {
+        this.salary = salary;
+        this.loan = loan;
+        this.investment = investment;
+        this.other = other;
+    }
+
     public long getId() {
         return id;
     }

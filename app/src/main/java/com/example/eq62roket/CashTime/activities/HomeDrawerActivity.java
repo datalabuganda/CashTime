@@ -21,8 +21,11 @@ import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
+import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +43,7 @@ public class HomeDrawerActivity extends AppCompatActivity
     UserCrud userCrud;
     GoalCrud goalCrud;
     IncomeSQLiteHelper incomeSQLiteHelper;
+    SQLiteHelper sqLiteHelper;
 
     private static final String TAG = "HomeDrawertActivity";
     private static final String REQUIRED = "Required";
@@ -75,9 +79,11 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgAnalytics = (ImageView) findViewById(R.id.imgAnalytics);
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
+/*
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+*/
 
 
 
@@ -140,6 +146,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         parseConnector = new ParseConnector(this);
         goalCrud = new GoalCrud(this);
         incomeSQLiteHelper = new IncomeSQLiteHelper(this);
+        sqLiteHelper = new SQLiteHelper(this);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
@@ -150,7 +157,6 @@ public class HomeDrawerActivity extends AppCompatActivity
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
         String userParseId = userCrud.getLastUserInserted().getParseId();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // check if last inserted user's information has already synced
         if (userSyncStatus == 0) {
@@ -179,7 +185,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         parseConnector.addExpenditureToParse();
         parseConnector.addIncomeToParse();
 
-        // get user details
+        /*// get user details
         long points = userCrud.getLastUserInserted().getPoints();
         int household = userCrud.getLastUserInserted().getHousehold();
         int age = userCrud.getLastUserInserted().getAge();
@@ -198,11 +204,35 @@ public class HomeDrawerActivity extends AppCompatActivity
 
         addGoal(goal_name, goal_amount, startDate, endDate, user);
 
+
+        if (sqLiteHelper.addAllCategories() > 0){
+            // get expenditure details
+            Goal goal = goalCrud.getLastInsertedGoal();
+            int educationCost = sqLiteHelper.addAllEducation();
+            int transportCost = sqLiteHelper.addAllTransport();
+            int healthCost = sqLiteHelper.addAllHealth();
+            int othersCost = sqLiteHelper.addAllOthers();
+            int savingsCost = sqLiteHelper.addAllSavings();
+            int homesteadCost = sqLiteHelper.addAllHomeneeds();
+
+            addExpenditure(goal, educationCost, transportCost, healthCost, othersCost, savingsCost, homesteadCost);
+        }
+
+        if (incomeSQLiteHelper.addAllIncome() != 0){
+            // get income details
+            int salaryIncome = incomeSQLiteHelper.addAllSalary();
+            int loanIncome = incomeSQLiteHelper.addAllLoan();
+            int investmentIncome = incomeSQLiteHelper.addAllInvestment();
+            int othersIncome = incomeSQLiteHelper.addAllOthers();
+
+            addIncome(salaryIncome, loanIncome, investmentIncome, othersIncome);
+
+        }*/
+
     }
 
-    private void addUser(long points, int household, int age, String sex, String educationlevel, String nationality) {
+   /* private void addUser(long points, int household, int age, String sex, String educationlevel, String nationality) {
 
-        //String key = mDatabase.child("posts").push().getKey();
         User user = new User(points, household, age, sex, educationlevel, nationality);
 
         mDatabase.child("users").setValue(user);
@@ -211,12 +241,28 @@ public class HomeDrawerActivity extends AppCompatActivity
 
     private void addGoal(String name, int amount, String startDate, String endDate, User user) {
 
-        //String key = mDatabase.child("posts").push().getKey();
         Goal goal = new Goal(name, amount, startDate, endDate, user);
 
         mDatabase.child("goal").setValue(goal);
 
     }
+
+    private void addExpenditure(Goal goal, int education, int transport, int health, int others, int savings, int homeneeds) {
+
+        Expenditure expenditure = new Expenditure(goal, education, transport, health, others, savings, homeneeds);
+
+        mDatabase.child("expenditure").push();
+        mDatabase.setValue(expenditure);
+
+    }
+
+    private void addIncome(int salary, int loan, int investment, int other) {
+
+        Income income = new Income(salary, loan, investment, other);
+
+        mDatabase.child("income").setValue(income);
+
+    }*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

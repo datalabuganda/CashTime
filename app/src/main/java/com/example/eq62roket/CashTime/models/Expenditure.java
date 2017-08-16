@@ -14,8 +14,19 @@ public class Expenditure {
     private int others;
     private int savings;
     private int homeneeds;
+    private Goal goal;
 
     public Expenditure() {
+    }
+
+    public Expenditure(Goal goal, int education, int transport, int health, int others, int savings, int homeneeds) {
+        this.goal = goal;
+        this.education = education;
+        this.transport = transport;
+        this.health = health;
+        this.others = others;
+        this.savings = savings;
+        this.homeneeds = homeneeds;
     }
 
     public Expenditure(long id, long goal_id, String expenditureDate, int education, int transport, int health, int others, int savings, int homeneeds) {

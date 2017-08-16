@@ -23,15 +23,6 @@ import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.models.Expenditure;
-import com.example.eq62roket.CashTime.models.Goal;
-import com.example.eq62roket.CashTime.models.Income;
-import com.example.eq62roket.CashTime.models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.parse.Parse;
 
 public class HomeDrawerActivity extends AppCompatActivity
@@ -48,7 +39,6 @@ public class HomeDrawerActivity extends AppCompatActivity
     private static final String TAG = "HomeDrawertActivity";
     private static final String REQUIRED = "Required";
 
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

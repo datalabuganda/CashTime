@@ -22,18 +22,29 @@ import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.parse.Parse;
 
 public class HomeDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "HomeDrawerActivity";
     ImageView imgGoal, imgIncome, imgExpenditure, imgAnalytics, imgReports, imgTips;
 
     ParseConnector parseConnector;
     UserCrud userCrud;
     GoalCrud goalCrud;
     IncomeSQLiteHelper incomeSQLiteHelper;
+
+    private static final String TAG = "HomeDrawertActivity";
+    private static final String REQUIRED = "Required";
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +75,10 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgAnalytics = (ImageView) findViewById(R.id.imgAnalytics);
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
 
@@ -135,12 +150,13 @@ public class HomeDrawerActivity extends AppCompatActivity
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
         String userParseId = userCrud.getLastUserInserted().getParseId();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         // check if last inserted user's information has already synced
-        if (userSyncStatus == 0){
-            if( userParseId == null){
+        if (userSyncStatus == 0) {
+            if (userParseId == null) {
                 parseConnector.addUserToParse();
-            }
-            else{
+            } else {
                 parseConnector.upDateUser(userParseId);
             }
             userCrud.getLastUserInserted().setSyncStatus(1);
@@ -149,11 +165,10 @@ public class HomeDrawerActivity extends AppCompatActivity
         int goalSyncStatus = goalCrud.getLastInsertedGoal().getSyncStatus();
         String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
 
-        if (goalSyncStatus == 0){
-            if (goalParseId == null){
+        if (goalSyncStatus == 0) {
+            if (goalParseId == null) {
                 parseConnector.addGoalToParse();
-            }
-            else{
+            } else {
                 parseConnector.upDateGoal(goalParseId);
             }
             goalCrud.getLastInsertedGoal().setSyncStatus(1);
@@ -164,8 +179,44 @@ public class HomeDrawerActivity extends AppCompatActivity
         parseConnector.addExpenditureToParse();
         parseConnector.addIncomeToParse();
 
+        // get user details
+        long points = userCrud.getLastUserInserted().getPoints();
+        int household = userCrud.getLastUserInserted().getHousehold();
+        int age = userCrud.getLastUserInserted().getAge();
+        String sex = userCrud.getLastUserInserted().getSex();
+        String educationLevel = userCrud.getLastUserInserted().getEducationlevel();
+        String nationality = userCrud.getLastUserInserted().getNationality();
+
+        addUser(points, household, age, sex, educationLevel, nationality);
+
+        // get goal details
+        String goal_name = goalCrud.getLastInsertedGoal().getName();
+        int goal_amount = goalCrud.getLastInsertedGoal().getAmount();
+        String startDate = goalCrud.getLastInsertedGoal().getStartDate();
+        String endDate = goalCrud.getLastInsertedGoal().getEndDate();
+        User user = goalCrud.getLastInsertedGoal().getUser();
+
+        addGoal(goal_name, goal_amount, startDate, endDate, user);
+
     }
 
+    private void addUser(long points, int household, int age, String sex, String educationlevel, String nationality) {
+
+        //String key = mDatabase.child("posts").push().getKey();
+        User user = new User(points, household, age, sex, educationlevel, nationality);
+
+        mDatabase.child("users").setValue(user);
+
+    }
+
+    private void addGoal(String name, int amount, String startDate, String endDate, User user) {
+
+        //String key = mDatabase.child("posts").push().getKey();
+        Goal goal = new Goal(name, amount, startDate, endDate, user);
+
+        mDatabase.child("goal").setValue(goal);
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

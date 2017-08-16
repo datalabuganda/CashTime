@@ -12,6 +12,16 @@ public class User {
     public User() {
     }
 
+    public User(long points, int household, int age, String sex, String educationlevel, String nationality) {
+        this.points = points;
+        this.household = household;
+        this.age = age;
+        this.sex = sex;
+        this.educationlevel = educationlevel;
+        this.nationality = nationality;
+
+    }
+
     public long getId() {
         return id;
     }

@@ -55,6 +55,7 @@ public class OthersActivity extends AppCompatActivity {
                                 Intent Othersintent = new Intent(OthersActivity.this, ExpenditureActivity.class);
                                 OthersActivity.this.startActivity(Othersintent);
                                 Toast.makeText(OthersActivity.this, "Your costs of other items have been stored", Toast.LENGTH_LONG).show();
+                                finish();
                             }
                             else {
                                 Toast.makeText(OthersActivity.this, "Other costs have not been stored", Toast.LENGTH_LONG).show();

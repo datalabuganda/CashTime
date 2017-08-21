@@ -48,6 +48,7 @@ public class EducationActivity extends AppCompatActivity {
                         Intent Educationintent = new Intent(EducationActivity.this, ExpenditureActivity.class);
                         EducationActivity.this.startActivity(Educationintent);
                         Toast.makeText(EducationActivity.this, "Education costs have been stored", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     else {
                         Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();

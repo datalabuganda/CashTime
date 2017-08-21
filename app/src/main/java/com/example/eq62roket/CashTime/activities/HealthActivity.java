@@ -57,6 +57,7 @@ public class HealthActivity extends AppCompatActivity {
                                 Toast.makeText(HealthActivity.this, "Your health costs have been stored", Toast.LENGTH_LONG).show();
                                 Intent Healthintent = new Intent(HealthActivity.this, ExpenditureActivity.class);
                                 HealthActivity.this.startActivity(Healthintent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(HealthActivity.this, "Your health costs where not stored", Toast.LENGTH_LONG).show();

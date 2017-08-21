@@ -67,6 +67,7 @@ public class IncomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Othersintent = new Intent(IncomeActivity.this, OtherIncomesActivity.class);
                 IncomeActivity.this.startActivity(Othersintent);
+                finish();
             }
         });
 
@@ -75,6 +76,7 @@ public class IncomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Loanintent = new Intent(IncomeActivity.this, LoanActivity.class);
                 IncomeActivity.this.startActivity(Loanintent);
+                finish();
             }
         });
 

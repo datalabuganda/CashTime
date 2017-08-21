@@ -60,6 +60,7 @@ public class HomeneedsActivity extends AppCompatActivity {
                                 Toast.makeText(HomeneedsActivity.this, "Your Home needs have been stored", Toast.LENGTH_LONG).show();
                                 Intent Homeneeds = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
                                 HomeneedsActivity.this.startActivity(Homeneeds);
+                                finish();
                             } else {
                                 Toast.makeText(HomeneedsActivity.this, "Your Home needs have not been stored", Toast.LENGTH_LONG).show();
                             }

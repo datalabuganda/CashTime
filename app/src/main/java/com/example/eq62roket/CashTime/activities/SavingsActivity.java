@@ -57,6 +57,7 @@ public class SavingsActivity extends AppCompatActivity {
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
                                 Intent Savingsintent = new Intent(SavingsActivity.this, ExpenditureActivity.class);
                                 SavingsActivity.this.startActivity(Savingsintent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(SavingsActivity.this, "Your savings have not been stored", Toast.LENGTH_LONG).show();

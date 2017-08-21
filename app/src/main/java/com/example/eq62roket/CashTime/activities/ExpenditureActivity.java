@@ -58,6 +58,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Otherintent = new Intent(ExpenditureActivity.this, OthersActivity.class);
                 ExpenditureActivity.this.startActivity(Otherintent);
+                finish();
             }
         });
 
@@ -66,6 +67,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Educationintent = new Intent(ExpenditureActivity.this, EducationActivity.class);
                 ExpenditureActivity.this.startActivity(Educationintent);
+                finish();
             }
         });
 
@@ -74,6 +76,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Healthintent = new Intent(ExpenditureActivity.this, HealthActivity.class);
                 ExpenditureActivity.this.startActivity(Healthintent);
+                finish();
             }
         });
 
@@ -82,6 +85,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Transportintent = new Intent(ExpenditureActivity.this, TransportActivity.class);
                 ExpenditureActivity.this.startActivity(Transportintent);
+                finish();
             }
         });
 
@@ -90,6 +94,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Homeneedsintent = new Intent(ExpenditureActivity.this, HomeneedsActivity.class);
                 ExpenditureActivity.this.startActivity(Homeneedsintent);
+                finish();
             }
         });
 
@@ -98,6 +103,7 @@ public class ExpenditureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent Savingsintent = new Intent(ExpenditureActivity.this, SavingsActivity.class);
                 ExpenditureActivity.this.startActivity(Savingsintent);
+                finish();
             }
         });
 

@@ -63,6 +63,7 @@ public class TransportActivity extends AppCompatActivity {
                                 Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
                                 Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
                                 TransportActivity.this.startActivity(Transportintent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();

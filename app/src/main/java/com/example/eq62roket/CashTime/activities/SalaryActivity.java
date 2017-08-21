@@ -31,14 +31,6 @@ public class SalaryActivity extends AppCompatActivity {
 
         userCrud = new UserCrud(this);
 
-        /*btnSalary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent Incomeintent = new Intent(SalaryActivity.this, IncomeActivity.class);
-                SalaryActivity.this.startActivity(Incomeintent);
-            }
-        });
-*/
         AddSalary();
     }
 
@@ -59,6 +51,7 @@ public class SalaryActivity extends AppCompatActivity {
                                 Toast.makeText(SalaryActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
                                 Intent Salaryintent = new Intent(SalaryActivity.this, IncomeActivity.class);
                                 SalaryActivity.this.startActivity(Salaryintent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(SalaryActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();

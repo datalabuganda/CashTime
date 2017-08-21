@@ -33,16 +33,6 @@ public class LoanActivity extends AppCompatActivity {
         edtLoans = (EditText) findViewById(R.id.edtLoans);
 
         userCrud = new UserCrud(this);
-
-       /* btnLoans.setOnClickListener(new View.OnClickListener() {
->>>>>>> origin/master
-            @Override
-            public void onClick(View view) {
-                Intent Incomeintent = new Intent(LoanActivity.this, IncomeActivity.class);
-                LoanActivity.this.startActivity(Incomeintent);
-            }
-        });*/
-
         AddLoan();
     }
 
@@ -64,6 +54,7 @@ public class LoanActivity extends AppCompatActivity {
                                 Toast.makeText(LoanActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
                                 Intent Loanintent = new Intent(LoanActivity.this, IncomeActivity.class);
                                 LoanActivity.this.startActivity(Loanintent);
+                                finish();
                             } else {
                                 Toast.makeText(LoanActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();
                             }

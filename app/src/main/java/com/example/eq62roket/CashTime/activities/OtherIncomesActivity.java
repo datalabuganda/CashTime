@@ -32,14 +32,6 @@ public class OtherIncomesActivity extends AppCompatActivity {
 
         userCrud = new UserCrud(this);
 
-       /* btnOthers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent Incomeintent = new Intent(OtherIncomesActivity.this, IncomeActivity.class);
-                OtherIncomesActivity.this.startActivity(Incomeintent);
-            }
-        });*/
-
         AddOthers();
     }
 
@@ -61,6 +53,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
                                 Toast.makeText(OtherIncomesActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
                                 Intent OtherIncomeintent = new Intent(OtherIncomesActivity.this, IncomeActivity.class);
                                 OtherIncomesActivity.this.startActivity(OtherIncomeintent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(OtherIncomesActivity.this, "Your income has not been added", Toast.LENGTH_LONG).show();

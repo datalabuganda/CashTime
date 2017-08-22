@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -69,6 +70,7 @@ public class AnalysisActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
 
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.getXAxis().setLabelsToSkip(0);
         barChart.setTouchEnabled(false);
         barChart.setDragEnabled(false);

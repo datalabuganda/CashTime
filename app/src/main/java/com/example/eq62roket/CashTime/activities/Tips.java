@@ -1,8 +1,6 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,17 +9,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
+import com.example.eq62roket.CashTime.Fragments.EducationFragment;
+import com.example.eq62roket.CashTime.Fragments.HealthFragment;
+import com.example.eq62roket.CashTime.Fragments.HomeNeedsFragment;
+import com.example.eq62roket.CashTime.Fragments.OthersFragment;
+import com.example.eq62roket.CashTime.Fragments.SavingsFragment;
+import com.example.eq62roket.CashTime.Fragments.TransportFragment;
+import com.example.eq62roket.CashTime.R;
 
-import com.example.eq62roket.reportactivity.R;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UsefulTips extends AppCompatActivity {
+public class Tips extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -31,7 +31,7 @@ public class UsefulTips extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    //private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -45,29 +45,67 @@ public class UsefulTips extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+       // mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        setupViewPager(mViewPager);
+       // mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
+    private void setupViewPager(ViewPager viewPager){
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new TransportFragment(), "Transport");
+        adapter.addFragment(new SavingsFragment(), "Savings");
+        adapter.addFragment(new HealthFragment(), "Health");
+        adapter.addFragment(new EducationFragment(), "Education");
+        adapter.addFragment(new HomeNeedsFragment(), "Home Needs");
+        adapter.addFragment(new OthersFragment(), "Others");
+        viewPager.setAdapter(adapter);
 
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter{
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager){
+            super(manager);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position){
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount(){
+            return mFragmentList.size();
+        }
+
+        public void addFragment(android.support.v4.app.Fragment fragment, String title){
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position){
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+
+
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -82,35 +120,36 @@ public class UsefulTips extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+       *//* //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
+        }*//*
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+    *//**
      * A placeholder fragment containing a simple view.
-     */
+     *//*
     public static class PlaceholderFragment extends Fragment {
-        /**
+        *//**
          * The fragment argument representing the section number for this
          * fragment.
-         */
+         *//*
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_STRING = "frag_string";
 
         public PlaceholderFragment() {
         }
 
-        /**
+        *//**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+         *//*
+        public static PlaceholderFragment newInstance(String fragstr) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putString(ARG_STRING, fragstr);
             fragment.setArguments(args);
             return fragment;
         }
@@ -125,10 +164,10 @@ public class UsefulTips extends AppCompatActivity {
         }
     }
 
-    /**
+    *//**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
-     */
+     *//*
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -137,28 +176,32 @@ public class UsefulTips extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return getItem(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 6 total pages.
+            return 6;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Transport";
                 case 1:
-                    return "SECTION 2";
+                    return "Savings";
                 case 2:
-                    return "SECTION 3";
+                    return "Medication";
+                case 3:
+                    return "Education";
+                case 4:
+                    return "Home Needs";
+                case 5:
+                    return "Others";
             }
             return null;
         }
-    }
+    }*/
 }

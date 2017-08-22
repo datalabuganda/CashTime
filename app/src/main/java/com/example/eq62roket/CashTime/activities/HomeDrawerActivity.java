@@ -121,7 +121,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent HomeTipsintent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
+                Intent HomeTipsintent = new Intent(HomeDrawerActivity.this, Tips.class);
                 HomeDrawerActivity.this.startActivity(HomeTipsintent);
             }
         });
@@ -175,84 +175,10 @@ public class HomeDrawerActivity extends AppCompatActivity
         parseConnector.addExpenditureToParse();
         parseConnector.addIncomeToParse();
 
-        /*// get user details
-        long points = userCrud.getLastUserInserted().getPoints();
-        int household = userCrud.getLastUserInserted().getHousehold();
-        int age = userCrud.getLastUserInserted().getAge();
-        String sex = userCrud.getLastUserInserted().getSex();
-        String educationLevel = userCrud.getLastUserInserted().getEducationlevel();
-        String nationality = userCrud.getLastUserInserted().getNationality();
-
-        addUser(points, household, age, sex, educationLevel, nationality);
-
-        // get goal details
-        String goal_name = goalCrud.getLastInsertedGoal().getName();
-        int goal_amount = goalCrud.getLastInsertedGoal().getAmount();
-        String startDate = goalCrud.getLastInsertedGoal().getStartDate();
-        String endDate = goalCrud.getLastInsertedGoal().getEndDate();
-        User user = goalCrud.getLastInsertedGoal().getUser();
-
-        addGoal(goal_name, goal_amount, startDate, endDate, user);
-
-
-        if (sqLiteHelper.addAllCategories() > 0){
-            // get expenditure details
-            Goal goal = goalCrud.getLastInsertedGoal();
-            int educationCost = sqLiteHelper.addAllEducation();
-            int transportCost = sqLiteHelper.addAllTransport();
-            int healthCost = sqLiteHelper.addAllHealth();
-            int othersCost = sqLiteHelper.addAllOthers();
-            int savingsCost = sqLiteHelper.addAllSavings();
-            int homesteadCost = sqLiteHelper.addAllHomeneeds();
-
-            addExpenditure(goal, educationCost, transportCost, healthCost, othersCost, savingsCost, homesteadCost);
-        }
-
-        if (incomeSQLiteHelper.addAllIncome() != 0){
-            // get income details
-            int salaryIncome = incomeSQLiteHelper.addAllSalary();
-            int loanIncome = incomeSQLiteHelper.addAllLoan();
-            int investmentIncome = incomeSQLiteHelper.addAllInvestment();
-            int othersIncome = incomeSQLiteHelper.addAllOthers();
-
-            addIncome(salaryIncome, loanIncome, investmentIncome, othersIncome);
-
-        }*/
 
     }
 
-   /* private void addUser(long points, int household, int age, String sex, String educationlevel, String nationality) {
 
-        User user = new User(points, household, age, sex, educationlevel, nationality);
-
-        mDatabase.child("users").setValue(user);
-
-    }
-
-    private void addGoal(String name, int amount, String startDate, String endDate, User user) {
-
-        Goal goal = new Goal(name, amount, startDate, endDate, user);
-
-        mDatabase.child("goal").setValue(goal);
-
-    }
-
-    private void addExpenditure(Goal goal, int education, int transport, int health, int others, int savings, int homeneeds) {
-
-        Expenditure expenditure = new Expenditure(goal, education, transport, health, others, savings, homeneeds);
-
-        mDatabase.child("expenditure").push();
-        mDatabase.setValue(expenditure);
-
-    }
-
-    private void addIncome(int salary, int loan, int investment, int other) {
-
-        Income income = new Income(salary, loan, investment, other);
-
-        mDatabase.child("income").setValue(income);
-
-    }*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

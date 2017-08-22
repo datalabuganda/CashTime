@@ -55,11 +55,11 @@ public class GoalDetailActivity extends AppCompatActivity {
         int goal_amount_remaining =  goal_amount - goal_savings;
 
         tvGoalName.setText(goal_name);
-        tvEndDate.setText("By: " + goal_endDate);
-        tvGoalAmount.setText("Goal Cost  Shs: " + formatter.format(goal_amount));
-        tvAmountSaved.setText("Amount Saved So far Shs: " + formatter.format(goal_savings));
-        tvAmountRemaining.setText("Amount remaining Shs: " + formatter.format(goal_amount_remaining));
-        tvUserPoints.setText("Your Current points are: " + user_points);
+        tvEndDate.setText(getString(R.string.by_goal_end_date) + goal_endDate);
+        tvGoalAmount.setText(getString(R.string.goal_cost) + formatter.format(goal_amount));
+        tvAmountSaved.setText(getString(R.string.goal_amount_saved) + formatter.format(goal_savings));
+        tvAmountRemaining.setText(getString(R.string.goal_amount_remaining) + formatter.format(goal_amount_remaining));
+        tvUserPoints.setText(getString(R.string.current_points) + user_points);
 
         // starts edit goal activity
         edit.setOnClickListener(new View.OnClickListener() {

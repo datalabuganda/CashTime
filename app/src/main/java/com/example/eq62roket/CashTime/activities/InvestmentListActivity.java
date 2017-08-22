@@ -3,7 +3,7 @@ package com.example.eq62roket.CashTime.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.eq62roket.reportactivity.R;
+import com.example.eq62roket.CashTime.R;
 
 public class InvestmentListActivity extends AppCompatActivity {
 

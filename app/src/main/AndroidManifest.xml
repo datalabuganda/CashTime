@@ -121,7 +121,7 @@
             android:label="Help"
             android:parentActivityName=".activities.HomeDrawerActivity" />
         <activity
-            android:name=".activities.Tips"
+            android:name=".activities.TipsActivity"
             android:label="@string/title_activity_useful_tips"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.HomeDrawerActivity" ></activity>

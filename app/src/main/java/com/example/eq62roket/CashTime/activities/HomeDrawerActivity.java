@@ -2,9 +2,6 @@ package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -121,7 +118,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent HomeTipsintent = new Intent(HomeDrawerActivity.this, Tips.class);
+                Intent HomeTipsintent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
                 HomeDrawerActivity.this.startActivity(HomeTipsintent);
             }
         });
@@ -249,7 +246,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         }else if (id == R.id.nav_tips) {
             Intent tipsIntent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
             startActivity(tipsIntent);
-            //Toast.makeText(this, "Tips", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "TipsActivity", Toast.LENGTH_LONG).show();
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

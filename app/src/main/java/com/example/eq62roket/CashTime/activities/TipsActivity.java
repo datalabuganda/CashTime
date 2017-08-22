@@ -21,7 +21,7 @@ import com.example.eq62roket.CashTime.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tips extends AppCompatActivity {
+public class TipsActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

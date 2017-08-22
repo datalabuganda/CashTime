@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eq62roket.CashTime">
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -52,10 +52,6 @@
             android:label="Analysis"
             android:parentActivityName=".activities.HomeActivity" />
         <activity
-            android:name=".activities.TipsActivity"
-            android:label="Tips"
-            android:parentActivityName=".activities.HomeActivity" />
-        <activity
             android:name=".activities.LoanActivity"
             android:label="Loan"
             android:parentActivityName=".activities.IncomeActivity" />
@@ -91,24 +87,20 @@
             android:name=".activities.HealthActivity"
             android:label="Medical"
             android:parentActivityName=".activities.ExpenditureActivity" />
-
         <activity
             android:name=".activities.EditGoalActivity"
             android:label="Edit Goal"
             android:parentActivityName=".activities.GoalsListActivity" />
-
         <activity
             android:name=".activities.GoalDetailActivity"
             android:label="Goal Detail"
             android:parentActivityName=".activities.GoalsListActivity" />
         <activity
             android:name=".activities.OthersActivity"
-
             android:label="Medical"
             android:parentActivityName=".activities.ExpenditureActivity" />
         <activity
             android:name="activities.OthersActivity"
-
             android:label="Others"
             android:parentActivityName=".activities.ExpenditureActivity" />
         <activity
@@ -124,11 +116,15 @@
             android:name=".activities.HomeDrawerActivity"
             android:label="CashTime"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activities.HelpActivity"
             android:label="Help"
-            android:parentActivityName=".activities.HomeActivity"/>
+            android:parentActivityName=".activities.HomeDrawerActivity" />
+        <activity
+            android:name=".activities.Tips"
+            android:label="@string/title_activity_useful_tips"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.HomeDrawerActivity" ></activity>
     </application>
 
 </manifest>

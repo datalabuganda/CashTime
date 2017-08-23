@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
@@ -19,6 +20,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
     Button btnOthers;
     IncomeSQLiteHelper myHelper;
     UserCrud userCrud;
+    ListView othersListVIew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
 
         btnOthers = (Button) findViewById(R.id.btnOthers);
         edtOthers = (EditText) findViewById(R.id.edtOthers);
+
         myHelper = new IncomeSQLiteHelper(this);
 
         userCrud = new UserCrud(this);

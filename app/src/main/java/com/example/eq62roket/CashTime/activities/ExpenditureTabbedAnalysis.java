@@ -1,8 +1,12 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
@@ -15,27 +19,25 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class AnalysisActivity extends AppCompatActivity {
+/**
+ * Created by eq62roket on 8/22/17.
+ */
+
+public class ExpenditureTabbedAnalysis extends Fragment {
     BarChart barChart;
     SQLiteHelper myHelper;
     SQLiteDatabase sqLiteDatabase;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_graph);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.expenditure_tabbed_analysis, container, false);
 
-        myHelper = new SQLiteHelper(this);
+
+        barChart = (BarChart) rootView.findViewById(R.id.barchart);
+
+        myHelper = new SQLiteHelper(getActivity());
         sqLiteDatabase = myHelper.getWritableDatabase();
-
-        setUpPieChart();
-
-    }
-
-    private void setUpPieChart(){
-        barChart = (BarChart) findViewById(R.id.barchart);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
@@ -52,7 +54,6 @@ public class AnalysisActivity extends AppCompatActivity {
         entries.add(new BarEntry(sumSavings, 3));
         entries.add(new BarEntry(sumOthers, 4));
         entries.add(new BarEntry(sumHomeneeds, 5));
-
 
 
         BarDataSet dataset = new BarDataSet(entries, "Expenditures");
@@ -79,5 +80,10 @@ public class AnalysisActivity extends AppCompatActivity {
         barChart.setData(data);
         barChart.animateY(5000);
 
+
+
+        return rootView;
     }
+
+
 }

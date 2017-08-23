@@ -102,7 +102,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent HomeAnalyticsintent = new Intent(HomeDrawerActivity.this, AnalysisActivity.class);
+                Intent HomeAnalyticsintent = new Intent(HomeDrawerActivity.this, TabbedAnalysisActivity.class);
                 HomeDrawerActivity.this.startActivity(HomeAnalyticsintent);
             }
         });
@@ -110,7 +110,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent HomeReportsintent = new Intent(HomeDrawerActivity.this, ReportActivity.class);
+                Intent HomeReportsintent = new Intent(HomeDrawerActivity.this, TabbedReportActivity.class);
                 HomeDrawerActivity.this.startActivity(HomeReportsintent);
             }
         });

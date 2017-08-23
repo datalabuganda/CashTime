@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:label="CashTime">
+            android:label="CashTime"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,65 +25,84 @@
         <activity
             android:name=".activities.ReportActivity"
             android:label="Report"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AnalysisActivity"
             android:label="Analysis"
-            android:parentActivityName=".activities.HomeActivity" />
-        <activity android:name=".activities.MainActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GoalActivity"
             android:label="Goal"
-            android:parentActivityName=".activities.HomeActivity" />
-        <activity android:name=".activities.GoalCreateActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GoalCreateActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GoalsListActivity"
             android:label="Goals"
-            android:parentActivityName=".activities.HomeDrawerActivity" />
+            android:parentActivityName=".activities.HomeDrawerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.IncomeActivity"
             android:label="Income"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ExpenditureActivity"
             android:label="Expenditure"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeDrawerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AnalyticsActivity"
             android:label="Analysis"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeDrawerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoanActivity"
             android:label="Loan"
-            android:parentActivityName=".activities.IncomeActivity" />
+            android:parentActivityName=".activities.IncomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SalaryActivity"
             android:label="Salary"
-            android:parentActivityName=".activities.IncomeActivity" />
+            android:parentActivityName=".activities.IncomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.InvestmentActivity"
             android:label="Investment"
-            android:parentActivityName=".activities.IncomeActivity" />
+            android:parentActivityName=".activities.IncomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.OtherIncomesActivity"
             android:label="Others"
-            android:parentActivityName=".activities.IncomeActivity" />
+            android:parentActivityName=".activities.IncomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SavingsActivity"
             android:label="Savings"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.TransportActivity"
             android:label="Transport"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EducationActivity"
             android:label="Education"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeneedsActivity"
             android:label="Home needs"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HealthActivity"
             android:label="Medical"
@@ -90,31 +110,39 @@
         <activity
             android:name=".activities.EditGoalActivity"
             android:label="Edit Goal"
-            android:parentActivityName=".activities.GoalsListActivity" />
+            android:parentActivityName=".activities.GoalsListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GoalDetailActivity"
             android:label="Goal Detail"
-            android:parentActivityName=".activities.GoalsListActivity" />
+            android:parentActivityName=".activities.GoalsListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.OthersActivity"
             android:label="Medical"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="activities.OthersActivity"
             android:label="Others"
-            android:parentActivityName=".activities.ExpenditureActivity" />
+            android:parentActivityName=".activities.ExpenditureActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AddGoalActivity"
-            android:label="Add your goal" />
+            android:label="Add your goal"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="Registration" />
+            android:label="Registration"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
-            android:label="CashTime" />
+            android:label="CashTime"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeDrawerActivity"
             android:label="CashTime"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.HelpActivity"
@@ -124,7 +152,23 @@
             android:name=".activities.TipsActivity"
             android:label="@string/title_activity_useful_tips"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".activities.HomeDrawerActivity" ></activity>
+            android:parentActivityName=".activities.HomeDrawerActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.TabbedReportActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:launchMode="singleTask"
+            android:label="Reports"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.UpdateSalaryActivity" />
+        <activity android:name=".activities.UpdateInvestmentActivity" />
+        <activity android:name=".activities.UpdateLoanActivity" />
+        <activity android:name=".activities.UpdateOtherIncomesActivity" />
+        <activity
+            android:name=".activities.TabbedAnalysisActivity"
+            android:label="Analysis"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

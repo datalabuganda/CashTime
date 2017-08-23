@@ -1,14 +1,19 @@
 package com.example.eq62roket.CashTime.activities;
 
+/**
+ * Created by eq62roket on 8/21/17.
+ */
+
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;

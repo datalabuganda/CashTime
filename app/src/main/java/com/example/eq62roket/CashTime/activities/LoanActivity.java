@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 
 import com.example.eq62roket.CashTime.models.User;
@@ -29,8 +29,8 @@ public class LoanActivity extends AppCompatActivity {
         myHelper = new IncomeSQLiteHelper(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnLoans = (Button) findViewById(R.id.btnLoans);
-        edtLoans = (EditText) findViewById(R.id.edtLoans);
+        btnLoans = (Button) findViewById(R.id.btnUpdateLoans);
+        edtLoans = (EditText) findViewById(R.id.edtUpdateLoans);
 
         userCrud = new UserCrud(this);
         AddLoan();

@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eq62roket.CashTime.activities.SalaryActivity">
-
-
-
+    tools:context="com.example.eq62roket.CashTime.activities.UpdateSalaryActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -49,32 +46,23 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:layout_below="@+id/linearLayout15"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout17">
+        android:layout_centerHorizontal="true">
 
         <EditText
-            android:id="@+id/edtSalary"
+            android:id="@+id/edtUpdateSalary"
             android:layout_width="274dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_marginBottom="10dp"
+            android:ems="10"
             android:hint="Enter your Salary"
             android:inputType="number" />
 
         <Button
-            android:id="@+id/btnSalary"
+            android:id="@+id/btnUpdateSalary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="Update" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/SalaryListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout17" />
 
 
 </RelativeLayout>

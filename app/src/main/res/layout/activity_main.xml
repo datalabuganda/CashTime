@@ -67,8 +67,8 @@
         android:layout_marginBottom="23dp"
         android:text="Sum"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/btnLoans"
-        android:layout_alignStart="@+id/btnLoans" />
+        android:layout_alignLeft="@+id/btnUpdateLoans"
+        android:layout_alignStart="@+id/btnUpdateLoans" />
 
     <EditText
         android:id="@+id/edtHealth"
@@ -104,7 +104,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/edtLoans"
+        android:id="@+id/edtUpdateLoans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/edtSavings"
@@ -125,12 +125,12 @@
         android:text="Savings" />
 
     <Button
-        android:id="@+id/btnLoans"
+        android:id="@+id/btnUpdateLoans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnSavings"
         android:layout_alignStart="@+id/btnSavings"
-        android:layout_alignTop="@+id/edtLoans"
+        android:layout_alignTop="@+id/edtUpdateLoans"
         android:text="Others" />
 
 </RelativeLayout>

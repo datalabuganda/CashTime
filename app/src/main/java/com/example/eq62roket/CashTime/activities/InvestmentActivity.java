@@ -89,10 +89,7 @@ public class InvestmentActivity extends AppCompatActivity {
         Log.d(TAG, "here is data: " + data);
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()){
-            listData.add(data.getString(0));
-            listData.add(data.getString(2));
-            listData.add(data.getString(3));
-            listData.add(data.getString(4));
+            listData.add(data.getString(data.getColumnIndex(myHelper.COL_6)));
         }
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         investmentListView.setAdapter(adapter);

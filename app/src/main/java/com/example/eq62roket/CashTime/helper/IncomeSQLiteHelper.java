@@ -43,11 +43,10 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertSalary(int salary, int created_date){
+    public boolean insertSalary(int salary){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues salaryValues = new ContentValues();
         salaryValues.put(COL_3, salary);
-        salaryValues.put(COL_10, created_date);
         long result = db.insert(TABLE_NAME, null, salaryValues);
         if (result == -1)
             return false;

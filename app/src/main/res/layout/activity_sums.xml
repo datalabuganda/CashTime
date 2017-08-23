@@ -7,16 +7,6 @@
     tools:context="com.example.eq62roket.CashTime.activities.ReportActivity">
 
 
-    <!--<Button-->
-    <!--android:id="@+id/btnBarGraph"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Graphs"-->
-    <!--android:layout_below="@+id/linearLayout14"-->
-    <!--android:layout_alignRight="@+id/linearLayout14"-->
-    <!--android:layout_alignEnd="@+id/linearLayout14"-->
-    <!--android:layout_marginTop="54dp" />-->
-
     <LinearLayout
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -28,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:weightSum="1">

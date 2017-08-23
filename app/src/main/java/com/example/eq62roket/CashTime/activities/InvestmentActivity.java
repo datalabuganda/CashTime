@@ -112,7 +112,7 @@ public class InvestmentActivity extends AppCompatActivity {
                     editInvestmentIntent.putExtra("investment", investment);
                     Log.d(TAG, "almost through: " + investment);
                     startActivity(editInvestmentIntent);
-
+                    finish();
                 }else {
 
                 }

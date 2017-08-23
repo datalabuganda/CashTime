@@ -120,6 +120,7 @@ public class SalaryActivity extends AppCompatActivity {
                     editSalaryIntent.putExtra("salary", salary);
                     Log.d(TAG, "almost through: " + salary);
                     startActivity(editSalaryIntent);
+                    finish();
 
                 }else {
 

@@ -111,6 +111,7 @@ public class LoanActivity extends AppCompatActivity {
                     editLoanIntent.putExtra("loan", loan);
                     Log.d(TAG, "almost through: " + loan);
                     startActivity(editLoanIntent);
+                    finish();
 
                 }else {
 

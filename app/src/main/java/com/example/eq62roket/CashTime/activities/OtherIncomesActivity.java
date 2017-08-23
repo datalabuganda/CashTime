@@ -113,7 +113,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
                     editOthersIntent.putExtra("others", others);
                     Log.d(TAG, "almost through: " + others);
                     startActivity(editOthersIntent);
-
+                    finish();
                 }else {
 
                 }

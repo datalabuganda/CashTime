@@ -51,6 +51,7 @@ public class UpdateInvestmentActivity extends AppCompatActivity {
 
                 Intent IncomeIntent = new Intent(UpdateInvestmentActivity.this, IncomeActivity.class);
                 startActivity(IncomeIntent);
+                finish();
 
             }
         });

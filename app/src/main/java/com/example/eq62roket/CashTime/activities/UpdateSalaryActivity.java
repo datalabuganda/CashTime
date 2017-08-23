@@ -52,6 +52,7 @@ public class UpdateSalaryActivity extends AppCompatActivity {
 
                 Intent IncomeIntent = new Intent(UpdateSalaryActivity.this, IncomeActivity.class);
                 startActivity(IncomeIntent);
+                finish();
 
             }
         });

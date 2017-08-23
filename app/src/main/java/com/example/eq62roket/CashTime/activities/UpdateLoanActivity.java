@@ -44,7 +44,7 @@ public class UpdateLoanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String item = edtUpdateLoan.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateSalary(item,selectedID,selectedLoan);
+                    myHelper.updateLoan(item,selectedID,selectedLoan);
 
                 }else {
                     Toast.makeText(UpdateLoanActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

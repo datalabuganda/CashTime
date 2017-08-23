@@ -65,14 +65,11 @@
             android:text="Add" />
     </LinearLayout>
 
-    <LinearLayout
+    <ListView
         android:id="@+id/LoanListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout19"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_below="@+id/linearLayout19" />
 
 
 </RelativeLayout>

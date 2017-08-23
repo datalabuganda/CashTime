@@ -7,18 +7,26 @@ package com.example.eq62roket.CashTime.models;
 public class Income {
     private long id;
     private int amount;
-    private String startDate;
+    private String createdDate;
     private String endDate;
     private int salary;
     private int loan;
     private int investment;
     private int other;
 
-    public Income() {
+    public Income(String createdDate, int salary, int loan, int investment, int other) {
+        this.createdDate = createdDate;
+        this.salary = salary;
+        this.loan = loan;
+        this.investment = investment;
+        this.other = other;
     }
 
-
-    public Income(int salary, int loan, int investment, int other) {
+    public Income(long id, int amount, String createdDate, String endDate, int salary, int loan, int investment, int other) {
+        this.id = id;
+        this.amount = amount;
+        this.createdDate = createdDate;
+        this.endDate = endDate;
         this.salary = salary;
         this.loan = loan;
         this.investment = investment;
@@ -41,12 +49,12 @@ public class Income {
         this.amount = amount;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getEndDate() {

@@ -22,9 +22,9 @@
             app:srcCompat="@drawable/others"
             tools:layout_editor_absoluteX="65dp"
             tools:layout_editor_absoluteY="58dp"
-            android:layout_alignBottom="@+id/btnLoans"
-            android:layout_alignLeft="@+id/edtLoans"
-            android:layout_alignStart="@+id/edtLoans" />
+            android:layout_alignBottom="@+id/btnUpdateLoans"
+            android:layout_alignLeft="@+id/edtUpdateLoans"
+            android:layout_alignStart="@+id/edtUpdateLoans" />
 
         <TextView
             android:id="@+id/textView3"
@@ -46,7 +46,8 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:layout_below="@+id/linearLayout15"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout20">
 
         <EditText
             android:id="@+id/edtOthers"
@@ -63,6 +64,14 @@
             android:layout_height="wrap_content"
             android:text="Add" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/othersListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout20"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"></LinearLayout>
 
 
 </RelativeLayout>

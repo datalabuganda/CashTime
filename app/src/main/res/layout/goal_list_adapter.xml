@@ -49,17 +49,36 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="100dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvUserPoints"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="30sp"
             android:layout_marginTop="20dp"
             android:text="Your Score"
             android:textStyle="bold"
             android:textSize="18sp"/>
+
+       <!-- <ImageView
+            android:id="@+id/imgCompleted"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/completed"
+            android:layout_marginLeft="140dp"/>-->
+
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:rotation="-45"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginLeft="120dp"
+            android:text="Completed" />
 
     </LinearLayout>
 

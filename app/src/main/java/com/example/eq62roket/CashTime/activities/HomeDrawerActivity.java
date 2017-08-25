@@ -36,6 +36,8 @@ public class HomeDrawerActivity extends AppCompatActivity
     private static final String TAG = "HomeDrawertActivity";
     private static final String REQUIRED = "Required";
 
+    private long userPoints;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         goalCrud = new GoalCrud(this);
         incomeSQLiteHelper = new IncomeSQLiteHelper(this);
         sqLiteHelper = new SQLiteHelper(this);
+        userPoints = userCrud.getLastUserInserted().getPoints();
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
@@ -143,6 +146,7 @@ public class HomeDrawerActivity extends AppCompatActivity
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
         String userParseId = userCrud.getLastUserInserted().getParseId();
+
 
 
         // check if last inserted user's information has already synced
@@ -194,17 +198,24 @@ public class HomeDrawerActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem myItem = menu.findItem(R.id.action_help);
+        myItem.setTitle("Points Earned: " + userPoints);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        /*//noinspection SimplifiableIfStatement
         if (id == R.id.action_help) {
             Intent helpIntent = new Intent(HomeDrawerActivity.this, HelpActivity.class);
             startActivity(helpIntent);
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,5 +1,6 @@
 package com.example.eq62roket.CashTime.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,8 +23,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     public static final String TAG = "RegisterActivity";
 
-    private EditText etHousehold, sexSpinner, etAge, spinnerEducationLevel, etPhoneNumber;
-    AutoCompleteTextView tvCountry;
+    private EditText etHousehold, sexSpinner, etAge, spinnerEducationLevel, etPhoneNumber, spinnerCountryList;
     private Button btnProceed;
 
     SharedPreferences preferences;
@@ -46,12 +45,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         init();
     }
 
+    @SuppressLint("CutPasteId")
     private void init(){
         etHousehold = (EditText) findViewById(R.id.etHousehold);
         sexSpinner = (EditText) findViewById(R.id.sexSpinner);
         etAge = (EditText) findViewById(R.id.etAge);
         spinnerEducationLevel = (EditText) findViewById(R.id.spinnerEducationLevel);
-        tvCountry = (AutoCompleteTextView) findViewById(R.id.tvCountry);
+        spinnerCountryList = (EditText) findViewById(R.id.tvCountry);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         btnProceed = (Button) findViewById(R.id.btnProceed);
 
@@ -85,8 +85,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 countryList
         );
 
-        tvCountry.setAdapter(countryListAdapter);
-        tvCountry.setThreshold(1);
+        MaterialBetterSpinner materialCountrySpinner = (MaterialBetterSpinner) findViewById(R.id.tvCountry);
+        materialCountrySpinner.setAdapter(countryListAdapter);
+
+       /* tvCountry.setAdapter(countryListAdapter);
+        tvCountry.setThreshold(1);*/
 
         this.btnProceed.setOnClickListener(this);
     }
@@ -99,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Editable sex = sexSpinner.getText();
                 Editable age = etAge.getText();
                 Editable educationLevel = spinnerEducationLevel.getText();
-                Editable nationality = tvCountry.getText();
+                Editable nationality = spinnerCountryList.getText();
                 Editable phoneNumber = etPhoneNumber.getText();
                 if (!TextUtils.isEmpty(household) &&
                         !TextUtils.isEmpty(sex) &&

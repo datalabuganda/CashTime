@@ -88,9 +88,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         MaterialBetterSpinner materialCountrySpinner = (MaterialBetterSpinner) findViewById(R.id.tvCountry);
         materialCountrySpinner.setAdapter(countryListAdapter);
 
-       /* tvCountry.setAdapter(countryListAdapter);
-        tvCountry.setThreshold(1);*/
-
         this.btnProceed.setOnClickListener(this);
     }
 

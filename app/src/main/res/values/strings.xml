@@ -15,7 +15,7 @@
     <string name="goal_amount_saved">Amount Saved So far Shs:</string>
     <string name="goal_amount_remaining">Amount remaining Shs:</string>
     <string name="current_points">Your Current points are:</string>
-    <string name="title_activity_useful_tips">UsefulTips</string>
+    <string name="title_activity_useful_tips">Useful Tips</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="education_tip">
         Educate the next generation, spending on education is a valuable investment.

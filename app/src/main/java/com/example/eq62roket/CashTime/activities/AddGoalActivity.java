@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
+import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
@@ -39,6 +42,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private GoalCrud goalCrud;
     private UserCrud userCrud;
     private Goal goal;
+    SQLiteHelper sqLiteHelper;
 
     SimpleDateFormat simpleDateFormat;
 
@@ -57,6 +61,7 @@ public class AddGoalActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
         goalCrud = new GoalCrud(this);
         goal = new Goal();
+        sqLiteHelper = new SQLiteHelper(this);
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -78,7 +83,7 @@ public class AddGoalActivity extends AppCompatActivity {
                 {
                     String goal_name = goalName.toString();
                     int goal_amount = Integer.parseInt(goalAmount.toString());
-                    String start_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                    String start_date = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date());
                     String end_date = chooseDate.toString();
                     User user = userCrud.getLastUserInserted();
 
@@ -88,12 +93,32 @@ public class AddGoalActivity extends AppCompatActivity {
 
                     goal.setName(goal_name);
                     goal.setAmount(goal_amount);
-                    goal.setStartDate(start_date);
+                    //goal.setStartDate(start_date);
                     goal.setEndDate(end_date);
                     goal.setSyncStatus(0);
                     goal.setUser(user);
 
+                   // Log.d(TAG, "start date  "+ goal.getStartDate());
+
+                    if (goalCrud.getLastInsertedGoal() != null){
+                        Goal goalLastInserted = goalCrud.getLastInsertedGoal();
+                        if (goalLastInserted.getCompleteStatus() == 1){
+                            int goalLastInsertedAmount = goalLastInserted.getAmount();
+                            int goalLastInsertedSavings = sqLiteHelper.addAllSavings(goalLastInserted.getStartDate()) + goalLastInserted.getSurplus();
+                            int goalLastInsertedSurplus = goalLastInsertedSavings - goalLastInsertedAmount;
+                            if (goalLastInsertedSurplus < 0){
+                                goalLastInsertedSurplus = 0;
+                            }
+                            goal.setSurplus(goalLastInsertedSurplus);
+
+                        }
+                    }
+                    else {
+                        goal.setSurplus(0);
+                    }
+
                     goalCrud.createGoal(goal);
+                    //Log.d(TAG, "new goal start date: "+ goalCrud.getLastInsertedGoal().getStartDate());
 
                     Intent intent = new Intent(AddGoalActivity.this, HomeDrawerActivity.class);
                     Toast.makeText(AddGoalActivity.this, "Goal added successfully", Toast.LENGTH_SHORT).show();

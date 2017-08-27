@@ -2,6 +2,7 @@ package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,7 @@ import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Goal;
 import com.parse.Parse;
 
 public class HomeDrawerActivity extends AppCompatActivity
@@ -32,11 +34,14 @@ public class HomeDrawerActivity extends AppCompatActivity
     GoalCrud goalCrud;
     IncomeSQLiteHelper incomeSQLiteHelper;
     SQLiteHelper sqLiteHelper;
+    Goal goal;
 
     private static final String TAG = "HomeDrawertActivity";
     private static final String REQUIRED = "Required";
 
     private long userPoints;
+    private int goal_amount;
+    private int goal_saving;
 
 
     @Override
@@ -55,12 +60,28 @@ public class HomeDrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*
-        * If this activity is reached
-        * and new data has been added to db and
-        * there is an active internet connection
-        * send data to server
-        * */
+        sqLiteHelper = new SQLiteHelper(this);
+        goalCrud = new GoalCrud(this);
+
+        goal = goalCrud.getLastInsertedGoal();
+
+        goal_amount = goal.getAmount();
+        goal_saving = sqLiteHelper.addAllSavings(goal.getStartDate());
+        int extraSavings = goal_saving - goal_amount;
+
+        // set goal complete status
+        if ( (goal_saving + goal.getSurplus()) >= goal_amount) {
+            goal.setCompleteStatus(1);
+            goalCrud.updateGoal(goal);
+            Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
+            Log.d(TAG, "goal Amount " + goal.getAmount());
+            Log.d(TAG, "goal saving " + goal_saving);
+            // reset savings to zero
+            //expenditure = sqliteHelper.getLastInsertedExpenditure();
+            //expenditure.setSavings(0);
+            //sqliteHelper.updateSavings(expenditure);
+        }
+       // Log.d(TAG, "goal last saving inserted " + sqLiteHelper.addAllSavings(null));
 
         imgGoal = (ImageView) findViewById(R.id.imgGoals);
         imgIncome = (ImageView) findViewById(R.id.imgIncome);
@@ -148,7 +169,6 @@ public class HomeDrawerActivity extends AppCompatActivity
         String userParseId = userCrud.getLastUserInserted().getParseId();
 
 
-
         // check if last inserted user's information has already synced
         if (userSyncStatus == 0) {
             if (userParseId == null) {
@@ -170,7 +190,6 @@ public class HomeDrawerActivity extends AppCompatActivity
             }
             goalCrud.getLastInsertedGoal().setSyncStatus(1);
         }
-
 
         // send expenditure details to server with an internet connection on device.
         parseConnector.addExpenditureToParse();
@@ -200,7 +219,7 @@ public class HomeDrawerActivity extends AppCompatActivity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem myItem = menu.findItem(R.id.action_help);
-        myItem.setTitle("Points Earned: " + userPoints);
+        myItem.setTitle("Points: " + userPoints);
         return true;
     }
 

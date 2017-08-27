@@ -42,7 +42,7 @@ public class AnalysisActivity extends AppCompatActivity {
         int sumTransport = myHelper.addAllTransport();
         int sumEducation = myHelper.addAllEducation();
         int sumHealth = myHelper.addAllHealth();
-        int sumSavings = myHelper.addAllSavings();
+        int sumSavings = myHelper.addAllSavings(null);
         int sumOthers = myHelper.addAllOthers();
         int sumHomeneeds = myHelper.addAllHomeneeds();
 

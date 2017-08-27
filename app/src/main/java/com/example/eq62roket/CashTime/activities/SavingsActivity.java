@@ -10,8 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
 public class SavingsActivity extends AppCompatActivity {
@@ -22,6 +24,9 @@ public class SavingsActivity extends AppCompatActivity {
     UserCrud userCrud;
     EditText edtSavings;
     Button btnSavings;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +39,12 @@ public class SavingsActivity extends AppCompatActivity {
 
         userCrud = new UserCrud(this);
 
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AddSavings();
-    }
 
-    public void AddSavings(){
         btnSavings.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -54,10 +59,15 @@ public class SavingsActivity extends AppCompatActivity {
                                 user.setPoints(5);
                                 userCrud.updateUser(user);
 
+                               // Log.d(TAG, "goal status " + goal.getCompleteStatus());
+
+
+
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
                                 Intent Savingsintent = new Intent(SavingsActivity.this, ExpenditureActivity.class);
                                 SavingsActivity.this.startActivity(Savingsintent);
                                 finish();
+                                //Log.d(TAG, "goal saved " + myHelper.addAllSavings(null));
                             }
                             else {
                                 Toast.makeText(SavingsActivity.this, "Your savings have not been stored", Toast.LENGTH_LONG).show();

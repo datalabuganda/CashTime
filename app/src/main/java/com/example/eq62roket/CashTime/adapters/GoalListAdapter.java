@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import com.example.eq62roket.CashTime.activities.GoalDetailActivity;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.Income;
+import com.example.eq62roket.CashTime.models.User;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -38,6 +42,9 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
     private UserCrud userCrud;
     private GoalCrud goalCrud;
     private SQLiteHelper sqLiteHelper;
+    private Expenditure expenditure;
+    private User user;
+    private Goal goal;
 
     public GoalListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<Goal> objects) {
         super(context, resource, objects);
@@ -46,6 +53,9 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         userCrud = new UserCrud(context);
         goalCrud = new GoalCrud(context);
         sqLiteHelper = new SQLiteHelper(context);
+        expenditure = new Expenditure();
+        user = new User();
+        //goal = new Goal();
 
     }
 
@@ -60,15 +70,15 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         final int goal_amount = getItem(position).getAmount();
         final String goal_endDate = getItem(position).getEndDate();
         final long goal_id = getItem(position).getId();
+        final long st = getItem(position).getCompleteStatus();
+        //goal = getItem(position);
+        goal = goalCrud.getGoalById(goal_id);
+
 
         // get user points
         final long user_points = userCrud.getLastUserInserted().getPoints();
-        int goalAmount = goalCrud.getLastInsertedGoal().getAmount();
-        int savedAmount = sqLiteHelper.addAllSavings();
-        int extraSavings = savedAmount - goal_amount;
-
-        // pick user points.
-        // pick extra savings
+        int goalAmount = goal.getAmount();
+        //int savedAmount = sqLiteHelper.addAllSavings();
 
 
        /* // create Goal object with above information
@@ -82,39 +92,30 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         TextView tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
         TextView tvGoalAmount = (TextView) convertView.findViewById(R.id.tvGoalAmount);
         TextView tvUserPoints = (TextView) convertView.findViewById(R.id.tvUserPoints);
-        TextView tvCompleted = (TextView) convertView.findViewById(R.id.tvCompleted);
+        ImageView imgCompleted = (ImageView) convertView.findViewById(R.id.imgCompleted);
 
-        if (savedAmount >= goalAmount){
-            // reset savings to zero
-            // reset points to zero
-            tvGoalName.setText(goal_name);
-            tvEndDate.setText("By: " + goal_endDate);
-            tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
-            tvUserPoints.setText("Current points: "+ user_points);
+        tvGoalName.setText(goal_name);
+        tvEndDate.setText("By: " + goal_endDate);
+        tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
 
+        /*Log.d(TAG, "goal status  " + goal.getCompleteStatus());
+        Log.d(TAG, "goal saved hack  " + sqLiteHelper.addAllSavings(goal.getStartDate()));
+        Log.d(TAG, "goal saved  " + sqLiteHelper.addAllSavings(null));
+        Log.d(TAG, "goal id  " + goal_id);
+        Log.d(TAG, "goal start date " + goal.getStartDate());*/
+        if (goal.getCompleteStatus() == 1){
+            imgCompleted.setVisibility(convertView.VISIBLE);
         }
-        else{
-            //sqLiteHelper.insertSavings(extraSavings);
+        else {
 
-            // display points for creating goal
-            // set all savings to extrasavings if exist
-
-            tvCompleted.setVisibility(convertView.INVISIBLE);
-            tvGoalName.setText(goal_name);
-            tvEndDate.setText("By: " + goal_endDate);
-            tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
-            tvUserPoints.setText("Current points: "+ user_points);
+            // goal click listener
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openGoalDetail(goal_name, goal_amount, goal_endDate, goal_id, user_points);
+                }
+            });
         }
-
-
-
-        // goal click listener
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGoalDetail(goal_name, goal_amount, goal_endDate, goal_id, user_points);
-            }
-        });
 
         return convertView;
     }

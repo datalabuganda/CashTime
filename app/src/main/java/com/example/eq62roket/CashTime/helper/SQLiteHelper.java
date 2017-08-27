@@ -5,12 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.eq62roket.CashTime.models.Expenditure;
+import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.Income;
 
 /**
  * Created by eq62roket on 8/2/17.
  */
 
 public class SQLiteHelper extends SQLiteOpenHelper {
+    private static final String TAG = "SQLiteHelper";
+
     public static final String DATABASE_NAME = "EXPENDITURE";
     public static final String TABLE_NAME1 = "EXPENDITURETABLE";
     public static final String COL_1 = "ID";
@@ -21,14 +28,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String COL_8 = "SAVINGS";
     public static final String COL_10 = "OTHERS";
     public static final String COL_11 = "HOMENEEDS";
+    public static final String COL_12 = "DATEINSERTED";
 
     public SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 6);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME1 +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER)");
+        db.execSQL("create table " + TABLE_NAME1 +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')))");
 
     }
 
@@ -38,6 +46,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public Expenditure getLastInsertedSaving() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "select * from " + TABLE_NAME1 +
+                " where " + COL_8 + " <> 0" +
+                " order by " + COL_1 + " desc " +
+                " limit 1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Expenditure expenditure = new Expenditure();
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            expenditure.setId(cursor.getLong(0));
+        }
+        return expenditure;
+
+    }
 
     public boolean insertTransport(int transport){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -81,6 +105,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public void updateSavings(Expenditure expenditure){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues savingsValues = new ContentValues();
+        savingsValues.put(COL_8, expenditure.getSavings());
+        db.update(TABLE_NAME1, savingsValues, null, null);
+
     }
 
     public boolean insertOthers(int others){
@@ -139,10 +171,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return totalHealth;
     }
 
-    public int addAllSavings(){
+    public int addAllSavings(String date){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalSavings = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_8) + ") FROM " + TABLE_NAME1, null);
+
+        String where = "";
+        if( date != null) {
+            where = " WHERE " + COL_12 + " >= Datetime('" + date + "')";
+        }
+
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_8) + ")" +
+                " FROM " + TABLE_NAME1 + where , null);
         if (cursor.moveToFirst()){
             totalSavings = cursor.getInt(0);
         }
@@ -174,7 +213,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
     public  int addAllCategories(){
-        int Savings = addAllSavings();
+        int Savings = addAllSavings(null);
         int Transport = addAllTransport();
         int Medical = addAllHealth();
         int Others = addAllOthers();

@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 15;
 
     // Columns of User table
     public static final String TABLE_USER = "user";
@@ -40,6 +40,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_PARSE_ID = "goal_parseId";
     public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
     public static final String COLUMN_GOAL_SYNCED = "goal_synced";
+    public static final String COLUMN_GOAL_COMPLETED = "goal_completed";
+    public static final String COLUMN_GOAL_POINTS = "goal_points";
+    public static final String COLUMN_GOAL_SURPLUS = "goal_amount_saved";
 
 
 
@@ -88,11 +91,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_GOAL_NAME + " TEXT NOT NULL, "
             + COLUMN_GOAL_AMOUNT + " INTEGER NOT NULL, "
-            + COLUMN_GOAL_STARTDATE + " DATE NOT NULL, "
+            + COLUMN_GOAL_STARTDATE + " TIMESTAMP DEFAULT (datetime('now', 'localtime')), "
             + COLUMN_GOAL_ENDDATE + " DATE NOT NULL, "
             + COLUMN_GOAL_PARSE_ID + " TEXT, "
             + COLUMN_GOAL_USER_ID + " INTEGER, "
-            + COLUMN_GOAL_SYNCED + " INTEGER "
+            + COLUMN_GOAL_SYNCED + " INTEGER, "
+            + COLUMN_GOAL_COMPLETED + " INTEGER, "
+            + COLUMN_GOAL_POINTS + " INTEGER, "
+            + COLUMN_GOAL_SURPLUS + " INTEGER "
             + ");";
 
     // Variable to create Expenditure_table

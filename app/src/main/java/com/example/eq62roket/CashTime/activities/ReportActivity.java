@@ -70,7 +70,7 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     public void sumSavings(){
-        int sumSavings = mySQLiteHelper.addAllSavings();
+        int sumSavings = mySQLiteHelper.addAllSavings(null);
         txtSavings.setText(formatter.format(sumSavings));
     }
 

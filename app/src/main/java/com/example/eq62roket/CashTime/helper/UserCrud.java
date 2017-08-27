@@ -68,7 +68,7 @@ public class UserCrud {
                 values,
                 DatabaseHelper.COLUMN_USER_ID + " = ?",
                 new String[]{String.valueOf(user.getId())});
-        mDatabase.close();
+        // mDatabase.close();
     }
 
     public void deleteUser(User user){

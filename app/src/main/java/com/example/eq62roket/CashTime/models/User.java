@@ -12,6 +12,10 @@ public class User {
     public User() {
     }
 
+    public User(long points) {
+        this.points = points;
+    }
+
     public User(long points, int household, int age, String sex, String educationlevel, String nationality) {
         this.points = points;
         this.household = household;
@@ -53,6 +57,8 @@ public class User {
     public void setPoints(long points) {
         this.points += points;
     }
+
+    public void resetPoints(long points){ this.points = points; }
 
     public int getHousehold() {
         return household;

@@ -22,7 +22,11 @@ import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class GoalsListActivity extends AppCompatActivity {
 
@@ -32,6 +36,10 @@ public class GoalsListActivity extends AppCompatActivity {
     private UserCrud userCrud;
     private Expenditure expenditure;
     private Goal goal;
+
+    private Date currentDate;
+    private Date goalEndDate;
+
     Button btnPoints;
 
     SQLiteHelper sqliteHelper;
@@ -52,6 +60,7 @@ public class GoalsListActivity extends AppCompatActivity {
         sqliteHelper = new SQLiteHelper(this);
         expenditure = new Expenditure();
         final User user = userCrud.getLastUserInserted();
+        goal = goalCrud.getLastInsertedGoal();
 
         // get amount saved on goal and goal amount.
         /*final int goal_amount = goalCrud.getLastInsertedGoal().getAmount();
@@ -71,17 +80,44 @@ public class GoalsListActivity extends AppCompatActivity {
         GoalListAdapter goalListAdapter = new GoalListAdapter(this, R.layout.goal_list_adapter, goalArrayList);
         listView.setAdapter(goalListAdapter);
 
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("d/M/yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        try {
+            currentDate = df.parse(formattedDate);
+            goalEndDate = df.parse(goal.getEndDate());
+            //Log.d(TAG, "Current Date " + currentDate);
+            //Log.d(TAG, "Goal End Date " + goalEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "GoAL enddate " + goalEndDate);
+        Log.d(TAG, "GoAL enddate " + currentDate);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (goalCrud.getLastInsertedGoal().getCompleteStatus() != 1){
+                /*if ( (goalCrud.getLastInsertedGoal().getCompleteStatus() == 0) || (goalCrud.getLastInsertedGoal().getCompleteStatus() == 1 && currentDate.after( goalEndDate )) ) {
                     Toast.makeText(GoalsListActivity.this,
                             "You must complete the current goal to set another goal.",
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    Intent intent = new Intent(GoalsListActivity.this, AddGoalActivity.class);
+                    startActivity(intent);
+                }*/
+                if ( (goalCrud.getLastInsertedGoal().getCompleteStatus() == 0 && currentDate.before(goalEndDate))){
+                    Toast.makeText(GoalsListActivity.this,
+                            "You must complete the current goal to set another goal.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
                     Intent intent = new Intent(GoalsListActivity.this, AddGoalActivity.class);
                     startActivity(intent);
                 }

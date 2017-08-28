@@ -1,7 +1,10 @@
 package com.example.eq62roket.CashTime.activities;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,6 +27,11 @@ import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.parse.Parse;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +50,8 @@ public class HomeDrawerActivity extends AppCompatActivity
     private long userPoints;
     private int goal_amount;
     private int goal_saving;
+    private  Date currentDate;
+    private Date goalEndDate;
 
 
     @Override
@@ -69,17 +79,33 @@ public class HomeDrawerActivity extends AppCompatActivity
         goal_saving = sqLiteHelper.addAllSavings(goal.getStartDate());
         int extraSavings = goal_saving - goal_amount;
 
-        // set goal complete status
-        if ( (goal_saving + goal.getSurplus()) >= goal_amount) {
-            goal.setCompleteStatus(1);
-            goalCrud.updateGoal(goal);
-            Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
-            Log.d(TAG, "goal Amount " + goal.getAmount());
-            Log.d(TAG, "goal saving " + goal_saving);
-            // reset savings to zero
-            //expenditure = sqliteHelper.getLastInsertedExpenditure();
-            //expenditure.setSavings(0);
-            //sqliteHelper.updateSavings(expenditure);
+        //get todays date and the end date of the current goal and parse them into java dates for comparison
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("d/M/yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        try {
+            currentDate = df.parse(formattedDate);
+            goalEndDate = df.parse(goal.getEndDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        // set goal complete status only if its active
+        if(  goal.getCompleteStatus() == 0 && currentDate.before(goalEndDate)  ) {
+            if ((goal_saving + goal.getSurplus()) >= goal_amount) {
+                goal.setCompleteStatus(1);
+                goalCrud.updateGoal(goal);
+                Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
+                Log.d(TAG, "goal Amount " + goal.getAmount());
+                Log.d(TAG, "goal saving " + goal_saving);
+                // reset savings to zero
+                //expenditure = sqliteHelper.getLastInsertedExpenditure();
+                //expenditure.setSavings(0);
+                //sqliteHelper.updateSavings(expenditure);
+            }
         }
        // Log.d(TAG, "goal last saving inserted " + sqLiteHelper.addAllSavings(null));
 
@@ -145,6 +171,38 @@ public class HomeDrawerActivity extends AppCompatActivity
                 HomeDrawerActivity.this.startActivity(HomeTipsintent);
             }
         });
+
+
+
+        if (currentDate.after( goalEndDate )) {
+
+            NotificationCompat.Builder mBuilder =
+                    (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.goals)
+                            .setContentTitle("Goal Deadline ")
+                            .setContentText("You were not able to complete your goal in time.");
+
+            Intent resultIntent = new Intent(this, GoalsListActivity.class);
+
+            PendingIntent resultPendingIntent =
+                    PendingIntent.getActivity(
+                            this,
+                            0,
+                            resultIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+            mBuilder.setContentIntent(resultPendingIntent);
+
+            // Sets an ID for the notification
+            int mNotificationId = 1;
+
+            // Gets an instance of the NotificationManager service
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            // Builds the notification and issues it.
+
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        }
 
     }
 

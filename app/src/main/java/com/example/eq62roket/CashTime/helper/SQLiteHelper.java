@@ -31,7 +31,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String COL_12 = "DATEINSERTED";
 
     public SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, 6);
+        super(context, DATABASE_NAME, null, 7);
     }
 
     @Override
@@ -222,6 +222,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         int totalCategory = Savings + Transport + Medical + Others + Homeneeds + Education;
 
+        Log.d(TAG, "Savings: " + Savings);
         return totalCategory;
     }
 

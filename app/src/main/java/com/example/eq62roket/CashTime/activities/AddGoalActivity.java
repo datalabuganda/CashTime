@@ -24,6 +24,7 @@ import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +43,10 @@ public class AddGoalActivity extends AppCompatActivity {
     private GoalCrud goalCrud;
     private UserCrud userCrud;
     private Goal goal;
+
+    private  Date currentDate;
+    private Date goalEndDate;
+
     SQLiteHelper sqLiteHelper;
 
     SimpleDateFormat simpleDateFormat;
@@ -67,6 +72,25 @@ public class AddGoalActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //get todays date and the end date of the current goal and parse them into java dates for comparison
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("d/M/yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        try {
+            currentDate = df.parse(formattedDate);
+
+            Goal last_inserted = goalCrud.getLastInsertedGoal();
+            goalEndDate = null;
+            if(last_inserted != null){
+                goalEndDate = df.parse(last_inserted.getEndDate());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
 
         btnAddGoal.setOnClickListener(new View.OnClickListener() {
@@ -102,10 +126,20 @@ public class AddGoalActivity extends AppCompatActivity {
 
                     if (goalCrud.getLastInsertedGoal() != null){
                         Goal goalLastInserted = goalCrud.getLastInsertedGoal();
-                        if (goalLastInserted.getCompleteStatus() == 1){
+                        if (
+                                goalLastInserted.getCompleteStatus() == 1 || (goal.getCompleteStatus() == 0 && currentDate.after(goalEndDate))  ){
                             int goalLastInsertedAmount = goalLastInserted.getAmount();
                             int goalLastInsertedSavings = sqLiteHelper.addAllSavings(goalLastInserted.getStartDate()) + goalLastInserted.getSurplus();
+
+                            //under normal circumstances ie the goal was completed..this is our surplus
                             int goalLastInsertedSurplus = goalLastInsertedSavings - goalLastInsertedAmount;
+
+                            //if the last goal was failed, the whole saved amount becomes the next surplus ie we don't subtract the goal's amount
+                            if(  goalEndDate != null && (goal.getCompleteStatus() == 0 && currentDate.after(goalEndDate))  ) {
+                                goalLastInsertedSurplus += goalLastInsertedAmount;
+                            }
+                            Log.d(TAG, " goalLastInsertedSurplus" + goalLastInsertedSurplus);
+
                             if (goalLastInsertedSurplus < 0){
                                 goalLastInsertedSurplus = 0;
                             }

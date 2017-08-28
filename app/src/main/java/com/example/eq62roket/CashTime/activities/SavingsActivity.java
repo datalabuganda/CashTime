@@ -62,7 +62,6 @@ public class SavingsActivity extends AppCompatActivity {
                                // Log.d(TAG, "goal status " + goal.getCompleteStatus());
 
 
-
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
                                 Intent Savingsintent = new Intent(SavingsActivity.this, ExpenditureActivity.class);
                                 SavingsActivity.this.startActivity(Savingsintent);

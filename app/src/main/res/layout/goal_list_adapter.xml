@@ -11,6 +11,8 @@
         android:layout_marginLeft="180dp"
         android:alpha=".60"
         android:src="@drawable/completed" />
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

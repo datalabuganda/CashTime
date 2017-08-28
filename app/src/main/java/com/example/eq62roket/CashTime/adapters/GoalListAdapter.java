@@ -24,7 +24,11 @@ import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by probuse on 8/5/17.
@@ -45,6 +49,9 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
     private Expenditure expenditure;
     private User user;
     private Goal goal;
+
+    private Date currentDate;
+    private Date goalEndDate;
 
     public GoalListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull ArrayList<Goal> objects) {
         super(context, resource, objects);
@@ -71,7 +78,6 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         final String goal_endDate = getItem(position).getEndDate();
         final long goal_id = getItem(position).getId();
         final long st = getItem(position).getCompleteStatus();
-        //goal = getItem(position);
         goal = goalCrud.getGoalById(goal_id);
 
 
@@ -98,12 +104,28 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         tvEndDate.setText("By: " + goal_endDate);
         tvGoalAmount.setText("Shs: " + formatter.format(goal_amount));
 
-        /*Log.d(TAG, "goal status  " + goal.getCompleteStatus());
-        Log.d(TAG, "goal saved hack  " + sqLiteHelper.addAllSavings(goal.getStartDate()));
-        Log.d(TAG, "goal saved  " + sqLiteHelper.addAllSavings(null));
-        Log.d(TAG, "goal id  " + goal_id);
-        Log.d(TAG, "goal start date " + goal.getStartDate());*/
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("d/M/yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        try {
+            currentDate = df.parse(formattedDate);
+            goalEndDate = df.parse(goal.getEndDate());
+            //Log.d(TAG, "Current Date " + currentDate);
+            //Log.d(TAG, "Goal End Date " + goalEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         if (goal.getCompleteStatus() == 1){
+            imgCompleted.setImageResource(R.drawable.completed);
+            imgCompleted.setVisibility(convertView.VISIBLE);
+        }
+
+        else if (goal.getCompleteStatus() == 0 && (currentDate.after( goalEndDate ))){
+            imgCompleted.setImageResource(R.drawable.failed);
             imgCompleted.setVisibility(convertView.VISIBLE);
         }
         else {

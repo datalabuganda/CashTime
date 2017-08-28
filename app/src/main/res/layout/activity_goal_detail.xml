@@ -85,22 +85,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvUserPoints"
-                android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:layout_marginTop="20dp"
-                android:text="Your Score"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+            <!--<TextView-->
+                <!--android:id="@+id/tvUserPoints"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30sp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:text="Your Score"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textSize="18sp"/>-->
 
-            <RatingBar
+            <!--<RatingBar
                 android:id="@+id/ratingBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:isIndicator="true"
-                android:clickable="false"/>
+                android:clickable="false"/>-->
 
         </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.example.eq62roket.CashTime.activities;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -23,14 +24,26 @@ import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.TLSSocketFactory;
+import com.example.eq62roket.CashTime.helper.TrustManagerManipulator;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Goal;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.parse.Parse;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 public class HomeDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +82,7 @@ public class HomeDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         sqLiteHelper = new SQLiteHelper(this);
         goalCrud = new GoalCrud(this);
@@ -178,9 +192,10 @@ public class HomeDrawerActivity extends AppCompatActivity
 
             NotificationCompat.Builder mBuilder =
                     (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.goals)
+                            .setSmallIcon(R.drawable.goal1)
                             .setContentTitle("Goal Deadline ")
-                            .setContentText("You were not able to complete your goal in time.");
+                            .setContentText("You were not able to complete your goal in time.")
+                            .setAutoCancel(true);
 
             Intent resultIntent = new Intent(this, GoalsListActivity.class);
 
@@ -193,18 +208,20 @@ public class HomeDrawerActivity extends AppCompatActivity
                     );
             mBuilder.setContentIntent(resultPendingIntent);
 
+
             // Sets an ID for the notification
             int mNotificationId = 1;
 
             // Gets an instance of the NotificationManager service
             NotificationManager mNotifyMgr =
                     (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            // Builds the notification and issues it.
 
+            // Builds the notification and issues it.
             mNotifyMgr.notify(mNotificationId, mBuilder.build());
         }
 
     }
+
 
     @Override
     protected void onStart() {
@@ -217,10 +234,22 @@ public class HomeDrawerActivity extends AppCompatActivity
         sqLiteHelper = new SQLiteHelper(this);
         userPoints = userCrud.getLastUserInserted().getPoints();
 
+        try {
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+            SSLContext sslContext;
+            sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, null, null);
+            sslContext.createSSLEngine();
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                | NoSuchAlgorithmException | KeyManagementException e) {
+            e.printStackTrace();
+        }
+
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
                 .server("https://oxfamdataservice.org/parse/")
                 .build()
+
         );
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();

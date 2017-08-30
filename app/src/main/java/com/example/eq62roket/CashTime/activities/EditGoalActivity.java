@@ -94,7 +94,7 @@ public class EditGoalActivity extends AppCompatActivity {
                 goal.setSyncStatus(0);
 
                 Log.d(TAG, "GoalParseId " + goalCrud.getLastInsertedGoal().getParseId());
-                Log.d(TAG, "GoalParseId " + goalCrud.getLastInsertedGoal().getId());
+                Log.d(TAG, "goal Surplus " + goal.getSurplus());
 
                 Intent updateIntent = new Intent(EditGoalActivity.this, GoalsListActivity.class);
 

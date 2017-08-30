@@ -2,7 +2,6 @@ package com.example.eq62roket.CashTime.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.graphics.Color;
 import android.view.View;
@@ -28,7 +27,7 @@ public class SplashScreenActivity extends Activity {
                 .withTargetActivity(RegisterActivity.class)
                 .withSplashTimeOut(500)
                 .withBackgroundColor(Color.parseColor("#074E72"))
-                .withLogo(R.mipmap.logoresized)
+                .withLogo(R.drawable.cashtime_logo)
                 .withFooterText("Copyright CashTime 2017")
                 .withBeforeLogoText("CashTime")
                 .withAfterLogoText("Track Your Expenses Visually");

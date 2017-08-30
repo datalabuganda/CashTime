@@ -126,8 +126,7 @@ public class AddGoalActivity extends AppCompatActivity {
 
                     if (goalCrud.getLastInsertedGoal() != null){
                         Goal goalLastInserted = goalCrud.getLastInsertedGoal();
-                        if (
-                                goalLastInserted.getCompleteStatus() == 1 || (goal.getCompleteStatus() == 0 && currentDate.after(goalEndDate))  ){
+                        if ( goalLastInserted.getCompleteStatus() == 1 || (goal.getCompleteStatus() == 0 && currentDate.after(goalEndDate))  ){
                             int goalLastInsertedAmount = goalLastInserted.getAmount();
                             int goalLastInsertedSavings = sqLiteHelper.addAllSavings(goalLastInserted.getStartDate()) + goalLastInserted.getSurplus();
 

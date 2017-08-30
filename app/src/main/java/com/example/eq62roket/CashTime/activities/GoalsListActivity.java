@@ -89,13 +89,11 @@ public class GoalsListActivity extends AppCompatActivity {
         try {
             currentDate = df.parse(formattedDate);
             goalEndDate = df.parse(goal.getEndDate());
-            //Log.d(TAG, "Current Date " + currentDate);
-            //Log.d(TAG, "Goal End Date " + goalEndDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Log.d(TAG, "GoAL enddate " + goalEndDate);
+        Log.d(TAG, "GoAL savings " + sqliteHelper.addAllSavings(goal.getStartDate()));
         Log.d(TAG, "GoAL enddate " + currentDate);
 
 

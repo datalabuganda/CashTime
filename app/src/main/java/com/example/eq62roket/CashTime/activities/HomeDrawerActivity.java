@@ -3,29 +3,29 @@ package com.example.eq62roket.CashTime.activities;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.CustomGrid;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
-import com.example.eq62roket.CashTime.helper.TLSSocketFactory;
-import com.example.eq62roket.CashTime.helper.TrustManagerManipulator;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -35,20 +35,37 @@ import com.parse.Parse;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 
-public class HomeDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeDrawerActivity extends AppCompatActivity{
+
+    String[] web = {
+            "Income",
+            "Expenditure",
+            "Goals",
+            "Reports",
+            "Analytics",
+            "Tips"
+    } ;
+
+    int[] imageId = {
+            R.drawable.income,
+            R.drawable.expenditure,
+            R.drawable.goals,
+            R.drawable.reports,
+            R.drawable.analytics,
+            R.drawable.tips
+    };
+
+    String[] values = new String[] { "IncomeActivity", "ExpenditureActivity", "GoalsListActivity", "TabbedReportActivity", "TabbedAnalysisActivity", "TipsActivity" };
 
     ImageView imgGoal, imgIncome, imgExpenditure, imgAnalytics, imgReports, imgTips;
+    GridView grid;
 
     ParseConnector parseConnector;
     UserCrud userCrud;
@@ -66,23 +83,11 @@ public class HomeDrawerActivity extends AppCompatActivity
     private  Date currentDate;
     private Date goalEndDate;
 
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_drawer);
+        setContentView(R.layout.activity_home_grid);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
 
         sqLiteHelper = new SQLiteHelper(this);
         goalCrud = new GoalCrud(this);
@@ -115,10 +120,7 @@ public class HomeDrawerActivity extends AppCompatActivity
                 Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
                 Log.d(TAG, "goal Amount " + goal.getAmount());
                 Log.d(TAG, "goal saving " + goal_saving);
-                // reset savings to zero
-                //expenditure = sqliteHelper.getLastInsertedExpenditure();
-                //expenditure.setSavings(0);
-                //sqliteHelper.updateSavings(expenditure);
+
             }
         }
        // Log.d(TAG, "goal last saving inserted " + sqLiteHelper.addAllSavings(null));
@@ -129,6 +131,8 @@ public class HomeDrawerActivity extends AppCompatActivity
         imgAnalytics = (ImageView) findViewById(R.id.imgAnalytics);
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
+
+
 /*
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -136,53 +140,23 @@ public class HomeDrawerActivity extends AppCompatActivity
 */
 
 
+        CustomGrid adapter = new CustomGrid(HomeDrawerActivity.this, web, imageId);
+        grid=(GridView)findViewById(R.id.grid);
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-
-        imgGoal.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent HomeGoalintent = new Intent(HomeDrawerActivity.this, GoalsListActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeGoalintent);
-            }
-        });
-
-        imgIncome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent HomeIncomeintent = new Intent(HomeDrawerActivity.this, IncomeActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeIncomeintent);
-            }
-        });
-
-        imgExpenditure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent HomeExpenditureintent = new Intent(HomeDrawerActivity.this, ExpenditureActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeExpenditureintent);
-            }
-        });
-
-        imgAnalytics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent HomeAnalyticsintent = new Intent(HomeDrawerActivity.this, TabbedAnalysisActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeAnalyticsintent);
-            }
-        });
-
-        imgReports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent HomeReportsintent = new Intent(HomeDrawerActivity.this, TabbedReportActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeReportsintent);
-            }
-        });
-
-        imgTips.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent HomeTipsintent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
-                HomeDrawerActivity.this.startActivity(HomeTipsintent);
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String val = values[position];
+                Class ourClass  = null;
+                try {
+                    ourClass = Class.forName("com.example.eq62roket.CashTime.activities."+val);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(HomeDrawerActivity.this, ourClass);
+                startActivity(intent);
             }
         });
 
@@ -282,7 +256,6 @@ public class HomeDrawerActivity extends AppCompatActivity
         parseConnector.addExpenditureToParse();
         parseConnector.addIncomeToParse();
 
-
     }
 
 
@@ -317,57 +290,7 @@ public class HomeDrawerActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        /*//noinspection SimplifiableIfStatement
-        if (id == R.id.action_help) {
-            Intent helpIntent = new Intent(HomeDrawerActivity.this, HelpActivity.class);
-            startActivity(helpIntent);
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_editprofile) {
-            Toast.makeText(this, "Edit your profile", Toast.LENGTH_LONG).show();
-            // Handle the camera action
-        } else if (id == R.id.nav_goals) {
-            Intent goalslistIntent = new Intent(HomeDrawerActivity.this, GoalsListActivity.class);
-            startActivity(goalslistIntent);
-           // Toast.makeText(this, "Goals", Toast.LENGTH_LONG).show();
-
-        } else if (id == R.id.nav_income) {
-            Intent incomeIntent = new Intent(HomeDrawerActivity.this, IncomeActivity.class);
-            startActivity(incomeIntent);
-           // Toast.makeText(this, "Income", Toast.LENGTH_LONG).show();
-
-        } else if (id == R.id.nav_expenditure) {
-            Intent expenditureIntent = new Intent(HomeDrawerActivity.this, ExpenditureActivity.class);
-            startActivity(expenditureIntent);
-            //Toast.makeText(this, "Expenditure", Toast.LENGTH_LONG).show();
-
-        } else if (id == R.id.nav_reports) {
-            Intent reportsIntent = new Intent(HomeDrawerActivity.this, ReportActivity.class);
-            startActivity(reportsIntent);
-           // Toast.makeText(this, "Reports", Toast.LENGTH_LONG).show();
-
-        } else if (id == R.id.nav_analysis) {
-            Intent analysisIntent = new Intent(HomeDrawerActivity.this, AnalysisActivity.class);
-            startActivity(analysisIntent);
-            //Toast.makeText(this, "Analysis", Toast.LENGTH_LONG).show();
-
-        }else if (id == R.id.nav_tips) {
-            Intent tipsIntent = new Intent(HomeDrawerActivity.this, TipsActivity.class);
-            startActivity(tipsIntent);
-            //Toast.makeText(this, "TipsActivity", Toast.LENGTH_LONG).show();
-
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

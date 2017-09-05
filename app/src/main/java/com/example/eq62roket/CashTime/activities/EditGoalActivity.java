@@ -86,20 +86,16 @@ public class EditGoalActivity extends AppCompatActivity {
                 int new_goal_amount = Integer.parseInt(etGoalAmount.getText().toString());
                 String new_goal_enddate = String.valueOf(etChooseDate.getText());
 
-                String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
-                Log.d(TAG, "ParseId: " + goalParseId);
+                String goalParseId = goalCrud.getLastInsertedGoal().getPhpId();
+
 
                 // create a goal instance with the above information
                 goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user, goalParseId);
                 goal.setSyncStatus(0);
-
-                Log.d(TAG, "GoalParseId " + goalCrud.getLastInsertedGoal().getParseId());
-                Log.d(TAG, "goal Surplus " + goal.getSurplus());
-
-                Intent updateIntent = new Intent(EditGoalActivity.this, GoalsListActivity.class);
-
                 // update the database
                 goalCrud.updateGoal(goal);
+
+                Intent updateIntent = new Intent(EditGoalActivity.this, GoalsListActivity.class);
                 Toast.makeText(EditGoalActivity.this, "Goal updated to " + goal.getName(),  Toast.LENGTH_SHORT).show();
                 startActivity(updateIntent);
                 finish();

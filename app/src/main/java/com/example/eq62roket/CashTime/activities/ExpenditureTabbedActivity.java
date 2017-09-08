@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 
 import java.text.DecimalFormat;
 
@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 public class ExpenditureTabbedActivity extends Fragment {
 
     TextView txtTransport, txtEducation, txtHealth, txtSavings, txtOthers, txtTotal, txtHomeneeds;
-    SQLiteHelper mySQLiteHelper;
+    ExpenditureCrud expenditureCrud;
     Button btnGraph;
     DecimalFormat formatter;
 
@@ -38,7 +38,7 @@ public class ExpenditureTabbedActivity extends Fragment {
         txtHomeneeds = (TextView) rootView.findViewById(R.id.txtHomeneeds);
 
         formatter = new DecimalFormat("#,###,###");
-        mySQLiteHelper = new SQLiteHelper(getActivity());
+        expenditureCrud = new ExpenditureCrud(getActivity());
 
         sumEducation();
         sumTransport();
@@ -53,37 +53,37 @@ public class ExpenditureTabbedActivity extends Fragment {
     }
 
     public void sumTransport(){
-        int sumTransport = mySQLiteHelper.addAllTransport();
+        int sumTransport = expenditureCrud.addAllTransport();
         txtTransport.setText(formatter.format(sumTransport));
     }
 
     public void sumEducation(){
-        int sumEducation = mySQLiteHelper.addAllEducation();
+        int sumEducation = expenditureCrud.addAllEducation();
         txtEducation.setText(formatter.format(sumEducation));
     }
 
     public void sumHealth(){
-        int sumHealth = mySQLiteHelper.addAllHealth();
+        int sumHealth = expenditureCrud.addAllHealth();
         txtHealth.setText(formatter.format(sumHealth));
     }
 
     public void sumSavings(){
-        int sumSavings = mySQLiteHelper.addAllSavings(null);
+        int sumSavings = expenditureCrud.addAllSavings(null);
         txtSavings.setText(formatter.format(sumSavings));
     }
 
     public void sumOthers(){
-        int sumOthers = mySQLiteHelper.addAllOthers();
+        int sumOthers = expenditureCrud.addAllOthers();
         txtOthers.setText(formatter.format(sumOthers));
     }
 
     public void sumTotal(){
-        int sumTotal = mySQLiteHelper.addAllCategories();
+        int sumTotal = expenditureCrud.addAllCategories();
         txtTotal.setText(formatter.format(sumTotal));
     }
 
     public void sumHomeneeds(){
-        int sumHomeneeds = mySQLiteHelper.addAllHomeneeds();
+        int sumHomeneeds = expenditureCrud.addAllHomeneeds();
         txtHomeneeds.setText(formatter.format(sumHomeneeds));
     }
 

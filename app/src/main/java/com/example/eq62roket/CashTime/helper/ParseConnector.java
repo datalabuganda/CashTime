@@ -24,8 +24,8 @@ public class ParseConnector {
     UserCrud userCrud;
     GoalCrud goalCrud;
 
-    SQLiteHelper sqLiteHelper;
-    IncomeSQLiteHelper incomeSQLiteHelper;
+    ExpenditureCrud expenditureCrud;
+    IncomeCrud incomeCrud;
 
     Goal lastInsertedGoal;
     User lastInsertedUser;
@@ -38,8 +38,8 @@ public class ParseConnector {
         this.lastInsertedGoal = goalCrud.getLastInsertedGoal();
         this.lastInsertedUser = userCrud.getLastUserInserted();
 
-        sqLiteHelper = new SQLiteHelper(context);
-        incomeSQLiteHelper = new IncomeSQLiteHelper(context);
+        expenditureCrud = new ExpenditureCrud(context);
+        incomeCrud = new IncomeCrud(context);
     }
 
     public void addUserToParse(){
@@ -55,7 +55,7 @@ public class ParseConnector {
             public void done(ParseException e) {
                 if (e == null){
                     String userParseId = user.getObjectId();
-                    lastInsertedUser.setParseId(userParseId);
+                    lastInsertedUser.setPhpId(userParseId);
                     userCrud.updateUser(lastInsertedUser);
                 }
                 else{
@@ -69,7 +69,7 @@ public class ParseConnector {
 
     public void addGoalToParse(){
         // get the user back from the database
-        final String userParseId = userCrud.getLastUserInserted().getParseId();
+        final String userParseId = userCrud.getLastUserInserted().getPhpId();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
@@ -91,7 +91,7 @@ public class ParseConnector {
                         public void done(ParseException e) {
                             if (e == null){
                                 String goalParseId = goal.getObjectId();
-                                lastInsertedGoal.setParseId(goalParseId);
+                                lastInsertedGoal.setPhpId(goalParseId);
                                 goalCrud.updateGoal(lastInsertedGoal);
 
                             }
@@ -108,8 +108,8 @@ public class ParseConnector {
 
 
     public void addExpenditureToParse(){
-       String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
-        Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getParseId());
+       String goalParseId = goalCrud.getLastInsertedGoal().getPhpId();
+        Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getPhpId());
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Goal");
         query.getInBackground(goalParseId, new GetCallback<ParseObject>() {
@@ -117,13 +117,13 @@ public class ParseConnector {
             public void done(ParseObject object, ParseException e) {
                 if (e == null){
                     ParseObject expenditure = new ParseObject("Expenditure");
-                    expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
-                    expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
-                    expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
-                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings(null));
-                    expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
-                    expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
-                    expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());
+                    expenditure.put("TotalTransportCost", expenditureCrud.addAllTransport());
+                    expenditure.put("TotalEducationCost", expenditureCrud.addAllEducation());
+                    expenditure.put("TotalHealthCost", expenditureCrud.addAllHealth());
+                    expenditure.put("TotalSavingCost", expenditureCrud.addAllSavings(null));
+                    expenditure.put("TotalOthersCost", expenditureCrud.addAllOthers());
+                    expenditure.put("TotalHomeNeedsCost", expenditureCrud.addAllHomeneeds());
+                    expenditure.put("TotalExpenditureCost", expenditureCrud.addAllCategories());
 
                     // create a relationship between goal table and expenditure table
                     expenditure.put("parent", object);
@@ -138,7 +138,7 @@ public class ParseConnector {
     }
 
     public void addIncomeToParse(){
-        String userParseId = userCrud.getLastUserInserted().getParseId();
+        String userParseId = userCrud.getLastUserInserted().getPhpId();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
@@ -146,11 +146,11 @@ public class ParseConnector {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     ParseObject income = new ParseObject("Income");
-                    income.put("TotalLoanIncome", incomeSQLiteHelper.addAllLoan());
-                    income.put("TotalSalaryIncome", incomeSQLiteHelper.addAllSalary());
-                    income.put("TotalInvestmentIncome", incomeSQLiteHelper.addAllInvestment());
-                    income.put("TotalOthersIncome", incomeSQLiteHelper.addAllOthers());
-                    income.put("TotalIncome", incomeSQLiteHelper.addAllIncome());
+                    income.put("TotalLoanIncome", incomeCrud.addAllLoan());
+                    income.put("TotalSalaryIncome", incomeCrud.addAllSalary());
+                    income.put("TotalInvestmentIncome", incomeCrud.addAllInvestment());
+                    income.put("TotalOthersIncome", incomeCrud.addAllOthers());
+                    income.put("TotalIncome", incomeCrud.addAllIncome());
 
                     // create a relationship between user table and income table
                     income.put("parent", object);
@@ -211,13 +211,13 @@ public class ParseConnector {
             public void done(ParseObject expenditure, ParseException e) {
                 if (e == null) {
                     // Now let's update it with some new data.
-                    expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
-                    expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
-                    expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
-                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings(null));
-                    expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
-                    expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
-                    expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());
+                    expenditure.put("TotalTransportCost", expenditureCrud.addAllTransport());
+                    expenditure.put("TotalEducationCost", expenditureCrud.addAllEducation());
+                    expenditure.put("TotalHealthCost", expenditureCrud.addAllHealth());
+                    expenditure.put("TotalSavingCost", expenditureCrud.addAllSavings(null));
+                    expenditure.put("TotalOthersCost", expenditureCrud.addAllOthers());
+                    expenditure.put("TotalHomeNeedsCost", expenditureCrud.addAllHomeneeds());
+                    expenditure.put("TotalExpenditureCost", expenditureCrud.addAllCategories());
 
                     expenditure.saveInBackground();
                 }
@@ -233,11 +233,11 @@ public class ParseConnector {
             public void done(ParseObject income, ParseException e) {
                 if (e == null) {
                     // Now let's update it with some new data.
-                    income.put("TotalLoanIncome", incomeSQLiteHelper.addAllLoan());
-                    income.put("TotalSalaryIncome", incomeSQLiteHelper.addAllSalary());
-                    income.put("TotalInvestmentIncome", incomeSQLiteHelper.addAllInvestment());
-                    income.put("TotalOthersIncome", incomeSQLiteHelper.addAllOthers());
-                    income.put("TotalIncome", incomeSQLiteHelper.addAllIncome());
+                    income.put("TotalLoanIncome", incomeCrud.addAllLoan());
+                    income.put("TotalSalaryIncome", incomeCrud.addAllSalary());
+                    income.put("TotalInvestmentIncome", incomeCrud.addAllInvestment());
+                    income.put("TotalOthersIncome", incomeCrud.addAllOthers());
+                    income.put("TotalIncome", incomeCrud.addAllIncome());
 
                     income.saveInBackground();
                 }

@@ -1,22 +1,21 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
 
 public class TransportActivity extends AppCompatActivity {
 
-    SQLiteHelper myHelper;
+    ExpenditureCrud expenditureCrud;
     EditText edtTransport;
     Button btnTransport;
     UserCrud userCrud;
@@ -28,7 +27,7 @@ public class TransportActivity extends AppCompatActivity {
 
         edtTransport = (EditText) findViewById(R.id.amtTransport);
         btnTransport = (Button) findViewById(R.id.btnTransport);
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         userCrud = new UserCrud(this);
 
@@ -44,7 +43,7 @@ public class TransportActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
 //                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
-//                        boolean isInseted = myHelper.insertTransport(yVal);
+//                        boolean isInseted = incomeCrud.insertTransport(yVal);
 //                        if (isInseted = true)
 //                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
 //                        else
@@ -53,11 +52,12 @@ public class TransportActivity extends AppCompatActivity {
 //                        TransportActivity.this.startActivity(Transportintent);
                         if (!edtTransport.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
-                            boolean isInseted = myHelper.insertTransport(yVal);
+                            boolean isInseted = expenditureCrud.insertTransport(yVal);
                             if (isInseted) {
                                 // if user spends on any expense, award them 2 points
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
+                                user.setSyncStatus(0);
                                 userCrud.updateUser(user);
 
                                 Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();

@@ -3,9 +3,8 @@ package com.example.eq62roket.CashTime.activities;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -86,11 +85,11 @@ public class EditGoalActivity extends AppCompatActivity {
                 int new_goal_amount = Integer.parseInt(etGoalAmount.getText().toString());
                 String new_goal_enddate = String.valueOf(etChooseDate.getText());
 
-                String goalParseId = goalCrud.getLastInsertedGoal().getPhpId();
+                String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
 
 
                 // create a goal instance with the above information
-                goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user, goalParseId);
+                goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user, goalPhpId);
                 goal.setSyncStatus(0);
                 // update the database
                 goalCrud.updateGoal(goal);

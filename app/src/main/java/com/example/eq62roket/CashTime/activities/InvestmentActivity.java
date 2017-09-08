@@ -2,8 +2,8 @@ package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,13 +14,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.DatabaseHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InvestmentActivity extends AppCompatActivity {
 
@@ -30,7 +30,9 @@ public class InvestmentActivity extends AppCompatActivity {
     UserCrud userCrud;
     ListView investmentListView;
 
-    IncomeSQLiteHelper myHelper;
+    IncomeCrud incomeCrud;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,8 @@ public class InvestmentActivity extends AppCompatActivity {
         btnInvestments = (Button) findViewById(R.id.btnInvestment);
         edtInvestments = (EditText) findViewById(R.id.edtInvestment);
         investmentListView = (ListView) findViewById(R.id.InvestmentListView);
-        myHelper = new IncomeSQLiteHelper(this);
+        incomeCrud = new IncomeCrud(this);
+
 
         userCrud = new UserCrud(this);
 
@@ -56,11 +59,12 @@ public class InvestmentActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (!edtInvestments.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtInvestments.getText()));
-                            boolean isInseted = myHelper.insertInvestment(yVal);
+                            boolean isInseted = incomeCrud.insertInvestment(yVal);
                             if (isInseted) {
                                 // if user adds income, award them 2 points
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
+                                user.setSyncStatus(0);
                                 userCrud.updateUser(user);
 
                                 Toast.makeText(InvestmentActivity.this, "Your income has been added", Toast.LENGTH_LONG).show();
@@ -85,11 +89,11 @@ public class InvestmentActivity extends AppCompatActivity {
     private void populateListView(){
         Log.d(TAG, "populateListView: Displayng data in the listView");
 
-        Cursor data = myHelper.getInvestment();
+        Cursor data = incomeCrud.getInvestment();
         Log.d(TAG, "here is data: " + data);
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(myHelper.COL_6)));
+            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_INCOME_INVESTMENT)));
         }
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         investmentListView.setAdapter(adapter);
@@ -100,7 +104,7 @@ public class InvestmentActivity extends AppCompatActivity {
                 String investment = adapterView.getItemAtPosition(i).toString();
                 Log.d(TAG, "onItemClick: You clicked on" + investment);
 
-                Cursor data = myHelper.getInvestmentID(investment);
+                Cursor data = incomeCrud.getInvestmentID(investment);
                 int investmentID = -1;
                 while (data.moveToNext()){
                     investmentID = data.getInt(0);

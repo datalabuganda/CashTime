@@ -4,43 +4,32 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.NotificationCompat;
-import android.util.Log;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.adapters.CustomGrid;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
-import com.example.eq62roket.CashTime.helper.ParseConnector;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.helper.VolleyHelper;
 import com.example.eq62roket.CashTime.models.Goal;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.security.ProviderInstaller;
-import com.parse.Parse;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.net.ssl.SSLContext;
 
 public class HomeDrawerActivity extends AppCompatActivity{
 
@@ -67,11 +56,12 @@ public class HomeDrawerActivity extends AppCompatActivity{
     ImageView imgGoal, imgIncome, imgExpenditure, imgAnalytics, imgReports, imgTips;
     GridView grid;
 
-    ParseConnector parseConnector;
+//    ParseConnector parseConnector;
+    VolleyHelper volleyHelper;
     UserCrud userCrud;
     GoalCrud goalCrud;
-    IncomeSQLiteHelper incomeSQLiteHelper;
-    SQLiteHelper sqLiteHelper;
+    IncomeCrud incomeCrud;
+    ExpenditureCrud expenditureCrud;
     Goal goal;
 
     private static final String TAG = "HomeDrawertActivity";
@@ -89,13 +79,13 @@ public class HomeDrawerActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sqLiteHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
         goalCrud = new GoalCrud(this);
 
         goal = goalCrud.getLastInsertedGoal();
 
         goal_amount = goal.getAmount();
-        goal_saving = sqLiteHelper.addAllSavings(goal.getStartDate());
+        goal_saving = expenditureCrud.addAllSavings(goal.getStartDate());
         int extraSavings = goal_saving - goal_amount;
 
         //get todays date and the end date of the current goal and parse them into java dates for comparison
@@ -123,7 +113,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
 
             }
         }
-       // Log.d(TAG, "goal last saving inserted " + sqLiteHelper.addAllSavings(null));
+       // Log.d(TAG, "goal last saving inserted " + expenditureCrud.addAllSavings(null));
 
         imgGoal = (ImageView) findViewById(R.id.imgGoals);
         imgIncome = (ImageView) findViewById(R.id.imgIncome);
@@ -131,13 +121,6 @@ public class HomeDrawerActivity extends AppCompatActivity{
         imgAnalytics = (ImageView) findViewById(R.id.imgAnalytics);
         imgTips = (ImageView) findViewById(R.id.imgTips);
         imgReports = (ImageView) findViewById(R.id.imgReport);
-
-
-/*
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-*/
 
 
         CustomGrid adapter = new CustomGrid(HomeDrawerActivity.this, web, imageId);
@@ -202,59 +185,74 @@ public class HomeDrawerActivity extends AppCompatActivity{
         super.onStart();
 
         userCrud = new UserCrud(this);
-        parseConnector = new ParseConnector(this);
+        volleyHelper = new VolleyHelper(this);
         goalCrud = new GoalCrud(this);
-        incomeSQLiteHelper = new IncomeSQLiteHelper(this);
-        sqLiteHelper = new SQLiteHelper(this);
+        incomeCrud = new IncomeCrud(this);
+        expenditureCrud = new ExpenditureCrud(this);
         userPoints = userCrud.getLastUserInserted().getPoints();
 
-        try {
-            ProviderInstaller.installIfNeeded(getApplicationContext());
-            SSLContext sslContext;
-            sslContext = SSLContext.getInstance("TLSv1.2");
-            sslContext.init(null, null, null);
-            sslContext.createSSLEngine();
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
-                | NoSuchAlgorithmException | KeyManagementException e) {
-            e.printStackTrace();
-        }
-
-        Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
-                .server("https://oxfamdataservice.org/parse/")
-                .build()
-
-        );
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
-        String userParseId = userCrud.getLastUserInserted().getParseId();
+        String userPhpId = userCrud.getLastUserInserted().getPhpId();
 
 
-        // check if last inserted user's information has already synced
+        Log.d(TAG, "userSyncStatus: "+ userSyncStatus);
         if (userSyncStatus == 0) {
-            if (userParseId == null) {
-                parseConnector.addUserToParse();
-            } else {
-                parseConnector.upDateUser(userParseId);
+            if (userPhpId.equals("0")) {
+                volleyHelper.sendUserData();
+                Log.d(TAG, "user sending ");
             }
-            userCrud.getLastUserInserted().setSyncStatus(1);
+            else{
+                volleyHelper.updateUserData();
+                Log.d(TAG, "user updating ");
+            }
+
         }
 
         int goalSyncStatus = goalCrud.getLastInsertedGoal().getSyncStatus();
-        String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+        String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
 
-        if (goalSyncStatus == 0) {
-            if (goalParseId == null) {
-                parseConnector.addGoalToParse();
-            } else {
-                parseConnector.upDateGoal(goalParseId);
+        if (goalSyncStatus == 0){
+            if (goalPhpId.equals("0")){
+                volleyHelper.sendGoalData();
+                Log.d(TAG, "goal sending ");
             }
-            goalCrud.getLastInsertedGoal().setSyncStatus(1);
+            else {
+                volleyHelper.updateGoalData();
+                Log.d(TAG, "goal updating ");
+            }
+
         }
 
-        // send expenditure details to server with an internet connection on device.
-        parseConnector.addExpenditureToParse();
-        parseConnector.addIncomeToParse();
+        int expenditureSyncStatus = expenditureCrud.getSyncStatus();
+        int expenditurePhpId = expenditureCrud.getPhpID();
+
+        if (expenditureSyncStatus == 0){
+            if (expenditurePhpId == 0){
+                volleyHelper.sendExpenditureData();
+                Log.d(TAG, "expenditure sending ");
+            }
+            else{
+                volleyHelper.updateExpenditureData();
+                Log.d(TAG, "expenditure updating ");
+            }
+        }
+
+
+        int incomeSyncStatus = incomeCrud.getSyncStatus();
+        int incomePhpId = incomeCrud.getPhpID();
+
+
+        if (incomeSyncStatus == 0){
+            if (incomePhpId == 0){
+                volleyHelper.sendIncomeData();
+                Log.d(TAG, "income sending ");
+            }
+            else{
+                volleyHelper.updateIncomeData();
+                Log.d(TAG, "income updating ");
+            }
+        }
 
     }
 

@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.eq62roket.CashTime.models.Expenditure;
-import com.example.eq62roket.CashTime.models.Goal;
-import com.example.eq62roket.CashTime.models.Income;
 
 /**
  * Created by eq62roket on 8/2/17.
@@ -19,38 +17,85 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String TAG = "SQLiteHelper";
 
     public static final String DATABASE_NAME = "EXPENDITURE";
-    public static final String TABLE_NAME1 = "EXPENDITURETABLE";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "AMOUNT";
-    public static final String COL_3 = "TRANSPORT";
-    public static final String COL_4 = "EDUCATION";
-    public static final String COL_6 = "HEALTH";
-    public static final String COL_8 = "SAVINGS";
-    public static final String COL_10 = "OTHERS";
-    public static final String COL_11 = "HOMENEEDS";
-    public static final String COL_12 = "DATEINSERTED";
+    public static final String TABLE_EXPENDITURE = "EXPENDITURETABLE";
+    public static final String COLUMN_EXPENDITURE_ID = "ID";
+    public static final String COLUMN_EXPENDITURE_AMOUNT = "AMOUNT";
+    public static final String COLUMN_EXPENDITURE_TRANSPORT = "TRANSPORT";
+    public static final String COLUMN_EXPENDITURE_EDUCATION = "EDUCATION";
+    public static final String COLUMN_EXPENDITURE_HEALTH = "HEALTH";
+    public static final String COLUMN_EXPENDITURE_SAVINGS = "SAVINGS";
+    public static final String COLUMN_EXPENDITURE_OTHERS = "OTHERS";
+    public static final String COLUMN_EXPENDITURE_HOMENEEDS = "HOMENEEDS";
+    public static final String COLUMN_EXPENDITURE_INSERTDATE = "DATEINSERTED";
+    public static final String COLUMN_EXPENDITURE_SYNCSTATUS = "SYNCSTATUS";
+    public static final String COLUMN_EXPENDITURE_PHPID = "PHPID";
+
+
 
     public SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, 7);
+        super(context, DATABASE_NAME, null, 9);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME1 +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')))");
+        db.execSQL("create table " + TABLE_EXPENDITURE +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')), SYNCSTATUS INTEGER DEFAULT 0, PHPID INTEGER)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME1);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_EXPENDITURE);
         onCreate(db);
+    }
+
+    public void updateSyncExpenditure(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXPENDITURE_SYNCSTATUS, 1);
+        db.update(TABLE_EXPENDITURE, values, null, null);
+        //database.close();
+    }
+
+    public int getSyncStatus(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_SYNCSTATUS + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_SYNCSTATUS + " IS NOT 1 ";
+        Cursor cursor = db.rawQuery(query, null);
+        int syncStatus = 1;
+        if (cursor.moveToFirst()){
+            syncStatus = 0;
+        }
+        cursor.close();
+        return  syncStatus;
+    }
+
+    public boolean insertPhpId(int phpId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues phpIdValue = new ContentValues();
+        phpIdValue.put(COLUMN_EXPENDITURE_PHPID, phpId);
+        long result = db.insert(TABLE_EXPENDITURE, null, phpIdValue);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public int getPhpID(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_PHPID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_PHPID + " IS NOT NULL ";
+        Cursor cursor = db.rawQuery(query, null);
+        int phpId = 0;
+        if (cursor.moveToFirst()){
+            phpId = cursor.getInt(0);
+        }
+        cursor.close();
+        return  phpId;
     }
 
     public Expenditure getLastInsertedSaving() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "select * from " + TABLE_NAME1 +
-                " where " + COL_8 + " <> 0" +
-                " order by " + COL_1 + " desc " +
+        String selectQuery = "select * from " + TABLE_EXPENDITURE +
+                " where " + COLUMN_EXPENDITURE_SAVINGS + " <> 0" +
+                " order by " + COLUMN_EXPENDITURE_ID + " desc " +
                 " limit 1";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -66,8 +111,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public boolean insertTransport(int transport){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_3, transport);
-        long result = db.insert(TABLE_NAME1, null, contentValues);
+        contentValues.put(COLUMN_EXPENDITURE_TRANSPORT, transport);
+        long result = db.insert(TABLE_EXPENDITURE, null, contentValues);
         if (result == -1)
             return false;
         else
@@ -77,8 +122,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public boolean insertEducation(int amount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues educationValues = new ContentValues();
-        educationValues.put(COL_4, amount);
-        long result = db.insert(TABLE_NAME1, null, educationValues);
+        educationValues.put(COLUMN_EXPENDITURE_EDUCATION, amount);
+        long result = db.insert(TABLE_EXPENDITURE, null, educationValues);
         if (result == -1)
             return false;
         else
@@ -88,8 +133,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public boolean insertHealth(int health){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues healthValues = new ContentValues();
-        healthValues.put(COL_6, health);
-        long result = db.insert(TABLE_NAME1, null, healthValues);
+        healthValues.put(COLUMN_EXPENDITURE_HEALTH, health);
+        long result = db.insert(TABLE_EXPENDITURE, null, healthValues);
         if (result == -1)
             return false;
         else
@@ -99,8 +144,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public boolean insertSavings(int savings){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues savingsValues = new ContentValues();
-        savingsValues.put(COL_8, savings);
-        long result = db.insert(TABLE_NAME1, null, savingsValues);
+        savingsValues.put(COLUMN_EXPENDITURE_SAVINGS, savings);
+        long result = db.insert(TABLE_EXPENDITURE, null, savingsValues);
         if (result == -1)
             return false;
         else
@@ -110,16 +155,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void updateSavings(Expenditure expenditure){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues savingsValues = new ContentValues();
-        savingsValues.put(COL_8, expenditure.getSavings());
-        db.update(TABLE_NAME1, savingsValues, null, null);
+        savingsValues.put(COLUMN_EXPENDITURE_SAVINGS, expenditure.getSavings());
+        db.update(TABLE_EXPENDITURE, savingsValues, null, null);
 
     }
 
     public boolean insertOthers(int others){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues othersValues = new ContentValues();
-        othersValues.put(COL_10, others);
-        long result = db.insert(TABLE_NAME1, null, othersValues);
+        othersValues.put(COLUMN_EXPENDITURE_OTHERS, others);
+        long result = db.insert(TABLE_EXPENDITURE, null, othersValues);
         if (result == -1)
             return false;
         else
@@ -129,8 +174,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public boolean insertHomeneeds(int homeneeds){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues homeneedsValues = new ContentValues();
-        homeneedsValues.put(COL_11, homeneeds);
-        long result = db.insert(TABLE_NAME1, null, homeneedsValues);
+        homeneedsValues.put(COLUMN_EXPENDITURE_HOMENEEDS, homeneeds);
+        long result = db.insert(TABLE_EXPENDITURE, null, homeneedsValues);
         if (result == -1)
             return false;
         else
@@ -141,7 +186,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public int addAllTransport(){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalTransport = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_3) + ") FROM " + TABLE_NAME1, null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_TRANSPORT) + ") FROM " + TABLE_EXPENDITURE, null);
         if (cursor.moveToFirst()){
             totalTransport = cursor.getInt(0);
         }
@@ -152,7 +197,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public int addAllEducation(){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalEducation = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_4) + ") FROM " + TABLE_NAME1, null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_EDUCATION) + ") FROM " + TABLE_EXPENDITURE, null);
         if (cursor.moveToFirst()){
             totalEducation = cursor.getInt(0);
         }
@@ -163,7 +208,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public int addAllHealth(){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalHealth = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_6) + ") FROM " + TABLE_NAME1, null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_HEALTH) + ") FROM " + TABLE_EXPENDITURE, null);
         if (cursor.moveToFirst()){
             totalHealth = cursor.getInt(0);
         }
@@ -177,11 +222,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         String where = "";
         if( date != null) {
-            where = " WHERE " + COL_12 + " >= Datetime('" + date + "')";
+            where = " WHERE " + COLUMN_EXPENDITURE_INSERTDATE + " >= Datetime('" + date + "')";
         }
 
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_8) + ")" +
-                " FROM " + TABLE_NAME1 + where , null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_SAVINGS) + ")" +
+                " FROM " + TABLE_EXPENDITURE + where , null);
         if (cursor.moveToFirst()){
             totalSavings = cursor.getInt(0);
         }
@@ -192,7 +237,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public int addAllOthers(){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalOthers = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_10) + ") FROM " + TABLE_NAME1, null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_OTHERS) + ") FROM " + TABLE_EXPENDITURE, null);
         if (cursor.moveToFirst()){
             totalOthers = cursor.getInt(0);
         }
@@ -203,7 +248,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public int addAllHomeneeds(){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalHomeneeds = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_11) + ") FROM " + TABLE_NAME1, null);
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COLUMN_EXPENDITURE_HOMENEEDS) + ") FROM " + TABLE_EXPENDITURE, null);
         if (cursor.moveToFirst()){
             totalHomeneeds = cursor.getInt(0);
         }
@@ -225,5 +270,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Log.d(TAG, "Savings: " + Savings);
         return totalCategory;
     }
+
 
 }

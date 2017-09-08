@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -27,7 +27,7 @@ public class IncomeActivity extends AppCompatActivity {
 
     ImageView imgSalary, imgInvestment, imgOthers, imgLoan;
     BarChart barChart;
-    IncomeSQLiteHelper myHelper;
+    IncomeCrud incomeCrud;
     TextView totalIncome;
     DecimalFormat formatter;
 
@@ -46,7 +46,7 @@ public class IncomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         formatter = new DecimalFormat("#,###,###");
-        myHelper = new IncomeSQLiteHelper(this);
+        incomeCrud = new IncomeCrud(this);
 
 
         imgInvestment.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,7 @@ public class IncomeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        long sumIncome = myHelper.addAllIncome();
+        long sumIncome = incomeCrud.addAllIncome();
 
         entries.add(new BarEntry(sumIncome, 0));
 
@@ -121,7 +121,7 @@ public class IncomeActivity extends AppCompatActivity {
     }
 
     public void sumAllIncomes(){
-        long sumIncome = myHelper.addAllIncome();
+        long sumIncome = incomeCrud.addAllIncome();
         totalIncome.setText(formatter.format(sumIncome));
     }
 }

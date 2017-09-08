@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
@@ -32,11 +31,11 @@ public class GoalCrud {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
-        //values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, 0);
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
+        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, "0");
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
 
         database.insert(DatabaseHelper.TABLE_GOAL, null, values);
@@ -47,9 +46,8 @@ public class GoalCrud {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
-       // values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
-        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
+        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, goal.getPhpId());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
@@ -77,8 +75,6 @@ public class GoalCrud {
                 goal.setId(cursor.getLong(0));
                 goal.setName(cursor.getString(1));
                 goal.setAmount(cursor.getInt(2));
-                //Toast.makeText(context, cursor.getString(3), Toast.LENGTH_SHORT).show();
-               // goal.setStartDate(cursor.getString(3));
                 goal.setEndDate(cursor.getString(4));
 
                 // get user id
@@ -135,7 +131,7 @@ public class GoalCrud {
         goal.setAmount(cursor.getInt(2));
         goal.setStartDate(cursor.getString(3));
         goal.setEndDate(cursor.getString(4));
-        goal.setParseId(cursor.getString(5));
+        goal.setPhpId(cursor.getString(5));
         goal.setSyncStatus(cursor.getInt(7));
         goal.setCompleteStatus(cursor.getInt(8));
         goal.setTotalPoints(cursor.getLong(9));

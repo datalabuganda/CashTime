@@ -1,16 +1,15 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.ParseConnector;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -24,13 +23,12 @@ public class ExpenditureActivity extends AppCompatActivity {
 
     ImageView imgTransport, imgEducation, imgSavings, imgHomeneeds, imgOthers, imgHealth;
     BarChart barChart;
-    SQLiteHelper myHelper;
-    IncomeSQLiteHelper incomeMyHelper;
+    ExpenditureCrud expenditureCrud;
+    IncomeCrud incomeCrud;
     TextView txtRemainingIncome;
     int remainingIncome;
     DecimalFormat formatter;
 
-    ParseConnector parseConnector;
 
 
     @Override
@@ -49,9 +47,9 @@ public class ExpenditureActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
         formatter = new DecimalFormat("#,###,###");
-        incomeMyHelper = new IncomeSQLiteHelper(this);
+        incomeCrud = new IncomeCrud(this);
 
         imgOthers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,10 +115,6 @@ public class ExpenditureActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        //int sumIncome = myHelper.addAllInvestment();
-
-        //entries.add(new BarEntry(sumIncome, 0));
-
         entries.add(new BarEntry(remaining, 0));
 
         BarDataSet dataset = new BarDataSet(entries, "Expenditure");
@@ -147,8 +141,8 @@ public class ExpenditureActivity extends AppCompatActivity {
     }
 
     public int remainingIncome(){
-        int totalIncome = incomeMyHelper.addAllIncome();
-        int totalExpenditure = myHelper.addAllCategories();
+        int totalIncome = incomeCrud.addAllIncome();
+        int totalExpenditure = expenditureCrud.addAllCategories();
 
         remainingIncome = totalIncome - totalExpenditure;
         txtRemainingIncome.setText(formatter.format(remainingIncome));

@@ -1,22 +1,22 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 
 public class UpdateSalaryActivity extends AppCompatActivity {
 
     EditText edtUpdateSalary;
     Button btnUpdateSalary;
 
-    IncomeSQLiteHelper myHelper;
+    IncomeCrud incomeCrud;
 
     private String selectedSalary;
     private int selectedID;
@@ -31,7 +31,7 @@ public class UpdateSalaryActivity extends AppCompatActivity {
         edtUpdateSalary = (EditText) findViewById(R.id.edtUpdateSalary);
         btnUpdateSalary = (Button) findViewById(R.id.btnUpdateSalary);
 
-        myHelper = new IncomeSQLiteHelper(this);
+        incomeCrud = new IncomeCrud(this);
 
         Intent receivedIntent = getIntent();
 
@@ -44,7 +44,7 @@ public class UpdateSalaryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String item = edtUpdateSalary.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateSalary(item,selectedID,selectedSalary);
+                    incomeCrud.updateSalary(item,selectedID,selectedSalary);
 
                 }else {
                     Toast.makeText(UpdateSalaryActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

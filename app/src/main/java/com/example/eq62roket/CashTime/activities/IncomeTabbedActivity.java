@@ -9,8 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 
 import java.text.DecimalFormat;
 
@@ -20,7 +19,7 @@ import java.text.DecimalFormat;
 
 public class IncomeTabbedActivity extends Fragment {
     TextView txtSalary, txtInvestment, txtLoan, txtOthers, txtTotal;
-    IncomeSQLiteHelper myHelper;
+    IncomeCrud incomeCrud;
     Button btnGraph;
     DecimalFormat formatter;
 
@@ -35,7 +34,7 @@ public class IncomeTabbedActivity extends Fragment {
         txtTotal = (TextView) rootView.findViewById(R.id.txtIncome);
 
         formatter = new DecimalFormat("#,###,###");
-        myHelper = new IncomeSQLiteHelper(getActivity());
+        incomeCrud = new IncomeCrud(getActivity());
 
         sumSalary();
         sumInvestment();
@@ -48,28 +47,28 @@ public class IncomeTabbedActivity extends Fragment {
     }
 
     public void sumSalary(){
-        int sumSalary = myHelper.addAllSalary();
+        int sumSalary = incomeCrud.addAllSalary();
         txtSalary.setText(formatter.format(sumSalary));
     }
 
     public void sumInvestment(){
-        int sumInvestment = myHelper.addAllInvestment();
+        int sumInvestment = incomeCrud.addAllInvestment();
         txtInvestment.setText(formatter.format(sumInvestment));
     }
 
     public void sumLoan(){
-        int sumLoan = myHelper.addAllLoan();
+        int sumLoan = incomeCrud.addAllLoan();
         txtLoan.setText(formatter.format(sumLoan));
     }
 
     public void sumOthers(){
-        int sumOthers = myHelper.addAllOthers();
+        int sumOthers = incomeCrud.addAllOthers();
         txtOthers.setText(formatter.format(sumOthers));
     }
 
 
     public void sumTotal(){
-        int sumTotal = myHelper.addAllIncome();
+        int sumTotal = incomeCrud.addAllIncome();
         txtTotal.setText(formatter.format(sumTotal));
     }
 

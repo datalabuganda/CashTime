@@ -3,8 +3,8 @@ package com.example.eq62roket.CashTime.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     User user;
 
     public static String[] gender = {"Male", "Female"};
-    public static String[] educationLevel = {"Primary", "O'Level", "A'level", "Institution"};
+    public static String[] educationLevel = {"Primary", "OLevel", "Alevel", "Institution"};
     public static String[] countryList = new String[]{"Kenya", "South Sudan", "Tanzania", "Uganda"};
 
     @Override

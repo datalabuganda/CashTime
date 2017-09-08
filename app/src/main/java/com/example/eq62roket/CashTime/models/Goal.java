@@ -6,7 +6,7 @@ package com.example.eq62roket.CashTime.models;
 
 public class Goal {
     private long id, totalPoints;
-    private String parseId;
+    private String phpId;
     private String name;
     private int amount, syncStatus, completeStatus, surplus;
     private String startDate;
@@ -24,10 +24,10 @@ public class Goal {
         this.user = user;
     }
 
-    public Goal(long id, String name, int amount, String startDate, String endDate, User user, String parseId) {
+    public Goal(long id, String name, int amount, String startDate, String endDate, User user, String phpId) {
         this.id = id;
         this.name = name;
-        this.parseId = parseId;
+        this.phpId = phpId;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -50,12 +50,12 @@ public class Goal {
         this.totalPoints = totalPoints;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getPhpId() {
+        return phpId;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setPhpId(String phpId) {
+        this.phpId = phpId;
     }
 
     public int getSyncStatus() {

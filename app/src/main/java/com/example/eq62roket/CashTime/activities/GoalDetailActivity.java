@@ -1,7 +1,6 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -10,10 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.models.Goal;
 
 import java.text.DecimalFormat;
@@ -29,7 +29,7 @@ public class GoalDetailActivity extends AppCompatActivity {
     private TextView tvUserProgress;
 
     DecimalFormat formatter;
-    SQLiteHelper sqLiteHelper;
+    ExpenditureCrud expenditureCrud;
     GoalCrud goalCrud;
     Goal goal;
 
@@ -49,7 +49,7 @@ public class GoalDetailActivity extends AppCompatActivity {
         edit = (FloatingActionButton) findViewById(R.id.edit);
 
         formatter = new DecimalFormat("#,###,###");
-        sqLiteHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
         goalCrud = new GoalCrud(this);
         goal = goalCrud.getLastInsertedGoal();
 
@@ -63,7 +63,7 @@ public class GoalDetailActivity extends AppCompatActivity {
 
 
         // Amount saved on goal so far
-        final int goal_savings = sqLiteHelper.addAllSavings(goal.getStartDate());
+        final int goal_savings = expenditureCrud.addAllSavings(goal.getStartDate());
 
         int goal_amount_remaining =  goal_amount - goal_savings;
         int goalSurplus = goal.getSurplus();
@@ -95,19 +95,26 @@ public class GoalDetailActivity extends AppCompatActivity {
             }
         }).start();
 
-        // starts edit goal activitygit
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(GoalDetailActivity.this, EditGoalActivity.class);
-                intent1.putExtra("GOAL_ID", goal_id);
-                intent1.putExtra("GOAL_NAME", goal_name);
-                intent1.putExtra("GOAL_AMOUNT", goal_amount);
-                intent1.putExtra("GOAL_ENDDATE", goal_endDate);
-                startActivity(intent1);
-            }
-        });
-    }
+        // starts edit goal edit activity
+
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if ( (goal_savings + goal.getSurplus()) > 0){
+                        Toast.makeText(GoalDetailActivity.this, "You can not edit if you have started saving on a goal", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Intent intent1 = new Intent(GoalDetailActivity.this, EditGoalActivity.class);
+                        intent1.putExtra("GOAL_ID", goal_id);
+                        intent1.putExtra("GOAL_NAME", goal_name);
+                        intent1.putExtra("GOAL_AMOUNT", goal_amount);
+                        intent1.putExtra("GOAL_ENDDATE", goal_endDate);
+                        startActivity(intent1);
+                    }
+                }
+            });
+        }
 
 
 }

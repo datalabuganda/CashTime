@@ -1,11 +1,10 @@
 package com.example.eq62roket.CashTime.activities;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 
 public class AnalysisActivity extends AppCompatActivity {
     BarChart barChart;
-    SQLiteHelper myHelper;
-    SQLiteDatabase sqLiteDatabase;
+    ExpenditureCrud expenditureCrud;
+    //SQLiteDatabase sqLiteDatabase;
 
 
     @Override
@@ -27,8 +26,8 @@ public class AnalysisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bar_graph);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new SQLiteHelper(this);
-        sqLiteDatabase = myHelper.getWritableDatabase();
+        expenditureCrud = new ExpenditureCrud(this);
+        //sqLiteDatabase = expenditureCrud.getWritableDatabase();
 
         setUpPieChart();
 
@@ -39,12 +38,12 @@ public class AnalysisActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        int sumTransport = myHelper.addAllTransport();
-        int sumEducation = myHelper.addAllEducation();
-        int sumHealth = myHelper.addAllHealth();
-        int sumSavings = myHelper.addAllSavings(null);
-        int sumOthers = myHelper.addAllOthers();
-        int sumHomeneeds = myHelper.addAllHomeneeds();
+        int sumTransport = expenditureCrud.addAllTransport();
+        int sumEducation = expenditureCrud.addAllEducation();
+        int sumHealth = expenditureCrud.addAllHealth();
+        int sumSavings = expenditureCrud.addAllSavings(null);
+        int sumOthers = expenditureCrud.addAllOthers();
+        int sumHomeneeds = expenditureCrud.addAllHomeneeds();
 
         entries.add(new BarEntry(sumTransport, 0));
         entries.add(new BarEntry(sumEducation, 1));

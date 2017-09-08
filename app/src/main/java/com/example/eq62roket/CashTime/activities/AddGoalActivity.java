@@ -4,9 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,10 +17,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
@@ -47,7 +46,7 @@ public class AddGoalActivity extends AppCompatActivity {
     private  Date currentDate;
     private Date goalEndDate;
 
-    SQLiteHelper sqLiteHelper;
+    ExpenditureCrud expenditureCrud;
 
     SimpleDateFormat simpleDateFormat;
 
@@ -66,7 +65,7 @@ public class AddGoalActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
         goalCrud = new GoalCrud(this);
         goal = new Goal();
-        sqLiteHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -128,7 +127,7 @@ public class AddGoalActivity extends AppCompatActivity {
                         Goal goalLastInserted = goalCrud.getLastInsertedGoal();
                         if ( goalLastInserted.getCompleteStatus() == 1 || (goal.getCompleteStatus() == 0 && currentDate.after(goalEndDate))  ){
                             int goalLastInsertedAmount = goalLastInserted.getAmount();
-                            int goalLastInsertedSavings = sqLiteHelper.addAllSavings(goalLastInserted.getStartDate()) + goalLastInserted.getSurplus();
+                            int goalLastInsertedSavings = expenditureCrud.addAllSavings(goalLastInserted.getStartDate()) + goalLastInserted.getSurplus();
 
                             //under normal circumstances ie the goal was completed..this is our surplus
                             int goalLastInsertedSurplus = goalLastInsertedSavings - goalLastInsertedAmount;

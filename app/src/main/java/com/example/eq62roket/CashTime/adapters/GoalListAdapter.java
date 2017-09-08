@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,11 @@ import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.activities.GoalDetailActivity;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
-import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.text.DecimalFormat;
@@ -45,7 +43,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
 
     private UserCrud userCrud;
     private GoalCrud goalCrud;
-    private SQLiteHelper sqLiteHelper;
+    private ExpenditureCrud expenditureCrud;
     private Expenditure expenditure;
     private User user;
     private Goal goal;
@@ -59,7 +57,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         mResource = resource;
         userCrud = new UserCrud(context);
         goalCrud = new GoalCrud(context);
-        sqLiteHelper = new SQLiteHelper(context);
+        expenditureCrud = new ExpenditureCrud(context);
         expenditure = new Expenditure();
         user = new User();
         //goal = new Goal();
@@ -84,7 +82,7 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         // get user points
         final long user_points = userCrud.getLastUserInserted().getPoints();
         int goalAmount = goal.getAmount();
-        //int savedAmount = sqLiteHelper.addAllSavings();
+        //int savedAmount = expenditureCrud.addAllSavings();
 
 
        /* // create Goal object with above information

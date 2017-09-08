@@ -2,8 +2,8 @@ package com.example.eq62roket.CashTime.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 
 import com.example.eq62roket.CashTime.R;

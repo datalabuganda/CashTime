@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 1;
 
     // Columns of User table
     public static final String TABLE_USER = "user";
@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_LEVEL_EDUCATION = "level_of_education";
     public static final String COLUMN_USER_NATIONALITY = "nationality";
     public static final String COLUMN_USER_PHONE_NUMBER = "phone_number";
-    public static final String COLUMN_USER_PARSE_ID = "parse_id";
+    public static final String COLUMN_USER_PHP_ID = "parse_id";
     public static final String COLUMN_USER_POINTS = "points";
     public static final String COLUMN_USER_SYNCED = "user_synced";
 
@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_AMOUNT = "goal_amount";
     public static final String COLUMN_GOAL_STARTDATE = "goal_startDate";
     public static final String COLUMN_GOAL_ENDDATE = "goal_endDate  ";
-    public static final String COLUMN_GOAL_PARSE_ID = "goal_parseId";
+    public static final String COLUMN_GOAL_PHP_ID = "goal_phpId";
     public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
     public static final String COLUMN_GOAL_SYNCED = "goal_synced";
     public static final String COLUMN_GOAL_COMPLETED = "goal_completed";
@@ -47,29 +47,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // expenditure table
-    public static final String TABLE_EXPENDITURE = "expenditure";
-    public static final String COLUMN_EXPENDITURE_ID = "expenditure_id";
-    public static final String COLUMN_EXPENDITURE_GOAL_ID = "expenditure_goal_id";
-    public static final String COLUMN_EXPENDITURE_DATE = "expenditure_date";
-    public static final String COLUMN_EXPENDITURE_EDUCATION = "expenditure_education";
-    public static final String COLUMN_EXPENDITURE_TRANSPORT = "expenditure_transport";
-    public static final String COLUMN_EXPENDITURE_HEALTH = "expenditure_health";
-    public static final String COLUMN_EXPENDITURE_HOMENEEDS = "expenditure_home_needs";
-    public static final String COLUMN_EXPENDITURE_SAVINGS = "expenditure_savings";
-    public static final String COLUMN_EXPENDITURE_OTHERS = "expenditure_others";
+    public static final String TABLE_EXPENDITURE = "EXPENDITURETABLE";
+    public static final String COLUMN_EXPENDITURE_ID = "ID";
+    public static final String COLUMN_EXPENDITURE_AMOUNT = "AMOUNT";
+    public static final String COLUMN_EXPENDITURE_TRANSPORT = "TRANSPORT";
+    public static final String COLUMN_EXPENDITURE_EDUCATION = "EDUCATION";
+    public static final String COLUMN_EXPENDITURE_HEALTH = "HEALTH";
+    public static final String COLUMN_EXPENDITURE_SAVINGS = "SAVINGS";
+    public static final String COLUMN_EXPENDITURE_OTHERS = "OTHERS";
+    public static final String COLUMN_EXPENDITURE_HOMENEEDS = "HOMENEEDS";
+    public static final String COLUMN_EXPENDITURE_INSERTDATE = "DATEINSERTED";
+    public static final String COLUMN_EXPENDITURE_SYNCSTATUS = "SYNCSTATUS";
+    public static final String COLUMN_EXPENDITURE_PHPID = "PHPID";
+
 
 
     // income table
-    public static final String TABLE_INCOME = "income";
-    public static final String COLUMN_INCOME_ID = "income_id";
-    public static final String COLUMN_INCOME_USER_ID = "income_user_id";
-    public static final String COLUMN_INCOME_AMOUNT = "income_amount";
-    public static final String COLUMN_INCOME_STARTDATE = "income_startDate";
-    public static final String COLUMN_INCOME_ENDDATE = "income_endDate";
-    public static final String COLUMN_INCOME_SALARY = "income_salary";
-    public static final String COLUMN_INCOME_LOAN = "income_loan";
-    public static final String COLUMN_INCOME_INVESTMENT = "income_investment";
-    public static final String COLUMN_INCOME_OTHERS = "income_others";
+    public static final String TABLE_INCOME = "INCOMETABLE";
+    public static final String COLUMN_INCOME_ID = "ID";
+    public static final String COLUMN_INCOME_SYNCSTATUS = "SYNC_STATUS";
+    public static final String COLUMN_INCOME_SALARY = "SALARY";
+    public static final String COLUMN_INCOME_LOAN = "LOAN";
+    public static final String COLUMN_INCOME_INVESTMENT = "INVESTMENT";
+    public static final String COLUMN_INCOME_OTHERS = "OTHERS";
+    public static final String COLUMN_INCOME_CREATEDATE = "CREATED_DATE";
+    public static final String COLUMN_INCOME_PHPID = "PHPID";
+
 
 
     // Variable to create User_table
@@ -82,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_NATIONALITY + " TEXT NOT NULL, "
             + COLUMN_USER_PHONE_NUMBER + " TEXT NOT NULL, "
             + COLUMN_USER_POINTS + " REAL NOT NULL, "
-            + COLUMN_USER_PARSE_ID + " TEXT, "
+            + COLUMN_USER_PHP_ID + " TEXT, "
             + COLUMN_USER_SYNCED + " INTEGER "
             + ");";
 
@@ -93,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_AMOUNT + " INTEGER NOT NULL, "
             + COLUMN_GOAL_STARTDATE + " TIMESTAMP DEFAULT (datetime('now', 'localtime')), "
             + COLUMN_GOAL_ENDDATE + " DATE NOT NULL, "
-            + COLUMN_GOAL_PARSE_ID + " TEXT, "
+            + COLUMN_GOAL_PHP_ID + " TEXT, "
             + COLUMN_GOAL_USER_ID + " INTEGER, "
             + COLUMN_GOAL_SYNCED + " INTEGER, "
             + COLUMN_GOAL_COMPLETED + " INTEGER, "
@@ -102,31 +105,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ");";
 
     // Variable to create Expenditure_table
-    private static final String SQL_CREATE_TABLE_EXPENDITURE = "CREATE TABLE " + TABLE_EXPENDITURE + "("
-            + COLUMN_EXPENDITURE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_EXPENDITURE_GOAL_ID + " INTEGER, "
-            + COLUMN_EXPENDITURE_DATE + " DATE NOT NULL, "
-            + COLUMN_EXPENDITURE_EDUCATION + " INTEGER, "
-            + COLUMN_EXPENDITURE_TRANSPORT + " INTEGER, "
-            + COLUMN_EXPENDITURE_HEALTH + " INTEGER, "
-            + COLUMN_EXPENDITURE_HOMENEEDS + " INTEGER, "
-            + COLUMN_EXPENDITURE_SAVINGS + " INTEGER, "
-            + COLUMN_EXPENDITURE_OTHERS + " INTEGER "
-            + ");";
+    private static final String SQL_CREATE_TABLE_EXPENDITURE = "create table " + TABLE_EXPENDITURE +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')), SYNCSTATUS INTEGER DEFAULT 0, PHPID INTEGER)";
 
 
     // Variable to create Income_table
-    private static final String SQL_CREATE_TABLE_INCOME = "CREATE TABLE " + TABLE_INCOME + "("
-            + COLUMN_INCOME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_INCOME_USER_ID + " INTEGER NOT NULL, "
-            + COLUMN_INCOME_AMOUNT + " INTEGER NOT NULL, "
-            + COLUMN_INCOME_STARTDATE + " DATE, "
-            + COLUMN_INCOME_ENDDATE + " DATE, "
-            + COLUMN_INCOME_SALARY + " INTEGER, "
-            + COLUMN_INCOME_LOAN + " INTEGER, "
-            + COLUMN_INCOME_INVESTMENT + " INTEGER, "
-            + COLUMN_INCOME_OTHERS + " INTEGER "
-            + ");";
+    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER, AMOUNT INTEGER, SALARY INTEGER, LOAN INTEGER, INVESTMENT INTEGER, OTHERS INTEGER, CREATED_DATE DATETIME, PHPID INTEGER)";
 
 
     public DatabaseHelper(Context context) {

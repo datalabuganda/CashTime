@@ -1,16 +1,13 @@
 package com.example.eq62roket.CashTime.activities;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
-import com.example.eq62roket.CashTime.helper.SQLiteHelper;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -26,8 +23,8 @@ import java.util.ArrayList;
 
 public class IncomeTabbedAnalysis extends Fragment {
     BarChart barChartIncome;
-    IncomeSQLiteHelper myHelper;
-    SQLiteDatabase sqLiteDatabase;
+    IncomeCrud incomeCrud;
+    //SQLiteDatabase sqLiteDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,15 +32,15 @@ public class IncomeTabbedAnalysis extends Fragment {
         View rootView = inflater.inflate(R.layout.income_tabbed_analysis, container, false);
         barChartIncome = (BarChart) rootView.findViewById(R.id.barchartIncome);
 
-        myHelper = new IncomeSQLiteHelper(getActivity());
-        sqLiteDatabase = myHelper.getWritableDatabase();
+        incomeCrud = new IncomeCrud(getActivity());
+        //sqLiteDatabase = incomeCrud.getWritableDatabase();
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        int sumSalary = myHelper.addAllSalary();
-        int sumInvestment = myHelper.addAllInvestment();
-        int sumLoan = myHelper.addAllLoan();
-        int sumOthers = myHelper.addAllOthers();;
+        int sumSalary = incomeCrud.addAllSalary();
+        int sumInvestment = incomeCrud.addAllInvestment();
+        int sumLoan = incomeCrud.addAllLoan();
+        int sumOthers = incomeCrud.addAllOthers();;
 
         entries.add(new BarEntry(sumSalary, 0));
         entries.add(new BarEntry(sumInvestment, 1));
@@ -72,7 +69,7 @@ public class IncomeTabbedAnalysis extends Fragment {
         barChartIncome.setScaleEnabled(false);
         barChartIncome.setVisibleXRangeMaximum(1);
         barChartIncome.setData(data);
-        barChartIncome.animateY(5000);
+        barChartIncome.animateY(3000);
 
 
 

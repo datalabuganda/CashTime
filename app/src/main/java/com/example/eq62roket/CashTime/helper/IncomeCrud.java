@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.eq62roket.CashTime.models.Income;
+
+import java.util.ArrayList;
+
 /**
  * Created by CASHTIME on 8/5/17.
  */
@@ -74,7 +78,7 @@ public class IncomeCrud {
             return true;
     }
     public Cursor getSalary(){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_SALARY + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
@@ -105,6 +109,27 @@ public class IncomeCrud {
             return true;
     }
 
+    public ArrayList<Income> getAllLoan(){
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToNext();
+                Income income = new Income();
+                income.setId(cursor.getLong(0));
+                income.setLoan(cursor.getInt(3));
+                income.setCreatedDate(cursor.getString(7));
+
+                loanArrayList.add(income);
+
+            }
+        }
+        return loanArrayList;
+
+    }
+
     public Cursor getLoan(){
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_LOAN + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
         Cursor data = database.rawQuery(query, null);
@@ -112,18 +137,17 @@ public class IncomeCrud {
     }
 
     public Cursor getLoanID(String loan){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " = '" + loan + "'";
-        Cursor data = database.rawQuery(query, null);
+        String query = "SELECT rowid _id, ID FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " = '" + loan + "'";        Cursor data = database.rawQuery(query, null);
         return data;
     }
 
-    public void updateLoan(String newLoan, int id, String oldLoan){
-        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_LOAN + " = '" + newLoan + "' WHERE " + DatabaseHelper.COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_LOAN + " = '" + oldLoan + "'";
+    public void updateLoan(String newLoan, int id){
+        ContentValues updateLoanValues = new ContentValues();
+        updateLoanValues.put(DatabaseHelper.COLUMN_INCOME_LOAN, newLoan);
+        database.update(DatabaseHelper.TABLE_INCOME, updateLoanValues, DatabaseHelper.COLUMN_INCOME_ID + " = ? " , new String[]{String.valueOf(id)});
 
-        Log.d(TAG, "updateLoan: query: " + query);
-        Log.d(TAG, "updateLoan: Setting loan to " + newLoan);
-        database.execSQL(query);
     }
+
 
 
     public boolean insertInvestment(int investment){
@@ -137,7 +161,7 @@ public class IncomeCrud {
     }
 
     public Cursor getInvestment(){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
@@ -169,8 +193,8 @@ public class IncomeCrud {
     }
 
     public Cursor getOthers(){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_OTHERS + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
-        Cursor data = database.rawQuery(query, null);
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
+x        Cursor data = database.rawQuery(query, null);
         return  data;
     }
 

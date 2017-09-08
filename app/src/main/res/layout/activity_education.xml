@@ -43,7 +43,8 @@
             android:layout_marginTop="12dp"
             android:orientation="vertical"
             android:layout_below="@+id/linearLayout8"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout25">
 
             <EditText
                 android:id="@+id/amtEducation"
@@ -68,6 +69,16 @@
                 <!--android:text="Ok" />-->
         </LinearLayout>
 
+        <ListView
+            android:id="@+id/educationListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout25" />
+
 
     </RelativeLayout>
+
+
 </ScrollView>

@@ -130,6 +130,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getEducation(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_EDUCATION + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getEducationID(String education){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " = '" + education + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateEducation(String newEducation, int id, String oldEducation){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_EDUCATION + " = '" + newEducation + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_EDUCATION + " = '" + oldEducation + "'";
+
+        Log.d(TAG, "updateEducation: query: " + query);
+        Log.d(TAG, "updateEducation: Setting education to " + newEducation);
+        db.execSQL(query);
+    }
+
+
     public boolean insertHealth(int health){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues healthValues = new ContentValues();
@@ -139,6 +163,53 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public Cursor getHealth(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_HEALTH + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getSavings(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_SAVINGS + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getSavingsID(String savings){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " = '" + savings + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+
+    public void updateSavings(String newSavings, int id, String oldSavings){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_SAVINGS + " = '" + newSavings + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_SAVINGS + " = '" + oldSavings + "'";
+
+        Log.d(TAG, "updateSavings: query: " + query);
+        Log.d(TAG, "updateSavings: Setting savings to " + newSavings);
+        db.execSQL(query);
+    }
+
+    public Cursor getHealthID(String health){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_HEALTH + " = '" + health + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateHealth(String newHealth, int id, String oldHealth){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_HEALTH + " = '" + newHealth + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_HEALTH + " = '" + oldHealth + "'";
+
+        Log.d(TAG, "updateHealth: query: " + query);
+        Log.d(TAG, "updateHealth: Setting health to " + newHealth);
+        db.execSQL(query);
     }
 
     public boolean insertSavings(int savings){
@@ -171,6 +242,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getOthers(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_OTHERS + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getOthersID(String transport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " = '" + transport + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateOthers(String newOthers, int id, String oldOthers){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_OTHERS + " = '" + newOthers + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_OTHERS + " = '" + oldOthers + "'";
+
+        Log.d(TAG, "updateOthers: query: " + query);
+        Log.d(TAG, "updateOthers: Setting others to " + newOthers);
+        db.execSQL(query);
+    }
+
     public boolean insertHomeneeds(int homeneeds){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues homeneedsValues = new ContentValues();
@@ -182,6 +276,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getHomeneeds(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_HOMENEEDS + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getHomeneedsID(String homeneeds){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_HOMENEEDS + " = '" + homeneeds + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateHomeneeds(String newHomeneeds, int id, String oldHomeneeds){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_HOMENEEDS + " = '" + newHomeneeds + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_HOMENEEDS + " = '" + oldHomeneeds + "'";
+
+        Log.d(TAG, "updateHomeneeds: query: " + query);
+        Log.d(TAG, "updateHomeneeds: Setting homeneeds to " + newHomeneeds);
+        db.execSQL(query);
+    }
+
+
 
     public int addAllTransport(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -192,6 +310,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return totalTransport;
+    }
+
+    public Cursor getTransport(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_TRANSPORT + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getTransportID(String transport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_EXPENDITURE_ID + " FROM " + TABLE_EXPENDITURE + " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " = '" + transport + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateTransport(String newTransport, int id, String oldTransport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_TRANSPORT + " = '" + newTransport + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_TRANSPORT + " = '" + oldTransport + "'";
+
+        Log.d(TAG, "updateTransport: query: " + query);
+        Log.d(TAG, "updateTransport: Setting transport to " + newTransport);
+        db.execSQL(query);
     }
 
     public int addAllEducation(){

@@ -1,17 +1,27 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
+
+import java.util.ArrayList;
 
 public class HomeneedsActivity extends AppCompatActivity {
 
@@ -19,6 +29,7 @@ public class HomeneedsActivity extends AppCompatActivity {
     EditText edtHomeneeds;
     Button btnHomeneeds;
     UserCrud userCrud;
+    ListView HomeneedsListView;
     private static final String TAG = "SavingsActivity";
 
     @Override
@@ -28,7 +39,10 @@ public class HomeneedsActivity extends AppCompatActivity {
 
         edtHomeneeds = (EditText) findViewById(R.id.amtHomeneeds);
         btnHomeneeds = (Button) findViewById(R.id.btnHomeneeds);
+
         expenditureCrud = new ExpenditureCrud(this);
+
+        HomeneedsListView = (ListView) findViewById(R.id.HomeneedslistView);
 
         userCrud = new UserCrud(this);
 
@@ -36,6 +50,7 @@ public class HomeneedsActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
 
         AddHomeneeds();
+        populateListView();
 
     }
 
@@ -75,4 +90,53 @@ public class HomeneedsActivity extends AppCompatActivity {
                 }
         );
     }
+
+    private void populateListView(){
+        Log.d(TAG, "populateListView: Displayng data in the listView");
+
+        Cursor data = expenditureCrud.getHomeneeds();
+        Log.d(TAG, "here is data: " + data);
+//        ArrayList<Income> salaryDataList = new ArrayList<>();
+//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
+//
+//
+//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
+//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
+
+        ArrayList<String> listData = new ArrayList<>();
+
+        while (data.moveToNext()){
+            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_EXPENDITURE_HOMENEEDS)));
+
+        }
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+        HomeneedsListView.setAdapter(adapter);
+
+        HomeneedsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String Homeneeds = adapterView.getItemAtPosition(i).toString();
+                Log.d(TAG, "onItemClick: You clicked on" + Homeneeds);
+
+                Cursor data = expenditureCrud.getHomeneedsID(Homeneeds);
+                int HomeneedsID = -1;
+                while (data.moveToNext()){
+                    HomeneedsID = data.getInt(0);
+
+                }
+                if (HomeneedsID > -1){
+                    Intent editHomeneedsIntent = new Intent(HomeneedsActivity.this, UpdateHomeneedsActivity.class);
+                    editHomeneedsIntent.putExtra("id", HomeneedsID);
+                    editHomeneedsIntent.putExtra("Homeneeds", Homeneeds);
+                    Log.d(TAG, "almost through: " + Homeneeds);
+                    startActivity(editHomeneedsIntent);
+                    finish();
+
+                }else {
+
+                }
+            }
+        });
+    }
+
 }

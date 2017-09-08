@@ -4,20 +4,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="10dp">
 
-    <TextView
-        android:id="@+id/tvGoalName"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:textAlignment="center"
-        android:paddingTop="10dp"
-        android:textSize="24sp"
-        android:maxLines="2"
-        android:singleLine="false"
-        android:ellipsize="end"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:text="GoalName" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -26,7 +12,7 @@
         android:weightSum="100">
 
         <TextView
-            android:id="@+id/tvEndDate"
+            android:id="@+id/txtSalaryDate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingTop="10dp"
@@ -36,30 +22,14 @@
             android:text="EndDate" />
 
         <TextView
-            android:id="@+id/tvGoalAmount"
+            android:id="@+id/txtSalaryAmount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingTop="10dp"
             android:layout_weight="40"
-            android:textColor="#000"
+            android:textColor="#860909"
             android:textSize="18dp"
             android:text="Goal Amount" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvUserPoints"
-            android:layout_width="match_parent"
-            android:layout_height="30sp"
-            android:layout_marginTop="20dp"
-            android:text="Your Score"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
 
     </LinearLayout>
 

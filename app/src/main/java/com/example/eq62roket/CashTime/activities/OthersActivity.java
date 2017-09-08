@@ -1,22 +1,33 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
+
+import java.util.ArrayList;
 
 public class OthersActivity extends AppCompatActivity {
     ExpenditureCrud expenditureCrud;
     EditText edtOthers;
     Button btnOthers;
+    private static final String TAG = "OthersActivity";
+    ListView OthersListView;
     UserCrud userCrud;
 
     @Override
@@ -33,6 +44,7 @@ public class OthersActivity extends AppCompatActivity {
         userCrud = new UserCrud(this);
 
         AddOthers();
+        populateListView();
     }
 
     public void AddOthers(){
@@ -68,5 +80,54 @@ public class OthersActivity extends AppCompatActivity {
 
                 }
         );
+
+    }
+
+    private void populateListView(){
+        Log.d(TAG, "populateListView: Displayng data in the listView");
+
+        Cursor data = expenditureCrud.getOthers();
+        Log.d(TAG, "here is data: " + data);
+//        ArrayList<Income> salaryDataList = new ArrayList<>();
+//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
+//
+//
+//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
+//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
+
+        ArrayList<String> listData = new ArrayList<>();
+
+        while (data.moveToNext()){
+            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_EXPENDITURE_OTHERS)));
+
+        }
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+        OthersListView.setAdapter(adapter);
+
+        OthersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String Others = adapterView.getItemAtPosition(i).toString();
+                Log.d(TAG, "onItemClick: You clicked on" + Others);
+
+                Cursor data = expenditureCrud.getOthersID(Others);
+                int OthersID = -1;
+                while (data.moveToNext()){
+                    OthersID = data.getInt(0);
+
+                }
+                if (OthersID > -1){
+                    Intent editOthersIntent = new Intent(OthersActivity.this, UpdateOthersActivity.class);
+                    editOthersIntent.putExtra("id", OthersID);
+                    editOthersIntent.putExtra("Others", Others);
+                    Log.d(TAG, "almost through: " + Others);
+                    startActivity(editOthersIntent);
+                    finish();
+
+                }else {
+
+                }
+            }
+        });
     }
 }

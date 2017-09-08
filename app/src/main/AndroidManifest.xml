@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".activities.SplashScreenActivity"
             android:label="CashTime"
@@ -152,42 +159,48 @@
         <activity
             android:name=".activities.TipsActivity"
             android:label="@string/title_activity_useful_tips"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.HomeDrawerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.TabbedReportActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:launchMode="singleTask"
             android:label="Reports"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.UpdateSalaryActivity"
             android:label="Update Salary"
             android:parentActivityName=".activities.IncomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.UpdateInvestmentActivity"
             android:label="Update Investment"
             android:parentActivityName=".activities.IncomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.UpdateLoanActivity"
             android:label="Update Loan"
             android:parentActivityName=".activities.IncomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.UpdateOtherIncomesActivity"
             android:label="Update Others"
             android:parentActivityName=".activities.IncomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.TabbedAnalysisActivity"
             android:label="Analysis"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activities.HomeDrawerActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.UpdateOthersActivity" />
+        <activity android:name=".activities.UpdateEducationActivity" />
+        <activity android:name=".activities.UpdateHomeneedsActivity" />
+        <activity android:name=".activities.UpdateTransportActivity" />
+        <activity android:name=".activities.UpdateSavingsActivity" />
+        <activity android:name=".activities.UpdateHealthActivity"></activity>
     </application>
 
 </manifest>

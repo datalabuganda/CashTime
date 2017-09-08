@@ -14,6 +14,9 @@ public class Income {
     private int investment;
     private int other;
 
+    public Income() {
+    }
+
     public Income(String createdDate, int salary, int loan, int investment, int other) {
         this.createdDate = createdDate;
         this.salary = salary;

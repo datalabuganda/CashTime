@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class AnalysisActivity extends AppCompatActivity {
     BarChart barChart;
     ExpenditureCrud expenditureCrud;
-    //SQLiteDatabase sqLiteDatabase;
 
 
     @Override

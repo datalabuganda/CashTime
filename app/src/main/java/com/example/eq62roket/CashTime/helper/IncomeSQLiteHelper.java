@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class IncomeSQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "INCOME";
     public static final String TABLE_NAME = "INCOMETABLE";
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 12;
     public static final String COL_1 = "ID";
     public static final String COL_2 = "SYNC_STATUS";
     public static final String COL_3 = "SALARY";

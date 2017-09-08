@@ -97,7 +97,11 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         TextView tvGoalName = (TextView) convertView.findViewById(R.id.tvGoalName);
         TextView tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
         TextView tvGoalAmount = (TextView) convertView.findViewById(R.id.tvGoalAmount);
+
 //        TextView tvUserPoints = (TextView) convertView.findViewById(R.id.po);
+
+//        TextView tvUserPoints = (TextView) convertView.findViewById(R.id.tvUserPoints);
+
         ImageView imgCompleted = (ImageView) convertView.findViewById(R.id.imgCompleted);
 
         tvGoalName.setText(goal_name);
@@ -107,8 +111,27 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
+
         SimpleDateFormat df = new SimpleDateFormat("d/M/yyyy");
         String formattedDate = df.format(c.getTime());
+
+        try {
+            currentDate = df.parse(formattedDate);
+            goalEndDate = df.parse(goal.getEndDate());
+            //Log.d(TAG, "Current Date " + currentDate);
+            //Log.d(TAG, "Goal End Date " + goalEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (goal.getCompleteStatus() == 1){
+            imgCompleted.setImageResource(R.drawable.completed);
+            imgCompleted.setVisibility(convertView.VISIBLE);
+        }
+
+
+        df = new SimpleDateFormat("d/M/yyyy");
+        formattedDate = df.format(c.getTime());
 
         try {
             currentDate = df.parse(formattedDate);

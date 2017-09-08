@@ -31,11 +31,7 @@ public class SavingsActivity extends AppCompatActivity {
     UserCrud userCrud;
     EditText edtSavings;
     Button btnSavings;
-
     ListView SavingsListView;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

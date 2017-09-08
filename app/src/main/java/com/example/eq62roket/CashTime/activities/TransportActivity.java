@@ -34,41 +34,32 @@ public class TransportActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AddTransport();
-    }
-
-    public void AddTransport(){
         btnTransport.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-//                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
-//                        boolean isInseted = myHelper.insertTransport(yVal);
-//                        if (isInseted = true)
-//                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
-//                        Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
-//                        TransportActivity.this.startActivity(Transportintent);
-                        if (!edtTransport.getText().toString().equals("")) {
+                        if (!edtTransport.getText().toString().equals("")){
                             int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
                             boolean isInseted = myHelper.insertTransport(yVal);
                             if (isInseted) {
-                                // if user spends on any expense, award them 2 points
+                                // if user adds a saving, award them 5 points
                                 User user = userCrud.getLastUserInserted();
-                                user.setPoints(2);
+                                user.setPoints(5);
                                 userCrud.updateUser(user);
 
-                                Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
-                                Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
-                                TransportActivity.this.startActivity(Transportintent);
+                                // Log.d(TAG, "goal status " + goal.getCompleteStatus());
+
+
+                                Toast.makeText(TransportActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
+                                Intent Savingsintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
+                                TransportActivity.this.startActivity(Savingsintent);
                                 finish();
+                                //Log.d(TAG, "goal saved " + myHelper.addAllSavings(null));
                             }
                             else {
-                                Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
+                                Toast.makeText(TransportActivity.this, "Your savings have not been stored", Toast.LENGTH_LONG).show();
                             }
-
                         }
                         else {
                             Toast.makeText(TransportActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
@@ -77,6 +68,51 @@ public class TransportActivity extends AppCompatActivity {
 
                 }
         );
+
+
+//        AddTransport();
     }
+
+//    public void AddTransport(){
+//        btnTransport.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+////                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
+////                        boolean isInseted = myHelper.insertTransport(yVal);
+////                        if (isInseted = true)
+////                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
+////                        else
+////                            Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
+////                        Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
+////                        TransportActivity.this.startActivity(Transportintent);
+//                        if (!edtTransport.getText().toString().equals("")) {
+//                            int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
+//                            boolean isInseted = myHelper.insertTransport(yVal);
+//                            if (isInseted) {
+//                                // if user spends on any expense, award them 2 points
+//                                User user = userCrud.getLastUserInserted();
+//                                user.setPoints(2);
+//                                userCrud.updateUser(user);
+//
+//                                Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
+//                                Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
+//                                TransportActivity.this.startActivity(Transportintent);
+//                                finish();
+//                            }
+//                            else {
+//                                Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
+//                            }
+//
+//                        }
+//                        else {
+//                            Toast.makeText(TransportActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                }
+//        );
+//    }
 
 }

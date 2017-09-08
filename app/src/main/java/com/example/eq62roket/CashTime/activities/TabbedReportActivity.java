@@ -60,15 +60,6 @@ public class TabbedReportActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-//      FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//      fab.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//          public void onClick(View view) {
-//              Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                      .setAction("Action", null).show();
-//          }
-//      });
       
     }
 
@@ -94,14 +85,6 @@ public class TabbedReportActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
 
-//        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
-//        return super.onOptionsItemSelected(item);
     }
 
     
@@ -182,8 +165,6 @@ public class TabbedReportActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.expenditure_tabbed_report, container, false);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             return rootView;
         }

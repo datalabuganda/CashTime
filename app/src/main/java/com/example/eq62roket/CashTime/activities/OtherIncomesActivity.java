@@ -14,6 +14,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.eq62roket.CashTime.adapters.OtherIncome;
+import com.example.eq62roket.CashTime.adapters.SalaryAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.UserCrud;
@@ -29,6 +31,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
     IncomeSQLiteHelper myHelper;
     UserCrud userCrud;
     ListView othersListVIew;
+    OtherIncome otherincomeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +89,16 @@ public class OtherIncomesActivity extends AppCompatActivity {
         Log.d(TAG, "populateListView: Displayng data in the listView");
 
         Cursor data = myHelper.getOthers();
+        otherincomeAdapter = new OtherIncome(this, data);
+        othersListVIew.setAdapter(otherincomeAdapter);
         Log.d(TAG, "here is data: " + data);
-        ArrayList<String> listData = new ArrayList<>();
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(myHelper.COL_8)));
-
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        othersListVIew.setAdapter(adapter);
+//        ArrayList<String> listData = new ArrayList<>();
+//        while (data.moveToNext()){
+//            listData.add(data.getString(data.getColumnIndex(myHelper.COL_8)));
+//
+//        }
+//        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+//        othersListVIew.setAdapter(adapter);
 
         othersListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

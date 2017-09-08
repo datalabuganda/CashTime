@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <TextView
+            android:id="@+id/salaryDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="50"
+            android:paddingTop="10dp"
+            android:text="Date of Salary"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/salaryAmount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="40"
+            android:paddingTop="10dp"
+            android:text="Amount of Salary"
+            android:textColor="#000"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

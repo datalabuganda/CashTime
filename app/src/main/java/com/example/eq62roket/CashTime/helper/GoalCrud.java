@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
@@ -31,9 +32,12 @@ public class GoalCrud {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
-        values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
+        //values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
+        values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, 0);
+        values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
+        values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
 
         database.insert(DatabaseHelper.TABLE_GOAL, null, values);
 //        database.close();
@@ -43,14 +47,18 @@ public class GoalCrud {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
-        values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
+       // values.put(DatabaseHelper.COLUMN_GOAL_STARTDATE, goal.getStartDate());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
         values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
+        values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
+        values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
+        values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
 
         database.update(DatabaseHelper.TABLE_GOAL, values, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
         //database.close();
     }
+
 
     public void deleteGoal(Goal goal){
         database.delete(DatabaseHelper.TABLE_GOAL, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
@@ -69,7 +77,8 @@ public class GoalCrud {
                 goal.setId(cursor.getLong(0));
                 goal.setName(cursor.getString(1));
                 goal.setAmount(cursor.getInt(2));
-                goal.setStartDate(cursor.getString(3));
+                //Toast.makeText(context, cursor.getString(3), Toast.LENGTH_SHORT).show();
+               // goal.setStartDate(cursor.getString(3));
                 goal.setEndDate(cursor.getString(4));
 
                 // get user id
@@ -87,6 +96,19 @@ public class GoalCrud {
         return goalArrayList;
     }
 
+    public Goal getGoalById(long id){
+        Cursor cursor = database.query(DatabaseHelper.TABLE_GOAL, null,
+                DatabaseHelper.COLUMN_GOAL_ID + " = ?",
+                new String[] {String.valueOf(id)}, null, null, null);
+
+        Goal goal = null;
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            goal = cursorToGoal(cursor);
+        }
+        return goal;
+    }
+
     public Goal getLastInsertedGoal() {
         String selectQuery = "select * from " + DatabaseHelper.TABLE_GOAL +
                 " order by " + DatabaseHelper.COLUMN_GOAL_ID + " desc " +
@@ -95,6 +117,10 @@ public class GoalCrud {
 
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
+        }
+        else {
+            Goal goal = null;
+            return goal;
         }
 
         Goal goal = cursorToGoal(cursor);
@@ -111,6 +137,9 @@ public class GoalCrud {
         goal.setEndDate(cursor.getString(4));
         goal.setParseId(cursor.getString(5));
         goal.setSyncStatus(cursor.getInt(7));
+        goal.setCompleteStatus(cursor.getInt(8));
+        goal.setTotalPoints(cursor.getLong(9));
+        goal.setSurplus(cursor.getInt(10));
 
         // get user id
         long userId = cursor.getLong(6);

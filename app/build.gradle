@@ -34,6 +34,7 @@ dependencies {
     compile 'com.parse:parse-android:1.15.7'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'gr.pantrif:easy-android-splash-screen:0.0.1'
+    compile 'com.google.android.gms:play-services:6.1.+'
 }
 
 repositories {
@@ -149,5 +150,26 @@ dependencies {
 }
 dependencies {
     compile 'com.android.support:support-v4:26.+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
 }
 

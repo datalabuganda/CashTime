@@ -49,7 +49,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/transport1" />
+            app:srcCompat="@drawable/transport" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/hospital" />
+            app:srcCompat="@drawable/health" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/home" />
+            app:srcCompat="@drawable/homeneds" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/education2" />
+            app:srcCompat="@drawable/education" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/otherss"
+            app:srcCompat="@drawable/otherssssss"
             android:layout_alignBottom="@+id/linearLayout6"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

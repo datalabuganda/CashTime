@@ -3,12 +3,14 @@ package com.example.eq62roket.CashTime.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 
 public class UpdateLoanActivity extends AppCompatActivity {
@@ -17,8 +19,9 @@ public class UpdateLoanActivity extends AppCompatActivity {
 
     IncomeSQLiteHelper myHelper;
 
-    private String selectedLoan;
     private int selectedID;
+    private int loanAmount;
+    LoanAdapter loanAdapter;
 
     private static final String TAG = "UpdateLoanAcitivity";
 
@@ -35,16 +38,23 @@ public class UpdateLoanActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedLoan = receivedIntent.getStringExtra("loan");
 
-        edtUpdateLoan.setText(selectedLoan);
+        loanAmount = receivedIntent.getIntExtra("LOAN_AMOUNT",-1);
+        selectedID = receivedIntent.getIntExtra("LOAN_ID", -1);
+
+        edtUpdateLoan.setText("" + loanAmount);
+
+        Log.d(TAG, "loan Amount" + loanAmount);
         btnUpdateLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateLoan.getText().toString();
+                Log.d(TAG, "update valued" + item);
                 if (!item.equals("")){
-                    myHelper.updateLoan(item,selectedID,selectedLoan);
+
+                    myHelper.updateLoan(item,selectedID);
+                    Log.d(TAG, "loan amount" + loanAmount);
+                    Log.d(TAG, "loan id" + selectedID);
 
                 }else {
                     Toast.makeText(UpdateLoanActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

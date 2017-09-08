@@ -14,6 +14,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.eq62roket.CashTime.adapters.InvestmentAdapter;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.UserCrud;
@@ -29,6 +31,7 @@ public class InvestmentActivity extends AppCompatActivity {
     Button btnInvestments;
     UserCrud userCrud;
     ListView investmentListView;
+    InvestmentAdapter investmentAdapter;
 
     IncomeSQLiteHelper myHelper;
     @Override
@@ -86,13 +89,15 @@ public class InvestmentActivity extends AppCompatActivity {
         Log.d(TAG, "populateListView: Displayng data in the listView");
 
         Cursor data = myHelper.getInvestment();
+        investmentAdapter = new InvestmentAdapter(this, data);
+        investmentListView.setAdapter(investmentAdapter);
         Log.d(TAG, "here is data: " + data);
-        ArrayList<String> listData = new ArrayList<>();
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(myHelper.COL_6)));
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        investmentListView.setAdapter(adapter);
+//        ArrayList<String> listData = new ArrayList<>();
+//        while (data.moveToNext()){
+//            listData.add(data.getString(data.getColumnIndex(myHelper.COL_6)));
+//        }
+//        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+//        investmentListView.setAdapter(adapter);
 
         investmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

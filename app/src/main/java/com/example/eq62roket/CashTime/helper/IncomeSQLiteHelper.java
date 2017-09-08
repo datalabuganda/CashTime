@@ -9,6 +9,9 @@ import android.util.Log;
 
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.Income;
+import com.example.eq62roket.CashTime.models.User;
+
+import java.util.ArrayList;
 
 /**
  * Created by eq62roket on 8/3/17.
@@ -17,7 +20,7 @@ import com.example.eq62roket.CashTime.models.Income;
 public class IncomeSQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "INCOME";
     public static final String TABLE_NAME = "INCOMETABLE";
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 11;
     public static final String COL_1 = "ID";
     public static final String COL_2 = "SYNC_STATUS";
     public static final String COL_3 = "SALARY";
@@ -33,7 +36,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+ TABLE_NAME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, SALARY INTEGER, LOAN INTEGER, INVESTMENT INTEGER, OTHERS INTEGER, SYNC_STATUS INTEGER, CREATED_DATE DATETIME)");
+        db.execSQL("create table "+ TABLE_NAME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, SALARY INTEGER, LOAN INTEGER, INVESTMENT INTEGER, OTHERS INTEGER, SYNC_STATUS INTEGER, CREATED_DATE TIMESTAMP DEFAULT (date('now')))");
 
     }
 
@@ -55,10 +58,20 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
     }
     public Cursor getSalary(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + COL_3 + " FROM " + TABLE_NAME + " WHERE " + COL_3 + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + TABLE_NAME + " WHERE " + COL_3 + " IS NOT NULL ";
         Cursor data = db.rawQuery(query, null);
         return  data;
     }
+
+//    public int getSalaryID(String salary){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        int id = 0;
+//        Cursor cur = db.rawQuery("SELECT " + COL_3 + " FROM " +TABLE_NAME, null);
+//        cur.moveToPosition(Integer.parseInt(salary));
+//        id = cur.getInt(1);
+//        cur.close();
+//        return id;
+//    }
 
     public Cursor getSalaryID(String salary){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,28 +102,63 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public ArrayList<Income> getAllLoan(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_4 + " IS NOT NULL ";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToNext();
+                Income income = new Income();
+                income.setId(cursor.getLong(0));
+                income.setLoan(cursor.getInt(3));
+                income.setCreatedDate(cursor.getString(7));
+
+                loanArrayList.add(income);
+
+            }
+        }
+        return loanArrayList;
+
+    }
+
     public Cursor getLoan(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + COL_4 + " FROM " + TABLE_NAME + " WHERE " + COL_4 + " IS NOT NULL ";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_4 + " IS NOT NULL ";
         Cursor data = db.rawQuery(query, null);
         return  data;
     }
 
     public Cursor getLoanID(String loan){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME + " WHERE " + COL_4 + " = '" + loan + "'";
+        String query = "SELECT rowid _id, ID FROM " + TABLE_NAME + " WHERE " + COL_4 + " = '" + loan + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public void updateLoan(String newLoan, int id, String oldLoan){
+    public void updateLoan(String newLoan, int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + COL_4 + " = '" + newLoan + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_4 + " = '" + oldLoan + "'";
-
-        Log.d(TAG, "updateLoan: query: " + query);
-        Log.d(TAG, "updateLoan: Setting loan to " + newLoan);
-        db.execSQL(query);
+        ContentValues updateLoanValues = new ContentValues();
+        updateLoanValues.put(COL_4, newLoan);
+        db.update(TABLE_NAME, updateLoanValues, COL_1 + " = ? " , new String[]{String.valueOf(id)});
+//        String query = "UPDATE " + TABLE_NAME + " SET " + COL_4 + " = '" + newLoan + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_4 + " = '" + oldLoan + "'";
+//
+//        Log.d(TAG, "updateLoan: query: " + query);
+//        Log.d(TAG, "updateLoan: Setting loan to " + newLoan);
+//        db.execSQL(query);
     }
+
+
+//    public void updateLoan(String newLoan, int id, int oldLoan){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "UPDATE " + TABLE_NAME + " SET " + COL_4 + " = '" + newLoan + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_4 + " = '" + oldLoan + "'";
+//
+//        Log.d(TAG, "updateLoan: query: " + query);
+//        Log.d(TAG, "updateLoan: Setting loan to " + newLoan);
+//        db.execSQL(query);
+//    }
 
 
     public boolean insertInvestment(int investment){
@@ -126,7 +174,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
 
     public Cursor getInvestment(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + COL_6 + " FROM " + TABLE_NAME + " WHERE " + COL_6 + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + TABLE_NAME + " WHERE " + COL_6 + " IS NOT NULL ";
         Cursor data = db.rawQuery(query, null);
         return  data;
     }
@@ -162,7 +210,7 @@ public class IncomeSQLiteHelper extends SQLiteOpenHelper {
 
     public Cursor getOthers(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + COL_8 + " FROM " + TABLE_NAME + " WHERE " + COL_8 + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + TABLE_NAME + " WHERE " + COL_4 + " IS NOT NULL ";
         Cursor data = db.rawQuery(query, null);
         return  data;
     }

@@ -1,17 +1,25 @@
 package com.example.eq62roket.CashTime.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.User;
+
+import java.util.ArrayList;
 
 
 public class HealthActivity extends AppCompatActivity {
@@ -21,6 +29,7 @@ public class HealthActivity extends AppCompatActivity {
     EditText edtHealth;
     Button btnHealth;
     UserCrud userCrud;
+    ListView healthListView;
 
 
     @Override
@@ -30,6 +39,7 @@ public class HealthActivity extends AppCompatActivity {
 
         edtHealth = (EditText) findViewById(R.id.amtHealth);
         btnHealth = (Button) findViewById(R.id.btnHealth);
+        healthListView = (ListView) findViewById(R.id.healthListView);
         myHelper = new SQLiteHelper(this);
 
         userCrud = new UserCrud(this);
@@ -70,5 +80,56 @@ public class HealthActivity extends AppCompatActivity {
 
                 }
         );
+
+        populateListView();
     }
+    private void populateListView(){
+        Log.d(TAG, "populateListView: Displayng data in the listView");
+
+        Cursor data = myHelper.getHealth();
+        Log.d(TAG, "here is data: " + data);
+//        ArrayList<Income> salaryDataList = new ArrayList<>();
+//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
+//
+//
+//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
+//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
+
+        ArrayList<String> listData = new ArrayList<>();
+
+        while (data.moveToNext()){
+            listData.add(data.getString(data.getColumnIndex(myHelper.COL_6)));
+
+        }
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+        healthListView.setAdapter(adapter);
+
+        healthListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String health = adapterView.getItemAtPosition(i).toString();
+                Log.d(TAG, "onItemClick: You clicked on" + health);
+
+                Cursor data = myHelper.getHealthID(health);
+                int healthID = -1;
+                while (data.moveToNext()){
+                    healthID = data.getInt(0);
+
+                }
+                if (healthID > -1){
+                    Intent editHealthIntent = new Intent(HealthActivity.this, UpdateHealthActivity.class);
+                    editHealthIntent.putExtra("id", healthID);
+                    editHealthIntent.putExtra("health", health);
+                    Log.d(TAG, "almost through: " + health);
+                    startActivity(editHealthIntent);
+                    finish();
+
+                }else {
+
+                }
+            }
+        });
+    }
+
+
 }

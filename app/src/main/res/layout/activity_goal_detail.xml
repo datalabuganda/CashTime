@@ -86,21 +86,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvUserPoints"
+                android:id="@+id/tvUserProgress"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
                 android:layout_marginTop="20dp"
-                android:text="Your Score"
+                android:text="Your Progress"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:isIndicator="true"
-                android:clickable="false"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

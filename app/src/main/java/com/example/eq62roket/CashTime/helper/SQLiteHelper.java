@@ -5,12 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.eq62roket.CashTime.models.Expenditure;
+import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.Income;
 
 /**
  * Created by eq62roket on 8/2/17.
  */
 
 public class SQLiteHelper extends SQLiteOpenHelper {
+    private static final String TAG = "SQLiteHelper";
+
     public static final String DATABASE_NAME = "EXPENDITURE";
     public static final String TABLE_NAME1 = "EXPENDITURETABLE";
     public static final String COL_1 = "ID";
@@ -21,14 +28,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String COL_8 = "SAVINGS";
     public static final String COL_10 = "OTHERS";
     public static final String COL_11 = "HOMENEEDS";
+    public static final String COL_12 = "DATEINSERTED";
 
     public SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, 4);
+        super(context, DATABASE_NAME, null, 7);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME1 +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER)");
+        db.execSQL("create table " + TABLE_NAME1 +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER, TRANSPORT INTEGER, EDUCATION INTEGER, HEALTH INTEGER, SAVINGS INTEGER, OTHERS INTEGER, HOMENEEDS INTEGER, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')))");
 
     }
 
@@ -38,6 +46,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public Expenditure getLastInsertedSaving() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "select * from " + TABLE_NAME1 +
+                " where " + COL_8 + " <> 0" +
+                " order by " + COL_1 + " desc " +
+                " limit 1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Expenditure expenditure = new Expenditure();
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            expenditure.setId(cursor.getLong(0));
+        }
+        return expenditure;
+
+    }
 
     public boolean insertTransport(int transport){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -61,6 +85,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getEducation(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_4 + " FROM " + TABLE_NAME1 + " WHERE " + COL_4 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getEducationID(String education){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_4 + " = '" + education + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateEducation(String newEducation, int id, String oldEducation){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_4 + " = '" + newEducation + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_4 + " = '" + oldEducation + "'";
+
+        Log.d(TAG, "updateEducation: query: " + query);
+        Log.d(TAG, "updateEducation: Setting education to " + newEducation);
+        db.execSQL(query);
+    }
+
+
     public boolean insertHealth(int health){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues healthValues = new ContentValues();
@@ -70,6 +118,53 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public Cursor getHealth(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_6 + " FROM " + TABLE_NAME1 + " WHERE " + COL_6 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getSavings(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_8 + " FROM " + TABLE_NAME1 + " WHERE " + COL_8 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getSavingsID(String savings){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_8 + " = '" + savings + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+
+    public void updateSavings(String newSavings, int id, String oldSavings){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_8 + " = '" + newSavings + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_8 + " = '" + oldSavings + "'";
+
+        Log.d(TAG, "updateSavings: query: " + query);
+        Log.d(TAG, "updateSavings: Setting savings to " + newSavings);
+        db.execSQL(query);
+    }
+
+    public Cursor getHealthID(String health){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_6 + " = '" + health + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateHealth(String newHealth, int id, String oldHealth){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_6 + " = '" + newHealth + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_6 + " = '" + oldHealth + "'";
+
+        Log.d(TAG, "updateHealth: query: " + query);
+        Log.d(TAG, "updateHealth: Setting health to " + newHealth);
+        db.execSQL(query);
     }
 
     public boolean insertSavings(int savings){
@@ -83,6 +178,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public void updateSavings(Expenditure expenditure){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues savingsValues = new ContentValues();
+        savingsValues.put(COL_8, expenditure.getSavings());
+        db.update(TABLE_NAME1, savingsValues, null, null);
+
+    }
+
     public boolean insertOthers(int others){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues othersValues = new ContentValues();
@@ -92,6 +195,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public Cursor getOthers(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_10 + " FROM " + TABLE_NAME1 + " WHERE " + COL_10 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getOthersID(String transport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_10 + " = '" + transport + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateOthers(String newOthers, int id, String oldOthers){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_10 + " = '" + newOthers + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_10 + " = '" + oldOthers + "'";
+
+        Log.d(TAG, "updateOthers: query: " + query);
+        Log.d(TAG, "updateOthers: Setting others to " + newOthers);
+        db.execSQL(query);
     }
 
     public boolean insertHomeneeds(int homeneeds){
@@ -105,6 +231,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getHomeneeds(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_11 + " FROM " + TABLE_NAME1 + " WHERE " + COL_11 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getHomeneedsID(String homeneeds){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_11 + " = '" + homeneeds + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateHomeneeds(String newHomeneeds, int id, String oldHomeneeds){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_11 + " = '" + newHomeneeds + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_11 + " = '" + oldHomeneeds + "'";
+
+        Log.d(TAG, "updateHomeneeds: query: " + query);
+        Log.d(TAG, "updateHomeneeds: Setting homeneeds to " + newHomeneeds);
+        db.execSQL(query);
+    }
+
+
 
     public int addAllTransport(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -115,6 +265,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return totalTransport;
+    }
+
+    public Cursor getTransport(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_3 + " FROM " + TABLE_NAME1 + " WHERE " + COL_3 + " IS NOT NULL ";
+        Cursor data = db.rawQuery(query, null);
+        return  data;
+    }
+
+    public Cursor getTransportID(String transport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COL_1 + " FROM " + TABLE_NAME1 + " WHERE " + COL_3 + " = '" + transport + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public void updateTransport(String newTransport, int id, String oldTransport){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME1 + " SET " + COL_3 + " = '" + newTransport + "' WHERE " + COL_1 + " = '" + id + "'" + " AND " + COL_3 + " = '" + oldTransport + "'";
+
+        Log.d(TAG, "updateTransport: query: " + query);
+        Log.d(TAG, "updateTransport: Setting transport to " + newTransport);
+        db.execSQL(query);
     }
 
     public int addAllEducation(){
@@ -139,10 +312,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return totalHealth;
     }
 
-    public int addAllSavings(){
+    public int addAllSavings(String date){
         SQLiteDatabase db = this.getReadableDatabase();
         int totalSavings = 0;
-        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_8) + ") FROM " + TABLE_NAME1, null);
+
+        String where = "";
+        if( date != null) {
+            where = " WHERE " + COL_12 + " >= Datetime('" + date + "')";
+        }
+
+        Cursor cursor = db.rawQuery("SELECT SUM(" + (COL_8) + ")" +
+                " FROM " + TABLE_NAME1 + where , null);
         if (cursor.moveToFirst()){
             totalSavings = cursor.getInt(0);
         }
@@ -174,7 +354,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
     public  int addAllCategories(){
-        int Savings = addAllSavings();
+        int Savings = addAllSavings(null);
         int Transport = addAllTransport();
         int Medical = addAllHealth();
         int Others = addAllOthers();
@@ -183,6 +363,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         int totalCategory = Savings + Transport + Medical + Others + Homeneeds + Education;
 
+        Log.d(TAG, "Savings: " + Savings);
         return totalCategory;
     }
 

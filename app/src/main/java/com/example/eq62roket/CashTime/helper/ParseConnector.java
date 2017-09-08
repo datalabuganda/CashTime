@@ -120,7 +120,7 @@ public class ParseConnector {
                     expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
                     expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
                     expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
-                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings());
+                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings(null));
                     expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
                     expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
                     expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());
@@ -214,7 +214,7 @@ public class ParseConnector {
                     expenditure.put("TotalTransportCost", sqLiteHelper.addAllTransport());
                     expenditure.put("TotalEducationCost", sqLiteHelper.addAllEducation());
                     expenditure.put("TotalHealthCost", sqLiteHelper.addAllHealth());
-                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings());
+                    expenditure.put("TotalSavingCost", sqLiteHelper.addAllSavings(null));
                     expenditure.put("TotalOthersCost", sqLiteHelper.addAllOthers());
                     expenditure.put("TotalHomeNeedsCost", sqLiteHelper.addAllHomeneeds());
                     expenditure.put("TotalExpenditureCost", sqLiteHelper.addAllCategories());

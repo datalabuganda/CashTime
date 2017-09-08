@@ -15,12 +15,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.GoalListAdapter;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 
+import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
+
+import static com.example.eq62roket.CashTime.R.id.parent;
 
 
 public class LoanActivity extends AppCompatActivity {
@@ -31,6 +37,7 @@ public class LoanActivity extends AppCompatActivity {
     IncomeSQLiteHelper myHelper;
     UserCrud userCrud;
     ListView LoanListVIew;
+    LoanAdapter loanAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +50,23 @@ public class LoanActivity extends AppCompatActivity {
         edtLoans = (EditText) findViewById(R.id.edtUpdateLoans);
         LoanListVIew = (ListView) findViewById(R.id.LoanListView);
 
-        userCrud = new UserCrud(this);
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        loanArrayList = myHelper.getAllLoan();
+
+        loanAdapter = new LoanAdapter(this, R.layout.loan_list_adapter, loanArrayList);
+        LoanListVIew.setAdapter(loanAdapter);
+
+//        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//            }
+//        });
+
         AddLoan();
-        populateListView();
+
+
+//        populateListView();
     }
 
 
@@ -81,43 +102,46 @@ public class LoanActivity extends AppCompatActivity {
         );
     }
 
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = myHelper.getLoan();
-        Log.d(TAG, "here is data: " + data);
-        ArrayList<String> listData = new ArrayList<>();
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(myHelper.COL_4)));
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        LoanListVIew.setAdapter(adapter);
-
-        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String loan = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + loan);
-
-                Cursor data = myHelper.getLoanID(loan);
-                int loanID = -1;
-                while (data.moveToNext()){
-                    loanID = data.getInt(0);
-
-                }
-                if (loanID > -1){
-                    Intent editLoanIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
-                    editLoanIntent.putExtra("id", loanID);
-                    editLoanIntent.putExtra("loan", loan);
-                    Log.d(TAG, "almost through: " + loan);
-                    startActivity(editLoanIntent);
-                    finish();
-
-                }else {
-
-                }
-            }
-        });
-    }
+//    private void populateListView(){
+//        Log.d(TAG, "populateListView: Displayng data in the listView");
+//
+//        Cursor data = myHelper.getLoan();
+//
+//        //        Log.d(TAG, "here is data: " + data);
+////        loanAdapter = new LoanAdapter(this, data);
+////        LoanListVIew.setAdapter(loanAdapter);
+//
+//
+//        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                String loan = adapterView.getItemAtPosition(i).toString();
+//                Toast.makeText(getBaseContext(), adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
+//                Intent editIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
+//                startActivity(editIntent);
+//                Log.d(TAG, "onItemClick: You clicked on" + loan);
+//
+//                Cursor data = myHelper.getLoanID(loan);
+//                Log.d(TAG, "onItemClick: data" + data);
+//                int loanID = -1;
+//                while (data.moveToNext()){
+//                    loanID = data.getInt(0);
+//
+//                }
+//                if (loanID > -1){
+//                    Intent editLoanIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
+//                    editLoanIntent.putExtra("id", loanID);
+//                    editLoanIntent.putExtra("loan", loan);
+//                    Log.d(TAG, "almost through: " + loan);
+//                    startActivity(editLoanIntent);
+//                    finish();
+//
+//                }else {
+//
+//                }
+//            }
+//        });
+//    }
 
 }

@@ -68,7 +68,7 @@ public class ExpenditureTabbedActivity extends Fragment {
     }
 
     public void sumSavings(){
-        int sumSavings = mySQLiteHelper.addAllSavings();
+        int sumSavings = mySQLiteHelper.addAllSavings(null);
         txtSavings.setText(formatter.format(sumSavings));
     }
 

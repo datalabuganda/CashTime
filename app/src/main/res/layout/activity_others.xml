@@ -38,7 +38,8 @@
         android:layout_marginTop="12dp"
         android:orientation="vertical"
         android:layout_below="@+id/linearLayout8"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout24">
 
         <EditText
             android:id="@+id/amtOthers"
@@ -62,5 +63,13 @@
             <!--android:layout_marginLeft="180dp"-->
             <!--android:text="Ok" />-->
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/othersListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout24" />
 
 </RelativeLayout>

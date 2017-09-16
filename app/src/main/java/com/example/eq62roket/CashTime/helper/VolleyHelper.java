@@ -8,10 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,64 +53,85 @@ public class VolleyHelper {
 
     public void sendUserData() {
 
-        String url = "http://165.227.67.248/cashTimePhpDatabase/user.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        String url = "http://192.168.1.201:8000/user/";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
+        params.put("sex", lastInsertedUser.getSex());
+        params.put("age", String.valueOf(lastInsertedUser.getAge()));
+        params.put("educationLevel", lastInsertedUser.getEducationlevel());
+        params.put("nationality", lastInsertedUser.getNationality());
+        params.put("points", String.valueOf(lastInsertedUser.getPoints()));
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // response
-                        String userId = response;
+                       String userId = null;
+                        try {
+                            userId = String.valueOf(response.get("id"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         //int userId = Integer.valueOf(response);
                         lastInsertedUser.setPhpId(String.valueOf(userId));
                         lastInsertedUser.setSyncStatus(1);
                         userCrud.updateUser(lastInsertedUser);
-                        Log.d(TAG, "phpId: " +  goalCrud.getLastInsertedGoal().getPhpId());
-                        Log.d(TAG, "phpId: " +  goalCrud.getLastInsertedGoal().getPhpId());
-                        Log.d("Response User", response);
+                        Log.d(TAG, "phpId: " +  lastInsertedUser.getPhpId());
+                        Log.d(TAG, "Response UserId " + userId);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d("Error.Response", new String(error.networkResponse.data));
+
                     }
                 }
         ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
-                params.put("sex", lastInsertedUser.getSex());
-                params.put("age", String.valueOf(lastInsertedUser.getAge()));
-                params.put("educationLevel", lastInsertedUser.getEducationlevel());
-                params.put("nationality", lastInsertedUser.getNationality());
-                params.put("points", String.valueOf(lastInsertedUser.getPoints()));
-
-                return params;
-            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "text/html; charset=utf-8");
+                headers.put("Content-Type", "application/json; charset=UTF-8");
                 return headers;
             }
         };
-        queue.add(postRequest);
+        queue.add(jsonObjectRequest);
     }
 
     public void sendGoalData(){
-        String url = "http://192.168.1.201/goal.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        String url = "http://192.168.1.201:8000/goals/";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("goalName", lastInsertedGoal.getName());
+        params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
+        params.put("createDate",lastInsertedGoal.getStartDate());
+        params.put("completionDate", lastInsertedGoal.getEndDate());
+        params.put("user", lastInsertedUser.getPhpId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
+        params.put("actualCompletionDate", "placeholder");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // response
-                        int goalId = Integer.valueOf(response);
+                        int goalId = 0;
+                        try {
+                            goalId = (int) response.get("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         lastInsertedGoal.setPhpId(String.valueOf(goalId));
                         lastInsertedGoal.setSyncStatus(1);
                         goalCrud.updateGoal(lastInsertedGoal);
-                        Log.d("Response Goal", response);
+                        Log.d(TAG, "Response Goal" + goalId);
                     }
                 },
                 new Response.ErrorListener() {
@@ -117,33 +142,49 @@ public class VolleyHelper {
                     }
                 }
         ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("goalName", lastInsertedGoal.getName());
-                params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
-                params.put("goalStartDate",lastInsertedGoal.getStartDate());
-                params.put("goalEndDate", lastInsertedGoal.getEndDate());
 
-                return params;
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=UTF-8");
+                return headers;
             }
         };
-        queue.add(postRequest);
+        queue.add(jsonObjectRequest);
     }
 
     public void sendExpenditureData(){
-        String url = "http://192.168.1.201/expenditure.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        String url = "http://192.168.1.201:8000/expenditure/";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("user", lastInsertedUser.getPhpId());
+        params.put("goal", lastInsertedGoal.getPhpId());
+        params.put("transport", String.valueOf(expenditureCrud.addAllHealth()));
+        params.put("savings", String.valueOf(expenditureCrud.addAllSavings(null)));
+        params.put("otherExpenditures", String.valueOf(expenditureCrud.addAllOthers()));
+        params.put("homeneeds", String.valueOf(expenditureCrud.addAllHomeneeds()));
+        params.put("medical", "3000");
+        params.put("education", "300");
+        params.put("created", "23000");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // response
-                        int expenditureId = Integer.valueOf(response);
+                        int expenditureId = 0;
+                        try {
+                            expenditureId = (int) response.get("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         expenditureCrud.insertPhpId(expenditureId);
                         expenditureCrud.updateSyncExpenditure();
                         Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
                         Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
-                        Log.d("Response Exp", response);
+                        Log.d(TAG, "Response Exp" + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -155,35 +196,44 @@ public class VolleyHelper {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("totalTransportExpenditure", String.valueOf(expenditureCrud.addAllTransport()));
-                params.put("totalEducationExpenditure", String.valueOf(expenditureCrud.addAllEducation()));
-                params.put("totalHealthExpenditure", String.valueOf(expenditureCrud.addAllHealth()));
-                params.put("totalSavingsExpenditure", String.valueOf(expenditureCrud.addAllSavings(null)));
-                params.put("totalOthersExpenditure", String.valueOf(expenditureCrud.addAllOthers()));
-                params.put("totalHomeNeedsExpenditure", String.valueOf(expenditureCrud.addAllHomeneeds()));
-                params.put("totalExpenditureExpenditure", String.valueOf(expenditureCrud.addAllCategories()));
-
-                return params;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=UTF-8");
+                return headers;
             }
         };
-        queue.add(postRequest);
+        queue.add(jsonObjectRequest);
     }
 
     public void sendIncomeData(){
-        String url = "http://192.168.1.201/income.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        String url = "http://192.168.1.201:8000/income/";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("user", lastInsertedUser.getPhpId());
+        params.put("salary", String.valueOf(incomeCrud.addAllSalary()));
+        params.put("otherIncomes", String.valueOf(incomeCrud.addAllOthers()));
+        params.put("created", "time.now");
+        params.put("investment", "investment");
+        params.put("loan", "loan");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // response
-                        int incomeId = Integer.valueOf(response);
+                        int incomeId = 0;
+                        try {
+                            incomeId = (int) response.get("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         Log.d(TAG, "incomeId: " + incomeId);
                         incomeCrud.insertPhpId(incomeId);
                         incomeCrud.updateSyncIncome();
                         Log.d(TAG, "incomeIddb: " + incomeCrud.getPhpID());
-                        Log.d("Response Income", response);
+                        Log.d(TAG, "Response Income" + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -194,23 +244,20 @@ public class VolleyHelper {
                     }
                 }
         ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("totalLoanIncome", String.valueOf(incomeCrud.addAllLoan()));
-                params.put("totalSalaryIncome", String.valueOf(incomeCrud.addAllSalary()));
-                params.put("totalOthersIncome", String.valueOf(incomeCrud.addAllOthers()));
-                params.put("totalIncome", String.valueOf(incomeCrud.addAllIncome()));
 
-                return params;
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
             }
         };
-        queue.add(postRequest);
+        queue.add(jsonObjectRequest);
     }
 
     public void updateUserData() {
 
-        String url = "http://165.227.67.248/cashTimePhpDatabase/user_update.php";
+        String url = "http://165.227.67.248/cashTimePhpDatabase/user_updat";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -246,7 +293,7 @@ public class VolleyHelper {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "text/html; charset=utf-8");
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
                 return headers;
             }
         };
@@ -255,7 +302,7 @@ public class VolleyHelper {
 
 
     public void updateGoalData(){
-        String url = "http://192.168.1.201/goal_update.php";
+        String url = "http://165.227.67.248/cashTimePhpDatabase/goal_update.php";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -274,7 +321,7 @@ public class VolleyHelper {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("goalName", lastInsertedGoal.getName());
                 params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
@@ -283,12 +330,18 @@ public class VolleyHelper {
 
                 return params;
             }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
         };
         queue.add(postRequest);
     }
 
     public void updateExpenditureData(){
-        String url = "http://192.168.1.201/expenditure_update.php";
+        String url = "http://165.227.67.248/cashTimePhpDatabase/expenditure_update.php";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -308,24 +361,29 @@ public class VolleyHelper {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("totalTransportExpenditure", String.valueOf(expenditureCrud.addAllTransport()));
                 params.put("totalEducationExpenditure", String.valueOf(expenditureCrud.addAllEducation()));
-                params.put("totalHealthExpenditure", String.valueOf(expenditureCrud.addAllHealth()));
+                params.put("totalMedicalExpenditure", String.valueOf(expenditureCrud.addAllHealth()));
                 params.put("totalSavingsExpenditure", String.valueOf(expenditureCrud.addAllSavings(null)));
                 params.put("totalOthersExpenditure", String.valueOf(expenditureCrud.addAllOthers()));
-                params.put("totalHomeNeedsExpenditure", String.valueOf(expenditureCrud.addAllHomeneeds()));
-                params.put("totalExpenditureExpenditure", String.valueOf(expenditureCrud.addAllCategories()));
+                params.put("totalHomeneedsExpenditure", String.valueOf(expenditureCrud.addAllHomeneeds()));
 
                 return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
             }
         };
         queue.add(postRequest);
     }
 
     public void updateIncomeData(){
-        String url = "http://192.168.1.201/income_update.php";
+        String url = "http://165.227.67.248/cashTimePhpDatabase/income_update.php";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -344,14 +402,23 @@ public class VolleyHelper {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("totalLoanIncome", String.valueOf(incomeCrud.addAllLoan()));
+                Log.d(TAG, "totalLoanIncome: " + String.valueOf(incomeCrud.addAllLoan()));
                 params.put("totalSalaryIncome", String.valueOf(incomeCrud.addAllSalary()));
                 params.put("totalOthersIncome", String.valueOf(incomeCrud.addAllOthers()));
-                params.put("totalIncome", String.valueOf(incomeCrud.addAllIncome()));
+                Log.d(TAG, "totalOthersIncome: " + String.valueOf(incomeCrud.addAllOthers()));
+                params.put("totalInvestmentIncome", String.valueOf(incomeCrud.addAllInvestment()));
+                Log.d(TAG, "totalInvestmentIncome: " + String.valueOf(incomeCrud.addAllInvestment()));
 
                 return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
             }
         };
         queue.add(postRequest);

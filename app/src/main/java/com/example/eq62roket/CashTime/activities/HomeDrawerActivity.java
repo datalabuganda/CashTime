@@ -213,7 +213,9 @@ public class HomeDrawerActivity extends AppCompatActivity{
         String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
 
         if (goalSyncStatus == 0){
-            if (goalPhpId.equals("0")){
+            volleyHelper.sendGoalData();
+            Log.d(TAG, "goal sending ");
+            /*if (goalPhpId.equals("0")){
                 volleyHelper.sendGoalData();
                 Log.d(TAG, "goal sending ");
             }
@@ -221,21 +223,23 @@ public class HomeDrawerActivity extends AppCompatActivity{
                 volleyHelper.updateGoalData();
                 Log.d(TAG, "goal updating ");
             }
-
+*/
         }
 
         int expenditureSyncStatus = expenditureCrud.getSyncStatus();
         int expenditurePhpId = expenditureCrud.getPhpID();
 
         if (expenditureSyncStatus == 0){
-            if (expenditurePhpId == 0){
+            volleyHelper.sendExpenditureData();
+            Log.d(TAG, "expenditure sending ");
+            /*if (expenditurePhpId == 0){
                 volleyHelper.sendExpenditureData();
                 Log.d(TAG, "expenditure sending ");
             }
             else{
                 volleyHelper.updateExpenditureData();
                 Log.d(TAG, "expenditure updating ");
-            }
+            }*/
         }
 
 
@@ -244,14 +248,18 @@ public class HomeDrawerActivity extends AppCompatActivity{
 
 
         if (incomeSyncStatus == 0){
-            if (incomePhpId == 0){
+            volleyHelper.sendIncomeData();
+            Log.d(TAG, "income sending ");
+            /*if (incomePhpId == 0){
                 volleyHelper.sendIncomeData();
                 Log.d(TAG, "income sending ");
+
             }
+
             else{
                 volleyHelper.updateIncomeData();
                 Log.d(TAG, "income updating ");
-            }
+            }*/
         }
 
     }

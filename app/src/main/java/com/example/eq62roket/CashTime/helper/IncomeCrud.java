@@ -194,7 +194,7 @@ public class IncomeCrud {
 
     public Cursor getOthers(){
         String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
-x        Cursor data = database.rawQuery(query, null);
+       Cursor data = database.rawQuery(query, null);
         return  data;
     }
 

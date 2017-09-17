@@ -107,6 +107,7 @@ public class ParseConnector {
     }
 
 
+
     public void addExpenditureToParse(){
        String goalParseId = goalCrud.getLastInsertedGoal().getPhpId();
         Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getPhpId());

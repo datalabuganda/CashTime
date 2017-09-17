@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -53,7 +54,7 @@ public class VolleyHelper {
 
     public void sendUserData() {
 
-        String url = "http://192.168.1.201:8000/user/";
+        String url = "http://192.168.2.107:8000/user/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
@@ -88,7 +89,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", new String(error.networkResponse.data));
+                        Log.d(TAG, "Error.Response user" + new String(error.networkResponse.data));
 
                     }
                 }
@@ -100,11 +101,12 @@ public class VolleyHelper {
                 return headers;
             }
         };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
     }
 
     public void sendGoalData(){
-        String url = "http://192.168.1.201:8000/goals/";
+        String url = "http://192.168.2.107:8000/goals/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("goalName", lastInsertedGoal.getName());
@@ -138,7 +140,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response Goal" + error.toString());
                     }
                 }
         ) {
@@ -150,11 +152,13 @@ public class VolleyHelper {
                 return headers;
             }
         };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
     }
 
     public void sendExpenditureData(){
-        String url = "http://192.168.1.201:8000/expenditure/";
+        String url = "http://192.168.2.107:8000/expenditure/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user", lastInsertedUser.getPhpId());
@@ -191,7 +195,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response expenditure" + error.toString());
                     }
                 }
         ) {
@@ -202,11 +206,13 @@ public class VolleyHelper {
                 return headers;
             }
         };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
     }
 
     public void sendIncomeData(){
-        String url = "http://192.168.1.201:8000/income/";
+        String url = "http://192.168.2.107:8000/income/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user", lastInsertedUser.getPhpId());
@@ -240,7 +246,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response Income Error" + error.toString());
                     }
                 }
         ) {
@@ -252,44 +258,44 @@ public class VolleyHelper {
                 return headers;
             }
         };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
     }
 
-    public void updateUserData() {
+    public void updateUserData(String userID) {
 
-        String url = "http://165.227.67.248/cashTimePhpDatabase/user_updat";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        String url = String.format("http://192.168.2.107:8000/userlist/%s/update/", userID);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
+        params.put("sex", lastInsertedUser.getSex());
+        params.put("age", String.valueOf(lastInsertedUser.getAge()));
+        params.put("educationLevel", lastInsertedUser.getEducationlevel());
+        params.put("nationality", lastInsertedUser.getNationality());
+        params.put("points", String.valueOf(lastInsertedUser.getPoints()));
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // response
                         lastInsertedUser.setSyncStatus(1);
                         userCrud.updateUser(lastInsertedUser);
-                        Log.d("Response update User", response);
+                        Log.d(TAG, "Response update User" + response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response update user" + error.toString());
                     }
                 }
         )
         {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
-                params.put("sex", lastInsertedUser.getSex());
-                params.put("age", String.valueOf(lastInsertedUser.getAge()));
-                params.put("educationLevel", lastInsertedUser.getEducationlevel());
-                params.put("nationality", lastInsertedUser.getNationality());
-                params.put("points", String.valueOf(lastInsertedUser.getPoints()));
-                params.put("id", lastInsertedUser.getPhpId());
-
-                return params;
-            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -297,7 +303,9 @@ public class VolleyHelper {
                 return headers;
             }
         };
-        queue.add(postRequest);
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(jsonObjectRequest);
     }
 
 

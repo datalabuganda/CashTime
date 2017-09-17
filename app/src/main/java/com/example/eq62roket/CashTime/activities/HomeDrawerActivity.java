@@ -195,6 +195,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
         String userPhpId = userCrud.getLastUserInserted().getPhpId();
 
+        Log.d(TAG, "userPhpId: " + userPhpId);
 
         Log.d(TAG, "userSyncStatus: "+ userSyncStatus);
         if (userSyncStatus == 0) {
@@ -203,7 +204,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
                 Log.d(TAG, "user sending ");
             }
             else{
-                volleyHelper.updateUserData();
+                volleyHelper.updateUserData(userPhpId);
                 Log.d(TAG, "user updating ");
             }
 

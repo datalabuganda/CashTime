@@ -54,7 +54,7 @@ public class VolleyHelper {
 
     public void sendUserData() {
 
-        String url = "http://192.168.2.107:8000/user/";
+        String url = "http://165.227.67.248:8000/user/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("household", String.valueOf(lastInsertedUser.getHousehold()));
@@ -106,7 +106,7 @@ public class VolleyHelper {
     }
 
     public void sendGoalData(){
-        String url = "http://192.168.2.107:8000/goals/";
+        String url = "http://165.227.67.248:8000/goals/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("goalName", lastInsertedGoal.getName());
@@ -158,7 +158,7 @@ public class VolleyHelper {
     }
 
     public void sendExpenditureData(){
-        String url = "http://192.168.2.107:8000/expenditure/";
+        String url = "http://165.227.67.248:8000/expenditure/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user", lastInsertedUser.getPhpId());
@@ -212,7 +212,7 @@ public class VolleyHelper {
     }
 
     public void sendIncomeData(){
-        String url = "http://192.168.2.107:8000/income/";
+        String url = "http://165.227.67.248:8000/income/";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user", lastInsertedUser.getPhpId());
@@ -265,7 +265,7 @@ public class VolleyHelper {
 
     public void updateUserData(String userID) {
 
-        String url = String.format("http://192.168.2.107:8000/userlist/%s/update/", userID);
+        String url = String.format("http://165.227.67.248:8000/userlist/%s/update/", userID);
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("household", String.valueOf(lastInsertedUser.getHousehold()));

@@ -10,6 +10,9 @@ import com.example.eq62roket.CashTime.models.Income;
 
 import java.util.ArrayList;
 
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_ID;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_LOAN;
+
 /**
  * Created by CASHTIME on 8/5/17.
  */
@@ -83,14 +86,36 @@ public class IncomeCrud {
         return  data;
     }
 
+    public ArrayList<Income> getAllSalary(){
+        ArrayList<Income> salaryArrayList = new ArrayList<>();
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToNext();
+                Income income = new Income();
+                income.setId(cursor.getLong(0));
+                income.setSalary(cursor.getInt(3));
+                income.setCreatedDate(cursor.getString(7));
+
+                salaryArrayList.add(income);
+
+            }
+        }
+        return salaryArrayList;
+
+    }
+
+
     public Cursor getSalaryID(String salary){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + salary + "'";
+        String query = "SELECT " + COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + salary + "'";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
 
-    public void updateSalary(String newSalary, int id, String oldSalary){
-        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + newSalary + "' WHERE " + DatabaseHelper.COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + oldSalary + "'";
+    public void updateSalary(String newSalary, int id, int oldSalary){
+        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + newSalary + "' WHERE " + COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_SALARY + " = '" + oldSalary + "'";
 
         Log.d(TAG, "updateSalary: query: " + query);
         Log.d(TAG, "updateSalary: Setting salary to " + newSalary);
@@ -119,7 +144,7 @@ public class IncomeCrud {
                 cursor.moveToNext();
                 Income income = new Income();
                 income.setId(cursor.getLong(0));
-                income.setLoan(cursor.getInt(3));
+                income.setLoan(cursor.getInt(4));
                 income.setCreatedDate(cursor.getString(7));
 
                 loanArrayList.add(income);
@@ -141,11 +166,12 @@ public class IncomeCrud {
         return data;
     }
 
-    public void updateLoan(String newLoan, int id){
-        ContentValues updateLoanValues = new ContentValues();
-        updateLoanValues.put(DatabaseHelper.COLUMN_INCOME_LOAN, newLoan);
-        database.update(DatabaseHelper.TABLE_INCOME, updateLoanValues, DatabaseHelper.COLUMN_INCOME_ID + " = ? " , new String[]{String.valueOf(id)});
 
+    public void updateLoan(String newLoan, int id, int oldLoan){
+        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_LOAN + " = '" + newLoan + "' WHERE " + COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + COLUMN_INCOME_LOAN + " = '" + oldLoan + "'";
+        Log.d(TAG, "updateLoan: query: " + query);
+        Log.d(TAG, "updateLoan: Setting salary to " + newLoan);
+        database.execSQL(query);
     }
 
 
@@ -160,6 +186,27 @@ public class IncomeCrud {
             return true;
     }
 
+    public ArrayList<Income> getAllInvestment(){
+        ArrayList<Income> investmentArrayList = new ArrayList<>();
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToNext();
+                Income income = new Income();
+                income.setId(cursor.getLong(0));
+                income.setInvestment(cursor.getInt(5));
+                income.setCreatedDate(cursor.getString(7));
+
+                investmentArrayList.add(income);
+
+            }
+        }
+        return investmentArrayList;
+
+    }
+
     public Cursor getInvestment(){
         String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
         Cursor data = database.rawQuery(query, null);
@@ -167,13 +214,13 @@ public class IncomeCrud {
     }
 
     public Cursor getInvestmentID(String investment){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + investment + "'";
+        String query = "SELECT " + COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + investment + "'";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
 
-    public void updateInvestment(String newInvestment, int id, String oldInvestment){
-        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + newInvestment + "' WHERE " + DatabaseHelper.COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + oldInvestment + "'";
+    public void updateInvestment(String newInvestment, long id, int oldInvestment){
+        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + newInvestment + "' WHERE " + COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + oldInvestment + "'";
 
         Log.d(TAG, "updateInvestment: query: " + query);
         Log.d(TAG, "updateInvestment: Setting salary to " + newInvestment);
@@ -192,20 +239,42 @@ public class IncomeCrud {
             return true;
     }
 
+    public ArrayList<Income> getAllOthers(){
+        ArrayList<Income> othersArrayList = new ArrayList<>();
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.getCount() > 0){
+            for (int i = 0; i < cursor.getCount(); i++){
+                cursor.moveToNext();
+                Income income = new Income();
+                income.setId(cursor.getLong(0));
+                income.setOther(cursor.getInt(6));
+                income.setCreatedDate(cursor.getString(7));
+
+                othersArrayList.add(income);
+
+            }
+        }
+        return othersArrayList;
+
+    }
+
+
     public Cursor getOthers(){
         String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
-x        Cursor data = database.rawQuery(query, null);
+        Cursor data = database.rawQuery(query, null);
         return  data;
     }
 
     public Cursor getOthersID(String others){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + others + "'";
+        String query = "SELECT " + COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + others + "'";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
 
-    public void updateOthers(String newOthers, int id, String oldOthers){
-        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + newOthers + "' WHERE " + DatabaseHelper.COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + oldOthers + "'";
+    public void updateOthers(String newOthers, long id, int oldOthers){
+        String query = "UPDATE " + DatabaseHelper.TABLE_INCOME + " SET " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + newOthers + "' WHERE " + COLUMN_INCOME_ID + " = '" + id + "'" + " AND " + DatabaseHelper.COLUMN_INCOME_OTHERS + " = '" + oldOthers + "'";
 
         Log.d(TAG, "updateOthers: query: " + query);
         Log.d(TAG, "updateOthers: Setting others to " + newOthers);

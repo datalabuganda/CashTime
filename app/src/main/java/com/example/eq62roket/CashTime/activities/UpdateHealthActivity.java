@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 public class UpdateHealthActivity extends AppCompatActivity {
 
     EditText edtUpdateHealth;
     Button btnUpdateHealth;
-
+ExpenditureCrud expenditureCrud;
     SQLiteHelper myHelper;
 
     private String selectedHealth;
@@ -31,20 +32,20 @@ public class UpdateHealthActivity extends AppCompatActivity {
         edtUpdateHealth = (EditText) findViewById(R.id.amtUpdateHealth);
         btnUpdateHealth = (Button) findViewById(R.id.btnUpdateHealth);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedHealth = receivedIntent.getStringExtra("health");
+        final int healthAmount = receivedIntent.getExtras().getInt("HEALTH_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("HEALTH_ID");
 
-        edtUpdateHealth.setText(selectedHealth);
+        edtUpdateHealth.setText("" + healthAmount);
         btnUpdateHealth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateHealth.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateHealth(item,selectedID,selectedHealth);
+                    expenditureCrud.updateHealth(item, (int) selectedID,healthAmount);
 
                 }else {
                     Toast.makeText(UpdateHealthActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

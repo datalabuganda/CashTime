@@ -14,11 +14,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.adapters.SalaryAdapter;
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -43,22 +45,17 @@ public class SalaryActivity extends AppCompatActivity {
         btnSalary = (Button) findViewById(R.id.btnSalary);
         edtSalary = (EditText) findViewById(R.id.edtSalary);
         SalaryListVIew = (ListView) findViewById(R.id.SalaryListView);
-
         incomeCrud = new IncomeCrud(this);
 
         userCrud = new UserCrud(this);
 
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        loanArrayList = incomeCrud.getAllSalary();
 
-//        updateSalary.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent updateIntent = new Intent(SalaryActivity.this, UpdateSalaryActivity.class);
-//                startActivity(updateIntent);
-//            }
-//        });
+        salaryAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, loanArrayList);
+        SalaryListVIew.setAdapter(salaryAdapter);
 
         AddSalary();
-        populateListView();
     }
 
     public void AddSalary(){
@@ -98,90 +95,4 @@ public class SalaryActivity extends AppCompatActivity {
 
     }
 
-    private void populateListView() {
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = incomeCrud.getSalary();
-        Log.d(TAG, "here is data: " + data);
-        ArrayList<String> listData = new ArrayList<>();
-        while (data.moveToNext()) {
-            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_INCOME_SALARY)));
-
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        SalaryListVIew.setAdapter(adapter);
-
-        SalaryListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String salary = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + salary);
-
-                Cursor data = incomeCrud.getSalaryID(salary);
-                int salaryID = -1;
-                while (data.moveToNext()) {
-                    salaryID = data.getInt(0);
-
-                }
-                if (salaryID > -1) {
-                    Intent editSalaryIntent = new Intent(SalaryActivity.this, UpdateSalaryActivity.class);
-                    editSalaryIntent.putExtra("id", salaryID);
-                    editSalaryIntent.putExtra("salary", salary);
-                    Log.d(TAG, "almost through: " + salary);
-                    startActivity(editSalaryIntent);
-                    finish();
-                }
-
-
-        /*Cursor data = incomeCrud.getSalary();
-        salaryAdapter = new SalaryAdapter(this, data);
-        SalaryListVIew.setAdapter(salaryAdapter);
-
-        SalaryListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor item = (Cursor) parent.getItemAtPosition(position);
-                view.setSelected(true);
-                salaryAdapter.notifyDataSetChanged();
-//                G.t(getActivity(), "Now working with category: " + item.getName());
-            }
-        });
-*/
-//        Log.d(TAG, "here is data: " + data);
-//        ArrayList<String> listData = new ArrayList<>();
-//        while (data.moveToNext()){
-//            listData.add(data.getString(data.getColumnIndex(myHelper.COL_3)));
-//
-//        }
-//        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-//        SalaryListVIew.setAdapter(adapter);
-
-//        SalaryListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
-//                Cursor c = (Cursor) arg0.getItemAtPosition(arg2);
-////                Log.d(TAG, "onItemClick: You clicked on" + salary);
-////
-////                Cursor data = myHelper.getSalaryID(salary);
-////                int salaryID = -1;
-////                while (data.moveToNext()){
-////                    salaryID = data.getInt(0);
-//
-//                }
-////                if (salaryID > -1){
-////                    Intent editSalaryIntent = new Intent(SalaryActivity.this, UpdateSalaryActivity.class);
-////                    editSalaryIntent.putExtra("id", salaryID);
-////                    editSalaryIntent.putExtra("salary", salary);
-////                    Log.d(TAG, "almost through: " + salary);
-////                    startActivity(editSalaryIntent);
-////                    finish();
-////
-////                }else {
-////
-////                }
-////            }
-//        });
-            }
-        });
-    }
 }

@@ -14,10 +14,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.OthersAdapter;
+import com.example.eq62roket.CashTime.adapters.SavingsAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
 
@@ -42,6 +45,7 @@ public class SavingsActivity extends AppCompatActivity {
     private Date goalEndDate;
 
     ListView SavingsListView;
+    SavingsAdapter savingsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,11 @@ public class SavingsActivity extends AppCompatActivity {
         expenditureCrud = new ExpenditureCrud(this);
         SavingsListView = (ListView) findViewById(R.id.savingsListView);
 
+        ArrayList<Expenditure> savingsArrayList = new ArrayList<>();
+        savingsArrayList = expenditureCrud.getAllSavings();
+
+        savingsAdapter = new SavingsAdapter(this, R.layout.savings_list_adapter, savingsArrayList);
+        SavingsListView.setAdapter(savingsAdapter);
 
         userCrud = new UserCrud(this);
         goalCrud = new GoalCrud(this);
@@ -122,55 +131,6 @@ public class SavingsActivity extends AppCompatActivity {
 
                 }
         );
-        populateListView();
-    }
-
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = expenditureCrud.getSavings();
-        Log.d(TAG, "here is data: " + data);
-//        ArrayList<Income> salaryDataList = new ArrayList<>();
-//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
-//
-//
-//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
-//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
-
-        ArrayList<String> listData = new ArrayList<>();
-
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_EXPENDITURE_SAVINGS)));
-
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        SavingsListView.setAdapter(adapter);
-
-        SavingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String Savings = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + Savings);
-
-                Cursor data = expenditureCrud.getSavingsID(Savings);
-                int SavingsID = -1;
-                while (data.moveToNext()){
-                    SavingsID = data.getInt(0);
-
-                }
-                if (SavingsID > -1){
-                    Intent editSavingsIntent = new Intent(SavingsActivity.this, UpdateSavingsActivity.class);
-                    editSavingsIntent.putExtra("id", SavingsID);
-                    editSavingsIntent.putExtra("Savings", Savings);
-                    Log.d(TAG, "almost through: " + Savings);
-                    startActivity(editSavingsIntent);
-                    finish();
-
-                }else {
-
-                }
-            }
-        });
     }
 
 }

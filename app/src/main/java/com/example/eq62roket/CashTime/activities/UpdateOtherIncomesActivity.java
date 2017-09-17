@@ -36,16 +36,16 @@ public class UpdateOtherIncomesActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedOthers = receivedIntent.getStringExtra("others");
+        final int othersAmount = receivedIntent.getExtras().getInt("OTHERS_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("OTHERS_ID");
 
-        edtUpdateOthers.setText(selectedOthers);
+        edtUpdateOthers.setText("" + othersAmount);
         btnUpdateOthers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateOthers.getText().toString();
                 if (!item.equals("")){
-                    incomeCrud.updateOthers(item,selectedID,selectedOthers);
+                    incomeCrud.updateOthers(item,selectedID,othersAmount);
 
                 }else {
                     Toast.makeText(UpdateOtherIncomesActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

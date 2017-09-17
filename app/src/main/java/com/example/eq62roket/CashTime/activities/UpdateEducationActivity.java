@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 public class UpdateEducationActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class UpdateEducationActivity extends AppCompatActivity {
     Button btnUpdateEducation;
 
     SQLiteHelper myHelper;
+    ExpenditureCrud expenditureCrud;
 
     private String selectedEducation;
     private int selectedID;
@@ -32,20 +34,20 @@ public class UpdateEducationActivity extends AppCompatActivity {
         edtUpdateEducation = (EditText) findViewById(R.id.amtUpdateEducation);
         btnUpdateEducation = (Button) findViewById(R.id.btnUpdateEducation);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedEducation = receivedIntent.getStringExtra("Education");
+        final int educationAmount = receivedIntent.getExtras().getInt("EDUCATION_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("EDUCATION_ID");
 
-        edtUpdateEducation.setText(selectedEducation);
+        edtUpdateEducation.setText("" + educationAmount);
         btnUpdateEducation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateEducation.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateEducation(item,selectedID,selectedEducation);
+                    expenditureCrud.updateEducation(item, (int) selectedID,educationAmount);
 
                 }else {
                     Toast.makeText(UpdateEducationActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

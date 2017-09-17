@@ -56,20 +56,14 @@ public class LoanActivity extends AppCompatActivity {
         ArrayList<Income> loanArrayList = new ArrayList<>();
         loanArrayList = incomeCrud.getAllLoan();
 
+        userCrud = new UserCrud(this);
+
         loanAdapter = new LoanAdapter(this, R.layout.loan_list_adapter, loanArrayList);
         LoanListVIew.setAdapter(loanAdapter);
-
-//        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//        });
 
         AddLoan();
 
 
-//        populateListView();
     }
 
 
@@ -105,88 +99,5 @@ public class LoanActivity extends AppCompatActivity {
                 }
         );
     }
-
-
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = incomeCrud.getLoan();
-        Log.d(TAG, "here is data: " + data);
-        ArrayList<String> listData = new ArrayList<>();
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_INCOME_LOAN)));
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        LoanListVIew.setAdapter(adapter);
-
-        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String loan = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + loan);
-
-                Cursor data = incomeCrud.getLoanID(loan);
-                int loanID = -1;
-                while (data.moveToNext()){
-                    loanID = data.getInt(0);
-
-                }
-                if (loanID > -1){
-                    Intent editLoanIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
-                    editLoanIntent.putExtra("id", loanID);
-                    editLoanIntent.putExtra("loan", loan);
-                    Log.d(TAG, "almost through: " + loan);
-                    startActivity(editLoanIntent);
-                    finish();
-
-                }else {
-
-                }
-            }
-        });
-    }
-
-//    private void populateListView(){
-//        Log.d(TAG, "populateListView: Displayng data in the listView");
-//
-//        Cursor data = myHelper.getLoan();
-//
-//        //        Log.d(TAG, "here is data: " + data);
-////        loanAdapter = new LoanAdapter(this, data);
-////        LoanListVIew.setAdapter(loanAdapter);
-//
-//
-//        LoanListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                String loan = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(getBaseContext(), adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();
-//                Intent editIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
-//                startActivity(editIntent);
-//                Log.d(TAG, "onItemClick: You clicked on" + loan);
-//
-//                Cursor data = myHelper.getLoanID(loan);
-//                Log.d(TAG, "onItemClick: data" + data);
-//                int loanID = -1;
-//                while (data.moveToNext()){
-//                    loanID = data.getInt(0);
-//
-//                }
-//                if (loanID > -1){
-//                    Intent editLoanIntent = new Intent(LoanActivity.this, UpdateLoanActivity.class);
-//                    editLoanIntent.putExtra("id", loanID);
-//                    editLoanIntent.putExtra("loan", loan);
-//                    Log.d(TAG, "almost through: " + loan);
-//                    startActivity(editLoanIntent);
-//                    finish();
-//
-//                }else {
-//
-//                }
-//            }
-//        });
-//    }
-
 
 }

@@ -34,16 +34,16 @@ public class UpdateInvestmentActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedInvestment = receivedIntent.getStringExtra("investment");
+        final int investmentAmount = receivedIntent.getExtras().getInt("INVESTMENT_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("INVESTMENT_ID");
 
-        edtUpdateInvestment.setText(selectedInvestment);
+        edtUpdateInvestment.setText("" + investmentAmount);
         btnUpdateInvestment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateInvestment.getText().toString();
                 if (!item.equals("")){
-                    incomeCrud.updateInvestment(item,selectedID,selectedInvestment);
+                    incomeCrud.updateInvestment(item,selectedID,investmentAmount);
 
                 }else {
                     Toast.makeText(UpdateInvestmentActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

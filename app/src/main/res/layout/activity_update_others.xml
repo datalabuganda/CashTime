@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true">
 
         <EditText
-            android:id="@+id/amtUpdateOthers"
+            android:id="@+id/edtUpdateOthers"
             android:layout_width="274dp"
             android:layout_height="wrap_content"
             android:ems="10"

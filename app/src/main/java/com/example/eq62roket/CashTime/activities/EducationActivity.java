@@ -15,9 +15,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.EducationAdapter;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class EducationActivity extends AppCompatActivity {
     Button btnEducation;
     UserCrud userCrud;
     ListView EducationListVIew;
+    EducationAdapter educationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,12 @@ public class EducationActivity extends AppCompatActivity {
         edtEducation = (EditText) findViewById(R.id.amtEducation);
         btnEducation = (Button) findViewById(R.id.btnEducation);
         expenditureCrud = new ExpenditureCrud(this);
+
+        ArrayList<Expenditure> educationArrayList = new ArrayList<>();
+        educationArrayList = expenditureCrud.getAllEducation();
+
+        educationAdapter = new EducationAdapter(this, R.layout.education_list_adapter, educationArrayList);
+        EducationListVIew.setAdapter(educationAdapter);
 
         userCrud = new UserCrud(this);
 
@@ -72,56 +83,8 @@ public class EducationActivity extends AppCompatActivity {
             }
         });
 
-        populateListView();
 
     }
 
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = expenditureCrud.getEducation();
-        Log.d(TAG, "here is data: " + data);
-//        ArrayList<Income> salaryDataList = new ArrayList<>();
-//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
-//
-//
-//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
-//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
-
-        ArrayList<String> listData = new ArrayList<>();
-
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_EXPENDITURE_EDUCATION)));
-
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        EducationListVIew.setAdapter(adapter);
-
-        EducationListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String education = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + education);
-
-                Cursor data = expenditureCrud.getEducationID(education);
-                int educationID = -1;
-                while (data.moveToNext()){
-                    educationID = data.getInt(0);
-
-                }
-                if (educationID > -1){
-                    Intent editEducationIntent = new Intent(EducationActivity.this, UpdateEducationActivity.class);
-                    editEducationIntent.putExtra("id", educationID);
-                    editEducationIntent.putExtra("Education", education);
-                    Log.d(TAG, "almost through: " + education);
-                    startActivity(editEducationIntent);
-                    finish();
-
-                }else {
-
-                }
-            }
-        });
-       }
 
 }

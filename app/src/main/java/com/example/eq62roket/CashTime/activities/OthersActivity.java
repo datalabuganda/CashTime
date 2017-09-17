@@ -15,9 +15,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.EducationAdapter;
+import com.example.eq62roket.CashTime.adapters.OthersAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class OthersActivity extends AppCompatActivity {
     private static final String TAG = "OthersActivity";
     ListView OthersListView;
     UserCrud userCrud;
+    OthersAdapter othersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,18 @@ public class OthersActivity extends AppCompatActivity {
         edtOthers = (EditText) findViewById(R.id.amtOthers);
         btnOthers = (Button) findViewById(R.id.btnOthers);
         expenditureCrud = new ExpenditureCrud(this);
+        OthersListView = (ListView) findViewById(R.id.othersListView);
 
         userCrud = new UserCrud(this);
 
+        ArrayList<Expenditure> othersArrayList = new ArrayList<>();
+        othersArrayList = expenditureCrud.getAllOthers();
+
+        othersAdapter = new OthersAdapter(this, R.layout.others_list_adapter, othersArrayList);
+        OthersListView.setAdapter(othersAdapter);
+
         AddOthers();
-        populateListView();
+//        populateListView();
     }
 
     public void AddOthers(){

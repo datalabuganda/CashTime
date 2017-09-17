@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 public class UpdateHomeneedsActivity extends AppCompatActivity {
 
     EditText edtUpdateHomeneeds;
     Button btnUpdateHomeneeds;
+    ExpenditureCrud expenditureCrud;
 
     SQLiteHelper myHelper;
 
@@ -31,20 +33,20 @@ public class UpdateHomeneedsActivity extends AppCompatActivity {
         edtUpdateHomeneeds = (EditText) findViewById(R.id.amtUpdateHomeneeds);
         btnUpdateHomeneeds = (Button) findViewById(R.id.btnUpdateHomeneeds);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedHomeneeds = receivedIntent.getStringExtra("Homeneeds");
+        final int homeneedsAmount = receivedIntent.getExtras().getInt("HOMENEEDS_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("HOMENEEDS_ID");
 
-        edtUpdateHomeneeds.setText(selectedHomeneeds);
+        edtUpdateHomeneeds.setText("" + homeneedsAmount);
         btnUpdateHomeneeds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateHomeneeds.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateHomeneeds(item,selectedID,selectedHomeneeds);
+                    expenditureCrud.updateHomeneeds(item, (int) selectedID,homeneedsAmount);
 
                 }else {
                     Toast.makeText(UpdateHomeneedsActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

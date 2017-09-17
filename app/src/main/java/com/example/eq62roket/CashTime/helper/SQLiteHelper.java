@@ -144,7 +144,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public void updateEducation(String newEducation, int id, String oldEducation){
+    public void updateEducation(String newEducation, long id, int oldEducation){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_EXPENDITURE + " SET " + COLUMN_EXPENDITURE_EDUCATION + " = '" + newEducation + "' WHERE " + COLUMN_EXPENDITURE_ID + " = '" + id + "'" + " AND " + COLUMN_EXPENDITURE_EDUCATION + " = '" + oldEducation + "'";
 

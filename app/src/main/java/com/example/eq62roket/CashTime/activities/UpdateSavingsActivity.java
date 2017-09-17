@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 public class UpdateSavingsActivity extends AppCompatActivity {
 
     EditText edtUpdateSavings;
     Button btnUpdateSavings;
+    ExpenditureCrud expenditureCrud;
 
     SQLiteHelper myHelper;
 
@@ -31,20 +33,20 @@ public class UpdateSavingsActivity extends AppCompatActivity {
         edtUpdateSavings = (EditText) findViewById(R.id.amtUpdateSavings);
         btnUpdateSavings = (Button) findViewById(R.id.btnUpdateSavings);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedSavings = receivedIntent.getStringExtra("Savings");
+        final int savingsAmount = receivedIntent.getExtras().getInt("SAVINGS_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("SAVINGS_ID");
 
-        edtUpdateSavings.setText(selectedSavings);
+        edtUpdateSavings.setText("" + savingsAmount);
         btnUpdateSavings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateSavings.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateSavings(item,selectedID,selectedSavings);
+                    expenditureCrud.updateSavings(item, (int) selectedID,savingsAmount);
 
                 }else {
                     Toast.makeText(UpdateSavingsActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

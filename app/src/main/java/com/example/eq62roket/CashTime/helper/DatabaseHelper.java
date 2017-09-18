@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
 
 
     // Columns of User table

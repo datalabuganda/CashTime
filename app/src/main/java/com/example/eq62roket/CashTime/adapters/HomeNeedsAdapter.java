@@ -78,7 +78,7 @@ public class HomeNeedsAdapter extends ArrayAdapter<Expenditure> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtHomeneedsDate);
 
 
-        tvamount.setText("" + homeneeds_amount);
+        tvamount.setText("Shs: " + formatter.format(homeneeds_amount));
         tvdatecreated.setText(homeneeds_created_date);
         Log.d(TAG, "date: homeneeds " + homeneeds_created_date);
 

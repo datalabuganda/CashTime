@@ -89,7 +89,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d(TAG, "Error.Response user" + new String(error.networkResponse.data));
+//                        Log.d(TAG, "Error.Response user" + new String(error.networkResponse.data));
 
                     }
                 }

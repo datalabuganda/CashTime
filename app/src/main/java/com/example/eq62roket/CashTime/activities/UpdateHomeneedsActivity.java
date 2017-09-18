@@ -29,6 +29,7 @@ public class UpdateHomeneedsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_homeneeds);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtUpdateHomeneeds = (EditText) findViewById(R.id.amtUpdateHomeneeds);
         btnUpdateHomeneeds = (Button) findViewById(R.id.btnUpdateHomeneeds);

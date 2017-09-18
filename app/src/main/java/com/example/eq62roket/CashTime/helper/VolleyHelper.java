@@ -115,7 +115,7 @@ public class VolleyHelper {
         params.put("completionDate", lastInsertedGoal.getEndDate());
         params.put("user", lastInsertedUser.getPhpId());
         Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
-        params.put("actualCompletionDate", "placeholder");
+        params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
@@ -167,9 +167,11 @@ public class VolleyHelper {
         params.put("savings", String.valueOf(expenditureCrud.addAllSavings(null)));
         params.put("otherExpenditures", String.valueOf(expenditureCrud.addAllOthers()));
         params.put("homeneeds", String.valueOf(expenditureCrud.addAllHomeneeds()));
-        params.put("medical", "3000");
-        params.put("education", "300");
-        params.put("created", "23000");
+        params.put("medical", String.valueOf(expenditureCrud.addAllHealth()));
+        params.put("education", String.valueOf(expenditureCrud.addAllEducation()));
+        params.put("created", "placeholder");
+
+        Log.d(TAG, "education: " + String.valueOf(expenditureCrud.getAllEducation()));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
@@ -185,7 +187,7 @@ public class VolleyHelper {
                             e.printStackTrace();
                         }
                         expenditureCrud.insertPhpId(expenditureId);
-                        expenditureCrud.updateSyncExpenditure();
+                        expenditureCrud.updateSyncExpenditure(1);
                         Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
                         Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
                         Log.d(TAG, "Response Exp" + response);
@@ -195,7 +197,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d(TAG, "Error.Response expenditure" + error.toString());
+                        //Log.d(TAG, "Error.Response expenditure" + new String(error.networkResponse.data));
                     }
                 }
         ) {
@@ -218,9 +220,9 @@ public class VolleyHelper {
         params.put("user", lastInsertedUser.getPhpId());
         params.put("salary", String.valueOf(incomeCrud.addAllSalary()));
         params.put("otherIncomes", String.valueOf(incomeCrud.addAllOthers()));
-        params.put("created", "time.now");
-        params.put("investment", "investment");
-        params.put("loan", "loan");
+        params.put("created", "placeholder");
+        params.put("investment", String.valueOf(incomeCrud.addAllInvestment()));
+        params.put("loan", String.valueOf(incomeCrud.addAllLoan()));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
@@ -246,7 +248,7 @@ public class VolleyHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d(TAG, "Error.Response Income Error" + error.toString());
+                        //Log.d(TAG, "Error.Response Income Error" +  new String(error.networkResponse.data));
                     }
                 }
         ) {
@@ -254,7 +256,7 @@ public class VolleyHelper {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Content-Type", "application/json; charset=UTF-8");
                 return headers;
             }
         };
@@ -355,7 +357,7 @@ public class VolleyHelper {
                     @Override
                     public void onResponse(String response) {
 
-                        expenditureCrud.updateSyncExpenditure();
+                        expenditureCrud.updateSyncExpenditure(1);
 
                         Log.d("Response", response);
                     }

@@ -63,7 +63,7 @@ public class IncomeCrud {
     }
 
     public int getPhpID(){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_PHPID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_PHPID + " IS NOT NULL ";
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_PHPID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_PHPID + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
         int phpId = 0;
         if (cursor.moveToFirst()){
@@ -82,14 +82,14 @@ public class IncomeCrud {
             return true;
     }
     public Cursor getSalary(){
-        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 ";
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
 
     public ArrayList<Income> getAllSalary(){
         ArrayList<Income> salaryArrayList = new ArrayList<>();
-        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + "ORDER BY " + COLUMN_INCOME_CREATEDATE + " DESC " +  " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -137,7 +137,7 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllLoan(){
         ArrayList<Income> loanArrayList = new ArrayList<>();
-        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -157,7 +157,7 @@ public class IncomeCrud {
     }
 
     public Cursor getLoan(){
-        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_LOAN + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_LOAN + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
@@ -189,7 +189,7 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllInvestment(){
         ArrayList<Income> investmentArrayList = new ArrayList<>();
-        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -209,7 +209,7 @@ public class IncomeCrud {
     }
 
     public Cursor getInvestment(){
-        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 ";
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
@@ -242,7 +242,7 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllOthers(){
         ArrayList<Income> othersArrayList = new ArrayList<>();
-        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -263,7 +263,7 @@ public class IncomeCrud {
 
 
     public Cursor getOthers(){
-        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
+        String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 ";
        Cursor data = database.rawQuery(query, null);
         return  data;
     }

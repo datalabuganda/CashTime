@@ -27,6 +27,7 @@ public class UpdateLoanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_loan);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtUpdateLoan = (EditText) findViewById(R.id.edtUpdateLoans);
         btnUpdateLoan = (Button) findViewById(R.id.btnUpdateLoans);

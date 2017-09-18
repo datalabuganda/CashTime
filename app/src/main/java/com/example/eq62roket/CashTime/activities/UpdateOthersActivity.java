@@ -29,6 +29,7 @@ public class UpdateOthersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_others);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtUpdateOthers = (EditText) findViewById(R.id.edtUpdateOthers);
         btnUpdateOthers = (Button) findViewById(R.id.btnUpdateOthers);

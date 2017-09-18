@@ -18,13 +18,11 @@ public class GoalCrud {
     private static final String TAG = "GoalCrud";
 
     private SQLiteDatabase database;
-    private DatabaseHelper databaseHelper;
     private Context context;
 
     public GoalCrud(Context context) {
         this.context = context;
-        databaseHelper = new DatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
+        database = DatabaseHelper.getInstance(context);
     }
 
     public void createGoal(Goal goal){
@@ -138,7 +136,7 @@ public class GoalCrud {
         goal.setCompleteStatus(cursor.getInt(8));
         goal.setTotalPoints(cursor.getLong(9));
         goal.setSurplus(cursor.getInt(10));
-        goal.setSurplus(cursor.getInt(11));
+        goal.setActualCompletionDate(cursor.getString(11));
 
         // get user id
         long userId = cursor.getLong(6);

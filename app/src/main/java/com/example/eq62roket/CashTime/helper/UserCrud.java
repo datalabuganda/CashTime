@@ -34,8 +34,7 @@ public class UserCrud {
 
     public UserCrud(Context context) {
         this.mContext = context;
-        mDatabaseHelper = new DatabaseHelper(context);
-        mDatabase = mDatabaseHelper.getWritableDatabase();
+        mDatabase = DatabaseHelper.getInstance(context);
     }
 
     public void createUser(User user){
@@ -120,11 +119,10 @@ public class UserCrud {
 
     public User getLastUserInserted(){
 
-        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         String selectQuery = "select * from "+DatabaseHelper.TABLE_USER+
                 " order by "+DatabaseHelper.COLUMN_USER_ID+" desc "+
                 " limit 1";
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = mDatabase.rawQuery(selectQuery, null);
 
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();

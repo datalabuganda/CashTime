@@ -27,8 +27,7 @@ public class IncomeCrud {
 
     public IncomeCrud(Context context) {
         this.context = context;
-        databaseHelper = new DatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
+        database = DatabaseHelper.getInstance(context);
     }
 
 

@@ -104,26 +104,9 @@ public class HomeDrawerActivity extends AppCompatActivity{
         }
 
 
-        // set goal complete status only if its active
-        if(  goal.getCompleteStatus() == 0 && currentDate.before(goalEndDate)  ) {
-            if ((goal_saving + goal.getSurplus()) >= goal_amount) {
-                goal.setCompleteStatus(1);
-                Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
-                Log.d(TAG, "goal Amount " + goal.getAmount());
-                Log.d(TAG, "goal saving " + goal_saving);
-
-            }
+        if(  goal.getSyncStatus() == 0){
+            SavingsActivity.setGoalActualCompleteDate(goal, goalCrud, expenditureCrud);
         }
-        else if(  goal.getCompleteStatus() == 1 && currentDate.before(goalEndDate)  ) {
-            Log.d(TAG, "onCreate actualCompletionDate: " + actualCompletionDate);
-            goal.setActualCompletionDate(actualCompletionDate);
-            Log.d(TAG, "goal actualCompletionDate: " + goal.getActualCompletionDate());
-
-        }
-        goalCrud.updateGoal(goal);
-        Log.d(TAG, "goal actualCompletionDate: " + goalCrud.getLastInsertedGoal().getActualCompletionDate());
-        Log.d(TAG, "goal actualCompletionDate: " + goalCrud.getLastInsertedGoal().getCompleteStatus());
-
 
         imgGoal = (ImageView) findViewById(R.id.imgGoals);
         imgIncome = (ImageView) findViewById(R.id.imgIncome);
@@ -221,9 +204,9 @@ public class HomeDrawerActivity extends AppCompatActivity{
 
         }
 
-        int goalSyncStatus = goalCrud.getLastInsertedGoal().getSyncStatus();
-        String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
-        String actualCompletionDate = goalCrud.getLastInsertedGoal().getActualCompletionDate();
+        int goalSyncStatus = goal.getSyncStatus();
+        String goalPhpId = goal.getPhpId();
+        String actualCompletionDate = goal.getActualCompletionDate();
         Log.d(TAG, "actualCompletionDate: " + actualCompletionDate);
 
         if (goalSyncStatus == 0){
@@ -236,8 +219,21 @@ public class HomeDrawerActivity extends AppCompatActivity{
             }
             else {
 
-                volleyHelper.sendGoalData();
-                Log.d(TAG, "goal updating ");
+                Log.d(TAG, "HomeDrawer onStart: Im here");
+
+
+                if( goal.getPhpId().equals("0") ){
+                    Log.d(TAG, "HomeDrawer onStart: Im adding");
+                    volleyHelper.sendGoalData();
+                }
+
+                else{
+
+                    Log.d(TAG, "HomeDrawer onStart: Im updating");
+                    Log.d(TAG, "HomeDrawer onStart: "+goal.getActualCompletionDate());
+                    volleyHelper.updateGoalData(goalPhpId);
+                }
+
             }
         }
 

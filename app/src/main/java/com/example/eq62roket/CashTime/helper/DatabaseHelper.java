@@ -12,9 +12,26 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "DatabaseHelper";
+    private static DatabaseHelper mInstance = null;
+    private static SQLiteDatabase db_instance = null;
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
+
+    public static SQLiteDatabase getInstance(Context ctx) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (mInstance == null) {
+            mInstance = new DatabaseHelper(ctx.getApplicationContext());
+        }
+
+        if (db_instance == null) {
+            db_instance = mInstance.getWritableDatabase();
+        }
+        return db_instance;
+    }
 
 
     // Columns of User table

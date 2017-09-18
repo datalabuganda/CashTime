@@ -25,13 +25,11 @@ public class ExpenditureCrud {
     private static final String TAG = "ExpenditureCrud";
 
     private SQLiteDatabase database;
-    private DatabaseHelper databaseHelper;
     private Context context;
 
     public ExpenditureCrud(Context context) {
         this.context = context;
-        databaseHelper = new DatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
+        database = DatabaseHelper.getInstance(context);
     }
 
     public void updateSyncExpenditure(int statusFlag){

@@ -117,6 +117,8 @@ public class VolleyHelper {
         Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
         params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
+        Log.d(TAG, "sendGoalData: "+lastInsertedGoal.getActualCompletionDate());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
                 new JSONObject(params),
@@ -133,7 +135,7 @@ public class VolleyHelper {
                         lastInsertedGoal.setPhpId(String.valueOf(goalId));
                         lastInsertedGoal.setSyncStatus(1);
                         goalCrud.updateGoal(lastInsertedGoal);
-                        Log.d(TAG, "Response Goal" + goalId);
+                        Log.d(TAG, "Response Goal" + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -311,35 +313,41 @@ public class VolleyHelper {
     }
 
 
-    public void updateGoalData(){
-        String url = "http://165.227.67.248/cashTimePhpDatabase/goal_update.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+    public void updateGoalData(String goalID){
+
+        String url = String.format("http://165.227.67.248:8000/goalslist/%s/update/", goalID);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("goalName", lastInsertedGoal.getName());
+        params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
+        params.put("createDate",lastInsertedGoal.getStartDate());
+        params.put("completionDate", lastInsertedGoal.getEndDate());
+        params.put("user", lastInsertedUser.getPhpId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
+        params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
+
+        Log.d(TAG, "VolleyHElper updateGoalData: "+lastInsertedGoal.getActualCompletionDate());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        lastInsertedGoal.setSyncStatus(1);
-                        goalCrud.updateGoal(lastInsertedGoal);
-                        Log.d("Response", response);
+                    public void onResponse(JSONObject response) {
+                        // response
+                        lastInsertedUser.setSyncStatus(1);
+                        userCrud.updateUser(lastInsertedUser);
+                        Log.d(TAG, "Response update User" + response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response update user" + error.toString());
                     }
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("goalName", lastInsertedGoal.getName());
-                params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
-                params.put("goalStartDate",lastInsertedGoal.getStartDate());
-                params.put("goalEndDate", lastInsertedGoal.getEndDate());
-
-                return params;
-            }
+        )
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -347,7 +355,10 @@ public class VolleyHelper {
                 return headers;
             }
         };
-        queue.add(postRequest);
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(jsonObjectRequest);
+
     }
 
     public void updateExpenditureData(){

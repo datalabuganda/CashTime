@@ -79,7 +79,7 @@ public class TransportAdapter extends ArrayAdapter<Expenditure> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtTransportDate);
 
 
-        tvamount.setText("" + transport_amount);
+        tvamount.setText("Shs: " + formatter.format(transport_amount));
         tvdatecreated.setText(transport_created_date);
         Log.d(TAG, "date: transport " + transport_created_date);
 

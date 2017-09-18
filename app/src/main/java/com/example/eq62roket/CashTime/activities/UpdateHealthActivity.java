@@ -28,6 +28,7 @@ ExpenditureCrud expenditureCrud;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_health);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtUpdateHealth = (EditText) findViewById(R.id.amtUpdateHealth);
         btnUpdateHealth = (Button) findViewById(R.id.btnUpdateHealth);

@@ -78,8 +78,7 @@ public class HealthAdapter extends ArrayAdapter<Expenditure> {
         TextView tvamount = (TextView) convertView.findViewById(R.id.txtHealthAmount);
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtHealthDate);
 
-
-        tvamount.setText("" + health_amount);
+        tvamount.setText("Shs: " + formatter.format(health_amount));
         tvdatecreated.setText(health_created_date);
         Log.d(TAG, "date: health " + health_created_date);
 

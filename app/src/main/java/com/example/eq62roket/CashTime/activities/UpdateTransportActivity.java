@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.SQLiteHelper;
 
 public class UpdateTransportActivity extends AppCompatActivity {
 
     EditText edtUpdateTransport;
     Button btnUpdateTransport;
+    ExpenditureCrud expenditureCrud;
 
     SQLiteHelper myHelper;
 
@@ -31,20 +33,20 @@ public class UpdateTransportActivity extends AppCompatActivity {
         edtUpdateTransport = (EditText) findViewById(R.id.amtUpdateTransport);
         btnUpdateTransport = (Button) findViewById(R.id.btnUpdateTransport);
 
-        myHelper = new SQLiteHelper(this);
+        expenditureCrud = new ExpenditureCrud(this);
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedTransport = receivedIntent.getStringExtra("Transport");
+        final int transportAmount = receivedIntent.getExtras().getInt("TRANSPORT_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("TRANSPORT_ID");
 
-        edtUpdateTransport.setText(selectedTransport);
+        edtUpdateTransport.setText("" + transportAmount);
         btnUpdateTransport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateTransport.getText().toString();
                 if (!item.equals("")){
-                    myHelper.updateTransport(item,selectedID,selectedTransport);
+                    expenditureCrud.updateTransport(item, (int) selectedID,transportAmount);
 
                 }else {
                     Toast.makeText(UpdateTransportActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

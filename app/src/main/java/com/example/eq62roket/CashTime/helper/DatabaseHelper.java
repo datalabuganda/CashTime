@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "cashTime.db";
     private static final int DATABASE_VERSION = 3;
 
+
     // Columns of User table
     public static final String TABLE_USER = "user";
     public static final String COLUMN_USER_ID = "user_id";
@@ -109,7 +110,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Variable to create Income_table
-    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE DATETIME, PHPID INTEGER)";
+
+
+    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PHPID INTEGER)";
+
 
 
     public DatabaseHelper(Context context) {

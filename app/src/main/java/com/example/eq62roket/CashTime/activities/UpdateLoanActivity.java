@@ -20,10 +20,6 @@ public class UpdateLoanActivity extends AppCompatActivity {
 
     IncomeCrud incomeCrud;
 
-    private int selectedID;
-    private int loanAmount;
-    LoanAdapter loanAdapter;
-
     private static final String TAG = "UpdateLoanAcitivity";
 
 
@@ -39,9 +35,9 @@ public class UpdateLoanActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
 
+        final int loanAmount = receivedIntent.getExtras().getInt("LOAN_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("LOAN_ID");
 
-        loanAmount = receivedIntent.getIntExtra("LOAN_AMOUNT",-1);
-        selectedID = receivedIntent.getIntExtra("LOAN_ID", -1);
 
         edtUpdateLoan.setText("" + loanAmount);
 
@@ -52,9 +48,8 @@ public class UpdateLoanActivity extends AppCompatActivity {
                 String item = edtUpdateLoan.getText().toString();
                 Log.d(TAG, "update valued" + item);
                 if (!item.equals("")){
-                    //incomeCrud.updateLoan(item,selectedID,selectedLoan);
 
-                    incomeCrud.updateLoan(item,selectedID);
+                    incomeCrud.updateLoan(item, (int) selectedID, loanAmount);
                     Log.d(TAG, "loan amount" + loanAmount);
                     Log.d(TAG, "loan id" + selectedID);
 

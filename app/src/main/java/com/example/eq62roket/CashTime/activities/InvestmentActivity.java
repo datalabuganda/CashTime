@@ -21,6 +21,7 @@ import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -48,11 +49,18 @@ public class InvestmentActivity extends AppCompatActivity {
         investmentListView = (ListView) findViewById(R.id.InvestmentListView);
         incomeCrud = new IncomeCrud(this);
 
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        loanArrayList = incomeCrud.getAllInvestment();
+
+        investmentAdapter = new InvestmentAdapter(this, R.layout.investment_list_adapter, loanArrayList);
+        investmentListView.setAdapter(investmentAdapter);
+
+
 
         userCrud = new UserCrud(this);
 
         AddInvestments();
-        populateListView();
+//        populateListView();
 
     }
 
@@ -90,40 +98,40 @@ public class InvestmentActivity extends AppCompatActivity {
         );
     }
 
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = incomeCrud.getInvestment();
-        investmentAdapter = new InvestmentAdapter(this, data);
-        investmentListView.setAdapter(investmentAdapter);
-        Log.d(TAG, "here is data: " + data);
-
-
-        investmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String investment = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + investment);
-
-                Cursor data = incomeCrud.getInvestmentID(investment);
-                int investmentID = -1;
-                while (data.moveToNext()){
-                    investmentID = data.getInt(0);
-
-                }
-                if (investmentID > -1){
-                    Intent editInvestmentIntent = new Intent(InvestmentActivity.this, UpdateInvestmentActivity.class);
-                    editInvestmentIntent.putExtra("id", investmentID);
-                    editInvestmentIntent.putExtra("investment", investment);
-                    Log.d(TAG, "almost through: " + investment);
-                    startActivity(editInvestmentIntent);
-                    finish();
-                }else {
-
-                }
-            }
-        });
-    }
+//    private void populateListView(){
+//        Log.d(TAG, "populateListView: Displayng data in the listView");
+//
+//        Cursor data = incomeCrud.getInvestment();
+//        investmentAdapter = new InvestmentAdapter(this, data);
+//        investmentListView.setAdapter(investmentAdapter);
+//        Log.d(TAG, "here is data: " + data);
+//
+//
+//        investmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String investment = adapterView.getItemAtPosition(i).toString();
+//                Log.d(TAG, "onItemClick: You clicked on" + investment);
+//
+//                Cursor data = incomeCrud.getInvestmentID(investment);
+//                int investmentID = -1;
+//                while (data.moveToNext()){
+//                    investmentID = data.getInt(0);
+//
+//                }
+//                if (investmentID > -1){
+//                    Intent editInvestmentIntent = new Intent(InvestmentActivity.this, UpdateInvestmentActivity.class);
+//                    editInvestmentIntent.putExtra("id", investmentID);
+//                    editInvestmentIntent.putExtra("investment", investment);
+//                    Log.d(TAG, "almost through: " + investment);
+//                    startActivity(editInvestmentIntent);
+//                    finish();
+//                }else {
+//
+//                }
+//            }
+//        });
+//    }
 
 
 

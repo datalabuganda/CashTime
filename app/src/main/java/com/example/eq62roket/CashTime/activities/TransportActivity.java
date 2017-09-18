@@ -6,12 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.OthersAdapter;
+import com.example.eq62roket.CashTime.adapters.TransportAdapter;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
+import com.example.eq62roket.CashTime.models.Transport;
 import com.example.eq62roket.CashTime.models.User;
+
+import java.util.ArrayList;
 
 public class TransportActivity extends AppCompatActivity {
 
@@ -19,6 +26,8 @@ public class TransportActivity extends AppCompatActivity {
     EditText edtTransport;
     Button btnTransport;
     UserCrud userCrud;
+    ListView  transportListView;
+    TransportAdapter transportAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +37,23 @@ public class TransportActivity extends AppCompatActivity {
         edtTransport = (EditText) findViewById(R.id.amtTransport);
         btnTransport = (Button) findViewById(R.id.btnTransport);
         expenditureCrud = new ExpenditureCrud(this);
+        transportListView = (ListView) findViewById(R.id.TransportListView);
 
         userCrud = new UserCrud(this);
 
+        ArrayList<Expenditure> transportArrayList = new ArrayList<>();
+        transportArrayList = expenditureCrud.getAllTransport();
+
+        transportAdapter = new TransportAdapter(this, R.layout.transport_list_adapter, transportArrayList);
+        transportListView.setAdapter(transportAdapter);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         btnTransport.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-//                        int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
-//                        boolean isInseted = incomeCrud.insertTransport(yVal);
-//                        if (isInseted = true)
-//                            Toast.makeText(TransportActivity.this, "Your transport costs have been stored", Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(TransportActivity.this, "Your transport costs have not been stored", Toast.LENGTH_LONG).show();
-//                        Intent Transportintent = new Intent(TransportActivity.this, ExpenditureActivity.class);
-//                        TransportActivity.this.startActivity(Transportintent);
                         if (!edtTransport.getText().toString().equals("")){
                             int yVal = Integer.parseInt(String.valueOf(edtTransport.getText()));
                             boolean isInseted = expenditureCrud.insertTransport(yVal);

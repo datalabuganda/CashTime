@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.adapters.OtherIncome;
 import com.example.eq62roket.CashTime.adapters.SalaryAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
@@ -21,6 +22,7 @@ import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -44,13 +46,19 @@ public class OtherIncomesActivity extends AppCompatActivity {
         btnOthers = (Button) findViewById(R.id.btnOthers);
         edtOthers = (EditText) findViewById(R.id.edtOthers);
         othersListVIew = (ListView) findViewById(R.id.otherIncomeListView);
-
         incomeCrud = new IncomeCrud(this);
 
         userCrud = new UserCrud(this);
 
+        ArrayList<Income> loanArrayList = new ArrayList<>();
+        loanArrayList = incomeCrud.getAllOthers();
+
+        otherincomeAdapter = new OtherIncome(this, R.layout.otherincome_list_adapter, loanArrayList);
+        othersListVIew.setAdapter(otherincomeAdapter);
+
+
+
         AddOthers();
-        populateListView();
     }
 
     public void AddOthers(){
@@ -87,42 +95,6 @@ public class OtherIncomesActivity extends AppCompatActivity {
                 }
         );
     }
-
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = incomeCrud.getOthers();
-        otherincomeAdapter = new OtherIncome(this, data);
-        othersListVIew.setAdapter(otherincomeAdapter);
-        Log.d(TAG, "here is data: " + data);
-
-
-        othersListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String others = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + others);
-
-                Cursor data = incomeCrud.getOthersID(others);
-                int othersID = -1;
-                while (data.moveToNext()){
-                    othersID = data.getInt(0);
-
-                }
-                if (othersID > -1){
-                    Intent editOthersIntent = new Intent(OtherIncomesActivity.this, UpdateOtherIncomesActivity.class);
-                    editOthersIntent.putExtra("id", othersID);
-                    editOthersIntent.putExtra("others", others);
-                    Log.d(TAG, "almost through: " + others);
-                    startActivity(editOthersIntent);
-                    finish();
-                }else {
-
-                }
-            }
-        });
-    }
-
 
 
 }

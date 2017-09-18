@@ -12,7 +12,7 @@
         android:weightSum="100">
 
         <TextView
-            android:id="@+id/salaryDate"
+            android:id="@+id/txtEducationDate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
@@ -22,7 +22,7 @@
             android:textSize="18dp" />
 
         <TextView
-            android:id="@+id/salaryAmount"
+            android:id="@+id/txtEducationAmount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="40"

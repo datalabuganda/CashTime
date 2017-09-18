@@ -17,9 +17,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
+import com.example.eq62roket.CashTime.adapters.HealthAdapter;
+import com.example.eq62roket.CashTime.adapters.OthersAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
+import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.User;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class HealthActivity extends AppCompatActivity {
     Button btnHealth;
     UserCrud userCrud;
     ListView healthListView;
+    HealthAdapter healthAdapter;
 
 
     @Override
@@ -46,8 +50,14 @@ public class HealthActivity extends AppCompatActivity {
         //expenditureCrud = new ExpenditureCrud(this);
 
         healthListView = (ListView) findViewById(R.id.healthListView);
-
+        expenditureCrud = new ExpenditureCrud(this);
         userCrud = new UserCrud(this);
+
+        ArrayList<Expenditure> healthArrayList = new ArrayList<>();
+        healthArrayList = expenditureCrud.getAllHealth();
+
+        healthAdapter = new HealthAdapter(this, R.layout.health_list_adapter, healthArrayList);
+        healthListView.setAdapter(healthAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -87,55 +97,6 @@ public class HealthActivity extends AppCompatActivity {
                 }
         );
 
-        populateListView();
     }
-    private void populateListView(){
-        Log.d(TAG, "populateListView: Displayng data in the listView");
-
-        Cursor data = expenditureCrud.getHealth();
-        Log.d(TAG, "here is data: " + data);
-//        ArrayList<Income> salaryDataList = new ArrayList<>();
-//        salaryDataList = (ArrayList<Income>) myHelper.getSalary();
-//
-//
-//        SalaryAdapter salaryAdapterListAdapter = new SalaryAdapter(this, R.layout.salary_list_adapter, salaryDataList);
-//        SalaryListVIew.setAdapter(salaryAdapterListAdapter);
-
-        ArrayList<String> listData = new ArrayList<>();
-
-        while (data.moveToNext()){
-            listData.add(data.getString(data.getColumnIndex(DatabaseHelper.COLUMN_EXPENDITURE_HEALTH)));
-
-        }
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        healthListView.setAdapter(adapter);
-
-        healthListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String health = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on" + health);
-
-                Cursor data = expenditureCrud.getHealthID(health);
-                int healthID = -1;
-                while (data.moveToNext()){
-                    healthID = data.getInt(0);
-
-                }
-                if (healthID > -1){
-                    Intent editHealthIntent = new Intent(HealthActivity.this, UpdateHealthActivity.class);
-                    editHealthIntent.putExtra("id", healthID);
-                    editHealthIntent.putExtra("health", health);
-                    Log.d(TAG, "almost through: " + health);
-                    startActivity(editHealthIntent);
-                    finish();
-
-                }else {
-
-                }
-            }
-        });
-    }
-
 
 }

@@ -35,16 +35,16 @@ public class UpdateSalaryActivity extends AppCompatActivity {
 
         Intent receivedIntent = getIntent();
 
-        selectedID = receivedIntent.getIntExtra("id", -1);
-        selectedSalary = receivedIntent.getStringExtra("salary");
+        final int salaryAmount = receivedIntent.getExtras().getInt("SALARY_AMOUNT");
+        final long selectedID = receivedIntent.getExtras().getLong("SALARY_ID");
 
-        edtUpdateSalary.setText(selectedSalary);
+        edtUpdateSalary.setText("" + salaryAmount);
         btnUpdateSalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = edtUpdateSalary.getText().toString();
                 if (!item.equals("")){
-                    incomeCrud.updateSalary(item,selectedID,selectedSalary);
+                    incomeCrud.updateSalary(item, (int) selectedID,salaryAmount);
 
                 }else {
                     Toast.makeText(UpdateSalaryActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

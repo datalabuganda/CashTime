@@ -96,13 +96,11 @@ public class SavingsActivity extends AppCompatActivity {
                                 Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
                                 userCrud.updateUser(user);
 
-
+/*
                                 if ( (goalCrud.getLastInsertedGoal().getCompleteStatus() == 0 && currentDate.before(goalEndDate))){
                                     goal.setSyncStatus(0);
                                     goalCrud.updateGoal(goal);
-                                }
-
-                               // Log.d(TAG, "goal status " + goal.getCompleteStatus());
+                                }*/
 
 
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();

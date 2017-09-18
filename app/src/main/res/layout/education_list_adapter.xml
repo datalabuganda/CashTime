@@ -28,7 +28,7 @@
             android:layout_weight="40"
             android:paddingTop="10dp"
             android:text="Amount of Salary"
-            android:textColor="#000"
+            android:textColor="#be1919"
             android:textSize="18dp" />
 
     </LinearLayout>

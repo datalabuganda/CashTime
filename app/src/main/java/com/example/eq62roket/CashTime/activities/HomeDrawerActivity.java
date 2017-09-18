@@ -72,6 +72,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
     private int goal_saving;
     private  Date currentDate;
     private Date goalEndDate;
+    private String actualCompletionDate;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
         try {
             currentDate = df.parse(formattedDate);
             goalEndDate = df.parse(goal.getEndDate());
+            actualCompletionDate = df.format(currentDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -106,14 +108,22 @@ public class HomeDrawerActivity extends AppCompatActivity{
         if(  goal.getCompleteStatus() == 0 && currentDate.before(goalEndDate)  ) {
             if ((goal_saving + goal.getSurplus()) >= goal_amount) {
                 goal.setCompleteStatus(1);
-                goalCrud.updateGoal(goal);
                 Log.d(TAG, "goal status " + goalCrud.getLastInsertedGoal().getCompleteStatus());
                 Log.d(TAG, "goal Amount " + goal.getAmount());
                 Log.d(TAG, "goal saving " + goal_saving);
 
             }
         }
-       // Log.d(TAG, "goal last saving inserted " + expenditureCrud.addAllSavings(null));
+        else if(  goal.getCompleteStatus() == 1 && currentDate.before(goalEndDate)  ) {
+            Log.d(TAG, "onCreate actualCompletionDate: " + actualCompletionDate);
+            goal.setActualCompletionDate(actualCompletionDate);
+            Log.d(TAG, "goal actualCompletionDate: " + goal.getActualCompletionDate());
+
+        }
+        goalCrud.updateGoal(goal);
+        Log.d(TAG, "goal actualCompletionDate: " + goalCrud.getLastInsertedGoal().getActualCompletionDate());
+        Log.d(TAG, "goal actualCompletionDate: " + goalCrud.getLastInsertedGoal().getCompleteStatus());
+
 
         imgGoal = (ImageView) findViewById(R.id.imgGoals);
         imgIncome = (ImageView) findViewById(R.id.imgIncome);
@@ -190,6 +200,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
         incomeCrud = new IncomeCrud(this);
         expenditureCrud = new ExpenditureCrud(this);
         userPoints = userCrud.getLastUserInserted().getPoints();
+        goal = goalCrud.getLastInsertedGoal();
 
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
@@ -212,19 +223,22 @@ public class HomeDrawerActivity extends AppCompatActivity{
 
         int goalSyncStatus = goalCrud.getLastInsertedGoal().getSyncStatus();
         String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
+        String actualCompletionDate = goalCrud.getLastInsertedGoal().getActualCompletionDate();
+        Log.d(TAG, "actualCompletionDate: " + actualCompletionDate);
 
         if (goalSyncStatus == 0){
-            volleyHelper.sendGoalData();
-            Log.d(TAG, "goal sending ");
-            /*if (goalPhpId.equals("0")){
-                volleyHelper.sendGoalData();
+            /*volleyHelper.sendGoalData();
+            Log.d(TAG, "goal sending ");*/
+            if (userPhpId.equals("0")){
+                goal.setSyncStatus(0);
+                goalCrud.updateGoal(goal);
                 Log.d(TAG, "goal sending ");
             }
             else {
-                volleyHelper.updateGoalData();
+
+                volleyHelper.sendGoalData();
                 Log.d(TAG, "goal updating ");
             }
-*/
         }
 
         int expenditureSyncStatus = expenditureCrud.getSyncStatus();
@@ -233,14 +247,15 @@ public class HomeDrawerActivity extends AppCompatActivity{
         if (expenditureSyncStatus == 0){
             volleyHelper.sendExpenditureData();
             Log.d(TAG, "expenditure sending ");
-            /*if (expenditurePhpId == 0){
-                volleyHelper.sendExpenditureData();
+            if (goalPhpId.equals("0")){
+                expenditureCrud.updateSyncExpenditure(0);
                 Log.d(TAG, "expenditure sending ");
+                Log.d(TAG, "onStart: " + goalCrud.getLastInsertedGoal().getPhpId());
             }
             else{
-                volleyHelper.updateExpenditureData();
+                volleyHelper.sendExpenditureData();
                 Log.d(TAG, "expenditure updating ");
-            }*/
+            }
         }
 
 

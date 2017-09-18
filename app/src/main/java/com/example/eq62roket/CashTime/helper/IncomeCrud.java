@@ -10,6 +10,7 @@ import com.example.eq62roket.CashTime.models.Income;
 
 import java.util.ArrayList;
 
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_CREATEDATE;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_ID;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_LOAN;
 
@@ -88,7 +89,7 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllSalary(){
         ArrayList<Income> salaryArrayList = new ArrayList<>();
-        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
+        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + "ORDER BY " + COLUMN_INCOME_CREATEDATE + " DESC " +  " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){

@@ -30,7 +30,7 @@ public class UpdateEducationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_education);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edtUpdateEducation = (EditText) findViewById(R.id.amtUpdateEducation);
         btnUpdateEducation = (Button) findViewById(R.id.btnUpdateEducation);
 

@@ -82,7 +82,7 @@ public class OtherIncome extends ArrayAdapter<Income> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtOtherIncomeDate);
 
 
-        tvamount.setText("" + others_amount);
+        tvamount.setText("Shs: " + formatter.format(others_amount));
         tvdatecreated.setText(others_created_date);
         Log.d(TAG, "date: others " + others_created_date);
 

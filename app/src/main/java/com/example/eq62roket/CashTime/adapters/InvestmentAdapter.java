@@ -80,7 +80,7 @@ public class InvestmentAdapter extends ArrayAdapter<Income> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtInvestmentDate);
 
 
-        tvamount.setText("" + investment_amount);
+        tvamount.setText("Shs: " + formatter.format(investment_amount));
         tvdatecreated.setText(investment_created_date);
         Log.d(TAG, "date: investment " + investment_created_date);
 

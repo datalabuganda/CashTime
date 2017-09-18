@@ -28,6 +28,7 @@ public class UpdateOtherIncomesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_other_incomes);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtUpdateOthers = (EditText) findViewById(R.id.edtUpdateOthers);
         btnUpdateOthers = (Button) findViewById(R.id.btnUpdateOthers);

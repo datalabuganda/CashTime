@@ -29,6 +29,7 @@ public class UpdateInvestmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_investment);
         edtUpdateInvestment = (EditText) findViewById(R.id.edtUpdateInvestment);
         btnUpdateInvestment = (Button) findViewById(R.id.btnUpdateInvestment);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         incomeCrud = new IncomeCrud(this);
 

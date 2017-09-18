@@ -91,7 +91,7 @@ public class LoanAdapter extends ArrayAdapter<Income>{
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtLoanDate);
 
 
-        tvamount.setText("" + loan_amount);
+        tvamount.setText("Shs: " + formatter.format(loan_amount));
         tvdatecreated.setText(loan_created_date);
         Log.d(TAG, "date: loan " + loan_created_date);
 

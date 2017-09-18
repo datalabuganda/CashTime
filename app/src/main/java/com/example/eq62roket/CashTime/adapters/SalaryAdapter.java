@@ -80,7 +80,7 @@ public class SalaryAdapter extends ArrayAdapter<Income> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtSalaryDate);
 
 
-        tvamount.setText("" + salary_amount);
+        tvamount.setText("Shs: " + formatter.format(salary_amount));
         tvdatecreated.setText(salary_created_date);
         Log.d(TAG, "date: salary " + salary_created_date);
 

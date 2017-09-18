@@ -30,6 +30,7 @@ public class UpdateSalaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_salary);
         edtUpdateSalary = (EditText) findViewById(R.id.edtUpdateSalary);
         btnUpdateSalary = (Button) findViewById(R.id.btnUpdateSalary);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         incomeCrud = new IncomeCrud(this);
 

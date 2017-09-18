@@ -95,11 +95,6 @@ public class GoalListAdapter extends ArrayAdapter<Goal> {
         TextView tvGoalName = (TextView) convertView.findViewById(R.id.tvGoalName);
         TextView tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
         TextView tvGoalAmount = (TextView) convertView.findViewById(R.id.tvGoalAmount);
-
-//        TextView tvUserPoints = (TextView) convertView.findViewById(R.id.po);
-
-//        TextView tvUserPoints = (TextView) convertView.findViewById(R.id.tvUserPoints);
-
         ImageView imgCompleted = (ImageView) convertView.findViewById(R.id.imgCompleted);
 
         tvGoalName.setText(goal_name);

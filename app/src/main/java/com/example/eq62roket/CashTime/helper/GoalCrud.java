@@ -37,6 +37,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
         values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, "0");
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
+        values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
         database.insert(DatabaseHelper.TABLE_GOAL, null, values);
 //        database.close();
@@ -52,6 +53,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
+        values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
         database.update(DatabaseHelper.TABLE_GOAL, values, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
         //database.close();
@@ -136,6 +138,7 @@ public class GoalCrud {
         goal.setCompleteStatus(cursor.getInt(8));
         goal.setTotalPoints(cursor.getLong(9));
         goal.setSurplus(cursor.getInt(10));
+        goal.setSurplus(cursor.getInt(11));
 
         // get user id
         long userId = cursor.getLong(6);

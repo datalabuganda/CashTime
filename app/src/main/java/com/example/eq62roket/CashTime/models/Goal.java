@@ -11,6 +11,7 @@ public class Goal {
     private int amount, syncStatus, completeStatus, surplus;
     private String startDate;
     private String endDate;
+    String actualCompletionDate;
     private User user;
 
     public Goal() {
@@ -33,6 +34,8 @@ public class Goal {
         this.endDate = endDate;
         this.user = user;
     }
+
+
 
     public long getId() {
         return id;
@@ -112,6 +115,14 @@ public class Goal {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getActualCompletionDate() {
+        return actualCompletionDate;
+    }
+
+    public void setActualCompletionDate(String actualCompletionDate) {
+        this.actualCompletionDate = actualCompletionDate;
     }
 
     public User getUser() {

@@ -14,7 +14,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 4;
+
 
 
     // Columns of User table
@@ -38,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_AMOUNT = "goal_amount";
     public static final String COLUMN_GOAL_STARTDATE = "goal_startDate";
     public static final String COLUMN_GOAL_ENDDATE = "goal_endDate  ";
+    public static final String COLUMN_GOAL_ACTUALCOMPLETIONDATE = "goal_actualCompletionDate ";
     public static final String COLUMN_GOAL_PHP_ID = "goal_phpId";
     public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
     public static final String COLUMN_GOAL_SYNCED = "goal_synced";
@@ -102,7 +104,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_SYNCED + " INTEGER, "
             + COLUMN_GOAL_COMPLETED + " INTEGER, "
             + COLUMN_GOAL_POINTS + " INTEGER, "
-            + COLUMN_GOAL_SURPLUS + " INTEGER "
+            + COLUMN_GOAL_SURPLUS + " INTEGER, "
+            + COLUMN_GOAL_ACTUALCOMPLETIONDATE + " TEXT "
             + ");";
 
     // Variable to create Expenditure_table

@@ -22,9 +22,10 @@ import com.example.eq62roket.CashTime.adapters.CustomGrid;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
+import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.helper.VolleyHelper;
 import com.example.eq62roket.CashTime.models.Goal;
+import com.parse.Parse;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
     GridView grid;
 
 //    ParseConnector parseConnector;
-    VolleyHelper volleyHelper;
+    ParseConnector parseConnector;
     UserCrud userCrud;
     GoalCrud goalCrud;
     IncomeCrud incomeCrud;
@@ -178,51 +179,57 @@ public class HomeDrawerActivity extends AppCompatActivity{
         super.onStart();
 
         userCrud = new UserCrud(this);
-        volleyHelper = new VolleyHelper(this);
+        parseConnector = new ParseConnector(this);
+
         goalCrud = new GoalCrud(this);
         incomeCrud = new IncomeCrud(this);
         expenditureCrud = new ExpenditureCrud(this);
         userPoints = userCrud.getLastUserInserted().getPoints();
         goal = goalCrud.getLastInsertedGoal();
 
+        // Initialise a Parse Connection
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
+                .server("http://oxfamdataservice.org/parse/")
+                .build()
+        );
+
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
-        String userPhpId = userCrud.getLastUserInserted().getPhpId();
+        String userParseId = userCrud.getLastUserInserted().getParseId();
 
-        Log.d(TAG, "userPhpId: " + userPhpId);
+        Log.d(TAG, "userPhpId: " + userParseId);
 
         Log.d(TAG, "userSyncStatus: "+ userSyncStatus);
+        // check if last inserted user's information has already synced
         if (userSyncStatus == 0) {
-            if (userPhpId.equals("0")) {
-                volleyHelper.sendUserData();
+            if (userParseId == null) {
+                parseConnector.addUserToParse();
                 Log.d(TAG, "user sending ");
             }
             else{
-                volleyHelper.updateUserData(userPhpId);
+                parseConnector.upDateUser(userParseId);
                 Log.d(TAG, "user updating ");
             }
+            userCrud.getLastUserInserted().setSyncStatus(1);
 
         }
 
         int goalSyncStatus = goal.getSyncStatus();
-        String goalPhpId = goal.getPhpId();
+        String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
         String actualCompletionDate = goal.getActualCompletionDate();
         Log.d(TAG, "actualCompletionDate: " + actualCompletionDate);
 
         if (goalSyncStatus == 0){
-            /*volleyHelper.sendGoalData();
-            Log.d(TAG, "goal sending ");*/
-            if (userPhpId.equals("0")){
-                goal.setSyncStatus(0);
-                goalCrud.updateGoal(goal);
+            if (goalParseId == null){
+                /*goal.setSyncStatus(0);
+                goalCrud.updateGoal(goal);*/
+                parseConnector.addGoalToParse();
                 Log.d(TAG, "goal sending ");
             }
             else {
-
-                Log.d(TAG, "HomeDrawer onStart: Im here");
-
-
-                if( goal.getPhpId().equals("0") ){
+                parseConnector.upDateGoal(goalParseId);
+               /* if( goal.getParseId().equals("0") ){
                     Log.d(TAG, "HomeDrawer onStart: Im adding");
                     volleyHelper.sendGoalData();
                 }
@@ -233,11 +240,12 @@ public class HomeDrawerActivity extends AppCompatActivity{
                     Log.d(TAG, "HomeDrawer onStart: "+goal.getActualCompletionDate());
                     volleyHelper.updateGoalData(goalPhpId);
                 }
-
+*/
             }
+            goalCrud.getLastInsertedGoal().setSyncStatus(1);
         }
 
-        int expenditureSyncStatus = expenditureCrud.getSyncStatus();
+        /*int expenditureSyncStatus = expenditureCrud.getSyncStatus();
         int expenditurePhpId = expenditureCrud.getPhpID();
 
         if (expenditureSyncStatus == 0){
@@ -246,7 +254,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
             if (goalPhpId.equals("0")){
                 expenditureCrud.updateSyncExpenditure(0);
                 Log.d(TAG, "expenditure sending ");
-                Log.d(TAG, "onStart: " + goalCrud.getLastInsertedGoal().getPhpId());
+                Log.d(TAG, "onStart: " + goalCrud.getLastInsertedGoal().getParseId());
             }
             else{
                 volleyHelper.sendExpenditureData();
@@ -262,7 +270,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
         if (incomeSyncStatus == 0){
             volleyHelper.sendIncomeData();
             Log.d(TAG, "income sending ");
-            /*if (incomePhpId == 0){
+            *//*if (incomePhpId == 0){
                 volleyHelper.sendIncomeData();
                 Log.d(TAG, "income sending ");
 
@@ -271,8 +279,14 @@ public class HomeDrawerActivity extends AppCompatActivity{
             else{
                 volleyHelper.updateIncomeData();
                 Log.d(TAG, "income updating ");
-            }*/
-        }
+            }*//*
+        } */
+
+        // send expenditure details to server with an internet connection on device.
+        parseConnector.addExpenditureToParse();
+        parseConnector.addIncomeToParse();
+
+
 
     }
 

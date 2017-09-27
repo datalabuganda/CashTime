@@ -77,10 +77,10 @@ public class VolleyHelper {
                             e.printStackTrace();
                         }
                         //int userId = Integer.valueOf(response);
-                        lastInsertedUser.setPhpId(String.valueOf(userId));
+                        lastInsertedUser.setParseId(String.valueOf(userId));
                         lastInsertedUser.setSyncStatus(1);
                         userCrud.updateUser(lastInsertedUser);
-                        Log.d(TAG, "phpId: " +  lastInsertedUser.getPhpId());
+                        Log.d(TAG, "phpId: " +  lastInsertedUser.getParseId());
                         Log.d(TAG, "Response UserId " + userId);
 
                     }
@@ -113,8 +113,8 @@ public class VolleyHelper {
         params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
         params.put("createDate",lastInsertedGoal.getStartDate());
         params.put("completionDate", lastInsertedGoal.getEndDate());
-        params.put("user", lastInsertedUser.getPhpId());
-        Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getParseId());
         params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
         Log.d(TAG, "sendGoalData: "+lastInsertedGoal.getActualCompletionDate());
@@ -132,7 +132,7 @@ public class VolleyHelper {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        lastInsertedGoal.setPhpId(String.valueOf(goalId));
+                        lastInsertedGoal.setParseId(String.valueOf(goalId));
                         lastInsertedGoal.setSyncStatus(1);
                         goalCrud.updateGoal(lastInsertedGoal);
                         Log.d(TAG, "Response Goal" + response);
@@ -163,8 +163,8 @@ public class VolleyHelper {
         String url = "http://165.227.67.248:8000/expenditure/";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user", lastInsertedUser.getPhpId());
-        params.put("goal", lastInsertedGoal.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
+        params.put("goal", lastInsertedGoal.getParseId());
         params.put("transport", String.valueOf(expenditureCrud.addAllHealth()));
         params.put("savings", String.valueOf(expenditureCrud.addAllSavings(null)));
         params.put("otherExpenditures", String.valueOf(expenditureCrud.addAllOthers()));
@@ -219,7 +219,7 @@ public class VolleyHelper {
         String url = "http://165.227.67.248:8000/income/";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user", lastInsertedUser.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
         params.put("salary", String.valueOf(incomeCrud.addAllSalary()));
         params.put("otherIncomes", String.valueOf(incomeCrud.addAllOthers()));
         params.put("created", "placeholder");
@@ -322,8 +322,8 @@ public class VolleyHelper {
         params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
         params.put("createDate",lastInsertedGoal.getStartDate());
         params.put("completionDate", lastInsertedGoal.getEndDate());
-        params.put("user", lastInsertedUser.getPhpId());
-        Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getParseId());
         params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
         Log.d(TAG, "VolleyHElper updateGoalData: "+lastInsertedGoal.getActualCompletionDate());

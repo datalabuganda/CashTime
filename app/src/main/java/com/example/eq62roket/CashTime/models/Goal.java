@@ -6,12 +6,12 @@ package com.example.eq62roket.CashTime.models;
 
 public class Goal {
     private long id, totalPoints;
-    private String phpId;
+    private String parseId;
     private String name;
     private int amount, syncStatus, completeStatus, surplus;
     private String startDate;
     private String endDate;
-    String actualCompletionDate;
+    private String actualCompletionDate;
     private User user;
 
     public Goal() {
@@ -25,10 +25,10 @@ public class Goal {
         this.user = user;
     }
 
-    public Goal(long id, String name, int amount, String startDate, String endDate, User user, String phpId) {
+    public Goal(long id, String name, int amount, String startDate, String endDate, User user, String parseId) {
         this.id = id;
         this.name = name;
-        this.phpId = phpId;
+        this.parseId = parseId;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -53,12 +53,12 @@ public class Goal {
         this.totalPoints = totalPoints;
     }
 
-    public String getPhpId() {
-        return phpId;
+    public String getParseId() {
+        return parseId;
     }
 
-    public void setPhpId(String phpId) {
-        this.phpId = phpId;
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public int getSyncStatus() {

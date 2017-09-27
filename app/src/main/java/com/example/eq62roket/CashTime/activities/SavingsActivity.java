@@ -103,7 +103,7 @@ public class SavingsActivity extends AppCompatActivity {
 
                                 //sync goal with server if internet is availabe
                                 SavingsActivity.setGoalActualCompleteDate(goal, goalCrud, expenditureCrud);
-                                new VolleyHelper(SavingsActivity.this).updateGoalData(goal.getPhpId());
+                                new VolleyHelper(SavingsActivity.this).updateGoalData(goal.getParseId());
 
 
 

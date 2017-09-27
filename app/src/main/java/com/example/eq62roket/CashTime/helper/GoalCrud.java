@@ -46,7 +46,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
-        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, goal.getPhpId());
+        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
@@ -131,7 +131,7 @@ public class GoalCrud {
         goal.setAmount(cursor.getInt(2));
         goal.setStartDate(cursor.getString(3));
         goal.setEndDate(cursor.getString(4));
-        goal.setPhpId(cursor.getString(5));
+        goal.setParseId(cursor.getString(5));
         goal.setSyncStatus(cursor.getInt(7));
         goal.setCompleteStatus(cursor.getInt(8));
         goal.setTotalPoints(cursor.getLong(9));

@@ -61,7 +61,7 @@ public class UserCrud {
         values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
         values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhonenumber());
         values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
-        values.put(DatabaseHelper.COLUMN_USER_PHP_ID, user.getPhpId());
+        values.put(DatabaseHelper.COLUMN_USER_PHP_ID, user.getParseId());
         values.put(DatabaseHelper.COLUMN_USER_SYNCED, user.getSyncStatus());
 
         mDatabase.update(DatabaseHelper.TABLE_USER,
@@ -144,7 +144,7 @@ public class UserCrud {
         user.setNationality(cursor.getString(5));
         user.setPhonenumber(cursor.getString(6));
         user.setPoints(cursor.getLong(7));
-        user.setPhpId(cursor.getString(8));
+        user.setParseId(cursor.getString(8));
         user.setSyncStatus(cursor.getInt(9));
 
 

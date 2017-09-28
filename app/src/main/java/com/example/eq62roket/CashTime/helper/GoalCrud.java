@@ -33,7 +33,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, 0);
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
-        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, "0");
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, "0");
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
         values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
@@ -46,20 +46,27 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
-        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, goal.getParseId());
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
         values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
-        database.update(DatabaseHelper.TABLE_GOAL, values, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
+        database.update(
+                DatabaseHelper.TABLE_GOAL,
+                values,
+                DatabaseHelper.COLUMN_GOAL_ID + " = ?",
+                new String[]{String.valueOf(goal.getId())});
         //database.close();
     }
 
 
     public void deleteGoal(Goal goal){
-        database.delete(DatabaseHelper.TABLE_GOAL, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
+        database.delete(
+                DatabaseHelper.TABLE_GOAL,
+                DatabaseHelper.COLUMN_GOAL_ID + " = ?",
+                new String[]{String.valueOf(goal.getId())});
         database.close();
     }
 

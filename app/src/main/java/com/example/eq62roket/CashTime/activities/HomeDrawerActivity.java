@@ -3,6 +3,7 @@ package com.example.eq62roket.CashTime.activities;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -187,18 +188,27 @@ public class HomeDrawerActivity extends AppCompatActivity{
         userPoints = userCrud.getLastUserInserted().getPoints();
         goal = goalCrud.getLastInsertedGoal();
 
+        // server url
+        String server_url = "";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
+                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            server_url = "http://oxfamdataservice.org/parse/";
+        }
+        else {
+            server_url = "https://oxfamdataservice.org/parse/";
+        }
+
         // Initialise a Parse Connection
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("462s45ze2vn6x2vrfyfenqmksngx5xbs")
-                .server("http://oxfamdataservice.org/parse/")
+                .server(server_url)
                 .build()
         );
 
 
         int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
         String userParseId = userCrud.getLastUserInserted().getParseId();
-
-        Log.d(TAG, "userPhpId: " + userParseId);
 
         Log.d(TAG, "userSyncStatus: "+ userSyncStatus);
         // check if last inserted user's information has already synced

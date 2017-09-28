@@ -188,7 +188,7 @@ public class VolleyHelper {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        expenditureCrud.insertPhpId(expenditureId);
+                        expenditureCrud.insertParseId(expenditureId);
                         expenditureCrud.updateSyncExpenditure(1);
                         Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
                         Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());

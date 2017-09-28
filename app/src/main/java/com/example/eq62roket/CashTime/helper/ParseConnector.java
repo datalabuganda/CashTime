@@ -49,6 +49,7 @@ public class ParseConnector {
         user.put("Age", lastInsertedUser.getAge());
         user.put("Sex", lastInsertedUser.getSex());
         user.put("CountryOfBirth", lastInsertedUser.getNationality());
+        user.put("LevelOfEducation", lastInsertedUser.getEducationlevel());
         user.put("Points", lastInsertedUser.getPoints());
         user.saveInBackground(new SaveCallback() {
             @Override
@@ -82,6 +83,7 @@ public class ParseConnector {
                     goal.put("GoalAmount", lastInsertedGoal.getAmount());
                     goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
                     goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
+                    goal.put("ActualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
                     // link the user to this goal table
                     goal.put("parent", object);
@@ -124,7 +126,7 @@ public class ParseConnector {
                     expenditure.put("TotalSavingCost", expenditureCrud.addAllSavings(null));
                     expenditure.put("TotalOthersCost", expenditureCrud.addAllOthers());
                     expenditure.put("TotalHomeNeedsCost", expenditureCrud.addAllHomeneeds());
-                    expenditure.put("TotalExpenditureCost", expenditureCrud.addAllCategories());
+                    expenditure.put("ctUserId", lastInsertedUser.getParseId());
 
                     // create a relationship between goal table and expenditure table
                     expenditure.put("parent", object);
@@ -151,7 +153,6 @@ public class ParseConnector {
                     income.put("TotalSalaryIncome", incomeCrud.addAllSalary());
                     income.put("TotalInvestmentIncome", incomeCrud.addAllInvestment());
                     income.put("TotalOthersIncome", incomeCrud.addAllOthers());
-                    income.put("TotalIncome", incomeCrud.addAllIncome());
 
                     // create a relationship between user table and income table
                     income.put("parent", object);
@@ -177,6 +178,7 @@ public class ParseConnector {
                     user.put("Age", lastInsertedUser.getAge());
                     user.put("Sex", lastInsertedUser.getSex());
                     user.put("CountryOfBirth", lastInsertedUser.getNationality());
+                    user.put("LevelOfEducation", lastInsertedUser.getEducationlevel());
                     user.put("Points", lastInsertedUser.getPoints());
 
                     user.saveInBackground();
@@ -197,6 +199,7 @@ public class ParseConnector {
                     goal.put("GoalAmount", lastInsertedGoal.getAmount());
                     goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
                     goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
+                    goal.put("ActualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
                     goal.saveInBackground();
                 }

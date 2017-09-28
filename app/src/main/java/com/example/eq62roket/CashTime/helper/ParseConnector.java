@@ -57,10 +57,12 @@ public class ParseConnector {
                 if (e == null){
                     String userParseId = user.getObjectId();
                     lastInsertedUser.setParseId(userParseId);
+                    lastInsertedUser.setSyncStatus(1);
                     userCrud.updateUser(lastInsertedUser);
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done user: " + e);
                 }
             }
         });
@@ -71,6 +73,7 @@ public class ParseConnector {
     public void addGoalToParse(){
         // get the user back from the database
         final String userParseId = userCrud.getLastUserInserted().getParseId();
+        Log.d(TAG, "userParseId: " + userParseId);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUser");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
@@ -94,6 +97,7 @@ public class ParseConnector {
                             if (e == null){
                                 String goalParseId = goal.getObjectId();
                                 lastInsertedGoal.setParseId(goalParseId);
+                                lastInsertedGoal.setSyncStatus(1);
                                 goalCrud.updateGoal(lastInsertedGoal);
 
                             }
@@ -103,6 +107,7 @@ public class ParseConnector {
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done goal: " + e);
                 }
             }
         });
@@ -135,6 +140,7 @@ public class ParseConnector {
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done expenditure: " + e);
                 }
             }
         });
@@ -161,6 +167,7 @@ public class ParseConnector {
                 }
                 else{
                     // error occured
+                    Log.d(TAG, "done income: " + e);
                 }
             }
         });

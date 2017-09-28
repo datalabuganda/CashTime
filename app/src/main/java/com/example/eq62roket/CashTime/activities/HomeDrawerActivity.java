@@ -26,6 +26,7 @@ import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.ParseConnector;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Goal;
+import com.example.eq62roket.CashTime.models.User;
 import com.parse.Parse;
 
 import java.text.ParseException;
@@ -186,7 +187,7 @@ public class HomeDrawerActivity extends AppCompatActivity{
         incomeCrud = new IncomeCrud(this);
         expenditureCrud = new ExpenditureCrud(this);
         userPoints = userCrud.getLastUserInserted().getPoints();
-        goal = goalCrud.getLastInsertedGoal();
+
 
         // server url
         String server_url = "";
@@ -206,54 +207,52 @@ public class HomeDrawerActivity extends AppCompatActivity{
                 .build()
         );
 
-
-        int userSyncStatus = userCrud.getLastUserInserted().getSyncStatus();
-        String userParseId = userCrud.getLastUserInserted().getParseId();
+        User lastInsertedUser = userCrud.getLastUserInserted();
+        int userSyncStatus = lastInsertedUser.getSyncStatus();
+        String userParseId = lastInsertedUser.getParseId();
 
         Log.d(TAG, "userSyncStatus: "+ userSyncStatus);
+        Log.d(TAG, "userParseId: " + userParseId);
         // check if last inserted user's information has already synced
         if (userSyncStatus == 0) {
+            Log.d(TAG, "userSyncStatus: " + userSyncStatus);
+            Log.d(TAG, "userParseId: " + userParseId);
             if (userParseId == null) {
                 parseConnector.addUserToParse();
                 Log.d(TAG, "user sending ");
             }
             else{
                 parseConnector.upDateUser(userParseId);
+                lastInsertedUser.setSyncStatus(1);
+                userCrud.updateUser(lastInsertedUser);
                 Log.d(TAG, "user updating ");
             }
-            userCrud.getLastUserInserted().setSyncStatus(1);
+
+            Log.d(TAG, "userSyncStatus: " + lastInsertedUser.getSyncStatus());
 
         }
 
+        goal = goalCrud.getLastInsertedGoal();
         int goalSyncStatus = goal.getSyncStatus();
-        String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+        String goalParseId = goal.getParseId();
         String actualCompletionDate = goal.getActualCompletionDate();
         Log.d(TAG, "actualCompletionDate: " + actualCompletionDate);
+        Log.d(TAG, "goalParseId: " + goalParseId);
 
+        Log.d(TAG, "goalSyncStatus: " + goalSyncStatus);
         if (goalSyncStatus == 0){
             if (goalParseId == null){
-                /*goal.setSyncStatus(0);
-                goalCrud.updateGoal(goal);*/
                 parseConnector.addGoalToParse();
                 Log.d(TAG, "goal sending ");
             }
             else {
                 parseConnector.upDateGoal(goalParseId);
-               /* if( goal.getParseId().equals("0") ){
-                    Log.d(TAG, "HomeDrawer onStart: Im adding");
-                    volleyHelper.sendGoalData();
-                }
-
-                else{
-
-                    Log.d(TAG, "HomeDrawer onStart: Im updating");
-                    Log.d(TAG, "HomeDrawer onStart: "+goal.getActualCompletionDate());
-                    volleyHelper.updateGoalData(goalPhpId);
-                }
-*/
+                goal.setSyncStatus(1);
+                goalCrud.updateGoal(goal);
             }
-            goalCrud.getLastInsertedGoal().setSyncStatus(1);
+
         }
+
 
         /*int expenditureSyncStatus = expenditureCrud.getSyncStatus();
         int expenditurePhpId = expenditureCrud.getPhpID();
@@ -293,11 +292,18 @@ public class HomeDrawerActivity extends AppCompatActivity{
         } */
 
         // send expenditure details to server with an internet connection on device.
-        parseConnector.addExpenditureToParse();
-        parseConnector.addIncomeToParse();
+        int expenditureSyncStatus = expenditureCrud.getSyncStatus();
+        if (expenditureSyncStatus == 0){
+            parseConnector.addExpenditureToParse();
+            expenditureCrud.updateSyncExpenditure(1);
+        }
 
-
-
+        // send income details to server with an internet connection on device.
+        int incomeSyncStatus = incomeCrud.getSyncStatus();
+        if (incomeSyncStatus == 0){
+            parseConnector.addIncomeToParse();
+            incomeCrud.updateSyncIncome();
+        }
     }
 
 

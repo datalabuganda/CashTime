@@ -159,7 +159,8 @@ public class SavingsActivity extends AppCompatActivity {
         if(  goal.getCompleteStatus() == 1 && currentDate.before(goalEndDate)  ) {
             //Log.d(TAG, "onCreate actualCompletionDate: " + actualCompletionDate);
             goal.setActualCompletionDate(df.format(currentDate));
-            //Log.d(TAG, "goal actualCompletionDate: " + goal.getActualCompletionDate());
+            goal.setSyncStatus(0);
+            Log.d(TAG, "goal actualCompletionDate: " + goalCrud.getLastInsertedGoal().getActualCompletionDate());
 
 
         }

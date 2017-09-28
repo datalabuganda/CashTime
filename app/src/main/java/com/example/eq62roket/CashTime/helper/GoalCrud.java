@@ -33,7 +33,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, 0);
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
-        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, "0");
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
         values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 

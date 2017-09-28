@@ -116,6 +116,7 @@ public class AddGoalActivity extends AppCompatActivity {
 
                     goal.setName(goal_name);
                     goal.setAmount(goal_amount);
+                    goal.setActualCompletionDate("on going");
                     //goal.setStartDate(start_date);
                     goal.setEndDate(end_date);
                     goal.setSyncStatus(0);

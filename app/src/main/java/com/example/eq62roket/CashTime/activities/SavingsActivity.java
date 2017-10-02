@@ -15,7 +15,6 @@ import com.example.eq62roket.CashTime.adapters.SavingsAdapter;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
 import com.example.eq62roket.CashTime.helper.GoalCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.helper.VolleyHelper;
 import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.User;
@@ -101,10 +100,10 @@ public class SavingsActivity extends AppCompatActivity {
                                 Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
                                 userCrud.updateUser(user);
 
-                                //sync goal with server if internet is availabe
+                               /* //sync goal with server if internet is availabe
                                 SavingsActivity.setGoalActualCompleteDate(goal, goalCrud, expenditureCrud);
                                 new VolleyHelper(SavingsActivity.this).updateGoalData(goal.getParseId());
-
+*/
 
 
                                 Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();

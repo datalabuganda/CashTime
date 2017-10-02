@@ -23,19 +23,22 @@ import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
 public class InvestmentActivity extends AppCompatActivity {
 
     private static final String TAG = "InvestmentActivity";
-    EditText edtInvestments;
+    EditText edtInvestments, investmentspinner;
     Button btnInvestments;
     UserCrud userCrud;
     ListView investmentListView;
     InvestmentAdapter investmentAdapter;
 
     IncomeCrud incomeCrud;
+
+    public static String[] investment = {"Daily", "Weekly", "Monthly"};
 
 
     @Override
@@ -46,7 +49,17 @@ public class InvestmentActivity extends AppCompatActivity {
 
         btnInvestments = (Button) findViewById(R.id.btnInvestment);
         edtInvestments = (EditText) findViewById(R.id.edtInvestment);
+        investmentspinner = (EditText) findViewById(R.id.investmentSpinner);
         investmentListView = (ListView) findViewById(R.id.InvestmentListView);
+
+        ArrayAdapter<String> investmentSpinnerAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                investment
+        );
+
+        MaterialBetterSpinner materialInvestmentSpinner = (MaterialBetterSpinner) findViewById(R.id.investmentSpinner);
+        materialInvestmentSpinner.setAdapter(investmentSpinnerAdapter);
         incomeCrud = new IncomeCrud(this);
 
         ArrayList<Income> loanArrayList = new ArrayList<>();
@@ -69,10 +82,11 @@ public class InvestmentActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!edtInvestments.getText().toString().equals("")) {
-                            int yVal = Integer.parseInt(String.valueOf(edtInvestments.getText()));
-                            boolean isInseted = incomeCrud.insertInvestment(yVal);
-                            if (isInseted) {
+
+                        if (!edtInvestments.getText().toString().equals("") && !investmentspinner.getText().toString().equals("")) {
+//                            int yVal = Integer.parseInt(String.valueOf(edtInvestments.getText()));
+                            boolean isInserted = incomeCrud.insertInvestment(Integer.parseInt(edtInvestments.getText().toString()), investmentspinner.getText().toString());
+                            if (isInserted) {
                                 // if user adds income, award them 2 points
                                 User user = userCrud.getLastUserInserted();
                                 user.setPoints(2);
@@ -97,42 +111,5 @@ public class InvestmentActivity extends AppCompatActivity {
                 }
         );
     }
-
-//    private void populateListView(){
-//        Log.d(TAG, "populateListView: Displayng data in the listView");
-//
-//        Cursor data = incomeCrud.getInvestment();
-//        investmentAdapter = new InvestmentAdapter(this, data);
-//        investmentListView.setAdapter(investmentAdapter);
-//        Log.d(TAG, "here is data: " + data);
-//
-//
-//        investmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String investment = adapterView.getItemAtPosition(i).toString();
-//                Log.d(TAG, "onItemClick: You clicked on" + investment);
-//
-//                Cursor data = incomeCrud.getInvestmentID(investment);
-//                int investmentID = -1;
-//                while (data.moveToNext()){
-//                    investmentID = data.getInt(0);
-//
-//                }
-//                if (investmentID > -1){
-//                    Intent editInvestmentIntent = new Intent(InvestmentActivity.this, UpdateInvestmentActivity.class);
-//                    editInvestmentIntent.putExtra("id", investmentID);
-//                    editInvestmentIntent.putExtra("investment", investment);
-//                    Log.d(TAG, "almost through: " + investment);
-//                    startActivity(editInvestmentIntent);
-//                    finish();
-//                }else {
-//
-//                }
-//            }
-//        });
-//    }
-
-
 
 }

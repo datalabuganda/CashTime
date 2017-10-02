@@ -53,7 +53,7 @@
             android:id="@+id/btnUpdateSavings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="Update" />
 
         <!--<Button-->
         <!--android:id="@+id/btnSavings"-->

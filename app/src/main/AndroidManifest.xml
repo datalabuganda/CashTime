@@ -195,12 +195,32 @@
             android:parentActivityName=".activities.HomeDrawerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.UpdateOthersActivity" />
-        <activity android:name=".activities.UpdateEducationActivity" />
-        <activity android:name=".activities.UpdateHomeneedsActivity" />
-        <activity android:name=".activities.UpdateTransportActivity" />
-        <activity android:name=".activities.UpdateSavingsActivity" />
-        <activity android:name=".activities.UpdateHealthActivity"></activity>
+        <activity android:name=".activities.UpdateOthersActivity"
+            android:label="Update Others"
+            android:parentActivityName=".activities.OthersActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UpdateEducationActivity"
+            android:label="Update Education"
+            android:parentActivityName=".activities.EducationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UpdateHomeneedsActivity"
+            android:label="Update Homeneeds"
+            android:parentActivityName=".activities.HomeneedsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UpdateTransportActivity"
+            android:label="Update Transport"
+            android:parentActivityName=".activities.TransportActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UpdateSavingsActivity"
+            android:label="Update Savings"
+            android:parentActivityName=".activities.SavingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UpdateHealthActivity"
+            android:label="Update Health"
+            android:parentActivityName=".activities.HealthActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <receiver android:name=".AlarmReceiver"/>
     </application>
 
 </manifest>

@@ -79,7 +79,7 @@ public class EducationAdapter extends ArrayAdapter<Expenditure> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtEducationDate);
 
 
-        tvamount.setText("" + education_amount);
+        tvamount.setText("Shs: " + formatter.format(education_amount));
         tvdatecreated.setText(education_created_date);
         Log.d(TAG, "date: education " + education_created_date);
 

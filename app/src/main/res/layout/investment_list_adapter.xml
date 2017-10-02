@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:paddingTop="10dp"
             android:layout_weight="40"
-            android:textColor="#860909"
+            android:textColor="#d91111"
             android:textSize="18dp"
             android:text="Goal Amount" />
 

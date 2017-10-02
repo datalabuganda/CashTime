@@ -34,6 +34,7 @@ public class UpdateTransportActivity extends AppCompatActivity {
         btnUpdateTransport = (Button) findViewById(R.id.btnUpdateTransport);
 
         expenditureCrud = new ExpenditureCrud(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent receivedIntent = getIntent();
 

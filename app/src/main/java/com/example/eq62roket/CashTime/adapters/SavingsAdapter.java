@@ -79,7 +79,7 @@ public class SavingsAdapter extends ArrayAdapter<Expenditure> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtSavingsDate);
 
 
-        tvamount.setText("" + savings_amount);
+        tvamount.setText("Shs: " + formatter.format(savings_amount));
         tvdatecreated.setText(savings_created_date);
         Log.d(TAG, "date: savings " + savings_created_date);
 

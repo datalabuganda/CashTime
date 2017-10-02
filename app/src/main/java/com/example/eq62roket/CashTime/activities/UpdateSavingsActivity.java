@@ -34,6 +34,7 @@ public class UpdateSavingsActivity extends AppCompatActivity {
         btnUpdateSavings = (Button) findViewById(R.id.btnUpdateSavings);
 
         expenditureCrud = new ExpenditureCrud(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent receivedIntent = getIntent();
 

@@ -79,7 +79,7 @@ public class OthersAdapter extends ArrayAdapter<Expenditure> {
         TextView tvdatecreated = (TextView) convertView.findViewById(R.id.txtOthersDate);
 
 
-        tvamount.setText("" + others_amount);
+        tvamount.setText("Shs: " + formatter.format(others_amount));
         tvdatecreated.setText(others_created_date);
         Log.d(TAG, "date: others " + others_created_date);
 

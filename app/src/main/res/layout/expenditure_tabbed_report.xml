@@ -29,7 +29,7 @@
             android:id="@+id/imageView3"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/transport1" />
+            app:srcCompat="@drawable/transport" />
 
         <TextView
             android:id="@+id/textView20"
@@ -107,7 +107,7 @@
             android:id="@+id/imageView9"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/home" />
+            app:srcCompat="@drawable/homeneds" />
 
         <TextView
             android:id="@+id/textView5"
@@ -145,7 +145,7 @@
             android:id="@+id/imageView10"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/hospital" />
+            app:srcCompat="@drawable/health" />
 
         <TextView
             android:id="@+id/textView27"
@@ -217,7 +217,7 @@
             android:id="@+id/imageView12"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/otherss" />
+            app:srcCompat="@drawable/otherssssss" />
 
         <TextView
             android:id="@+id/textView"

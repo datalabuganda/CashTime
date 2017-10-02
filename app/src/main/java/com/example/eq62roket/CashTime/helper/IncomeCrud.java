@@ -8,8 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.eq62roket.CashTime.models.Income;
 
 import java.util.ArrayList;
+
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_EDUCATION;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_HEALTH;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_ID;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_OTHERS;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_SAVINGS;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_ID;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_INVESTMENT;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_LOAN;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_OTHERS;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_SALARY;
 
 /**
  * Created by CASHTIME on 8/5/17.
@@ -61,13 +70,10 @@ public class IncomeCrud {
     }
 
     public int getPhpID(){
-//<<<<<<< HEAD
-//        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_PHPID + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_PHPID + " IS NOT 0 ";
-//=======
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_PARSEID +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_PARSEID + " IS NOT NULL ";
-//>>>>>>> origin/master
+
         Cursor cursor = database.rawQuery(query, null);
         int phpId = 0;
         if (cursor.moveToFirst()){
@@ -86,12 +92,7 @@ public class IncomeCrud {
         else
             return true;
     }
-//<<<<<<< HEAD
 
-//    public ArrayList<Income> getAllSalary(){
-//        ArrayList<Income> salaryArrayList = new ArrayList<>();
-//        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 ";
-//=======
     public Cursor getSalary(){
         String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
@@ -103,7 +104,6 @@ public class IncomeCrud {
         ArrayList<Income> salaryArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT NULL ";
-//>>>>>>> origin/master
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -122,7 +122,6 @@ public class IncomeCrud {
 
     }
 
-
     public Cursor getSalaryID(String salary){
         String query = "SELECT " + COLUMN_INCOME_ID +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
@@ -139,13 +138,8 @@ public class IncomeCrud {
         database.execSQL(query);
     }
 
-//<<<<<<< HEAD
-
 
     public boolean insertLoan(int loan, String period){
-//=======
-//    public boolean insertLoan(int loan){
-//>>>>>>> origin/master
         ContentValues loanValues = new ContentValues();
         loanValues.put(DatabaseHelper.COLUMN_INCOME_LOAN, loan);
         loanValues.put(DatabaseHelper.COLUMN_INCOME_PERIOD, period);
@@ -158,12 +152,8 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllLoan(){
         ArrayList<Income> loanArrayList = new ArrayList<>();
-//<<<<<<< HEAD
-//        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
-//=======
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
-//>>>>>>> origin/master
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -182,15 +172,10 @@ public class IncomeCrud {
 
     }
 
-//<<<<<<< HEAD
-//    public Cursor getLastInsertedLoan(){
-//        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_LOAN + " FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
-//=======
     public Cursor getLoan(){
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_LOAN +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT NULL ";
-//>>>>>>> origin/master
         Cursor data = database.rawQuery(query, null);
         return  data;
     }
@@ -226,12 +211,8 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllInvestment(){
         ArrayList<Income> investmentArrayList = new ArrayList<>();
-//<<<<<<< HEAD
-//        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 ";
-//=======
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
-//>>>>>>> origin/master
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -250,8 +231,6 @@ public class IncomeCrud {
 
     }
 
-//<<<<<<< HEAD
-//=======
     public Cursor getInvestment(){
         String query = "SELECT rowid _id,* FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT NULL ";
@@ -259,7 +238,6 @@ public class IncomeCrud {
         return  data;
     }
 
-//>>>>>>> origin/master
     public Cursor getInvestmentID(String investment){
         String query = "SELECT " + COLUMN_INCOME_ID + " FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " = '" + investment + "'";
@@ -290,12 +268,8 @@ public class IncomeCrud {
 
     public ArrayList<Income> getAllOthers(){
         ArrayList<Income> othersArrayList = new ArrayList<>();
-//<<<<<<< HEAD
-//        String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME + " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 ";
-//=======
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
                 " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT NULL ";
-//>>>>>>> origin/master
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -395,6 +369,57 @@ public class IncomeCrud {
         int totalIncome = Salary + Loan + Investment + Others;
 
         return totalIncome;
+    }
+
+
+    /////////////// Methods to retrieve last inserted dates in each column ////////////////////
+
+    public String getSalaryDate(){
+        String lastSalaryInsertedDate;
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
+                " FROM " + DatabaseHelper.TABLE_INCOME +
+                " WHERE " + COLUMN_INCOME_SALARY +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
+        Cursor data = database.rawQuery(query, null);
+        data.moveToLast();
+        lastSalaryInsertedDate = data.getString(0);
+        return lastSalaryInsertedDate;
+    }
+
+    public String geteInvestmentDate(){
+        String lastInvestmentInsertedDate;
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
+                " FROM " + DatabaseHelper.TABLE_INCOME +
+                " WHERE " + COLUMN_INCOME_INVESTMENT +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
+        Cursor data = database.rawQuery(query, null);
+        data.moveToLast();
+        lastInvestmentInsertedDate = data.getString(0);
+        return lastInvestmentInsertedDate;
+    }
+
+    public String getLoanDate(){
+        String lastLoanInsertedDate;
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
+                " FROM " + DatabaseHelper.TABLE_INCOME +
+                " WHERE " + COLUMN_INCOME_LOAN +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
+        Cursor data = database.rawQuery(query, null);
+        data.moveToLast();
+        lastLoanInsertedDate = data.getString(0);
+        return lastLoanInsertedDate;
+    }
+
+    public String getOthersDate(){
+        String lastOthersInsertedDate;
+        String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
+                " FROM " + DatabaseHelper.TABLE_INCOME +
+                " WHERE " + COLUMN_INCOME_OTHERS +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
+        Cursor data = database.rawQuery(query, null);
+        data.moveToLast();
+        lastOthersInsertedDate = data.getString(0);
+        return lastOthersInsertedDate;
     }
 
 

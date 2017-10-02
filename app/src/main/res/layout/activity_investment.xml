@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:id="@+id/linearLayout15"
         android:layout_alignParentTop="true"
@@ -50,14 +50,38 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout18">
 
-        <EditText
-            android:id="@+id/edtInvestment"
-            android:layout_width="274dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginBottom="10dp"
-            android:hint="Enter your Investment"
-            android:inputType="number" />
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout343">
+
+            <EditText
+                android:id="@+id/edtInvestment"
+                android:layout_width="274dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:layout_marginBottom="10dp"
+                android:hint="Enter your Loan"
+                android:inputType="number" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/investmentSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:hint="Period" />
+
+        </LinearLayout>
+
+        <!--<EditText-->
+            <!--android:id="@+id/edtInvestment"-->
+            <!--android:layout_width="274dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:ems="10"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:hint="Enter your Investment"-->
+            <!--android:inputType="number" />-->
 
         <Button
             android:id="@+id/btnInvestment"

@@ -253,44 +253,6 @@ public class HomeDrawerActivity extends AppCompatActivity{
 
         }
 
-
-        /*int expenditureSyncStatus = expenditureCrud.getSyncStatus();
-        int expenditurePhpId = expenditureCrud.getPhpID();
-
-        if (expenditureSyncStatus == 0){
-            volleyHelper.sendExpenditureData();
-            Log.d(TAG, "expenditure sending ");
-            if (goalPhpId.equals("0")){
-                expenditureCrud.updateSyncExpenditure(0);
-                Log.d(TAG, "expenditure sending ");
-                Log.d(TAG, "onStart: " + goalCrud.getLastInsertedGoal().getParseId());
-            }
-            else{
-                volleyHelper.sendExpenditureData();
-                Log.d(TAG, "expenditure updating ");
-            }
-        }
-
-
-        int incomeSyncStatus = incomeCrud.getSyncStatus();
-        int incomePhpId = incomeCrud.getPhpID();
-
-
-        if (incomeSyncStatus == 0){
-            volleyHelper.sendIncomeData();
-            Log.d(TAG, "income sending ");
-            *//*if (incomePhpId == 0){
-                volleyHelper.sendIncomeData();
-                Log.d(TAG, "income sending ");
-
-            }
-
-            else{
-                volleyHelper.updateIncomeData();
-                Log.d(TAG, "income updating ");
-            }*//*
-        } */
-
         // send expenditure details to server with an internet connection on device.
         int expenditureSyncStatus = expenditureCrud.getSyncStatus();
         if (expenditureSyncStatus == 0){

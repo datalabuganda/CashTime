@@ -74,7 +74,7 @@ public class SavingsActivity extends AppCompatActivity {
 
         goal = goalCrud.getLastInsertedGoal();
 
-        final int remaining = this.remainingIncome();
+        final int remainingincome = this.remainingIncome();
 
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
@@ -103,56 +103,32 @@ public class SavingsActivity extends AppCompatActivity {
                         if (!edtSavings.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtSavings.getText()));
 
-                            if (yVal <= remaining) {
+                            if (yVal <= remainingincome) {
                                 boolean isInseted = expenditureCrud.insertSavings(yVal);
-//                                if (isInseted) {
-//                                    // if user adds a saving, award them 5 points
-//                                    User user = userCrud.getLastUserInserted();
-//                                    user.setPoints(5);
-//                                    user.setSyncStatus(0);
-//                                    Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
-//                                    Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
-//                                    userCrud.updateUser(user);
-//
-//                                    Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
-//                                    Intent Savingsintent = new Intent(SavingsActivity.this, ExpenditureActivity.class);
-//                                    SavingsActivity.this.startActivity(Savingsintent);
-//                                    finish();
-//                                    //Log.d(TAG, "goal saved " + incomeCrud.addAllSavings(null));
-//                                }
-//                                else {
-//                                    Toast.makeText(SavingsActivity.this, "Your savings have not been stored", Toast.LENGTH_LONG).show();
-//                                }
-////=======
-//                            boolean isInseted = expenditureCrud.insertSavings(yVal);
-
                                 if (isInseted) {
                                     // if user adds a saving, award them 5 points
                                     User user = userCrud.getLastUserInserted();
                                     user.setPoints(5);
                                     user.setSyncStatus(0);
-                                    Log.d(TAG, "expenditurephpId: " + expenditureCrud.getPhpID());
-                                    Log.d(TAG, "expendituresync status: " + expenditureCrud.getSyncStatus());
                                     userCrud.updateUser(user);
-
-                                    //sync goal with server if internet is availabe
-                                    SavingsActivity.setGoalActualCompleteDate(goal, goalCrud, expenditureCrud);
-                                    new VolleyHelper(SavingsActivity.this).updateGoalData(goal.getParseId());
-
 
                                     Toast.makeText(SavingsActivity.this, "Your savings have been stored", Toast.LENGTH_LONG).show();
                                     Intent Savingsintent = new Intent(SavingsActivity.this, ExpenditureActivity.class);
                                     SavingsActivity.this.startActivity(Savingsintent);
                                     finish();
-                                    //Log.d(TAG, "goal saved " + incomeCrud.addAllSavings(null));
-                                } else {
-                                    Toast.makeText(SavingsActivity.this, "Your don't have enough income to save", Toast.LENGTH_LONG).show();
-
                                 }
+                                else {
+                                    Toast.makeText(SavingsActivity.this, "Your savings have not been stored", Toast.LENGTH_LONG).show();
+                                }
+
+                            } else {
+                                Toast.makeText(SavingsActivity.this, "Your don't have enough income to save", Toast.LENGTH_LONG).show();
 
                             }
 
-                        }
+                            }
+
+
                         else {
                             Toast.makeText(SavingsActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                         }

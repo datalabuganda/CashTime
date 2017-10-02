@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
 
 
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // expenditure table
     public static final String TABLE_EXPENDITURE = "EXPENDITURETABLE";
     public static final String COLUMN_EXPENDITURE_ID = "ID";
-    public static final String COLUMN_EXPENDITURE_AMOUNT = "AMOUNT";
+    public static final String COLUMN_EXPENDITURE_PERIOD = "PERIOD";
     public static final String COLUMN_EXPENDITURE_TRANSPORT = "TRANSPORT";
     public static final String COLUMN_EXPENDITURE_EDUCATION = "EDUCATION";
     public static final String COLUMN_EXPENDITURE_HEALTH = "HEALTH";
@@ -75,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INCOME_OTHERS = "OTHERS";
     public static final String COLUMN_INCOME_CREATEDATE = "CREATED_DATE";
     public static final String COLUMN_INCOME_PHPID = "PHPID";
+    public static final String COLUMN_INCOME_PERIOD = "PERIOD";
 
 
 
@@ -115,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Variable to create Income_table
 
 
-    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PHPID INTEGER)";
+    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PHPID INTEGER, PERIOD TEXT NOT NULL)";
 
 
 

@@ -219,6 +219,8 @@
             android:label="Update Health"
             android:parentActivityName=".activities.HealthActivity"
             android:screenOrientation="portrait"></activity>
+
+        <receiver android:name=".AlarmReceiver"/>
     </application>
 
 </manifest>

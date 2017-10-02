@@ -22,6 +22,7 @@ import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
@@ -29,12 +30,13 @@ import java.util.ArrayList;
 public class SalaryActivity extends AppCompatActivity {
     private static final String TAG = "SalaryActivity";
     Button btnSalary, updateSalary;
-    EditText edtSalary;
+    EditText edtSalary, salaryspinner;
     IncomeCrud incomeCrud;
     UserCrud userCrud;
     ListView SalaryListVIew;
     SalaryAdapter salaryAdapter;
     Cursor c;
+    public static String[] salary = {"Daily", "Weekly", "Monthly"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,17 @@ public class SalaryActivity extends AppCompatActivity {
         btnSalary = (Button) findViewById(R.id.btnSalary);
         edtSalary = (EditText) findViewById(R.id.edtSalary);
         SalaryListVIew = (ListView) findViewById(R.id.SalaryListView);
+        salaryspinner = (EditText) findViewById(R.id.salarySpinner);
+
+        ArrayAdapter<String> salarySpinnerAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                salary
+        );
+
+        MaterialBetterSpinner materialLoanSpinner = (MaterialBetterSpinner) findViewById(R.id.salarySpinner);
+        materialLoanSpinner.setAdapter(salarySpinnerAdapter);
+
         incomeCrud = new IncomeCrud(this);
 
         userCrud = new UserCrud(this);
@@ -63,9 +76,9 @@ public class SalaryActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!edtSalary.getText().toString().equals("")) {
-                            int yVal = Integer.parseInt(String.valueOf(edtSalary.getText()));
-                            boolean isInseted = incomeCrud.insertSalary(yVal);
+                        if (!edtSalary.getText().toString().equals("") && !salaryspinner.getText().toString().equals("")) {
+//                            int yVal = Integer.parseInt(String.valueOf(edtSalary.getText()));
+                            boolean isInseted = incomeCrud.insertSalary(Integer.parseInt(edtSalary.getText().toString()), salaryspinner.getText().toString());
                             if (isInseted) {
                                 Log.d(TAG, "phpId: "+ incomeCrud.getPhpID());
                                 Log.d(TAG, "insertedSyncStatusLocal: "+ incomeCrud.getSyncStatus());
@@ -85,7 +98,7 @@ public class SalaryActivity extends AppCompatActivity {
                             }
                         }
                         else{
-                            Toast.makeText(SalaryActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SalaryActivity.this, "Please input amount and period before submitting", Toast.LENGTH_LONG).show();
                         }
                     }
 

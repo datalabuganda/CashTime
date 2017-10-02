@@ -77,10 +77,10 @@ public class VolleyHelper {
                             e.printStackTrace();
                         }
                         //int userId = Integer.valueOf(response);
-                        lastInsertedUser.setPhpId(String.valueOf(userId));
+                        lastInsertedUser.setParseId(String.valueOf(userId));
                         lastInsertedUser.setSyncStatus(1);
                         userCrud.updateUser(lastInsertedUser);
-                        Log.d(TAG, "phpId: " +  lastInsertedUser.getPhpId());
+                        Log.d(TAG, "phpId: " +  lastInsertedUser.getParseId());
                         Log.d(TAG, "Response UserId " + userId);
 
                     }
@@ -113,9 +113,11 @@ public class VolleyHelper {
         params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
         params.put("createDate",lastInsertedGoal.getStartDate());
         params.put("completionDate", lastInsertedGoal.getEndDate());
-        params.put("user", lastInsertedUser.getPhpId());
-        Log.d(TAG, "userID: " + lastInsertedGoal.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getParseId());
         params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
+
+        Log.d(TAG, "sendGoalData: "+lastInsertedGoal.getActualCompletionDate());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
@@ -130,10 +132,10 @@ public class VolleyHelper {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        lastInsertedGoal.setPhpId(String.valueOf(goalId));
+                        lastInsertedGoal.setParseId(String.valueOf(goalId));
                         lastInsertedGoal.setSyncStatus(1);
                         goalCrud.updateGoal(lastInsertedGoal);
-                        Log.d(TAG, "Response Goal" + goalId);
+                        Log.d(TAG, "Response Goal" + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -161,8 +163,8 @@ public class VolleyHelper {
         String url = "http://165.227.67.248:8000/expenditure/";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user", lastInsertedUser.getPhpId());
-        params.put("goal", lastInsertedGoal.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
+        params.put("goal", lastInsertedGoal.getParseId());
         params.put("transport", String.valueOf(expenditureCrud.addAllHealth()));
         params.put("savings", String.valueOf(expenditureCrud.addAllSavings(null)));
         params.put("otherExpenditures", String.valueOf(expenditureCrud.addAllOthers()));
@@ -186,7 +188,7 @@ public class VolleyHelper {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        expenditureCrud.insertPhpId(expenditureId);
+                        expenditureCrud.insertParseId(expenditureId);
                         expenditureCrud.updateSyncExpenditure(1);
                         Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
                         Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
@@ -217,7 +219,7 @@ public class VolleyHelper {
         String url = "http://165.227.67.248:8000/income/";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user", lastInsertedUser.getPhpId());
+        params.put("user", lastInsertedUser.getParseId());
         params.put("salary", String.valueOf(incomeCrud.addAllSalary()));
         params.put("otherIncomes", String.valueOf(incomeCrud.addAllOthers()));
         params.put("created", "placeholder");
@@ -311,35 +313,41 @@ public class VolleyHelper {
     }
 
 
-    public void updateGoalData(){
-        String url = "http://165.227.67.248/cashTimePhpDatabase/goal_update.php";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+    public void updateGoalData(String goalID){
+
+        String url = String.format("http://165.227.67.248:8000/goalslist/%s/update/", goalID);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("goalName", lastInsertedGoal.getName());
+        params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
+        params.put("createDate",lastInsertedGoal.getStartDate());
+        params.put("completionDate", lastInsertedGoal.getEndDate());
+        params.put("user", lastInsertedUser.getParseId());
+        Log.d(TAG, "userID: " + lastInsertedGoal.getParseId());
+        params.put("actualCompletionDate", lastInsertedGoal.getActualCompletionDate());
+
+        Log.d(TAG, "VolleyHElper updateGoalData: "+lastInsertedGoal.getActualCompletionDate());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        lastInsertedGoal.setSyncStatus(1);
-                        goalCrud.updateGoal(lastInsertedGoal);
-                        Log.d("Response", response);
+                    public void onResponse(JSONObject response) {
+                        // response
+                        lastInsertedUser.setSyncStatus(1);
+                        userCrud.updateUser(lastInsertedUser);
+                        Log.d(TAG, "Response update User" + response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        Log.d(TAG, "Error.Response update user" + error.toString());
                     }
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("goalName", lastInsertedGoal.getName());
-                params.put("goalAmount", String.valueOf(lastInsertedGoal.getAmount()));
-                params.put("goalStartDate",lastInsertedGoal.getStartDate());
-                params.put("goalEndDate", lastInsertedGoal.getEndDate());
-
-                return params;
-            }
+        )
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -347,7 +355,10 @@ public class VolleyHelper {
                 return headers;
             }
         };
-        queue.add(postRequest);
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(jsonObjectRequest);
+
     }
 
     public void updateExpenditureData(){

@@ -44,22 +44,25 @@ public class ParseConnector {
 
     public void addUserToParse(){
         // add details of this user to a ParseObject
-        final ParseObject user = new ParseObject("Users");
+        final ParseObject user = new ParseObject("ctUser");
         user.put("HouseHoldComposition", lastInsertedUser.getHousehold());
         user.put("Age", lastInsertedUser.getAge());
         user.put("Sex", lastInsertedUser.getSex());
         user.put("CountryOfBirth", lastInsertedUser.getNationality());
+        user.put("LevelOfEducation", lastInsertedUser.getEducationlevel());
         user.put("Points", lastInsertedUser.getPoints());
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null){
                     String userParseId = user.getObjectId();
-                    lastInsertedUser.setPhpId(userParseId);
+                    lastInsertedUser.setParseId(userParseId);
+                    lastInsertedUser.setSyncStatus(1);
                     userCrud.updateUser(lastInsertedUser);
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done user: " + e);
                 }
             }
         });
@@ -69,19 +72,21 @@ public class ParseConnector {
 
     public void addGoalToParse(){
         // get the user back from the database
-        final String userParseId = userCrud.getLastUserInserted().getPhpId();
+        final String userParseId = userCrud.getLastUserInserted().getParseId();
+        Log.d(TAG, "userParseId: " + userParseId);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUser");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null){
                     // create a Goal table
-                    final ParseObject goal = new ParseObject("Goal");
+                    final ParseObject goal = new ParseObject("ctUserGoals");
                     goal.put("GoalName", lastInsertedGoal.getName());
                     goal.put("GoalAmount", lastInsertedGoal.getAmount());
                     goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
                     goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
+                    goal.put("ActualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
                     // link the user to this goal table
                     goal.put("parent", object);
@@ -91,7 +96,8 @@ public class ParseConnector {
                         public void done(ParseException e) {
                             if (e == null){
                                 String goalParseId = goal.getObjectId();
-                                lastInsertedGoal.setPhpId(goalParseId);
+                                lastInsertedGoal.setParseId(goalParseId);
+                                lastInsertedGoal.setSyncStatus(1);
                                 goalCrud.updateGoal(lastInsertedGoal);
 
                             }
@@ -101,6 +107,7 @@ public class ParseConnector {
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done goal: " + e);
                 }
             }
         });
@@ -109,22 +116,22 @@ public class ParseConnector {
 
 
     public void addExpenditureToParse(){
-       String goalParseId = goalCrud.getLastInsertedGoal().getPhpId();
-        Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getPhpId());
+       String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
+        Log.d(TAG, "AddExpenditure: " + goalCrud.getLastInsertedGoal().getParseId());
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Goal");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUserGoals");
         query.getInBackground(goalParseId, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null){
-                    ParseObject expenditure = new ParseObject("Expenditure");
+                    ParseObject expenditure = new ParseObject("ctUserExpenditures");
                     expenditure.put("TotalTransportCost", expenditureCrud.addAllTransport());
                     expenditure.put("TotalEducationCost", expenditureCrud.addAllEducation());
                     expenditure.put("TotalHealthCost", expenditureCrud.addAllHealth());
                     expenditure.put("TotalSavingCost", expenditureCrud.addAllSavings(null));
                     expenditure.put("TotalOthersCost", expenditureCrud.addAllOthers());
                     expenditure.put("TotalHomeNeedsCost", expenditureCrud.addAllHomeneeds());
-                    expenditure.put("TotalExpenditureCost", expenditureCrud.addAllCategories());
+                    expenditure.put("ctUserId", lastInsertedUser.getParseId());
 
                     // create a relationship between goal table and expenditure table
                     expenditure.put("parent", object);
@@ -133,25 +140,25 @@ public class ParseConnector {
                 }
                 else{
                     // Error occured
+                    Log.d(TAG, "done expenditure: " + e);
                 }
             }
         });
     }
 
     public void addIncomeToParse(){
-        String userParseId = userCrud.getLastUserInserted().getPhpId();
+        String userParseId = userCrud.getLastUserInserted().getParseId();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUser");
         query.getInBackground(userParseId, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    ParseObject income = new ParseObject("Income");
+                    ParseObject income = new ParseObject("ctUserIncomes");
                     income.put("TotalLoanIncome", incomeCrud.addAllLoan());
                     income.put("TotalSalaryIncome", incomeCrud.addAllSalary());
                     income.put("TotalInvestmentIncome", incomeCrud.addAllInvestment());
                     income.put("TotalOthersIncome", incomeCrud.addAllOthers());
-                    income.put("TotalIncome", incomeCrud.addAllIncome());
 
                     // create a relationship between user table and income table
                     income.put("parent", object);
@@ -160,13 +167,14 @@ public class ParseConnector {
                 }
                 else{
                     // error occured
+                    Log.d(TAG, "done income: " + e);
                 }
             }
         });
     }
 
     public void upDateUser(String objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Users");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUser");
 
         // Retrieve the object by id
         query.getInBackground(objectId, new GetCallback<ParseObject>() {
@@ -177,6 +185,7 @@ public class ParseConnector {
                     user.put("Age", lastInsertedUser.getAge());
                     user.put("Sex", lastInsertedUser.getSex());
                     user.put("CountryOfBirth", lastInsertedUser.getNationality());
+                    user.put("LevelOfEducation", lastInsertedUser.getEducationlevel());
                     user.put("Points", lastInsertedUser.getPoints());
 
                     user.saveInBackground();
@@ -186,7 +195,7 @@ public class ParseConnector {
     }
 
     public void upDateGoal(String objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Goal");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUserGoals");
 
         // Retrieve the object by id
         query.getInBackground(objectId, new GetCallback<ParseObject>() {
@@ -197,6 +206,7 @@ public class ParseConnector {
                     goal.put("GoalAmount", lastInsertedGoal.getAmount());
                     goal.put("GoalStartDate", lastInsertedGoal.getStartDate());
                     goal.put("GoalEndDate", lastInsertedGoal.getEndDate());
+                    goal.put("ActualCompletionDate", lastInsertedGoal.getActualCompletionDate());
 
                     goal.saveInBackground();
                 }
@@ -205,7 +215,7 @@ public class ParseConnector {
     }
 
     public void upDateExpenditure(String objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Expenditure");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUserExpenditures");
 
         // Retrieve the object by id
         query.getInBackground(objectId, new GetCallback<ParseObject>() {
@@ -227,7 +237,7 @@ public class ParseConnector {
     }
 
     public void upDateIncome(String objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Income");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ctUserIncomes");
 
         // Retrieve the object by id
         query.getInBackground(objectId, new GetCallback<ParseObject>() {

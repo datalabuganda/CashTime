@@ -12,10 +12,27 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "DatabaseHelper";
+    private static DatabaseHelper mInstance = null;
+    private static SQLiteDatabase db_instance = null;
 
     private static final String DATABASE_NAME = "cashTime.db";
     private static final int DATABASE_VERSION = 6;
 
+
+    public static SQLiteDatabase getInstance(Context ctx) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (mInstance == null) {
+            mInstance = new DatabaseHelper(ctx.getApplicationContext());
+        }
+
+        if (db_instance == null) {
+            db_instance = mInstance.getWritableDatabase();
+        }
+        return db_instance;
+    }
 
 
     // Columns of User table
@@ -27,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_LEVEL_EDUCATION = "level_of_education";
     public static final String COLUMN_USER_NATIONALITY = "nationality";
     public static final String COLUMN_USER_PHONE_NUMBER = "phone_number";
-    public static final String COLUMN_USER_PHP_ID = "parse_id";
+    public static final String COLUMN_USER_PARSE_ID = "parse_id";
     public static final String COLUMN_USER_POINTS = "points";
     public static final String COLUMN_USER_SYNCED = "user_synced";
 
@@ -40,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_GOAL_STARTDATE = "goal_startDate";
     public static final String COLUMN_GOAL_ENDDATE = "goal_endDate  ";
     public static final String COLUMN_GOAL_ACTUALCOMPLETIONDATE = "goal_actualCompletionDate ";
-    public static final String COLUMN_GOAL_PHP_ID = "goal_phpId";
+    public static final String COLUMN_GOAL_PARSE_ID = "goal_parseId";
     public static final String COLUMN_GOAL_USER_ID = "goal_user_id";
     public static final String COLUMN_GOAL_SYNCED = "goal_synced";
     public static final String COLUMN_GOAL_COMPLETED = "goal_completed";
@@ -61,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EXPENDITURE_HOMENEEDS = "HOMENEEDS";
     public static final String COLUMN_EXPENDITURE_INSERTDATE = "DATEINSERTED";
     public static final String COLUMN_EXPENDITURE_SYNCSTATUS = "SYNCSTATUS";
-    public static final String COLUMN_EXPENDITURE_PHPID = "PHPID";
+    public static final String COLUMN_EXPENDITURE_PARSEID = "PARSEID";
 
 
 
@@ -76,6 +93,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INCOME_CREATEDATE = "CREATED_DATE";
     public static final String COLUMN_INCOME_PHPID = "PHPID";
     public static final String COLUMN_INCOME_PERIOD = "PERIOD";
+    public static final String COLUMN_INCOME_PARSEID = "PARSEID";
+
 
 
 
@@ -89,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_NATIONALITY + " TEXT NOT NULL, "
             + COLUMN_USER_PHONE_NUMBER + " TEXT NOT NULL, "
             + COLUMN_USER_POINTS + " REAL NOT NULL, "
-            + COLUMN_USER_PHP_ID + " TEXT, "
+            + COLUMN_USER_PARSE_ID + " TEXT, "
             + COLUMN_USER_SYNCED + " INTEGER "
             + ");";
 
@@ -100,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_GOAL_AMOUNT + " INTEGER NOT NULL, "
             + COLUMN_GOAL_STARTDATE + " TIMESTAMP DEFAULT (datetime('now', 'localtime')), "
             + COLUMN_GOAL_ENDDATE + " DATE NOT NULL, "
-            + COLUMN_GOAL_PHP_ID + " TEXT, "
+            + COLUMN_GOAL_PARSE_ID + " TEXT, "
             + COLUMN_GOAL_USER_ID + " INTEGER, "
             + COLUMN_GOAL_SYNCED + " INTEGER, "
             + COLUMN_GOAL_COMPLETED + " INTEGER, "
@@ -110,14 +129,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ");";
 
     // Variable to create Expenditure_table
-    private static final String SQL_CREATE_TABLE_EXPENDITURE = "create table " + TABLE_EXPENDITURE +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER DEFAULT 0, TRANSPORT INTEGER DEFAULT 0, EDUCATION INTEGER DEFAULT 0, HEALTH INTEGER DEFAULT 0, SAVINGS INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, HOMENEEDS INTEGER DEFAULT 0, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')), SYNCSTATUS INTEGER DEFAULT 0, PHPID INTEGER)";
-
-
+    private static final String SQL_CREATE_TABLE_EXPENDITURE = "create table " + TABLE_EXPENDITURE +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, AMOUNT INTEGER DEFAULT 0, TRANSPORT INTEGER DEFAULT 0, EDUCATION INTEGER DEFAULT 0, HEALTH INTEGER DEFAULT 0, SAVINGS INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, HOMENEEDS INTEGER DEFAULT 0, DATEINSERTED TIMESTAMP DEFAULT (datetime('now', 'localtime')), SYNCSTATUS INTEGER DEFAULT 0, PARSEID INTEGER)";
+    
     // Variable to create Income_table
 
-
-    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PHPID INTEGER, PERIOD TEXT NOT NULL)";
-
+    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER DEFAULT 0, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PARSEID INTEGER, PERIOD TEXT NOT NULL)";
 
 
     public DatabaseHelper(Context context) {

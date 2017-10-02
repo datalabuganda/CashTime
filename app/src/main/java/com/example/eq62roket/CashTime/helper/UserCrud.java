@@ -34,8 +34,7 @@ public class UserCrud {
 
     public UserCrud(Context context) {
         this.mContext = context;
-        mDatabaseHelper = new DatabaseHelper(context);
-        mDatabase = mDatabaseHelper.getWritableDatabase();
+        mDatabase = DatabaseHelper.getInstance(context);
     }
 
     public void createUser(User user){
@@ -47,7 +46,7 @@ public class UserCrud {
         values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
         values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhonenumber());
         values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
-        values.put(DatabaseHelper.COLUMN_USER_PHP_ID, "0");
+        values.put(DatabaseHelper.COLUMN_USER_PARSE_ID, user.getParseId());
         values.put(DatabaseHelper.COLUMN_USER_SYNCED, user.getSyncStatus());
 
         mDatabase.insert(DatabaseHelper.TABLE_USER, null, values);
@@ -62,7 +61,7 @@ public class UserCrud {
         values.put(DatabaseHelper.COLUMN_USER_NATIONALITY, user.getNationality());
         values.put(DatabaseHelper.COLUMN_USER_PHONE_NUMBER, user.getPhonenumber());
         values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
-        values.put(DatabaseHelper.COLUMN_USER_PHP_ID, user.getPhpId());
+        values.put(DatabaseHelper.COLUMN_USER_PARSE_ID, user.getParseId());
         values.put(DatabaseHelper.COLUMN_USER_SYNCED, user.getSyncStatus());
 
         mDatabase.update(DatabaseHelper.TABLE_USER,
@@ -120,11 +119,10 @@ public class UserCrud {
 
     public User getLastUserInserted(){
 
-        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         String selectQuery = "select * from "+DatabaseHelper.TABLE_USER+
                 " order by "+DatabaseHelper.COLUMN_USER_ID+" desc "+
                 " limit 1";
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = mDatabase.rawQuery(selectQuery, null);
 
         if (cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -146,7 +144,7 @@ public class UserCrud {
         user.setNationality(cursor.getString(5));
         user.setPhonenumber(cursor.getString(6));
         user.setPoints(cursor.getLong(7));
-        user.setPhpId(cursor.getString(8));
+        user.setParseId(cursor.getString(8));
         user.setSyncStatus(cursor.getInt(9));
 
 

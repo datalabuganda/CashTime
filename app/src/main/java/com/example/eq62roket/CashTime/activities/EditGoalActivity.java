@@ -85,11 +85,11 @@ public class EditGoalActivity extends AppCompatActivity {
                 int new_goal_amount = Integer.parseInt(etGoalAmount.getText().toString());
                 String new_goal_enddate = String.valueOf(etChooseDate.getText());
 
-                String goalPhpId = goalCrud.getLastInsertedGoal().getPhpId();
+                String goalParseId = goalCrud.getLastInsertedGoal().getParseId();
 
 
                 // create a goal instance with the above information
-                goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user, goalPhpId);
+                goal = new Goal(goal_id, new_goal_name,  new_goal_amount, goal_startdate, new_goal_enddate, goal_user, goalParseId);
                 goal.setSyncStatus(0);
                 // update the database
                 goalCrud.updateGoal(goal);

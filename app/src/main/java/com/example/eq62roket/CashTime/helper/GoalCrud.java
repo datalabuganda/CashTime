@@ -18,13 +18,11 @@ public class GoalCrud {
     private static final String TAG = "GoalCrud";
 
     private SQLiteDatabase database;
-    private DatabaseHelper databaseHelper;
     private Context context;
 
     public GoalCrud(Context context) {
         this.context = context;
-        databaseHelper = new DatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
+        database = DatabaseHelper.getInstance(context);
     }
 
     public void createGoal(Goal goal){
@@ -35,7 +33,7 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, 0);
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, 0);
-        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, "0");
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
         values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
@@ -48,20 +46,27 @@ public class GoalCrud {
         values.put(DatabaseHelper.COLUMN_GOAL_NAME, goal.getName());
         values.put(DatabaseHelper.COLUMN_GOAL_AMOUNT, goal.getAmount());
         values.put(DatabaseHelper.COLUMN_GOAL_ENDDATE, goal.getEndDate());
-        values.put(DatabaseHelper.COLUMN_GOAL_PHP_ID, goal.getPhpId());
+        values.put(DatabaseHelper.COLUMN_GOAL_PARSE_ID, goal.getParseId());
         values.put(DatabaseHelper.COLUMN_GOAL_SYNCED, goal.getSyncStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_COMPLETED, goal.getCompleteStatus());
         values.put(DatabaseHelper.COLUMN_GOAL_POINTS, goal.getTotalPoints());
         values.put(DatabaseHelper.COLUMN_GOAL_SURPLUS, goal.getSurplus());
         values.put(DatabaseHelper.COLUMN_GOAL_ACTUALCOMPLETIONDATE, goal.getActualCompletionDate());
 
-        database.update(DatabaseHelper.TABLE_GOAL, values, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
+        database.update(
+                DatabaseHelper.TABLE_GOAL,
+                values,
+                DatabaseHelper.COLUMN_GOAL_ID + " = ?",
+                new String[]{String.valueOf(goal.getId())});
         //database.close();
     }
 
 
     public void deleteGoal(Goal goal){
-        database.delete(DatabaseHelper.TABLE_GOAL, DatabaseHelper.COLUMN_GOAL_ID + " = ?", new String[]{String.valueOf(goal.getId())});
+        database.delete(
+                DatabaseHelper.TABLE_GOAL,
+                DatabaseHelper.COLUMN_GOAL_ID + " = ?",
+                new String[]{String.valueOf(goal.getId())});
         database.close();
     }
 
@@ -133,12 +138,12 @@ public class GoalCrud {
         goal.setAmount(cursor.getInt(2));
         goal.setStartDate(cursor.getString(3));
         goal.setEndDate(cursor.getString(4));
-        goal.setPhpId(cursor.getString(5));
+        goal.setParseId(cursor.getString(5));
         goal.setSyncStatus(cursor.getInt(7));
         goal.setCompleteStatus(cursor.getInt(8));
         goal.setTotalPoints(cursor.getLong(9));
         goal.setSurplus(cursor.getInt(10));
-        goal.setSurplus(cursor.getInt(11));
+        goal.setActualCompletionDate(cursor.getString(11));
 
         // get user id
         long userId = cursor.getLong(6);

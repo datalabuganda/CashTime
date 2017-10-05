@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,21 +83,12 @@ public class SalaryActivity extends AppCompatActivity {
         String Monthly = df.format(addmonth);
 
 
-        //String[] salary = new String[]{Daily, Weekly, Monthly};
-
-        Map<String, String> salary = new HashMap<String, String>();
-        salary.put("Daily", Daily);
-        salary.put("Weekly", Weekly);
-        salary.put("Daily", Daily);
-
-        salary.get("Daily");
-        salary.get("Weekly");
-        salary.get("Monthly");
+        String[] salary = {Daily, Weekly, Monthly};
 
         ArrayAdapter<String> salarySpinnerAdapter = new ArrayAdapter<String>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item,
-                (List<String>) salary
+                salary
         );
 
         MaterialBetterSpinner materialSalarySpinner = (MaterialBetterSpinner) findViewById(R.id.salarySpinner);

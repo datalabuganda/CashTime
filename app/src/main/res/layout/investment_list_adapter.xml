@@ -18,6 +18,7 @@
             android:paddingTop="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_weight="50"
             android:text="EndDate" />
 
@@ -28,6 +29,7 @@
             android:paddingTop="10dp"
             android:layout_weight="40"
             android:textColor="#d91111"
+            android:textStyle="bold"
             android:textSize="18dp"
             android:text="Goal Amount" />
 

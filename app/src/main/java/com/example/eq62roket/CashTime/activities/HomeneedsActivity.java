@@ -20,6 +20,7 @@ import com.example.eq62roket.CashTime.adapters.HomeNeedsAdapter;
 import com.example.eq62roket.CashTime.adapters.OthersAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.User;
@@ -35,6 +36,7 @@ public class HomeneedsActivity extends AppCompatActivity {
     ListView HomeneedsListView;
     HomeNeedsAdapter homeNeedsAdapter;
     private static final String TAG = "HomeneedsActivity";
+    IncomeCrud incomeCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +57,19 @@ public class HomeneedsActivity extends AppCompatActivity {
         HomeneedsListView.setAdapter(homeNeedsAdapter);
 
         userCrud = new UserCrud(this);
+        incomeCrud = new IncomeCrud(this);
+        final int remainingincome = this.remainingIncome();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userCrud = new UserCrud(this);
 
         AddHomeneeds();
+        remainingIncome();
 
     }
 
     public void AddHomeneeds(){
+        final int remainingincome = this.remainingIncome();
         btnHomeneeds.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -73,21 +79,27 @@ public class HomeneedsActivity extends AppCompatActivity {
                                 // if user creates goal for the first time, award them 3 points
                         if (!edtHomeneeds.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtHomeneeds.getText()));
-                            boolean isInseted = expenditureCrud.insertHomeneeds(yVal);
-                            if (isInseted) {
-                                // if user spends on any expense, award them 2 points
-                                User user = userCrud.getLastUserInserted();
-                                user.setPoints(2);
-                                user.setSyncStatus(0);
-                                userCrud.updateUser(user);
+                            if (yVal <= remainingincome) {
+                                boolean isInseted = expenditureCrud.insertHomeneeds(yVal);
+                                if (isInseted) {
+                                    // if user spends on any expense, award them 2 points
+                                    User user = userCrud.getLastUserInserted();
+                                    user.setPoints(2);
+                                    user.setSyncStatus(0);
+                                    userCrud.updateUser(user);
 
-                                Toast.makeText(HomeneedsActivity.this, "Your Home needs have been stored", Toast.LENGTH_LONG).show();
-                                Intent Homeneeds = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
-                                HomeneedsActivity.this.startActivity(Homeneeds);
-                                finish();
+                                    Toast.makeText(HomeneedsActivity.this, "Your Home needs have been stored", Toast.LENGTH_LONG).show();
+                                    Intent Homeneeds = new Intent(HomeneedsActivity.this, ExpenditureActivity.class);
+                                    HomeneedsActivity.this.startActivity(Homeneeds);
+                                    finish();
+                                } else {
+                                    Toast.makeText(HomeneedsActivity.this, "Your Home needs have not been stored", Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                Toast.makeText(HomeneedsActivity.this, "Your Home needs have not been stored", Toast.LENGTH_LONG).show();
+                                Toast.makeText(HomeneedsActivity.this, "Your don't have enough income to spend on your Home needs", Toast.LENGTH_LONG).show();
+
                             }
+
                         }
                             else {
                                 Toast.makeText(HomeneedsActivity.this, "Your home needs costs where not stored", Toast.LENGTH_LONG).show();
@@ -99,5 +111,15 @@ public class HomeneedsActivity extends AppCompatActivity {
                 }
         );
     }
+
+    public int remainingIncome(){
+        int totalIncome = incomeCrud.addAllIncome();
+        int totalExpenditure = expenditureCrud.addAllCategories();
+
+        int remainingIncome = totalIncome - totalExpenditure;
+        return remainingIncome;
+
+    }
+
 
 }

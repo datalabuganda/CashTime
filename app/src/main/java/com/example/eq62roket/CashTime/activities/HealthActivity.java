@@ -21,6 +21,7 @@ import com.example.eq62roket.CashTime.adapters.HealthAdapter;
 import com.example.eq62roket.CashTime.adapters.OthersAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.User;
@@ -37,6 +38,7 @@ public class HealthActivity extends AppCompatActivity {
     UserCrud userCrud;
     ListView healthListView;
     HealthAdapter healthAdapter;
+    IncomeCrud incomeCrud;
 
 
     @Override
@@ -52,6 +54,7 @@ public class HealthActivity extends AppCompatActivity {
         healthListView = (ListView) findViewById(R.id.healthListView);
         expenditureCrud = new ExpenditureCrud(this);
         userCrud = new UserCrud(this);
+        incomeCrud = new IncomeCrud(this);
 
         ArrayList<Expenditure> healthArrayList = new ArrayList<>();
         healthArrayList = expenditureCrud.getAllHealth();
@@ -62,33 +65,42 @@ public class HealthActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         AddHealth();
+        remainingIncome();
 
     }
 
     public void AddHealth(){
+        final int remainingincome = this.remainingIncome();
         btnHealth.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (!edtHealth.getText().toString().equals("")) {
                             int yVal = Integer.parseInt(String.valueOf(edtHealth.getText()));
-                            boolean isInseted = expenditureCrud.insertHealth(yVal);
-                            if (isInseted) {
-                                // if user spends on any expense, award them 2 points
-                                User user = userCrud.getLastUserInserted();
-                                user.setPoints(2);
-                                user.setSyncStatus(0);
-                                userCrud.updateUser(user);
+                            if (yVal <= remainingincome) {
+                                boolean isInseted = expenditureCrud.insertHealth(yVal);
+                                if (isInseted) {
+                                    // if user spends on any expense, award them 2 points
+                                    User user = userCrud.getLastUserInserted();
+                                    user.setPoints(2);
+                                    user.setSyncStatus(0);
+                                    userCrud.updateUser(user);
 
-                                Toast.makeText(HealthActivity.this, "Your health costs have been stored", Toast.LENGTH_LONG).show();
-                                Intent Healthintent = new Intent(HealthActivity.this, ExpenditureActivity.class);
-                                HealthActivity.this.startActivity(Healthintent);
-                                finish();
-                            }
+                                    Toast.makeText(HealthActivity.this, "Your health costs have been stored", Toast.LENGTH_LONG).show();
+                                    Intent Healthintent = new Intent(HealthActivity.this, ExpenditureActivity.class);
+                                    HealthActivity.this.startActivity(Healthintent);
+                                    finish();
+                                }
+
                             else {
                                 Toast.makeText(HealthActivity.this, "Your health costs where not stored", Toast.LENGTH_LONG).show();
                             }
                         }
+                        else {
+                            Toast.makeText(HealthActivity.this, "Your don't have enough income to spend on Health", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
                         else {
                             Toast.makeText(HealthActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                         }
@@ -98,5 +110,15 @@ public class HealthActivity extends AppCompatActivity {
         );
 
     }
+
+    public int remainingIncome(){
+        int totalIncome = incomeCrud.addAllIncome();
+        int totalExpenditure = expenditureCrud.addAllCategories();
+
+        int remainingIncome = totalIncome - totalExpenditure;
+        return remainingIncome;
+
+    }
+
 
 }

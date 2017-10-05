@@ -1,31 +1,20 @@
 package com.example.eq62roket.CashTime.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.DatabaseHelper;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.adapters.GoalListAdapter;
-import com.example.eq62roket.CashTime.adapters.LoanAdapter;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
-import com.example.eq62roket.CashTime.helper.UserCrud;
-
-import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -37,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import static com.example.eq62roket.CashTime.R.id.parent;
 
 
 public class LoanActivity extends AppCompatActivity {
@@ -52,7 +39,7 @@ public class LoanActivity extends AppCompatActivity {
     LoanAdapter loanAdapter;
 
 
-//    public static String[] loan = {"Daily", "Weekly", "Monthly"};
+    //    public static String[] loan = {"Daily", "Weekly", "Monthly"};
     public static String[] loan = {"Daily", "Weekly", "Monthly"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {

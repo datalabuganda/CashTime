@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
+            android:textStyle="bold"
             android:layout_weight="50"
             android:paddingTop="10dp"
             android:text="Date of Salary"
@@ -24,6 +25,7 @@
         <TextView
             android:id="@+id/txtSavingsAmount"
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="50dp"
             android:layout_weight="40"
             android:paddingTop="10dp"

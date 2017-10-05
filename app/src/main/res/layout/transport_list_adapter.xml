@@ -18,6 +18,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="50"
             android:paddingTop="10dp"
+            android:textStyle="bold"
             android:text="Date of Salary"
             android:textSize="18dp" />
 
@@ -28,6 +29,7 @@
             android:layout_weight="40"
             android:paddingTop="10dp"
             android:text="Amount of Salary"
+            android:textStyle="bold"
             android:textColor="#d91111"
             android:textSize="18dp" />
 

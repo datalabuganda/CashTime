@@ -19,6 +19,7 @@
             android:layout_weight="50"
             android:paddingTop="10dp"
             android:text="Date of Salary"
+            android:textStyle="bold"
             android:textSize="18dp" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_height="50dp"
             android:layout_weight="40"
             android:paddingTop="10dp"
+            android:textStyle="bold"
             android:text="Amount of Salary"
             android:textColor="#d91111"
             android:textSize="18dp" />

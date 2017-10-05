@@ -19,11 +19,13 @@
             android:layout_weight="50"
             android:paddingTop="10dp"
             android:text="Date of Salary"
+            android:textStyle="bold"
             android:textSize="18dp" />
 
         <TextView
             android:id="@+id/txtEducationAmount"
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="50dp"
             android:layout_weight="40"
             android:paddingTop="10dp"

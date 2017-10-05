@@ -108,7 +108,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllTransport(){
         ArrayList<Expenditure> transportArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -149,7 +150,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllEducation(){
         ArrayList<Expenditure> educationArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -208,7 +210,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllHealth(){
         ArrayList<Expenditure> healthArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -255,7 +258,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllSavings(){
         ArrayList<Expenditure> savingsArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -323,7 +327,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllOthers(){
         ArrayList<Expenditure> othersArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -382,7 +387,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllHomeneeds(){
         ArrayList<Expenditure> homeneedsArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + DatabaseHelper.COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 " +
+                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -552,9 +558,12 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastHealthInsertedDate = data.getString(0);
-        return lastHealthInsertedDate;
+        if (data.moveToLast()) {
+            lastHealthInsertedDate = data.getString(0);
+            return lastHealthInsertedDate;
+        }
+        else
+            return null;
     }
 
     public String geteEducationDate(){
@@ -564,9 +573,12 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastEducationInsertedDate = data.getString(0);
-        return lastEducationInsertedDate;
+        if (data.moveToLast()) {
+            lastEducationInsertedDate = data.getString(0);
+            return lastEducationInsertedDate;
+        }
+        else
+            return null;
     }
 
     public String getSavingsDate(){
@@ -576,9 +588,13 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastSavingsInsertedDate = data.getString(0);
-        return lastSavingsInsertedDate;
+        if (data.moveToLast()) {
+            lastSavingsInsertedDate = data.getString(0);
+            return lastSavingsInsertedDate;
+        }
+        else
+            return null;
+
     }
 
     public String getOthersDate(){
@@ -588,9 +604,12 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastOthersInsertedDate = data.getString(0);
-        return lastOthersInsertedDate;
+        if (data.moveToLast()) {
+            lastOthersInsertedDate = data.getString(0);
+            return lastOthersInsertedDate;
+        }
+        else
+            return null;
     }
 
     public String getHomeneedsDate(){
@@ -600,9 +619,13 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastHomeneedsInsertedDate = data.getString(0);
-        return lastHomeneedsInsertedDate;
+        if (data.moveToLast()) {
+            lastHomeneedsInsertedDate = data.getString(0);
+            return lastHomeneedsInsertedDate;
+        }
+        else
+            return null;
+
     }
 
     public String getTransportDate(){
@@ -612,9 +635,13 @@ public class ExpenditureCrud {
                 " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastTransportInsertedDate = data.getString(0);
-        return lastTransportInsertedDate;
+        if (data.moveToLast()) {
+            lastTransportInsertedDate = data.getString(0);
+            return lastTransportInsertedDate;
+        }
+        else
+            return null;
+
     }
 
     /////////////// Methods to retrieve last inserted amounts in each column ////////////////////

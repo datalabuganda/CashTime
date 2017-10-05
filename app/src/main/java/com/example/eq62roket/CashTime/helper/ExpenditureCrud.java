@@ -108,7 +108,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllTransport(){
         ArrayList<Expenditure> transportArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -149,7 +150,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllEducation(){
         ArrayList<Expenditure> educationArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -208,7 +210,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllHealth(){
         ArrayList<Expenditure> healthArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -255,7 +258,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllSavings(){
         ArrayList<Expenditure> savingsArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -323,7 +327,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllOthers(){
         ArrayList<Expenditure> othersArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 ";
+                " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -382,7 +387,8 @@ public class ExpenditureCrud {
     public ArrayList<Expenditure> getAllHomeneeds(){
         ArrayList<Expenditure> homeneedsArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + DatabaseHelper.COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 " +
+                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc ";
 
         Cursor cursor = database.rawQuery(query, null);
 

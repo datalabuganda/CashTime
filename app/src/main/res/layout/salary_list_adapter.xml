@@ -19,6 +19,7 @@
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
             android:layout_weight="50"
+            android:textStyle="bold"
             android:text="EndDate" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_height="50dp"
             android:paddingTop="10dp"
             android:layout_weight="40"
+            android:textStyle="bold"
             android:textColor="#860909"
             android:textSize="18dp"
             android:text="Goal Amount" />

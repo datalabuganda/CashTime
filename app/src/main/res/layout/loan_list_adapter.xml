@@ -18,12 +18,14 @@
             android:paddingTop="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
+            android:textStyle="bold"
             android:layout_weight="50"
             android:text="EndDate" />
 
         <TextView
             android:id="@+id/txtLoanAmount"
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="50dp"
             android:paddingTop="10dp"
             android:layout_weight="40"

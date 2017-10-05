@@ -563,7 +563,7 @@ public class ExpenditureCrud {
             return lastHealthInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String geteEducationDate(){
@@ -578,7 +578,7 @@ public class ExpenditureCrud {
             return lastEducationInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getSavingsDate(){
@@ -593,7 +593,7 @@ public class ExpenditureCrud {
             return lastSavingsInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
 
     }
 
@@ -609,7 +609,7 @@ public class ExpenditureCrud {
             return lastOthersInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getHomeneedsDate(){
@@ -624,7 +624,7 @@ public class ExpenditureCrud {
             return lastHomeneedsInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
 
     }
 
@@ -640,7 +640,7 @@ public class ExpenditureCrud {
             return lastTransportInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
 
     }
 

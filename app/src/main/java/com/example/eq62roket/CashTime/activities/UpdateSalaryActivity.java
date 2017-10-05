@@ -46,6 +46,7 @@ public class UpdateSalaryActivity extends AppCompatActivity {
                 String item = edtUpdateSalary.getText().toString();
                 if (!item.equals("")){
                     incomeCrud.updateSalary(item, (int) selectedID,salaryAmount);
+                    incomeCrud.updateSyncIncome(0);
 
                 }else {
                     Toast.makeText(UpdateSalaryActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

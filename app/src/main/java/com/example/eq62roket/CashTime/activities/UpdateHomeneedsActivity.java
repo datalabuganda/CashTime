@@ -48,6 +48,7 @@ public class UpdateHomeneedsActivity extends AppCompatActivity {
                 String item = edtUpdateHomeneeds.getText().toString();
                 if (!item.equals("")){
                     expenditureCrud.updateHomeneeds(item, (int) selectedID,homeneedsAmount);
+                    expenditureCrud.updateSyncExpenditure(0);
 
                 }else {
                     Toast.makeText(UpdateHomeneedsActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

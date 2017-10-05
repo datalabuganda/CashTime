@@ -33,9 +33,9 @@ public class IncomeCrud {
     }
 
 
-    public void updateSyncIncome(){
+    public void updateSyncIncome(int flag){
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_INCOME_SYNCSTATUS, 1);
+        values.put(DatabaseHelper.COLUMN_INCOME_SYNCSTATUS, flag);
         database.update(DatabaseHelper.TABLE_INCOME, values, null, null);
         //database.close();
     }
@@ -400,7 +400,7 @@ public class IncomeCrud {
             return lastSalaryInsertedDate;
         }
         else
-            return null;
+            return "null";
     }
 
     public String getInvestmentDate(){
@@ -430,7 +430,7 @@ public class IncomeCrud {
             return lastInvestmentInsertedDate;
         }
         else
-            return null;
+            return "null";
     }
 
     public String getLoanDate(){
@@ -461,7 +461,7 @@ public class IncomeCrud {
             return lastLoanInsertedDate;
         }
         else
-            return null;
+            return "null";
     }
 
     public String getOthersDate(){
@@ -491,7 +491,7 @@ public class IncomeCrud {
             return lastOthersInsertedDate;
         }
         else
-            return null;
+            return "null";
     }
 
 

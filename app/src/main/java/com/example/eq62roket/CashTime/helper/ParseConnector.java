@@ -126,17 +126,17 @@ public class ParseConnector {
                 if (e == null){
                     ParseObject expenditure = new ParseObject("ctUserExpenditures");
                     expenditure.put("TransportCost", String.valueOf(expenditureCrud.getLastInsertedTransport()));
-                    expenditure.put("TransportCostInsertDate", expenditureCrud.getTransportDate());
+                    expenditure.put("TransportCostInsertDate", String.valueOf(expenditureCrud.getTransportDate()));
                     expenditure.put("EducationCost", String.valueOf(expenditureCrud.getLastInsertedEducation()));
-                    expenditure.put("EducationCostInsertDate", expenditureCrud.geteEducationDate());
+                    expenditure.put("EducationCostInsertDate", String.valueOf(expenditureCrud.geteEducationDate()));
                     expenditure.put("HealthCost", String.valueOf(expenditureCrud.getLastInsertedHealth()));
-                    expenditure.put("HealthCostInsertDate", expenditureCrud.getHealthDate());
+                    expenditure.put("HealthCostInsertDate", String.valueOf(expenditureCrud.getHealthDate()));
                     expenditure.put("SavingCost", String.valueOf(expenditureCrud.getLastInsertedSavings()));
-                    expenditure.put("SavingCostInsertDate", expenditureCrud.getSavingsDate());
+                    expenditure.put("SavingCostInsertDate", String.valueOf(expenditureCrud.getSavingsDate()));
                     expenditure.put("OthersCost", String.valueOf(expenditureCrud.getLastInsertedOthers()));
-                    expenditure.put("OthersCostInsertDate", expenditureCrud.getOthersDate());
+                    expenditure.put("OthersCostInsertDate", String.valueOf(expenditureCrud.getOthersDate()));
                     expenditure.put("HomeNeedsCost", String.valueOf(expenditureCrud.getLastInserteHomeneeds()));
-                    expenditure.put("HomeNeedsCostInsertDate", expenditureCrud.getHomeneedsDate());
+                    expenditure.put("HomeNeedsCostInsertDate", String.valueOf(expenditureCrud.getHomeneedsDate()));
                     expenditure.put("ctUserId", lastInsertedUser.getParseId());
 
                     // create a relationship between goal table and expenditure table
@@ -236,13 +236,19 @@ public class ParseConnector {
             public void done(ParseObject expenditure, ParseException e) {
                 if (e == null) {
                     // Now let's update it with some new data.
-                    expenditure.put("TotalTransportCost", expenditureCrud.addAllTransport());
-                    expenditure.put("TotalEducationCost", expenditureCrud.addAllEducation());
-                    expenditure.put("TotalHealthCost", expenditureCrud.addAllHealth());
-                    expenditure.put("TotalSavingCost", expenditureCrud.addAllSavings(null));
-                    expenditure.put("TotalOthersCost", expenditureCrud.addAllOthers());
-                    expenditure.put("TotalHomeNeedsCost", expenditureCrud.addAllHomeneeds());
-                    expenditure.put("TotalExpenditureCost", expenditureCrud.addAllCategories());
+                    expenditure.put("TransportCost", String.valueOf(expenditureCrud.getLastInsertedTransport()));
+                    expenditure.put("TransportCostInsertDate", String.valueOf(expenditureCrud.getTransportDate()));
+                    expenditure.put("EducationCost", String.valueOf(expenditureCrud.getLastInsertedEducation()));
+                    expenditure.put("EducationCostInsertDate", String.valueOf(expenditureCrud.geteEducationDate()));
+                    expenditure.put("HealthCost", String.valueOf(expenditureCrud.getLastInsertedHealth()));
+                    expenditure.put("HealthCostInsertDate", String.valueOf(expenditureCrud.getHealthDate()));
+                    expenditure.put("SavingCost", String.valueOf(expenditureCrud.getLastInsertedSavings()));
+                    expenditure.put("SavingCostInsertDate", String.valueOf(expenditureCrud.getSavingsDate()));
+                    expenditure.put("OthersCost", String.valueOf(expenditureCrud.getLastInsertedOthers()));
+                    expenditure.put("OthersCostInsertDate", String.valueOf(expenditureCrud.getOthersDate()));
+                    expenditure.put("HomeNeedsCost", String.valueOf(expenditureCrud.getLastInserteHomeneeds()));
+                    expenditure.put("HomeNeedsCostInsertDate", String.valueOf(expenditureCrud.getHomeneedsDate()));
+                    expenditure.put("ctUserId", lastInsertedUser.getParseId());
 
                     expenditure.saveInBackground();
                 }
@@ -258,11 +264,18 @@ public class ParseConnector {
             public void done(ParseObject income, ParseException e) {
                 if (e == null) {
                     // Now let's update it with some new data.
-                    income.put("TotalLoanIncome", incomeCrud.addAllLoan());
-                    income.put("TotalSalaryIncome", incomeCrud.addAllSalary());
-                    income.put("TotalInvestmentIncome", incomeCrud.addAllInvestment());
-                    income.put("TotalOthersIncome", incomeCrud.addAllOthers());
-                    income.put("TotalIncome", incomeCrud.addAllIncome());
+                    income.put("LoanIncome", String.valueOf(incomeCrud.getLastInserteLoan()));
+                    income.put("LoanIncomeInsertDate", String.valueOf(incomeCrud.getLoanDate()));
+                    income.put("LoanIncomePeriod", String.valueOf(incomeCrud.getLoanPeriod()));
+                    income.put("SalaryIncome", String.valueOf(incomeCrud.getLastInsertedSalary()));
+                    income.put("SalaryIncomeInsertDate", String.valueOf(incomeCrud.getSalaryDate()));
+                    income.put("SalaryIncomePeriod", String.valueOf(incomeCrud.getSalaryPeriod()));
+                    income.put("InvestmentIncome", String.valueOf(incomeCrud.getLastInserteInvestment()));
+                    income.put("InvestmentIncomeInsertDate", String.valueOf(incomeCrud.getInvestmentDate()));
+                    income.put("InvestmentIncomePeriod", String.valueOf(incomeCrud.getInvestmentPeriod()));
+                    income.put("OthersIncome", String.valueOf(incomeCrud.getLastInsertedOthers()));
+                    income.put("OthersIncomeInsertDate", String.valueOf(incomeCrud.getOthersDate()));
+                    income.put("OthersIncomePeriod", String.valueOf(incomeCrud.getOthersPeriod()));
 
                     income.saveInBackground();
                 }

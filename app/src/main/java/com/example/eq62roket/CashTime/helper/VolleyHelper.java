@@ -190,7 +190,7 @@ public class VolleyHelper {
                         }
                         expenditureCrud.insertParseId(expenditureId);
                         expenditureCrud.updateSyncExpenditure(1);
-                        Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getPhpID());
+                        Log.d(TAG, "expenditurephpId: "+ expenditureCrud.getParseID());
                         Log.d(TAG, "expendituresync status: "+ expenditureCrud.getSyncStatus());
                         Log.d(TAG, "Response Exp" + response);
                     }
@@ -241,7 +241,7 @@ public class VolleyHelper {
                         }
                         Log.d(TAG, "incomeId: " + incomeId);
                         incomeCrud.insertPhpId(incomeId);
-                        incomeCrud.updateSyncIncome();
+                        incomeCrud.updateSyncIncome(1);
                         Log.d(TAG, "incomeIddb: " + incomeCrud.getPhpID());
                         Log.d(TAG, "Response Income" + response);
                     }
@@ -410,7 +410,7 @@ public class VolleyHelper {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        incomeCrud.updateSyncIncome();
+                        incomeCrud.updateSyncIncome(1);
                         Log.d("Response", response);
                     }
                 },

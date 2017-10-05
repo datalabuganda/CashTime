@@ -47,6 +47,7 @@ public class UpdateOtherIncomesActivity extends AppCompatActivity {
                 String item = edtUpdateOthers.getText().toString();
                 if (!item.equals("")){
                     incomeCrud.updateOthers(item,selectedID,othersAmount);
+                    incomeCrud.updateSyncIncome(0);
 
                 }else {
                     Toast.makeText(UpdateOtherIncomesActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

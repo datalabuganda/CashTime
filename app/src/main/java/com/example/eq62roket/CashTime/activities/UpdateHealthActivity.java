@@ -47,6 +47,7 @@ ExpenditureCrud expenditureCrud;
                 String item = edtUpdateHealth.getText().toString();
                 if (!item.equals("")){
                     expenditureCrud.updateHealth(item, (int) selectedID,healthAmount);
+                    expenditureCrud.updateSyncExpenditure(0);
 
                 }else {
                     Toast.makeText(UpdateHealthActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

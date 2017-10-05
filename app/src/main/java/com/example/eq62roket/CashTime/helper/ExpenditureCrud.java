@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.eq62roket.CashTime.models.Expenditure;
 
@@ -64,7 +63,7 @@ public class ExpenditureCrud {
             return true;
     }
 
-    public int getPhpID(){
+    public int getParseID(){
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_PARSEID +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
                 " WHERE " + DatabaseHelper.COLUMN_EXPENDITURE_PARSEID + " IS NOT NULL ";

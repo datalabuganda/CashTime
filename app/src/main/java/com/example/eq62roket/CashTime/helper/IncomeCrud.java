@@ -386,7 +386,7 @@ public class IncomeCrud {
             return lastSalaryInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getSalaryPeriod(){
@@ -401,7 +401,7 @@ public class IncomeCrud {
             return lastSalaryInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getInvestmentDate(){
@@ -416,7 +416,7 @@ public class IncomeCrud {
             return lastInvestmentInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getInvestmentPeriod(){
@@ -431,7 +431,7 @@ public class IncomeCrud {
             return lastInvestmentInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getLoanDate(){
@@ -446,7 +446,7 @@ public class IncomeCrud {
             return lastLoanInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
 
     }
 
@@ -462,7 +462,7 @@ public class IncomeCrud {
             return lastLoanInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getOthersDate(){
@@ -477,7 +477,7 @@ public class IncomeCrud {
             return lastOthersInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
     public String getOthersPeriod(){
@@ -492,7 +492,7 @@ public class IncomeCrud {
             return lastOthersInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return null;
     }
 
 

@@ -97,7 +97,7 @@ public class HealthActivity extends AppCompatActivity {
                             }
                         }
                         else {
-                            Toast.makeText(HealthActivity.this, "Your don't have enough income to spend on Health", Toast.LENGTH_LONG).show();
+                            Toast.makeText(HealthActivity.this, "Your don't have enough income to spend on Medical", Toast.LENGTH_LONG).show();
 
                         }
                     }

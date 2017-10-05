@@ -103,7 +103,8 @@ public class IncomeCrud {
     public ArrayList<Income> getAllSalary(){
         ArrayList<Income> salaryArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -153,7 +154,8 @@ public class IncomeCrud {
     public ArrayList<Income> getAllLoan(){
         ArrayList<Income> loanArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -212,7 +214,8 @@ public class IncomeCrud {
     public ArrayList<Income> getAllInvestment(){
         ArrayList<Income> investmentArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -269,7 +272,8 @@ public class IncomeCrud {
     public ArrayList<Income> getAllOthers(){
         ArrayList<Income> othersArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 " +
+                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){

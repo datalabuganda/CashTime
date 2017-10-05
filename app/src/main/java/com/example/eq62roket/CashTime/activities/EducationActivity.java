@@ -48,6 +48,7 @@ public class EducationActivity extends AppCompatActivity {
         edtEducation = (EditText) findViewById(R.id.amtEducation);
         btnEducation = (Button) findViewById(R.id.btnEducation);
         expenditureCrud = new ExpenditureCrud(this);
+        incomeCrud = new IncomeCrud(this);
 
         ArrayList<Expenditure> educationArrayList = new ArrayList<>();
         educationArrayList = expenditureCrud.getAllEducation();
@@ -57,7 +58,7 @@ public class EducationActivity extends AppCompatActivity {
         EducationListVIew.setAdapter(educationAdapter);
 
         userCrud = new UserCrud(this);
-        incomeCrud = new IncomeCrud(this);
+
 
         btnEducation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,9 +80,10 @@ public class EducationActivity extends AppCompatActivity {
                             finish();
                         } else {
                             Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();
-                        }
 
-                    } else {
+                        }
+                    }
+                    else {
                         Toast.makeText(EducationActivity.this, "Your don't have enough income to spend on Education", Toast.LENGTH_LONG).show();
 
                     }
@@ -101,12 +103,9 @@ public class EducationActivity extends AppCompatActivity {
     public int remainingIncome(){
         int totalIncome = incomeCrud.addAllIncome();
         int totalExpenditure = expenditureCrud.addAllCategories();
-
         int remainingIncome = totalIncome - totalExpenditure;
         return remainingIncome;
 
     }
-
-
 
 }

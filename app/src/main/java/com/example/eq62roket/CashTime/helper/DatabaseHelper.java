@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static SQLiteDatabase db_instance = null;
 
     private static final String DATABASE_NAME = "cashTime.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 10;
 
 
     public static SQLiteDatabase getInstance(Context ctx) {
@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Variable to create Income_table
 
-    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER DEFAULT 0, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PARSEID INTEGER, PERIOD TEXT NOT NULL)";
+    private static final String SQL_CREATE_TABLE_INCOME = "create table "+ TABLE_INCOME +"(ID INTEGER PRIMARY KEY AUTOINCREMENT, SYNC_STATUS INTEGER DEFAULT 0, AMOUNT INTEGER DEFAULT 0, SALARY INTEGER DEFAULT 0, LOAN INTEGER DEFAULT 0, INVESTMENT INTEGER DEFAULT 0, OTHERS INTEGER DEFAULT 0, CREATED_DATE TIMESTAMP DEFAULT (datetime('now', 'localtime')), PARSEID INTEGER, PERIOD TIMESTAMP DEFAULT (datetime('now', 'localtime')))";
 
 
     public DatabaseHelper(Context context) {

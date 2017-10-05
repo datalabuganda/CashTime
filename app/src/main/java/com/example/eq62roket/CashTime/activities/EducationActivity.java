@@ -19,6 +19,7 @@ import com.example.eq62roket.CashTime.adapters.EducationAdapter;
 import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.DatabaseHelper;
 import com.example.eq62roket.CashTime.helper.ExpenditureCrud;
+import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
 import com.example.eq62roket.CashTime.models.Expenditure;
 import com.example.eq62roket.CashTime.models.Income;
@@ -35,6 +36,7 @@ public class EducationActivity extends AppCompatActivity {
     UserCrud userCrud;
     ListView EducationListVIew;
     EducationAdapter educationAdapter;
+    IncomeCrud incomeCrud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,42 +51,62 @@ public class EducationActivity extends AppCompatActivity {
 
         ArrayList<Expenditure> educationArrayList = new ArrayList<>();
         educationArrayList = expenditureCrud.getAllEducation();
+        final int remainingincome = this.remainingIncome();
 
         educationAdapter = new EducationAdapter(this, R.layout.education_list_adapter, educationArrayList);
         EducationListVIew.setAdapter(educationAdapter);
 
         userCrud = new UserCrud(this);
+        incomeCrud = new IncomeCrud(this);
 
         btnEducation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!edtEducation.getText().toString().equals("")) {
                     int yVal = Integer.parseInt(String.valueOf(edtEducation.getText()));
-                    boolean isInseted = expenditureCrud.insertEducation(yVal);
-                    if (isInseted) {
-                        // if user spends on any expense, award them 2 points
-                        User user = userCrud.getLastUserInserted();
-                        user.setPoints(2);
-                        user.setSyncStatus(0);
-                        userCrud.updateUser(user);
+                    if (yVal <= remainingincome) {
+                        boolean isInseted = expenditureCrud.insertEducation(yVal);
+                        if (isInseted) {
+                            // if user spends on any expense, award them 2 points
+                            User user = userCrud.getLastUserInserted();
+                            user.setPoints(2);
+                            user.setSyncStatus(0);
+                            userCrud.updateUser(user);
 
-                        Intent Educationintent = new Intent(EducationActivity.this, ExpenditureActivity.class);
-                        EducationActivity.this.startActivity(Educationintent);
-                        Toast.makeText(EducationActivity.this, "Education costs have been stored", Toast.LENGTH_LONG).show();
-                        finish();
+                            Intent Educationintent = new Intent(EducationActivity.this, ExpenditureActivity.class);
+                            EducationActivity.this.startActivity(Educationintent);
+                            Toast.makeText(EducationActivity.this, "Education costs have been stored", Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                            Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();
+                        }
+
                     } else {
-                        Toast.makeText(EducationActivity.this, "Education costs where not stored", Toast.LENGTH_LONG).show();
-                    }
+                        Toast.makeText(EducationActivity.this, "Your don't have enough income to spend on Education", Toast.LENGTH_LONG).show();
 
-                } else {
+                    }
+                }
+                else {
                     Toast.makeText(EducationActivity.this, "Please input amount before submitting", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
+        remainingIncome();
+
 
     }
+
+    public int remainingIncome(){
+        int totalIncome = incomeCrud.addAllIncome();
+        int totalExpenditure = expenditureCrud.addAllCategories();
+
+        int remainingIncome = totalIncome - totalExpenditure;
+        return remainingIncome;
+
+    }
+
 
 
 }

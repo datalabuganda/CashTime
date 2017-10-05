@@ -549,7 +549,7 @@ public class ExpenditureCrud {
         String lastHealthInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_HEALTH +
+                " WHERE " + COLUMN_EXPENDITURE_HEALTH + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -561,7 +561,7 @@ public class ExpenditureCrud {
         String lastEducationInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_EDUCATION +
+                " WHERE " + COLUMN_EXPENDITURE_EDUCATION + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -573,7 +573,7 @@ public class ExpenditureCrud {
         String lastSavingsInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_SAVINGS +
+                " WHERE " + COLUMN_EXPENDITURE_SAVINGS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -585,7 +585,7 @@ public class ExpenditureCrud {
         String lastOthersInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_OTHERS +
+                " WHERE " + COLUMN_EXPENDITURE_OTHERS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -597,7 +597,7 @@ public class ExpenditureCrud {
         String lastHomeneedsInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_HOMENEEDS +
+                " WHERE " + COLUMN_EXPENDITURE_HOMENEEDS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -609,7 +609,7 @@ public class ExpenditureCrud {
         String lastTransportInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_EXPENDITURE_INSERTDATE +
                 " FROM " + DatabaseHelper.TABLE_EXPENDITURE +
-                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT +
+                " WHERE " + COLUMN_EXPENDITURE_TRANSPORT + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_EXPENDITURE_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();

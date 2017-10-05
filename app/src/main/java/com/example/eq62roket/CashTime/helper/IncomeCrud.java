@@ -378,7 +378,7 @@ public class IncomeCrud {
         String lastSalaryInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + COLUMN_INCOME_SALARY +
+                " WHERE " + COLUMN_INCOME_SALARY + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -405,7 +405,7 @@ public class IncomeCrud {
         String lastInvestmentInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + COLUMN_INCOME_INVESTMENT +
+                " WHERE " + COLUMN_INCOME_INVESTMENT + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -432,7 +432,7 @@ public class IncomeCrud {
         String lastLoanInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + COLUMN_INCOME_LOAN +
+                " WHERE " + COLUMN_INCOME_LOAN + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();
@@ -459,7 +459,7 @@ public class IncomeCrud {
         String lastOthersInsertedDate;
         String query = "SELECT " + DatabaseHelper.COLUMN_INCOME_CREATEDATE +
                 " FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + COLUMN_INCOME_OTHERS +
+                " WHERE " + COLUMN_INCOME_OTHERS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
         data.moveToLast();

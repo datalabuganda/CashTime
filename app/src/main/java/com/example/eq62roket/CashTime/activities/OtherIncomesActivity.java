@@ -44,7 +44,6 @@ public class OtherIncomesActivity extends AppCompatActivity {
     ListView othersListVIew;
     OtherIncome otherincomeAdapter;
 
-    public static String[] others = {"Daily", "Weekly", "Monthly"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

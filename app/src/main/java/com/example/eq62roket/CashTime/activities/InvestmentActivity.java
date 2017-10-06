@@ -74,7 +74,7 @@ public class InvestmentActivity extends AppCompatActivity {
         Log.d(TAG, "add one week: " + addweek);
         Log.d(TAG, "add one month: " + addmonth);
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
         String Daily = df.format(addday);
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
@@ -101,9 +101,9 @@ public class InvestmentActivity extends AppCompatActivity {
         investmentAdapter = new InvestmentAdapter(this, R.layout.investment_list_adapter, loanArrayList);
         investmentListView.setAdapter(investmentAdapter);
 
-        String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String currentDate = new SimpleDateFormat("dd/MMM/yyyy").format(new Date());
         final String speriod = this.investmentPeriod();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
         Date convertedDate = new Date();
 
         try{

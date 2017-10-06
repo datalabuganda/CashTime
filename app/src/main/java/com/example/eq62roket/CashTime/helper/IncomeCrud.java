@@ -383,9 +383,13 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_SALARY + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastSalaryInsertedDate = data.getString(0);
-        return lastSalaryInsertedDate;
+        if (data.moveToLast()) {
+            lastSalaryInsertedDate = data.getString(0);
+            return lastSalaryInsertedDate;
+        }
+        else
+            return "null";
+
     }
 
     public String getSalaryPeriod(){
@@ -411,9 +415,13 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_INVESTMENT + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastInvestmentInsertedDate = data.getString(0);
-        return lastInvestmentInsertedDate;
+        if (data.moveToLast()) {
+            lastInvestmentInsertedDate = data.getString(0);
+            return lastInvestmentInsertedDate;
+        }
+        else
+            return "null";
+
     }
 
     public String getInvestmentPeriod(){
@@ -439,9 +447,13 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_LOAN + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastLoanInsertedDate = data.getString(0);
-        return lastLoanInsertedDate;
+        if (data.moveToLast()) {
+            lastLoanInsertedDate = data.getString(0);
+            return lastLoanInsertedDate;
+        }
+        else
+            return "null";
+
     }
 
     public String getLoanPeriod(){
@@ -467,9 +479,12 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_OTHERS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        data.moveToLast();
-        lastOthersInsertedDate = data.getString(0);
-        return lastOthersInsertedDate;
+        if (data.moveToLast()) {
+            lastOthersInsertedDate = data.getString(0);
+            return lastOthersInsertedDate;
+        }
+        else
+            return "null";
     }
 
     public String getOthersPeriod(){

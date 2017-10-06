@@ -9,7 +9,11 @@ import com.example.eq62roket.CashTime.models.Income;
 
 import java.util.ArrayList;
 
-
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_EDUCATION;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_HEALTH;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_ID;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_OTHERS;
+import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_SAVINGS;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_ID;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_INVESTMENT;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_LOAN;
@@ -99,8 +103,7 @@ public class IncomeCrud {
     public ArrayList<Income> getAllSalary(){
         ArrayList<Income> salaryArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 " +
-                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_SALARY + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -150,8 +153,7 @@ public class IncomeCrud {
     public ArrayList<Income> getAllLoan(){
         ArrayList<Income> loanArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 " +
-                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_LOAN + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -210,8 +212,7 @@ public class IncomeCrud {
     public ArrayList<Income> getAllInvestment(){
         ArrayList<Income> investmentArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 " +
-                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_INVESTMENT + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -268,8 +269,7 @@ public class IncomeCrud {
     public ArrayList<Income> getAllOthers(){
         ArrayList<Income> othersArrayList = new ArrayList<>();
         String query = "SELECT * FROM " + DatabaseHelper.TABLE_INCOME +
-                " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 " +
-                " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc ";
+                " WHERE " + DatabaseHelper.COLUMN_INCOME_OTHERS + " IS NOT 0 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.getCount() > 0){
@@ -381,12 +381,9 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_SALARY + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        if (data.moveToLast()) {
-            lastSalaryInsertedDate = data.getString(0);
-            return lastSalaryInsertedDate;
-        }
-        else
-            return null;
+        data.moveToLast();
+        lastSalaryInsertedDate = data.getString(0);
+        return lastSalaryInsertedDate;
     }
 
     public String getSalaryPeriod(){
@@ -401,7 +398,7 @@ public class IncomeCrud {
             return lastSalaryInsertedDate;
         }
         else
-            return null;
+            return String.valueOf(-1);
     }
 
     public String getInvestmentDate(){
@@ -411,12 +408,9 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_INVESTMENT + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        if (data.moveToLast()) {
-            lastInvestmentInsertedDate = data.getString(0);
-            return lastInvestmentInsertedDate;
-        }
-        else
-            return null;
+        data.moveToLast();
+        lastInvestmentInsertedDate = data.getString(0);
+        return lastInvestmentInsertedDate;
     }
 
     public String getInvestmentPeriod(){
@@ -431,7 +425,7 @@ public class IncomeCrud {
             return lastInvestmentInsertedDate;
         }
         else
-            return null;
+            return String.valueOf(-1);
     }
 
     public String getLoanDate(){
@@ -441,13 +435,9 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_LOAN + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        if (data.moveToLast()) {
-            lastLoanInsertedDate = data.getString(0);
-            return lastLoanInsertedDate;
-        }
-        else
-            return null;
-
+        data.moveToLast();
+        lastLoanInsertedDate = data.getString(0);
+        return lastLoanInsertedDate;
     }
 
     public String getLoanPeriod(){
@@ -462,7 +452,7 @@ public class IncomeCrud {
             return lastLoanInsertedDate;
         }
         else
-            return null;
+            return String.valueOf(-1);
     }
 
     public String getOthersDate(){
@@ -472,12 +462,9 @@ public class IncomeCrud {
                 " WHERE " + COLUMN_INCOME_OTHERS + " IS NOT 0 " +
                 " order by " + DatabaseHelper.COLUMN_INCOME_ID + " desc " + " limit 1";
         Cursor data = database.rawQuery(query, null);
-        if (data.moveToLast()) {
-            lastOthersInsertedDate = data.getString(0);
-            return lastOthersInsertedDate;
-        }
-        else
-            return null;
+        data.moveToLast();
+        lastOthersInsertedDate = data.getString(0);
+        return lastOthersInsertedDate;
     }
 
     public String getOthersPeriod(){
@@ -492,7 +479,7 @@ public class IncomeCrud {
             return lastOthersInsertedDate;
         }
         else
-            return null;
+            return String.valueOf(-1);
     }
 
 

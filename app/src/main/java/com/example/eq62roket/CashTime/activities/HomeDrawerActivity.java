@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
@@ -256,15 +254,15 @@ public class HomeDrawerActivity extends AppCompatActivity{
         // send expenditure details to server with an internet connection on device.
         int expenditureSyncStatus = expenditureCrud.getSyncStatus();
         if (expenditureSyncStatus == 0){
-            parseConnector.addExpenditureToParse();
-            expenditureCrud.updateSyncExpenditure(1);
+                parseConnector.addExpenditureToParse();
+                expenditureCrud.updateSyncExpenditure(1);
         }
 
         // send income details to server with an internet connection on device.
         int incomeSyncStatus = incomeCrud.getSyncStatus();
         if (incomeSyncStatus == 0){
             parseConnector.addIncomeToParse();
-            incomeCrud.updateSyncIncome();
+            incomeCrud.updateSyncIncome(1);
         }
     }
 

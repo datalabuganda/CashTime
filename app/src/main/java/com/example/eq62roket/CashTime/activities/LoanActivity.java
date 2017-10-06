@@ -1,31 +1,20 @@
 package com.example.eq62roket.CashTime.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
-import com.example.eq62roket.CashTime.helper.DatabaseHelper;
+import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
 import com.example.eq62roket.CashTime.helper.UserCrud;
-import com.example.eq62roket.CashTime.adapters.GoalListAdapter;
-import com.example.eq62roket.CashTime.adapters.LoanAdapter;
-import com.example.eq62roket.CashTime.helper.IncomeSQLiteHelper;
-import com.example.eq62roket.CashTime.helper.UserCrud;
-
-import com.example.eq62roket.CashTime.models.Goal;
 import com.example.eq62roket.CashTime.models.Income;
 import com.example.eq62roket.CashTime.models.User;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -37,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import static com.example.eq62roket.CashTime.R.id.parent;
 
 
 public class LoanActivity extends AppCompatActivity {
@@ -52,7 +39,7 @@ public class LoanActivity extends AppCompatActivity {
     LoanAdapter loanAdapter;
 
 
-//    public static String[] loan = {"Daily", "Weekly", "Monthly"};
+    //    public static String[] loan = {"Daily", "Weekly", "Monthly"};
     public static String[] loan = {"Daily", "Weekly", "Monthly"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +69,7 @@ public class LoanActivity extends AppCompatActivity {
         Log.d(TAG, "add one week: " + addweek);
         Log.d(TAG, "add one month: " + addmonth);
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String Daily = df.format(addday);
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
@@ -108,9 +95,9 @@ public class LoanActivity extends AppCompatActivity {
 
         userCrud = new UserCrud(this);
 
-        String currentDate = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         final String speriod = this.loanPeriod();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date convertedDate = new Date();
 
         try{

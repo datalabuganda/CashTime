@@ -48,6 +48,7 @@ public class UpdateTransportActivity extends AppCompatActivity {
                 String item = edtUpdateTransport.getText().toString();
                 if (!item.equals("")){
                     expenditureCrud.updateTransport(item, (int) selectedID,transportAmount);
+                    expenditureCrud.updateSyncExpenditure(0);
 
                 }else {
                     Toast.makeText(UpdateTransportActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

@@ -74,7 +74,7 @@ public class OtherIncomesActivity extends AppCompatActivity {
         Log.d(TAG, "add one week: " + addweek);
         Log.d(TAG, "add one month: " + addmonth);
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String Daily = df.format(addday);
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
@@ -99,9 +99,9 @@ public class OtherIncomesActivity extends AppCompatActivity {
 
         userCrud = new UserCrud(this);
 
-        String currentDate = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         final String speriod = this.othersPeriod();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date convertedDate = new Date();
 
         try{

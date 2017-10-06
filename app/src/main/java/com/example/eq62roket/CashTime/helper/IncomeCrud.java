@@ -9,11 +9,13 @@ import com.example.eq62roket.CashTime.models.Income;
 
 import java.util.ArrayList;
 
+
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_EDUCATION;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_HEALTH;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_ID;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_OTHERS;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_EXPENDITURE_SAVINGS;
+
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_ID;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_INVESTMENT;
 import static com.example.eq62roket.CashTime.helper.DatabaseHelper.COLUMN_INCOME_LOAN;
@@ -38,9 +40,9 @@ public class IncomeCrud {
     }
 
 
-    public void updateSyncIncome(){
+    public void updateSyncIncome(int flag){
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_INCOME_SYNCSTATUS, 1);
+        values.put(DatabaseHelper.COLUMN_INCOME_SYNCSTATUS, flag);
         database.update(DatabaseHelper.TABLE_INCOME, values, null, null);
         //database.close();
     }
@@ -398,7 +400,8 @@ public class IncomeCrud {
             return lastSalaryInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return "null";
+
     }
 
     public String getInvestmentDate(){
@@ -425,7 +428,8 @@ public class IncomeCrud {
             return lastInvestmentInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return "null";
+
     }
 
     public String getLoanDate(){
@@ -452,7 +456,8 @@ public class IncomeCrud {
             return lastLoanInsertedDate;
         }
         else
-            return String.valueOf(-1);
+            return "null";
+
     }
 
     public String getOthersDate(){
@@ -479,7 +484,9 @@ public class IncomeCrud {
             return lastOthersInsertedDate;
         }
         else
-            return String.valueOf(-1);
+
+            return "null";
+
     }
 
 

@@ -48,6 +48,7 @@ public class UpdateEducationActivity extends AppCompatActivity {
                 String item = edtUpdateEducation.getText().toString();
                 if (!item.equals("")){
                     expenditureCrud.updateEducation(item, (int) selectedID,educationAmount);
+                    expenditureCrud.updateSyncExpenditure(0);
 
                 }else {
                     Toast.makeText(UpdateEducationActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

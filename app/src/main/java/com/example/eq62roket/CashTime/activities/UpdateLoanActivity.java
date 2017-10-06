@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.eq62roket.CashTime.R;
 import com.example.eq62roket.CashTime.helper.IncomeCrud;
-import com.example.eq62roket.CashTime.adapters.LoanAdapter;
 
 
 public class UpdateLoanActivity extends AppCompatActivity {
@@ -51,6 +50,8 @@ public class UpdateLoanActivity extends AppCompatActivity {
                 if (!item.equals("")){
 
                     incomeCrud.updateLoan(item, (int) selectedID, loanAmount);
+                    incomeCrud.updateSyncIncome(0);
+
                     Log.d(TAG, "loan amount" + loanAmount);
                     Log.d(TAG, "loan id" + selectedID);
 

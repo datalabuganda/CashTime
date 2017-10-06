@@ -48,6 +48,7 @@ public class UpdateSavingsActivity extends AppCompatActivity {
                 String item = edtUpdateSavings.getText().toString();
                 if (!item.equals("")){
                     expenditureCrud.updateSavings(item, (int) selectedID,savingsAmount);
+                    expenditureCrud.updateSyncExpenditure(0);
 
                 }else {
                     Toast.makeText(UpdateSavingsActivity.this, "You must enter an amount", Toast.LENGTH_SHORT).show();

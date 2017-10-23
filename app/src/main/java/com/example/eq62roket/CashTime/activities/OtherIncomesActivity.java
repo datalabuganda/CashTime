@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 public class OtherIncomesActivity extends AppCompatActivity {
 
@@ -78,11 +79,20 @@ public class OtherIncomesActivity extends AppCompatActivity {
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
 
+        String strDailyFormat = getResources().getString(R.string.daily);
+        String strDailyMsg = String.format(strDailyFormat, Daily);
+
+        String strWeeklyFormat = getResources().getString(R.string.weekly);
+        String strWeeklyMsg = String.format(strWeeklyFormat, Weekly);
+
+        String strMonthlyFormat = getResources().getString(R.string.monthly);
+        String strMonthlyMsg = String.format(strMonthlyFormat, Monthly);
+
 
 
 //        Date [] dates = { addday, addweek, addmonth };
 
-        String[] others = {Daily, Weekly, Monthly};
+        String[] others = {strDailyMsg, strWeeklyMsg, strMonthlyMsg};
 
         // adapter for gender
         ArrayAdapter<String> othersSpinnerAdapter = new ArrayAdapter<String>(

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CashTime</string>
-    <string name="Daily">%1$s</string>
-    <string name="Weekly">%1$s</string>
-    <string name="Monthly">%1$s</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
     <string name="empty_fields_message">One or more fields are empty</string>
     <string name="title_activity_add_income">AddIncomeActivity</string>
     <string name="no_goals_yet">No Goals added yet, Please add a goal to continue</string>

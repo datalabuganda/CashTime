@@ -82,8 +82,18 @@ public class SalaryActivity extends AppCompatActivity {
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
 
+        String strDailyFormat = getResources().getString(R.string.daily);
+        String strDailyMsg = String.format(strDailyFormat, Daily);
 
-        String[] salary = {Daily, Weekly, Monthly};
+        String strWeeklyFormat = getResources().getString(R.string.weekly);
+        String strWeeklyMsg = String.format(strWeeklyFormat, Weekly);
+
+        String strMonthlyFormat = getResources().getString(R.string.monthly);
+        String strMonthlyMsg = String.format(strMonthlyFormat, Monthly);
+
+
+        String[] salary = {strDailyMsg, strWeeklyMsg, strMonthlyMsg};
+
 
         ArrayAdapter<String> salarySpinnerAdapter = new ArrayAdapter<String>(
                 this,

@@ -79,11 +79,19 @@ public class InvestmentActivity extends AppCompatActivity {
         String Weekly = df.format(addweek);
         String Monthly = df.format(addmonth);
 
+        String strDailyFormat = getResources().getString(R.string.daily);
+        String strDailyMsg = String.format(strDailyFormat, Daily);
+
+        String strWeeklyFormat = getResources().getString(R.string.weekly);
+        String strWeeklyMsg = String.format(strWeeklyFormat, Weekly);
+
+        String strMonthlyFormat = getResources().getString(R.string.monthly);
+        String strMonthlyMsg = String.format(strMonthlyFormat, Monthly);
 
 
-//        Date [] dates = { addday, addweek, addmonth };
+        String[] investment = {strDailyMsg, strWeeklyMsg, strMonthlyMsg};
 
-        String[] investment = {Daily, Weekly, Monthly};
+//        String[] investment = {Daily, Weekly, Monthly};
 
         ArrayAdapter<String> investmentSpinnerAdapter = new ArrayAdapter<String>(
                 this,

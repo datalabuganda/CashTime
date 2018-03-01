@@ -51,7 +51,15 @@
         <activity android:name=".AddTipsActivity" />
         <activity android:name=".SavingsActivity" />
         <activity android:name=".AddSavingsActivity" />
-        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".CalendarActivity" />
+        <activity
+            android:name=".TabbedTransactionsActivity"
+            android:label="@string/title_activity_tabbed_transactions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TabbedAnalysisActivity"
+            android:label="Analysis"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

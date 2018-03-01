@@ -1,8 +1,10 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CalendarView;
+
+import com.example.eq62roket.cashtime.R;
 
 import java.util.Calendar;
 

@@ -1,4 +1,4 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;

@@ -1,10 +1,12 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.eq62roket.cashtime.R;
 
 public class SavingsActivity extends AppCompatActivity {
     FloatingActionButton fabSavings;

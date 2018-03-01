@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Members;
+import com.example.eq62roket.cashtime.Models.Members;
 import com.example.eq62roket.cashtime.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Models;
 
 /**
  * Created by eq62roket on 2/28/18.

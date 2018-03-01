@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#006669"
-    tools:context="com.example.eq62roket.cashtime.RegistrationActivity">
+    tools:context="com.example.eq62roket.cashtime.Activities.RegistrationActivity">
 
     <EditText
         android:id="@+id/editText8"

@@ -1,4 +1,4 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
+import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupGoals;
 import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 

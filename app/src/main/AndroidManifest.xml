@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,39 +19,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".Activities.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Activities.SettingsActivity" />
         <activity
-            android:name=".GroupMembersActivity"
+            android:name=".Activities.GroupMembersActivity"
             android:label="Group Members" />
         <activity
-            android:name=".AddNewMemberActivity"
+            android:name=".Activities.AddNewMemberActivity"
             android:label="Add Member" />
-        <activity android:name=".AddGoalActivity" />
-        <activity android:name=".EditGoalActivity" />
-        <activity android:name=".GroupGoalsActivity" />
-        <activity android:name=".MembersGoalsActivity" />
+        <activity android:name=".Activities.AddGoalActivity" />
+        <activity android:name=".Activities.EditGoalActivity" />
+        <activity android:name=".Activities.GroupGoalsActivity" />
+        <activity android:name=".Activities.MembersGoalsActivity" />
         <activity
-            android:name=".TabbedGoalsActivity"
+            android:name=".Activities.TabbedGoalsActivity"
             android:label="@string/title_activity_tabbed_goals"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddGroupGoalsActivity"
+            android:name=".Activities.AddGroupGoalsActivity"
             android:label="Add Group Goal" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".TipsActivity" />
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.TipsActivity" />
         <activity
-            android:name=".SummaryActivity"
+            android:name=".Activities.SummaryActivity"
             android:label="Group Summary" />
-        <activity android:name=".AddTipsActivity" />
-        <activity android:name=".SavingsActivity" />
-        <activity android:name=".AddSavingsActivity" />
-        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".Activities.AddTipsActivity" />
+        <activity android:name=".Activities.SavingsActivity" />
+        <activity android:name=".Activities.AddSavingsActivity" />
+        <activity android:name=".Activities.CalendarActivity"></activity>
     </application>
 
 </manifest>

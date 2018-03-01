@@ -1,9 +1,10 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Activities;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;

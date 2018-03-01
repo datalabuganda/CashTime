@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity
         analyticsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent analyticsIntent = new Intent(HomeActivity.this, SummaryActivity.class);
+                Intent analyticsIntent = new Intent(HomeActivity.this, TabbedAnalysisActivity.class);
                 startActivity(analyticsIntent);
             }
         });
@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.groupMembers) {
             Intent groupMembersIntent = new Intent(HomeActivity.this, GroupMembersActivity.class);
             startActivity(groupMembersIntent);
             // Handle the camera action
@@ -134,6 +134,10 @@ public class HomeActivity extends AppCompatActivity
         }         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settingsIntent);
+
+        } if (id == R.id.transactions) {
+            Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
+            startActivity(transactionsIntent);
 
         } else if (id == R.id.nav_send) {
 

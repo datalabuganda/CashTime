@@ -28,30 +28,42 @@
         <activity android:name=".Activities.SettingsActivity" />
         <activity
             android:name=".Activities.GroupMembersActivity"
-            android:label="Group Members" />
+            android:label="Group Members"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
             android:label="Add Member" />
-        <activity android:name=".Activities.AddGoalActivity" />
+        <activity android:name=".Activities.AddMemberGoalActivity" />
         <activity android:name=".Activities.EditGoalActivity" />
-        <activity android:name=".Activities.GroupGoalsActivity" />
+        <activity
+            android:name=".Activities.GroupGoalsActivity"
+            android:label="Goals"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity android:name=".Activities.MembersGoalsActivity" />
         <activity
             android:name=".Activities.TabbedGoalsActivity"
             android:label="@string/title_activity_tabbed_goals"
+            android:parentActivityName=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.AddGroupGoalsActivity"
-            android:label="Add Group Goal" />
+            android:label="Add Group Goal"
+            android:parentActivityName=".Activities.TabbedGoalsActivity" />
         <activity android:name=".Activities.ProfileActivity" />
-        <activity android:name=".Activities.TipsActivity" />
+        <activity
+            android:label="Tips"
+            android:name=".Activities.TipsActivity" />
         <activity
             android:name=".Activities.SummaryActivity"
             android:label="Group Summary" />
         <activity android:name=".Activities.AddTipsActivity" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
-        <activity android:name=".Activities.CalendarActivity"></activity>
+        <activity android:name=".Activities.CalendarActivity" />
+        <activity
+            android:name=".Activities.TabbedSavingActivity"
+            android:label="@string/title_activity_tabbed_saving"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

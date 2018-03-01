@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity
         profileCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent profileIntent = new Intent(HomeActivity.this, SavingsActivity.class);
+                Intent profileIntent = new Intent(HomeActivity.this, TabbedSavingActivity.class);
                 startActivity(profileIntent);
             }
         });

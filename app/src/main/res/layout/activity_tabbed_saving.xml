@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.eq62roket.cashtime.Activities.TabbedGoalsActivity">
+    tools:context="com.example.eq62roket.cashtime.Activities.TabbedSavingActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -37,15 +36,17 @@
                 android:id="@+id/tabItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Group Goals" />
+                android:text="Group Savings" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Members Goals" />
+                android:text="Members Savings" />
 
         </android.support.design.widget.TabLayout>
+
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

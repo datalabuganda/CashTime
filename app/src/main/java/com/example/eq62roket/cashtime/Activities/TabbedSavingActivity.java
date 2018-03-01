@@ -6,17 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.eq62roket.cashtime.Fragments.GroupGoalsFragment;
-import com.example.eq62roket.cashtime.Fragments.MembersGoalsFragment;
+import com.example.eq62roket.cashtime.Fragments.GroupSavingsFragment;
+import com.example.eq62roket.cashtime.Fragments.MembersSavingsFragment;
 import com.example.eq62roket.cashtime.R;
 
-public class TabbedGoalsActivity extends AppCompatActivity {
+public class TabbedSavingActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,13 +35,10 @@ public class TabbedGoalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabbed_goals);
+        setContentView(R.layout.activity_tabbed_saving);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
 
         // Create the adapter that will return a fragment for each of the two
         // primary sections of the activity.
@@ -63,7 +59,7 @@ public class TabbedGoalsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tabbed_goals, menu);
+        getMenuInflater().inflate(R.menu.menu_tabbed_saving, menu);
         return true;
     }
 
@@ -82,10 +78,7 @@ public class TabbedGoalsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -96,18 +89,17 @@ public class TabbedGoalsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
-
             switch (position){
                 case 0:
-                    GroupGoalsFragment group = new GroupGoalsFragment();
-                    return group;
+                    GroupSavingsFragment groupSavingsFragment = new GroupSavingsFragment();
+                    return groupSavingsFragment;
                 case 1:
-                    MembersGoalsFragment members = new MembersGoalsFragment();
-                    return members;
+                    MembersSavingsFragment membersSavingsFragment = new MembersSavingsFragment();
+                    return membersSavingsFragment;
                 default:
                     return null;
             }
+
         }
 
         @Override

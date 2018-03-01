@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:text="Name"
                     android:layout_marginTop="15dp"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 
@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:text="By: 26/04/2018"
                         android:layout_marginTop="5dp"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textColor="@color/red" />
 
                     <TextView
@@ -57,11 +57,26 @@
                         android:id="@+id/amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="500,000 UGX"
+                        android:text="500,000,000"
                         android:layout_marginTop="5dp"
                         android:textSize="16sp"
                         android:textColor="@color/red"
                         android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USh"
+                        android:layout_marginTop="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/red" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 </LinearLayout>
             </LinearLayout>

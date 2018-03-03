@@ -51,8 +51,8 @@
             android:parentActivityName=".Activities.TabbedGoalsActivity" />
         <activity android:name=".Activities.ProfileActivity" />
         <activity
-            android:label="Tips"
-            android:name=".Activities.TipsActivity" />
+            android:name=".Activities.TipsActivity"
+            android:label="Tips" />
         <activity
             android:name=".Activities.SummaryActivity"
             android:label="Group Summary" />
@@ -63,7 +63,8 @@
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="@string/title_activity_tabbed_saving"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.MemberSavingsDetail"></activity>
     </application>
 
 </manifest>

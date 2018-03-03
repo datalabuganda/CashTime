@@ -1,14 +1,17 @@
 package com.example.eq62roket.cashtime.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eq62roket.cashtime.Activities.MemberSavingsDetail;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MemberSavingsAdapter;
@@ -18,6 +21,8 @@ import java.util.List;
 
 
 public class MembersSavingsFragment extends Fragment {
+
+    private static final String TAG = "MembersSavingsFragment";
 
     private List<MemberSavings> mMemberSavings = new ArrayList<>();
     private MemberSavingsAdapter mMemberSavingsAdapter;
@@ -34,7 +39,16 @@ public class MembersSavingsFragment extends Fragment {
         );
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        mMemberSavingsAdapter = new MemberSavingsAdapter(mMemberSavings);
+        mMemberSavingsAdapter = new MemberSavingsAdapter(mMemberSavings, new MemberSavingsAdapter.OnSavingClickListener() {
+            @Override
+            public void onSavingClick(MemberSavings memberSavings) {
+                Log.d(TAG, "onSavingClick: " + memberSavings.getName());
+                Intent intent = new Intent(getActivity(), MemberSavingsDetail.class);
+                intent.putExtra("name", memberSavings.getName());
+                intent.putExtra("amount", String.valueOf(memberSavings.getAmount()));
+                startActivity(intent);
+            }
+        });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());

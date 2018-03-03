@@ -17,10 +17,16 @@ import java.util.List;
 
 public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdapter.MemberSavingViewHolder> {
 
-    private List<MemberSavings> mMemberSavings;
+    public interface OnSavingClickListener {
+        void onSavingClick(MemberSavings memberSavings);
+    }
 
-    public MemberSavingsAdapter(List<MemberSavings> memberSavings){
+    private List<MemberSavings> mMemberSavings;
+    private final OnSavingClickListener mOnSavingClickListener;
+
+    public MemberSavingsAdapter(List<MemberSavings> memberSavings, OnSavingClickListener listener){
         mMemberSavings = memberSavings;
+        mOnSavingClickListener = listener;
     }
 
     public class MemberSavingViewHolder extends RecyclerView.ViewHolder{
@@ -30,6 +36,18 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.tv_memberName);
             amount = (TextView) itemView.findViewById(R.id.tv_memberAmount);
+        }
+
+        public void bind(final MemberSavings memberSavings, final OnSavingClickListener listener){
+            name.setText(memberSavings.getName());
+            amount.setText(String.valueOf(memberSavings.getAmount()));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onSavingClick(memberSavings);
+                }
+            });
+
         }
     }
 
@@ -45,16 +63,13 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
 
     @Override
     public void onBindViewHolder(MemberSavingViewHolder holder, int position) {
-        MemberSavings memberSavings = mMemberSavings.get(position);
-        holder.name.setText(memberSavings.getName());
-        holder.amount.setText(String.valueOf(memberSavings.getAmount()));
 
+        holder.bind(mMemberSavings.get(position), mOnSavingClickListener);
     }
 
     @Override
     public int getItemCount() {
         return mMemberSavings.size();
     }
-
 
 }

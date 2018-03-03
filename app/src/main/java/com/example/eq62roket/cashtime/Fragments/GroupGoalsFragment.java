@@ -20,7 +20,7 @@ import android.widget.EditText;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupGoals;
+import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 
 import java.util.ArrayList;

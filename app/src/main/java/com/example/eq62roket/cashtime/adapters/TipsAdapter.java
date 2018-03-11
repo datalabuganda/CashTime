@@ -17,10 +17,17 @@ import java.util.List;
 
 public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipViewHolder> {
 
-    List<Tip> mTipsList;
+    public interface OnTipClickListener{
+        void onTipSelected(Tip tip);
+    }
 
-    public TipsAdapter(List<Tip> tipsList) {
+    List<Tip> mTipsList;
+    OnTipClickListener mOnTipClickListener;
+
+
+    public TipsAdapter(List<Tip> tipsList, OnTipClickListener onTipClickListener) {
         mTipsList = tipsList;
+        mOnTipClickListener = onTipClickListener;
     }
 
     public class TipViewHolder extends RecyclerView.ViewHolder{
@@ -30,6 +37,17 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipViewHolder>
             super(view);
             goalName = (TextView) view.findViewById(R.id.tip_goalName);
             tipIntroText = (TextView) view.findViewById(R.id.tip_introText);
+        }
+
+        public void bind(final Tip tip, final OnTipClickListener onTipClickListener){
+            goalName.setText(tip.getGoalName());
+            tipIntroText.setText(tip.getIntroText());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onTipClickListener.onTipSelected(tip);
+                }
+            });
         }
     }
 
@@ -43,9 +61,7 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipViewHolder>
 
     @Override
     public void onBindViewHolder(TipViewHolder holder, int position) {
-        Tip tip = mTipsList.get(position);
-        holder.goalName.setText(tip.getGoalName());
-        holder.tipIntroText.setText(tip.getIntroText());
+       holder.bind(mTipsList.get(position), mOnTipClickListener);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
             amount = (TextView) itemView.findViewById(R.id.tv_memberAmount);
         }
 
-        public void bind(final MemberSavings memberSavings, final OnSavingClickListener listener){
+        public void bind(final MemberSavings memberSavings, final OnSavingClickListener     listener){
             name.setText(memberSavings.getName());
             amount.setText(String.valueOf(memberSavings.getAmount()));
             itemView.setOnClickListener(new View.OnClickListener() {

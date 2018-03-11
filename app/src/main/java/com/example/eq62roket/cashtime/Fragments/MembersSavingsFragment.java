@@ -2,7 +2,6 @@ package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MembersSavingsFragment extends Fragment {
+public class MembersSavingsFragment extends android.support.v4.app.Fragment {
 
     private static final String TAG = "MembersSavingsFragment";
 

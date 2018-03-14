@@ -31,17 +31,19 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipViewHolder>
     }
 
     public class TipViewHolder extends RecyclerView.ViewHolder{
-        private TextView goalName, tipIntroText;
+        private TextView goalName, tipIntroText, tipAddDate;
 
         public TipViewHolder(View view) {
             super(view);
             goalName = (TextView) view.findViewById(R.id.tip_goalName);
             tipIntroText = (TextView) view.findViewById(R.id.tip_introText);
+            tipAddDate = (TextView) view.findViewById(R.id.tv_dateAdded);
         }
 
         public void bind(final Tip tip, final OnTipClickListener onTipClickListener){
             goalName.setText(tip.getGoalName());
             tipIntroText.setText(tip.getIntroText());
+            tipAddDate.setText(tip.getDateAdded());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

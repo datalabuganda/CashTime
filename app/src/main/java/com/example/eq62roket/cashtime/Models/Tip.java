@@ -7,10 +7,12 @@ package com.example.eq62roket.cashtime.Models;
 public class Tip {
     private String goalName;
     private String introText;
+    private String dateAdded;
 
-    public Tip(String goalName, String introText) {
+    public Tip(String goalName, String introText, String dateAdded) {
         this.goalName = goalName;
         this.introText = introText;
+        this.dateAdded = dateAdded;
     }
 
     public String getGoalName() {
@@ -27,5 +29,13 @@ public class Tip {
 
     public void setIntroText(String introText) {
         this.introText = introText;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
     }
 }

@@ -26,7 +26,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
         tipsCardView = (CardView)findViewById(R.id.tipsCardView);
@@ -61,13 +60,6 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent tipsIntent = new Intent(HomeActivity.this, TipsActivity.class);
                 startActivity(tipsIntent);
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
@@ -108,6 +100,9 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.group){
+            Intent newGroup = new Intent(HomeActivity.this, NewGroupActivity.class);
+            startActivity(newGroup);
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,7 +1,9 @@
 package com.example.eq62roket.cashtime;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,6 +33,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
     private List<MembersGoals> membersGoalsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MembersGoalsAdapter mAdapter;
+    private FloatingActionButton fabMembersGoals;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +43,15 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         View rootView = inflater.inflate(R.layout.fragment_members_goals, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.members_goals_recycler_view);
+        fabMembersGoals = (FloatingActionButton) rootView.findViewById(R.id.fabMembersGoals);
+
+        fabMembersGoals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),AddMembersGoalsActivity.class);
+                startActivity(addMembersGoalsIntent);
+            }
+        });
 
         mAdapter = new MembersGoalsAdapter(membersGoalsList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

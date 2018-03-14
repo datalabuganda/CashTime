@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.eq62roket.cashtime.MembersGoalsFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -9,5 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMembersGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add"
+        android:layout_gravity="end|bottom"
+        app:elevation="10dp"
+        app:backgroundTint="#006669"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="15dp"
+        app:borderWidth="0dp"
+        app:rippleColor="#000000"/>
 
 </FrameLayout>

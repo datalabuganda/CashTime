@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Home"
+        android:icon="@drawable/person"
+        />
+    <item
+        android:title="Profile"
+        android:icon="@drawable/transactionsicon"
+        />
+    <item
+        android:title="Settings"
+        android:icon="@drawable/settings"
+        />
+
+    <item
+        android:title="Calendar"
+        android:icon="@drawable/calendar"
+        />
+</menu>

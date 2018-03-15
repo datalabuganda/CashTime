@@ -219,7 +219,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Completed Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -227,6 +226,7 @@
                                 android:text="100"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/red"/>
                             <TextView
                                 android:layout_marginLeft="10dp"
@@ -234,7 +234,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="InCompleted Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -242,6 +241,7 @@
                                 android:text="100"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/green"/>
                         </LinearLayout>
 
@@ -288,7 +288,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Completed Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -296,6 +295,7 @@
                                 android:text="5"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/red"/>
                             <TextView
                                 android:layout_marginLeft="10dp"
@@ -303,12 +303,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="InCompleted Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="10"
+                                android:textStyle="bold"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
                                 android:textColor="@color/green"/>
@@ -356,7 +356,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Completed Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -364,6 +363,7 @@
                                 android:text="1"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/red"/>
                             <TextView
                                 android:layout_marginLeft="10dp"
@@ -371,7 +371,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="InCompleted Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -379,6 +378,7 @@
                                 android:text="5"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/green"/>
                         </LinearLayout>
 
@@ -424,7 +424,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Completed Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -432,6 +431,7 @@
                                 android:text="0"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/red"/>
                             <TextView
                                 android:layout_marginLeft="10dp"
@@ -439,7 +439,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="InCompleted Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -447,6 +446,7 @@
                                 android:text="20"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
+                                android:textStyle="bold"
                                 android:textColor="@color/green"/>
                         </LinearLayout>
 
@@ -492,12 +492,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="Completed Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="30"
+                                android:textStyle="bold"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
                                 android:textColor="@color/red"/>
@@ -507,12 +507,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="InCompleted Goals"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2"
+                                android:textStyle="bold"
                                 android:layout_marginLeft="10dp"
                                 android:textSize="14dp"
                                 android:textColor="@color/green"/>

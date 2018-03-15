@@ -1,6 +1,8 @@
 package com.example.eq62roket.cashtime;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
@@ -16,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.eq62roket.cashtime.Helper.DatabaseHelper;
+import com.example.eq62roket.cashtime.adapters.DatabaseAdapter;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 
 import java.util.ArrayList;
@@ -44,38 +48,53 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
             }
         });
 
-        mAdapter = new MembersAdapter(membersList);
+        mAdapter = new MembersAdapter(this,membersList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
+//        recyclerView.setAdapter(mAdapter);
         prepareMemberData();
+
+
+//        prepareMemberData();
     }
 
-    private void prepareMemberData() {
-        Members member = new Members("Otim Tony", "0703457234");
-        membersList.add(member);
+    private void prepareMemberData(){
+        DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-        member = new Members("Nimukama Probuse", "0756212342");
-        membersList.add(member);
+        databaseAdapter.close();
 
-        member = new Members("Muguya Ivan", "0733242874");
-        membersList.add(member);
+        membersList.clear();
+        Cursor cursor = databaseHelper.getAllMembers();
+//        Cursor cursor=databaseAdapter.getAllGroupMembers();
+        //loop through the data adding to arraylist
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String phone = cursor.getString(2);
 
-        member = new Members("Sytske Groenewald", "0756762368");
-        membersList.add(member);
-
-        member = new Members("Rik Linssen", "0716215342");
-        membersList.add(member);
-
-        member = new Members("Patricia Dekker", "0756212342");
-        membersList.add(member);
+            Members members = new Members(name,phone,id);
+            membersList.add(members);
+        }
 
 
-        mAdapter.notifyDataSetChanged();
+        if(!(membersList.size()<1)){
+            recyclerView.setAdapter(mAdapter);
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepareMemberData();
+
     }
 
     @Override

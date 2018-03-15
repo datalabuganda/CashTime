@@ -21,11 +21,14 @@
                 android:layout_height="350dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/editProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edit Profile"
                     android:textColor="#fff"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     android:layout_gravity="right"/>
                 <ImageView
@@ -74,13 +77,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Goals"
-                            android:textSize="20sp"/>
+                            android:textColor="@color/black"
+                            android:textSize="18sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="8"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:paddingTop="10dp"
                             android:textColor="@color/red"/>
                     </LinearLayout>
@@ -94,13 +98,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Members"
-                            android:textSize="20sp"/>
+                            android:textColor="@color/black"
+                            android:textSize="18sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:paddingTop="10dp"
                             android:textColor="@color/red"/>
                     </LinearLayout>
@@ -114,13 +119,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tips"
-                            android:textSize="20sp"/>
+                            android:textColor="@color/black"
+                            android:textSize="18sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:paddingTop="10dp"
                             android:textColor="@color/red"/>
                     </LinearLayout>
@@ -135,6 +141,7 @@
                     <TextView
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Group Members"
@@ -153,7 +160,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_margin="5dp"
+                                android:layout_margin="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Tony Otim"
@@ -162,8 +169,8 @@
                                 android:textColor="#006669"/>
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="120dp"
@@ -186,9 +193,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="5dp"
+                                android:layout_margin="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Probuse Nimukama"
@@ -197,8 +202,8 @@
                                 android:textColor="#006669"/>
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0777563533"
@@ -221,9 +226,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="5dp"
+                                android:layout_margin="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Allan Mike"
@@ -232,8 +235,8 @@
                                 android:textColor="#006669"/>
 
                             <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0753675423"

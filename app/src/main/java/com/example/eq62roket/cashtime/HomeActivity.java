@@ -18,7 +18,7 @@ import android.view.MenuItem;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView;
+    private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
         tipsCardView = (CardView)findViewById(R.id.tipsCardView);
         profileCardView = (CardView)findViewById(R.id.profileCardView);
+        incomeCardView = (CardView)findViewById(R.id.incomeCardView);
+        expenditureCardView = (CardView)findViewById(R.id.expenditureCardView);
 
         goalsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +63,22 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent tipsIntent = new Intent(HomeActivity.this, TipsActivity.class);
                 startActivity(tipsIntent);
+            }
+        });
+
+        incomeCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent incomeIntent = new Intent(HomeActivity.this, IncomeActivity.class);
+                startActivity(incomeIntent);
+            }
+        });
+
+        expenditureCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expenditureIntent = new Intent(HomeActivity.this, ExpenditureActivity.class);
+                startActivity(expenditureIntent);
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {

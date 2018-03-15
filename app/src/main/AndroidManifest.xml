@@ -59,7 +59,9 @@
         <activity
             android:name=".TabbedAnalysisActivity"
             android:label="Analysis"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".IncomeActivity" />
+        <activity android:name=".ExpenditureActivity"></activity>
     </application>
 
 </manifest>

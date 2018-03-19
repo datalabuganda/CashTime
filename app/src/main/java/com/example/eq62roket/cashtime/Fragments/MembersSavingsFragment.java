@@ -67,7 +67,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         memberSavings = new MemberSavings("Anold Kimitu", 46200);
         mMemberSavings.add(memberSavings);
 
-        memberSavings = new MemberSavings("Lora Aninta", 58000);
+        memberSavings = new MemberSavings("Mukamaniwalinda Harrison", 580000000);
         mMemberSavings.add(memberSavings);
 
         memberSavings = new MemberSavings("Phifi Queen", 70000);

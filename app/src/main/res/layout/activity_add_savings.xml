@@ -22,6 +22,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/goal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <EditText
+                    android:id="@+id/goalName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Goal Name"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,27 +57,6 @@
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/person"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rik Linssen"
-                    android:textSize="16sp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="15dp"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,15 +69,33 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <TextView
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/select_period_spinner"
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.AppCompatSpinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="02/23/2018"
-                    android:textSize="16sp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="15dp"/>
+                    android:src="@drawable/money"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/select_income_spinner"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.AppCompatSpinner>
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +112,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Notes (Option)"
+                    android:hint="Notes (Optionaal)"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 

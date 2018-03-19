@@ -61,6 +61,9 @@
         <activity
             android:name=".Activities.SummaryActivity"
             android:label="Group Summary" />
+        <activity
+            android:name=".Activities.AddGroupSavingsActivity"
+            android:label="Add Group Saving" />
         <activity android:name=".Activities.AddTipsActivity" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />

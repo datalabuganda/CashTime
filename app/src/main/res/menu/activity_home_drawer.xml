@@ -5,13 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/groupMembers"
             android:icon="@drawable/group"
             android:title="Group Members" />
         <item
             android:id="@+id/profile"
             android:icon="@drawable/person"
             android:title="Profile" />
+        <item
+            android:id="@+id/transactions"
+            android:icon="@drawable/transactionsicon"
+            android:title="Transactions" />
         <item
             android:id="@+id/calendar"
             android:icon="@drawable/calendar"

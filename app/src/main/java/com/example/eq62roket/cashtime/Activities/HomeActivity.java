@@ -2,25 +2,28 @@ package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.CardView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.eq62roket.cashtime.ExpenditureActivity;
+import com.example.eq62roket.cashtime.IncomeActivity;
+import com.example.eq62roket.cashtime.NewGroupActivity;
 import com.example.eq62roket.cashtime.R;
+import com.example.eq62roket.cashtime.TabbedAnalysisActivity;
+import com.example.eq62roket.cashtime.TabbedTransactionsActivity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView;
+    private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +31,12 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
         tipsCardView = (CardView)findViewById(R.id.tipsCardView);
         profileCardView = (CardView)findViewById(R.id.profileCardView);
+        incomeCardView = (CardView)findViewById(R.id.incomeCardView);
+        expenditureCardView = (CardView)findViewById(R.id.expenditureCardView);
 
         goalsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
         analyticsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent analyticsIntent = new Intent(HomeActivity.this, SummaryActivity.class);
+                Intent analyticsIntent = new Intent(HomeActivity.this, TabbedAnalysisActivity.class);
                 startActivity(analyticsIntent);
             }
         });
@@ -65,13 +69,24 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(tipsIntent);
             }
         });
-        fab.setOnClickListener(new View.OnClickListener() {
+
+
+        incomeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent incomeIntent = new Intent(HomeActivity.this, IncomeActivity.class);
+                startActivity(incomeIntent);
             }
         });
+
+        expenditureCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expenditureIntent = new Intent(HomeActivity.this, ExpenditureActivity.class);
+                startActivity(expenditureIntent);
+            }
+        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -110,6 +125,9 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.group){
+            Intent newGroup = new Intent(HomeActivity.this, NewGroupActivity.class);
+            startActivity(newGroup);
         }
 
         return super.onOptionsItemSelected(item);
@@ -121,7 +139,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.groupMembers) {
             Intent groupMembersIntent = new Intent(HomeActivity.this, GroupMembersActivity.class);
             startActivity(groupMembersIntent);
             // Handle the camera action
@@ -136,6 +154,10 @@ public class HomeActivity extends AppCompatActivity
         }         if (id == R.id.settings) {
             Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settingsIntent);
+
+        } if (id == R.id.transactions) {
+            Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
+            startActivity(transactionsIntent);
 
         } else if (id == R.id.nav_send) {
 

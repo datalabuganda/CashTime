@@ -28,30 +28,17 @@
                     android:src="@drawable/goal"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Goal"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
 
-                <!--<TextView-->
-                    <!--android:layout_width="250dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Categories"-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:layout_marginTop="15dp"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:layout_marginBottom="15dp"/>-->
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Goal"
+                        android:layout_margin="5dp"/>
 
-                <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/ic_add_black_24dp"/>-->
-
-
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -65,11 +52,17 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
 
@@ -85,15 +78,18 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <TextView
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="02/23/2018"
-                    android:textSize="16sp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="15dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/groupGoalDueDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Due Date"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -107,11 +103,18 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Option)"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Option)"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -131,6 +134,7 @@
                         android:layout_marginRight="5dp"/>
 
                     <TextView
+                        android:id="@+id/selectImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Select Image"
@@ -147,6 +151,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/groupGoalImage"
                         android:layout_marginLeft="40dp"
                         android:layout_width="80dp"
                         android:layout_height="80dp"

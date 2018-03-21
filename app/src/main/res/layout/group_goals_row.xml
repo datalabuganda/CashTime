@@ -84,7 +84,7 @@
                 android:id="@+id/progressBar"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:progress="20"/>
         </LinearLayout>

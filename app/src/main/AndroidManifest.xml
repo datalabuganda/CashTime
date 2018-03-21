@@ -72,7 +72,7 @@
             android:name=".Activities.TabbedSavingActivity"
             android:label="@string/title_activity_tabbed_saving"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.MemberSavingsDetail"></activity>
+        <activity android:name=".Activities.MemberSavingsDetail" />
         <activity
             android:name=".Activities.TabbedTransactionsActivity"
             android:label="@string/title_activity_tabbed_transactions"
@@ -82,13 +82,12 @@
             android:label="Analysis"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.IncomeActivity" />
-        <activity android:name=".Activities.ExpenditureActivity"></activity>
-
+        <activity android:name=".Activities.ExpenditureActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
         <activity android:name=".Activities.AddMembersGoalsActivity" />
         <activity android:name=".Activities.NewGroupActivity" />
-        <activity android:name=".Activities.GroupMembersDetailActivity"></activity>
-
+        <activity android:name=".Activities.GroupMembersDetailActivity" />
+        <activity android:name=".Activities.GroupSavingToGoalsActivity"></activity>
     </application>
 
 </manifest>

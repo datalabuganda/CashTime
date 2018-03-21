@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Models.GroupSavings;
+import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
@@ -25,6 +30,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     private String selectedPeriod;
     private String selectedIncomeSource;
+    private  String nameOfGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,16 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         btnSave = (Button) findViewById(R.id.btnSave);
 
+        Intent intent = getIntent();
+        nameOfGoal = intent.getStringExtra("goalName");
+
+        // Prepopulate goalName and field
+        goalName.setText(nameOfGoal);
+
+        // get selected period
         getSelectPeriod();
 
+        // get selected income
         selectIncomeSource(getIncomeSources());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +123,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedIncomeSource = adapterView.getItemAtPosition(i).toString();
+
                 Toast.makeText(AddGroupSavingsActivity.this, "selected Income Source " + selectedIncomeSource , Toast.LENGTH_SHORT).show();
             }
 
@@ -121,12 +136,36 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void saveSavingTransaction(){
+        String period = "";
+        String savingPeriod = "";
         String nameOfGoal = goalName.getText().toString();
         String amountSaved = savingAmount.getText().toString();
-        String savingPeriodID = selectedPeriod;
-        String savingIncomeID = selectedIncomeSource;
-        String today = new PeriodHelper().getMonthlyDate();
-        Toast.makeText(this, "Saved..." + savingIncomeID + " " + amountSaved + " " + savingPeriodID + " " + today , Toast.LENGTH_SHORT).show();
+        String sourceOfIncome = selectedIncomeSource;
+
+        String goalAmount = savingAmount.getText().toString();
+
+        Date today = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateToday = simpleDateFormat.format(today);
+
+        if (selectedPeriod == "Daily"){
+            savingPeriod = new PeriodHelper().getDailyDate();
+        }else if (selectedPeriod == "Weekly"){
+            savingPeriod = new PeriodHelper().getWeeklyDate();
+        }else if (selectedPeriod == "Monthly"){
+            savingPeriod = new PeriodHelper().getMonthlyDate();
+        }
+        if (!savingPeriod.equals("")){
+            GroupSavings groupSavings = new GroupSavings(
+                    nameOfGoal, savingPeriod, selectedIncomeSource, "Hey i am a note", goalAmount);
+            Toast.makeText(this, "GroupGoals " + groupSavings.getPeriod(), Toast.LENGTH_SHORT).show();
+        }
+
+        // Award user 3 point for saving
+        User user = new User();
+        user.setPoints(3);
+
+
 
     }
 

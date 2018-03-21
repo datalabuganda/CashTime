@@ -49,16 +49,16 @@ public class GroupSavingsFragment extends Fragment {
 
     private void prepareSavingData(){
 
-        GroupSavings groupSavings = new GroupSavings("Leon Bryn", 20000);
+        GroupSavings groupSavings = new GroupSavings("Leon Bryn", "Weekly", "Salary", "Notessss",  "20000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("etwin himself", 5000);
+        groupSavings = new GroupSavings("etwin himself", "Monthly", "Loan", "Notey", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Moses Ali", 5000);
+        groupSavings = new GroupSavings("Moses Ali", "Monthly", "Investment", "jot notes", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Hostin Dundey", 3990);
+        groupSavings = new GroupSavings("Hostin Dundey", "Daily", "Salary", "Other notes", "3990");
         mGroupSavings.add(groupSavings);
 
         mGroupSavingsAdapter.notifyDataSetChanged();

@@ -18,7 +18,13 @@ import java.util.List;
 
 public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.GroupGoalsViewHolder> {
 
+    public interface OnGoalClickListener {
+        void onGoalClick(GroupGoals groupGoals);
+    }
+
     private List<GroupGoals> groupGoalsList;
+    private final OnGoalClickListener mOnGoalClickListener;
+
 
     public class GroupGoalsViewHolder extends RecyclerView.ViewHolder {
         public TextView name, date, amount;
@@ -26,14 +32,28 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
         public GroupGoalsViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            date = (TextView) view.findViewById(R.id.date);
+            date = (TextView) view.findViewById(R.id.endDate);
             amount = (TextView) view.findViewById(R.id.amount);
+        }
+
+        public void bind(final GroupGoals groupGoals, final OnGoalClickListener onGoalClickListener){
+            name.setText(groupGoals.getName());
+            amount.setText(groupGoals.getAmount());
+            date.setText(groupGoals.getDueDate());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onGoalClickListener.onGoalClick(groupGoals);
+                }
+            });
         }
     }
 
 
-    public GroupGoalsAdapter(List<GroupGoals> groupGoalsList) {
+    public GroupGoalsAdapter(List<GroupGoals> groupGoalsList, OnGoalClickListener listener) {
         this.groupGoalsList = groupGoalsList;
+        mOnGoalClickListener = listener;
+
     }
 
     @Override
@@ -46,10 +66,7 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
 
     @Override
     public void onBindViewHolder(GroupGoalsAdapter.GroupGoalsViewHolder holder, int position) {
-        GroupGoals groupGoals = groupGoalsList.get(position);
-        holder.name.setText(groupGoals.getName());
-        holder.date.setText(groupGoals.getDate());
-        holder.amount.setText(groupGoals.getAmount());
+       holder.bind(groupGoalsList.get(position), mOnGoalClickListener);
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,6 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         mMemberSavingsAdapter = new MemberSavingsAdapter(mMemberSavings, new MemberSavingsAdapter.OnSavingClickListener() {
             @Override
             public void onSavingClick(MemberSavings memberSavings) {
-                Log.d(TAG, "onSavingClick: " + memberSavings.getName());
                 Intent intent = new Intent(getActivity(), MemberSavingsDetail.class);
                 intent.putExtra("name", memberSavings.getName());
                 intent.putExtra("amount", String.valueOf(memberSavings.getAmount()));

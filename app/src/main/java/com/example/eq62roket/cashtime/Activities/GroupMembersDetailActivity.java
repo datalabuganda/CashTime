@@ -1,4 +1,4 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.DatabaseAdapter;
-
-import java.net.IDN;
 
 public class GroupMembersDetailActivity extends AppCompatActivity {
     EditText updateMemberName, updateMemberPhone;

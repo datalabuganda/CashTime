@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eq62roket.cashtime.ExpenditureActivity">
+    tools:context="com.example.eq62roket.cashtime.Activities.ExpenditureActivity">
 
 </android.support.constraint.ConstraintLayout>

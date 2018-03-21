@@ -13,12 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.eq62roket.cashtime.ExpenditureActivity;
-import com.example.eq62roket.cashtime.IncomeActivity;
-import com.example.eq62roket.cashtime.NewGroupActivity;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.TabbedAnalysisActivity;
-import com.example.eq62roket.cashtime.TabbedTransactionsActivity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

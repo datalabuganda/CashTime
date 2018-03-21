@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Models.Members;
-import com.example.eq62roket.cashtime.GroupMembersDetailActivity;
+import com.example.eq62roket.cashtime.Activities.GroupMembersDetailActivity;
 import com.example.eq62roket.cashtime.Interfaces.ItemClickListener;
 import com.example.eq62roket.cashtime.R;
 

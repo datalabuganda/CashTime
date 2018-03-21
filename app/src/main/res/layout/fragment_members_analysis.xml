@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eq62roket.cashtime.MembersAnalysisFragment">
+    tools:context="com.example.eq62roket.cashtime.Fragments.MembersAnalysisFragment">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.eq62roket.cashtime.GroupAnalysisFragment">
+        tools:context="com.example.eq62roket.cashtime.Fragments.GroupAnalysisFragment">
 
 
         <ScrollView

@@ -1,4 +1,4 @@
-package com.example.eq62roket.cashtime;
+package com.example.eq62roket.cashtime.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.eq62roket.cashtime.Models.GroupTransactions;
+import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupTransactionsAdapter;
 
 import java.util.ArrayList;

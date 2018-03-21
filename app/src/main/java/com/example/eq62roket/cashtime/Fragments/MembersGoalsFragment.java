@@ -18,14 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.AddMembersGoalsActivity;
+import com.example.eq62roket.cashtime.Activities.AddMembersGoalsActivity;
 import com.example.eq62roket.cashtime.R;
 
-import com.example.eq62roket.cashtime.Models.GroupTransactions;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
-import com.example.eq62roket.cashtime.Models.MembersTransactions;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
-import com.example.eq62roket.cashtime.adapters.MembersTransactionsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

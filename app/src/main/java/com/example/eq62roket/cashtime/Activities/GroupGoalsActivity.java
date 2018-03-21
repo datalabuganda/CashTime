@@ -20,6 +20,7 @@ public class GroupGoalsActivity extends AppCompatActivity {
         // switch to GroupSavingToGoalsActivity
         Intent intent = new Intent(GroupGoalsActivity.this, GroupSavingToGoalsActivity.class);
         startActivity(intent);
+        finish();
 
     }
 }

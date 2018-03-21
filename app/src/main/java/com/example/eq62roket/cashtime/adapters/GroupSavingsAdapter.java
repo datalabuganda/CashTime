@@ -46,7 +46,7 @@ public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapte
     @Override
     public void onBindViewHolder(GroupSavingsViewHolder holder, int position) {
         GroupSavings savings = mGroupSavings.get(position);
-        holder.name.setText(savings.getName());
+        holder.name.setText(savings.getGoalName());
         holder.amount.setText(String.valueOf(savings.getAmount()));
 
 

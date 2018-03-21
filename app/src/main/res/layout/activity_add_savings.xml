@@ -111,6 +111,7 @@
                     android:layout_marginRight="5dp"/>
 
                 <EditText
+                    android:id="@+id/savingNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Notes (Optionaal)"
@@ -129,6 +130,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnCancel"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
                         android:layout_marginRight="2dp"

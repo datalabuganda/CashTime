@@ -20,17 +20,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupSavingsActivity";
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount;
-    private Button btnSave;
+    private EditText goalName, savingAmount, savingNote;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
-    private  String nameOfGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +40,14 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
         goalName = (EditText) findViewById(R.id.goalName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
-        btnSave = (Button) findViewById(R.id.btnSave);
+        savingNote = (EditText) findViewById(R.id.savingNote);
+        Button btnSave = (Button) findViewById(R.id.btnSave);
+        Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
         Intent intent = getIntent();
-        nameOfGoal = intent.getStringExtra("goalName");
+        String nameOfGoal = intent.getStringExtra("goalName");
 
-        // Prepopulate goalName and field
+        // Prepopulate goalName
         goalName.setText(nameOfGoal);
 
         // get selected period
@@ -55,10 +56,22 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         // get selected income
         selectIncomeSource(getIncomeSources());
 
+        // Save Transaction
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveSavingTransaction();
+            }
+        });
+
+        // Cancel Transaction
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearEditTexts();
+
+                // start TabbedSavingActivity
+                startTabbedSavingActivity();
             }
         });
 
@@ -82,25 +95,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Get selected item id
+                // Get selected period
                 selectedPeriod = adapterView.getItemAtPosition(i).toString();
-                switch (selectedPeriod){
-                    case "Daily":
-                        Toast.makeText(AddGroupSavingsActivity.this, "You selected " + selectedPeriod, Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Weekly":
-                        Toast.makeText(AddGroupSavingsActivity.this, "You selected " + selectedPeriod, Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Monthly":
-                        Toast.makeText(AddGroupSavingsActivity.this, "You selected " + selectedPeriod, Toast.LENGTH_SHORT).show();
-                        break;
-
-                    default:
-                        Toast.makeText(AddGroupSavingsActivity.this, "un known selection" , Toast.LENGTH_SHORT).show();
-
-                }
             }
 
             @Override
@@ -123,8 +119,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedIncomeSource = adapterView.getItemAtPosition(i).toString();
-
-                Toast.makeText(AddGroupSavingsActivity.this, "selected Income Source " + selectedIncomeSource , Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -136,36 +130,49 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void saveSavingTransaction(){
-        String period = "";
         String savingPeriod = "";
+        // pick goalName again
         String nameOfGoal = goalName.getText().toString();
-        String amountSaved = savingAmount.getText().toString();
-        String sourceOfIncome = selectedIncomeSource;
 
-        String goalAmount = savingAmount.getText().toString();
+        if ( !savingAmount.getText().toString().equals("")
+                && !goalName.getText().toString().equals("") ){
 
-        Date today = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String dateToday = simpleDateFormat.format(today);
+            String amountSaved = savingAmount.getText().toString();
+            String note = savingNote.getText().toString();
 
-        if (selectedPeriod == "Daily"){
-            savingPeriod = new PeriodHelper().getDailyDate();
-        }else if (selectedPeriod == "Weekly"){
-            savingPeriod = new PeriodHelper().getWeeklyDate();
-        }else if (selectedPeriod == "Monthly"){
-            savingPeriod = new PeriodHelper().getMonthlyDate();
+            Date today = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            String dateToday = simpleDateFormat.format(today);
+
+            if (selectedPeriod == "Daily"){
+                savingPeriod = new PeriodHelper().getDailyDate();
+            }else if (selectedPeriod == "Weekly"){
+                savingPeriod = new PeriodHelper().getWeeklyDate();
+            }else if (selectedPeriod == "Monthly"){
+                savingPeriod = new PeriodHelper().getMonthlyDate();
+            }
+            if (!savingPeriod.equals("")){
+
+                // Add saving to GroupSaving object
+                GroupSavings groupSavings = new GroupSavings(
+                        nameOfGoal, savingPeriod, selectedIncomeSource, note, amountSaved);
+
+                // TODO: 3/21/18 ======>>>>> insert object into db 
+
+                // Award user 3 point for saving
+                User user = new User();
+                user.setPoints(3);
+
+                // clear EditTexts
+                clearEditTexts();
+
+                // start TabbedSavingActivity
+                startTabbedSavingActivity();
+
+            }
+        } else {
+            Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }
-        if (!savingPeriod.equals("")){
-            GroupSavings groupSavings = new GroupSavings(
-                    nameOfGoal, savingPeriod, selectedIncomeSource, "Hey i am a note", goalAmount);
-            Toast.makeText(this, "GroupGoals " + groupSavings.getPeriod(), Toast.LENGTH_SHORT).show();
-        }
-
-        // Award user 3 point for saving
-        User user = new User();
-        user.setPoints(3);
-
-
 
     }
 
@@ -176,5 +183,17 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         incomeSourcesList.add("Investments");
 
         return incomeSourcesList;
+    }
+
+    public void startTabbedSavingActivity(){
+        Intent intent = new Intent(AddGroupSavingsActivity.this, TabbedSavingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void clearEditTexts(){
+        goalName.setText("");
+        savingAmount.setText("");
+        savingNote.setText("");
     }
 }

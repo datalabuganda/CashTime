@@ -56,6 +56,7 @@ public class TabbedSavingActivity extends AppCompatActivity {
                 // switch to goals fragment
                 Intent intent = new Intent(TabbedSavingActivity.this, GroupGoalsActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });

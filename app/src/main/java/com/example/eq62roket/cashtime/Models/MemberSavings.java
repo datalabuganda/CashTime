@@ -6,7 +6,7 @@ package com.example.eq62roket.cashtime.Models;
  */
 
 public class MemberSavings {
-    private String memberName, goalName, period, incomeSource, dateAdded;
+    private String memberName, goalName, period, incomeSource, dateAdded, savingNote;
     private long savingAmount;
 
     public MemberSavings() {
@@ -18,6 +18,7 @@ public class MemberSavings {
             String period,
             String incomeSource,
             String dateAdded,
+            String savingNote,
             long savingAmount) {
 
         this.memberName = memberName;
@@ -25,7 +26,16 @@ public class MemberSavings {
         this.period = period;
         this.incomeSource = incomeSource;
         this.dateAdded = dateAdded;
+        this.savingNote = savingNote;
         this.savingAmount = savingAmount;
+    }
+
+    public String getSavingNote() {
+        return savingNote;
+    }
+
+    public void setSavingNote(String savingNote) {
+        this.savingNote = savingNote;
     }
 
     public String getDateAdded() {

@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
         incomeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent incomeIntent = new Intent(HomeActivity.this, IncomeActivity.class);
+                Intent incomeIntent = new Intent(HomeActivity.this, TabbedIncomeActivity.class);
                 startActivity(incomeIntent);
             }
         });
@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity
         expenditureCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent expenditureIntent = new Intent(HomeActivity.this, ExpenditureActivity.class);
+                Intent expenditureIntent = new Intent(HomeActivity.this, TabbedExpenditureActivity.class);
                 startActivity(expenditureIntent);
             }
         });

@@ -16,4 +16,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_tabbed_transactions">TabbedTransactionsActivity</string>
     <string name="title_activity_tabbed_analysis">TabbedAnalysisActivity</string>
+    <string name="title_activity_tabbed_expenditure">TabbedExpenditureActivity</string>
+    <string name="title_activity_tabbed_income">TabbedIncomeActivity</string>
 </resources>

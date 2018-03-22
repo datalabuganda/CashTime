@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.eq62roket.cashtime.Helper.DatabaseHelper;
 
+import static com.example.eq62roket.cashtime.Helper.DatabaseHelper.TABLE_NAME;
+import static com.example.eq62roket.cashtime.Helper.DatabaseHelper.INCOME_TABLE;
+
 /**
  * Created by eq62roket on 3/12/18.
  */
@@ -48,7 +51,7 @@ public class DatabaseAdapter {
             contentValues.put(DatabaseHelper.Name,name);
             contentValues.put(DatabaseHelper.Phone, phone);
 
-            return db.insert(DatabaseHelper.TABLE_NAME, DatabaseHelper.ROW_ID,contentValues);
+            return db.insert(TABLE_NAME, DatabaseHelper.ROW_ID,contentValues);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -59,8 +62,15 @@ public class DatabaseAdapter {
     //retrieve all group members
     public Cursor getAllGroupMembers(){
         String[] columns = {DatabaseHelper.ROW_ID,DatabaseHelper.Name,DatabaseHelper.Phone};
-        return db.query(DatabaseHelper.TABLE_NAME,columns,null,null,null,null,null);
+        return db.query(TABLE_NAME,columns,null,null,null,null,null);
     }
+
+//    public static Cursor getAllMembers(){
+//        db = helper.getWritableDatabase();
+//        Cursor cursor = db.rawQuery("select * from "+TABLE_NAME,null);
+//        return cursor;
+//    }
+
 
     //Updating group members
     public long updateGroupMember(int id, String name, String phone){
@@ -69,7 +79,7 @@ public class DatabaseAdapter {
             contentValues.put(helper.Name, name);
             contentValues.put(helper.Phone, phone);
 
-            return db.update(helper.TABLE_NAME,contentValues,helper.ROW_ID+" =?", new String[]{String.valueOf(id)});
+            return db.update(TABLE_NAME,contentValues,helper.ROW_ID+" =?", new String[]{String.valueOf(id)});
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -80,7 +90,7 @@ public class DatabaseAdapter {
     //Deleting group members
     public long deleteGroupMember(int id){
         try {
-            return db.delete(helper.TABLE_NAME,helper.ROW_ID+" =?", new String[]{String.valueOf(id)});
+            return db.delete(TABLE_NAME,helper.ROW_ID+" =?", new String[]{String.valueOf(id)});
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -88,4 +98,22 @@ public class DatabaseAdapter {
         return 0;
     }
 
+    //Add group member income
+
+    public long addMemberIncome(String amount, String source, String date, String period, String notes, String id){
+        try{
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseHelper.INCOME_AMOUNT,amount);
+            contentValues.put(DatabaseHelper.INCOME_SOURCE, source);
+            contentValues.put(DatabaseHelper.INCOME_DATE,date);
+            contentValues.put(DatabaseHelper.INCOME_PERIOD, period);
+            contentValues.put(DatabaseHelper.INCOME_NOTES,notes);
+            contentValues.put(DatabaseHelper.MEMBER_ID, id);
+
+            return db.insert(INCOME_TABLE, DatabaseHelper.INCOME_ID,contentValues);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

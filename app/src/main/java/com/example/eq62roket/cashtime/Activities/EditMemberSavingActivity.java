@@ -1,6 +1,8 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +47,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         Button btnDelete = (Button) findViewById(R.id.btnDelete);
 
         Intent intent = getIntent();
-        String nameOfGoal = intent.getStringExtra("goalName");
+        final String nameOfGoal = intent.getStringExtra("goalName");
         String nameOfMember = intent.getStringExtra("memberName");
         String amountSaved = intent.getStringExtra("savingAmount");
         String notes = intent.getStringExtra("savingNote");
@@ -77,13 +79,35 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clearEditTexts();
-
                 // start a dialog fragment
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                // Add the buttons
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Delete Saving, redirect to member goals fragment
+                        // TODO: 3/22/18 ====> delete saving record....redirect to member saving fragment
+
+                        // start TabbedSavingActivity
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cancel
+                    }
+                });
+
+                // 2. Chain together various setter methods to set the dialog characteristics
+                builder.setMessage(
+                        "Deleting saving for '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this saving?").setTitle("Delete Saving");
 
 
-                // start TabbedSavingActivity
-                startTabbedSavingActivity();
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
     }

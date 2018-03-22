@@ -29,7 +29,7 @@
                 android:layout_marginLeft="5dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/memberName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
@@ -39,7 +39,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/phone"
+                    android:id="@+id/memberPhoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0703627654"

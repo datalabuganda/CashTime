@@ -17,12 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Activities.AddMembersGoalsActivity;
-import com.example.eq62roket.cashtime.R;
-
+import com.example.eq62roket.cashtime.Activities.EditMemberGoalActivity;
+import com.example.eq62roket.cashtime.Activities.GroupMembersActivity;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
+import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
 
 import java.util.ArrayList;
@@ -48,22 +47,28 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),AddMembersGoalsActivity.class);
+                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),GroupMembersActivity.class);
                 startActivity(addMembersGoalsIntent);
+                getActivity().finish();
             }
         });
 
         mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
             @Override
             public void onMemberGoalClick(MembersGoals membersGoals) {
-                Toast.makeText(getActivity(), "Was clicked from Fragment", Toast.LENGTH_SHORT).show();
+                Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);
+                editMemberGoalIntent.putExtra("groupMemberName", membersGoals.getMemberName());
+                editMemberGoalIntent.putExtra("groupMemberGoalName", membersGoals.getMemberGoalName());
+                editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
+                editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
+                editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
+                startActivity(editMemberGoalIntent);
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
         prepareMembersGoalsData();
@@ -72,28 +77,28 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
     }
 
     private void prepareMembersGoalsData() {
-        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019");
+        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes also");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018");
+        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018", "incomplete", "Some Notes");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019");
+        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
         mAdapter.notifyDataSetChanged();
     }

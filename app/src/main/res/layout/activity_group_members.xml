@@ -13,19 +13,19 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addNewMember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/add"
-        app:elevation="4dp"
-        app:backgroundTint="#006669"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        app:borderWidth="0dp"
-        app:rippleColor="#000000"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/addNewMember"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/add"-->
+        <!--app:elevation="4dp"-->
+        <!--app:backgroundTint="#006669"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--app:borderWidth="0dp"-->
+        <!--app:rippleColor="#000000"/>-->
 
 </RelativeLayout>

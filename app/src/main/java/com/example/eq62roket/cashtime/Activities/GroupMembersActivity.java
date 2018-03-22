@@ -1,14 +1,11 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,23 +13,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Models.Members;
+import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.Helper.DatabaseHelper;
-import com.example.eq62roket.cashtime.adapters.DatabaseAdapter;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupMembersActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
-    private List<Members> membersList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private MembersAdapter mAdapter;
-    private FloatingActionButton addMember;
+    private List<User> mGroupMemberUsers = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private MembersAdapter mMembersAdapter;
 
 
     @Override
@@ -43,65 +36,66 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        addMember = (FloatingActionButton) findViewById(R.id.addNewMember);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        addMember.setOnClickListener(new View.OnClickListener() {
+        mMembersAdapter = new MembersAdapter(mGroupMemberUsers, new MembersAdapter.OnGroupMemberClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent addMemberIntent = new Intent(GroupMembersActivity.this, AddNewMemberActivity.class);
-                startActivity(addMemberIntent);
+            public void onGroupMemberClick(User groupMemberUser) {
+                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
+                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
+                startActivity(addMemberGoalIntent);
+                finish();
             }
         });
-
-        mAdapter = new MembersAdapter(this,membersList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
-
-//        recyclerView.setAdapter(mAdapter);
-        prepareMemberData();
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mRecyclerView.setAdapter(mMembersAdapter);
 
 
-//        prepareMemberData();
-    }
-
-    private void prepareMemberData(){
-        DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-
-        databaseAdapter.close();
-
-        membersList.clear();
-        Cursor cursor = databaseHelper.getAllMembers();
-//        Cursor cursor=databaseAdapter.getAllGroupMembers();
-        //loop through the data adding to arraylist
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String phone = cursor.getString(2);
-
-            Members members = new Members(name,phone,id);
-            membersList.add(members);
-        }
-
-
-        if(!(membersList.size()<1)){
-            recyclerView.setAdapter(mAdapter);
-        }
+        addGroupMembers();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        prepareMemberData();
+    public void addGroupMembers(){
+        User groupMemberUser = new User(
+                "Otim Tony Jeff",
+                "0705687924",
+                "honey farmer",
+                "male",
+                "secondary",
+                "Ugandan",
+                "kololo",
+                true,
+                false,
+                2,
+                3
+        );
+
+        mGroupMemberUsers.add(groupMemberUser);
+        User groupMemberUser2 = new User(
+                "etwim himself",
+                "0705687924",
+                "pig farmer",
+                "male",
+                "nursery",
+                "CheziLander",
+                "Kampala",
+                false,
+                false,
+                12,
+                3
+        );
+        mGroupMemberUsers.add(groupMemberUser2);
+        mGroupMemberUsers.add(groupMemberUser);
+        mGroupMemberUsers.add(groupMemberUser2);
+
+        mMembersAdapter.notifyDataSetChanged();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,14 +119,14 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     public boolean onQueryTextChange(String newText) {
 
         newText = newText.toLowerCase();
-        ArrayList<Members> newList = new ArrayList<>();
-        for (Members members : membersList){
-            String name = members.getName().toLowerCase();
+        ArrayList<User> groupMemberUsers = new ArrayList<>();
+        for (User groupMemberUser : mGroupMemberUsers){
+            String name = groupMemberUser.getUserName().toLowerCase();
             if (name.contains(newText)){
-                newList.add(members);
+                groupMemberUsers.add(groupMemberUser);
             }
         }
-        mAdapter.setFilter(newList);
+        mMembersAdapter.setFilter(groupMemberUsers);
         return true;
     }
 }

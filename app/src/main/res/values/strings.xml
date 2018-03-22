@@ -19,4 +19,7 @@
     <string name="add_amount">Add Amount</string>
     <string name="add_goal">Add Goal</string>
     <string name="goal_deadline">Goal Deadline</string>
+    <string name="etwin_himself">etwin himself</string>
+    <string name="add_goal_name">Add Goal Name</string>
+    <string name="add_goal_amount">Add Goal Amount</string>
 </resources>

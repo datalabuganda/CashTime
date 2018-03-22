@@ -33,12 +33,11 @@
         <activity android:name=".Activities.SettingsActivity" />
         <activity
             android:name=".Activities.GroupMembersActivity"
-            android:label="Group Members"
+            android:label="Select A Group Members"
             android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
             android:label="Add Member" />
-        <activity android:name=".Activities.AddMemberGoalActivity" />
         <activity android:name=".Activities.EditGoalActivity" />
         <activity android:name=".Activities.MembersGoalsActivity" />
         <activity
@@ -79,7 +78,9 @@
         <activity android:name=".Activities.IncomeActivity" />
         <activity android:name=".Activities.ExpenditureActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
-        <activity android:name=".Activities.AddMembersGoalsActivity" />
+        <activity
+            android:name=".Activities.AddMembersGoalsActivity"
+            android:label="Add A Member Goal" />
         <activity android:name=".Activities.NewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
@@ -93,7 +94,8 @@
             android:label="Add A Member Goal" />
         <activity android:name=".Activities.EditMemberSavingActivity" />
         <activity android:name=".Activities.EditGroupSavingActivity" />
-        <activity android:name=".Activities.EditGroupGoalActivity"></activity>
+        <activity android:name=".Activities.EditGroupGoalActivity" />
+        <activity android:name=".Activities.EditMemberGoalActivity"></activity>
     </application>
 
 </manifest>

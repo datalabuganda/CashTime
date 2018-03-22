@@ -91,13 +91,13 @@
                     android:src="@drawable/calendar"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
-                    <EditText
-                        android:id="@+id/memberGoalDueDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/goal_deadline"
-                        android:focusable="false"
-                        android:layout_marginLeft="5dp"/>
+                <EditText
+                    android:id="@+id/memberGoalDueDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/goal_deadline"
+                    android:focusable="false"
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -167,18 +167,18 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/memberGoalCancelBtn"
+                    android:id="@+id/memberGoalDeleteBtn"
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
-                    android:text="Cancel"/>
+                    android:text="Delete"/>
 
                 <Button
-                    android:id="@+id/memberGoalSaveBtn"
+                    android:id="@+id/memberGoalUpdateBtn"
                     android:layout_width="180dp"
                     android:layout_marginLeft="1dp"
                     android:layout_height="60dp"
-                    android:text="Save"/>
+                    android:text="Update"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

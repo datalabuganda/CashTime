@@ -77,28 +77,28 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
     }
 
     private void prepareMembersGoalsData() {
-        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019");
+        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Notes Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018");
+        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018", "incomplete", "Some Notes and notes");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019", "incomplete", "Some Notes");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019");
+        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
 
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019");
+        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
         membersGoalsList.add(membersGoals);
         mAdapter.notifyDataSetChanged();
     }

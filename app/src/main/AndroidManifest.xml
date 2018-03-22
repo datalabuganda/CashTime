@@ -68,7 +68,6 @@
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.MemberSavingsDetail" />
         <activity
             android:name=".Activities.TabbedTransactionsActivity"
             android:label="@string/title_activity_tabbed_transactions"
@@ -92,7 +91,8 @@
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
             android:label="Select A Member Goal" />
-        <activity android:name=".Activities.EditMemberSavingActivity"></activity>
+        <activity android:name=".Activities.EditMemberSavingActivity" />
+        <activity android:name=".Activities.EditGroupSavingActivity"></activity>
     </application>
 
 </manifest>

@@ -24,10 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class EditMemberSavingActivity extends AppCompatActivity {
+public class EditGroupSavingActivity extends AppCompatActivity {
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote, memberName;
+    private EditText goalName, savingAmount, savingNote;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
@@ -35,31 +35,25 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_member_saving);
+        setContentView(R.layout.activity_edit_group_saving);
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
         goalName = (EditText) findViewById(R.id.goalName);
-        memberName = (EditText) findViewById(R.id.memberName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
         Button btnUpdate = (Button) findViewById(R.id.btnUpdate);
         Button btnDelete = (Button) findViewById(R.id.btnDelete);
 
         Intent intent = getIntent();
-        final String nameOfGoal = intent.getStringExtra("goalName");
-        String nameOfMember = intent.getStringExtra("memberName");
-        String amountSaved = intent.getStringExtra("savingAmount");
-        String notes = intent.getStringExtra("savingNote");
-        String period = intent.getStringExtra("savingPeriod");
-        String sourceOfIncome = intent.getStringExtra("incomeSource");
+        final String nameOfGoal = intent.getStringExtra("groupGoalName");
+        String amountSaved = intent.getStringExtra("groupSavingAmount");
+        String note = intent.getStringExtra("groupSavingNote");
 
-        // Prepopulate goalName and memberName
+        // Prepopulate goalName
         goalName.setText(nameOfGoal);
-        memberName.setText(nameOfMember);
         savingAmount.setText(amountSaved);
-        savingNote.setText(notes);
-
+        savingNote.setText(note);
 
         // get selected period
         getSelectPeriod();
@@ -84,12 +78,12 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to member goals fragment
-                        // TODO: 3/22/18 ====> delete saving record....redirect to member saving fragment
+                        // Delete Saving, redirect to group goals fragment
+                        // TODO: 3/22/18 ====> delete saving record
 
                         // start TabbedSavingActivity
                         startTabbedSavingActivity();
-                        Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditGroupSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -110,6 +104,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void getSelectPeriod(){
@@ -169,8 +164,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
-                && !goalName.getText().toString().equals("")
-                && !memberName.getText().toString().equals("")){
+                && !goalName.getText().toString().equals("") ){
 
             String amountSaved = savingAmount.getText().toString();
             String note = savingNote.getText().toString();
@@ -193,7 +187,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                         nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                // TODO: 3/21/18 ======>>>>> insert object into db
+                // TODO: 3/21/18 ======>>>>> update object in db
 
                 // Award user 3 point for saving
                 User user = new User();
@@ -222,7 +216,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(EditMemberSavingActivity.this, TabbedSavingActivity.class);
+        Intent intent = new Intent(EditGroupSavingActivity.this, TabbedSavingActivity.class);
         startActivity(intent);
         finish();
     }

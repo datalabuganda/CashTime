@@ -158,7 +158,7 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
 
                 // Add saving to GroupSaving object
                 GroupSavings groupSavings = new GroupSavings(
-                        nameOfGoal, savingPeriod, selectedIncomeSource, note, amountSaved);
+                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
                 // TODO: 3/21/18 ======>>>>> insert object into db

@@ -17,21 +17,40 @@ import java.util.List;
 
 public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapter.GroupSavingsViewHolder> {
 
+    public interface OnGroupSavingClickListener {
+        void onGroupSavingClick(GroupSavings groupSavings);
+    }
     private static final String TAG = "GroupSavingsAdapter";
 
     private List<GroupSavings> mGroupSavings;
-    public GroupSavingsAdapter(List<GroupSavings> groupSavings){
+    private OnGroupSavingClickListener mOnGroupSavingClickListener;
+
+    public GroupSavingsAdapter(List<GroupSavings> groupSavings, OnGroupSavingClickListener onGroupSavingClickListener){
         mGroupSavings = groupSavings;
+        mOnGroupSavingClickListener = onGroupSavingClickListener;
     }
 
     public class GroupSavingsViewHolder extends RecyclerView.ViewHolder{
-        private TextView goalName, amount;
+        private TextView goalName, groupAmount, groupSavingDate;
 
 
         public GroupSavingsViewHolder(View view) {
             super(view);
             goalName = (TextView) view.findViewById(R.id.goalName);
-            amount = (TextView) view.findViewById(R.id.tv_memberAmount);
+            groupAmount = (TextView) view.findViewById(R.id.groupAmount);
+            groupSavingDate = (TextView) view.findViewById(R.id.groupSavingDate);
+        }
+
+        public void bind(final GroupSavings groupSavings, final OnGroupSavingClickListener onGroupSavingClickListener){
+            goalName.setText(groupSavings.getGoalName());
+            groupAmount.setText(groupSavings.getAmount());
+            groupSavingDate.setText(groupSavings.getDateAdded());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onGroupSavingClickListener.onGroupSavingClick(groupSavings);
+                }
+            });
         }
     }
 
@@ -45,9 +64,7 @@ public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapte
 
     @Override
     public void onBindViewHolder(GroupSavingsViewHolder holder, int position) {
-        GroupSavings savings = mGroupSavings.get(position);
-        holder.goalName.setText(savings.getGoalName());
-        holder.amount.setText(String.valueOf(savings.getAmount()));
+       holder.bind(mGroupSavings.get(position), mOnGroupSavingClickListener);
 
 
     }

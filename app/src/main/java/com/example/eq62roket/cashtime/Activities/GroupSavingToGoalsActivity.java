@@ -55,7 +55,7 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
         groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "703000", "Salary", "notessssss");
+        groupGoals = new GroupGoals("Buy seeds", "14/3/1890", "23000000", "notessssss");
         groupGoalsList.add(groupGoals);
 
         groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss");

@@ -77,7 +77,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "703000", "Salary", "notessssss");
+        groupGoals = new GroupGoals("Buy seeds", "23/12/2018", "23000", "notessssss");
         groupGoalsList.add(groupGoals);
 
         groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss");

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eq62roket.cashtime.Activities.EditGroupSavingActivity;
 import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
@@ -42,7 +43,17 @@ public class GroupSavingsFragment extends Fragment {
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
 
-        mGroupSavingsAdapter = new GroupSavingsAdapter(mGroupSavings);
+        mGroupSavingsAdapter = new GroupSavingsAdapter(mGroupSavings, new GroupSavingsAdapter.OnGroupSavingClickListener() {
+            @Override
+            public void onGroupSavingClick(GroupSavings groupSavings) {
+                Intent intent = new Intent(getActivity(), EditGroupSavingActivity.class);
+                intent.putExtra("groupGoalName", groupSavings.getGoalName());
+                intent.putExtra("groupSavingAmount", groupSavings.getAmount());
+                intent.putExtra("groupSavingNote", groupSavings.getNotes());
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -69,16 +80,16 @@ public class GroupSavingsFragment extends Fragment {
 
     private void prepareSavingData(){
 
-        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss",  "20000");
+        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss", "12/1/1980",  "20000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "5000");
+        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "12/3/1980", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "5000");
+        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "12/11/1980", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "3990");
+        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "12/12/1980","3990");
         mGroupSavings.add(groupSavings);
 
         mGroupSavingsAdapter.notifyDataSetChanged();

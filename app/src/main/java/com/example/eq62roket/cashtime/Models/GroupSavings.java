@@ -5,15 +5,24 @@ package com.example.eq62roket.cashtime.Models;
  */
 
 public class GroupSavings {
-    private String goalName, period, incomeSource, notes;
+    private String goalName, period, incomeSource, notes, dateAdded;
     private String amount;
 
-    public GroupSavings(String goalName, String period, String incomeSource, String notes, String amount) {
+    public GroupSavings(String goalName, String period, String incomeSource, String notes, String dateAdded, String amount) {
         this.goalName = goalName;
         this.period = period;
         this.incomeSource = incomeSource;
         this.notes = notes;
+        this.dateAdded = dateAdded;
         this.amount = amount;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public String getPeriod() {
@@ -52,7 +61,7 @@ public class GroupSavings {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount += amount;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

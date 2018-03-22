@@ -23,7 +23,7 @@ public class GroupExpendituresFragment extends Fragment {
         fabGroupExpenditures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GroupExpendituresFragment.this.getContext(),GroupExpenditureActivity.class);
+                Intent intent = new Intent(GroupExpendituresFragment.this.getContext(),AddGroupExpenditureActivity.class);
                 startActivity(intent);
             }
         });

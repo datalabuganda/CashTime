@@ -66,13 +66,23 @@
             android:label="Analysis"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".IncomeActivity" />
-        <activity android:name=".ExpenditureActivity"></activity>
-
+        <activity android:name=".AddGroupExpenditureActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".AddMembersGoalsActivity" />
         <activity android:name=".NewGroupActivity" />
-        <activity android:name=".GroupMembersDetailActivity"></activity>
-
+        <activity android:name=".GroupMembersDetailActivity" />
+        <activity android:name=".GroupMembersListIncomeActivity" />
+        <activity android:name=".AddGroupMembersIncomeActivity" />
+        <activity
+            android:name=".TabbedExpenditureActivity"
+            android:label="@string/title_activity_tabbed_expenditure"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TabbedIncomeActivity"
+            android:label="@string/title_activity_tabbed_income"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddGroupMembersExpendituresActivity" />
+        <activity android:name=".AddGroupIncomeActivity"></activity>
     </application>
 
 </manifest>

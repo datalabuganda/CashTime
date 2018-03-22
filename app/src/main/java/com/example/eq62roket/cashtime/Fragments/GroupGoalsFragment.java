@@ -17,9 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
-import com.example.eq62roket.cashtime.Activities.AddGroupSavingsActivity;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
@@ -54,10 +54,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
             @Override
             public void onGoalClick(GroupGoals groupGoals) {
-                Intent intent = new Intent(getActivity(), AddGroupSavingsActivity.class);
-                intent.putExtra("goalName", groupGoals.getName());
-                startActivity(intent);
-                getActivity().finish();
+                Toast.makeText(getContext(), "<*>" + groupGoals.getName() + " Clicked <*>", Toast.LENGTH_SHORT).show();
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

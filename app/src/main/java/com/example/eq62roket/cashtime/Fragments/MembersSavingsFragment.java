@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eq62roket.cashtime.Activities.GroupGoalsActivity;
+import com.example.eq62roket.cashtime.Activities.MemberSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Activities.MemberSavingsDetail;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
@@ -61,7 +61,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
                 // switch to goals fragment
-                Intent intent = new Intent(getActivity(), GroupGoalsActivity.class);
+                Intent intent = new Intent(getActivity(), MemberSavingToGoalsActivity.class);
                 startActivity(intent);
 
             }

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.eq62roket.cashtime.R;
 
-public class GroupGoalsActivity extends AppCompatActivity {
+public class    GroupGoalsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

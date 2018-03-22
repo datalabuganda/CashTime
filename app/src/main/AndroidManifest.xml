@@ -87,7 +87,8 @@
         <activity android:name=".Activities.AddMembersGoalsActivity" />
         <activity android:name=".Activities.NewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
-        <activity android:name=".Activities.GroupSavingToGoalsActivity"></activity>
+        <activity android:name=".Activities.GroupSavingToGoalsActivity" />
+        <activity android:name=".Activities.MemberSavingToGoalsActivity"></activity>
     </application>
 
 </manifest>

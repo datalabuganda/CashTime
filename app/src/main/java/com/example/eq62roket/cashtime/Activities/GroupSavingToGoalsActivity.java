@@ -2,12 +2,10 @@ package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
@@ -26,17 +24,17 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_group_goals);
+        setContentView(R.layout.activity_group_saving_to_goals);
 
         recyclerView = (RecyclerView) findViewById(R.id.group_recycler_view);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addGroupGoalsIntent = new Intent(GroupSavingToGoalsActivity.this, AddGroupGoalsActivity.class);
-                startActivity(addGroupGoalsIntent);
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent addGroupGoalsIntent = new Intent(GroupSavingToGoalsActivity.this, AddGroupGoalsActivity.class);
+//                startActivity(addGroupGoalsIntent);
+//            }
+//        });
 
         mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
             @Override

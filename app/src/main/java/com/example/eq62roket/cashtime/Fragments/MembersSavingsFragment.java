@@ -2,6 +2,7 @@ package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eq62roket.cashtime.Activities.GroupGoalsActivity;
 import com.example.eq62roket.cashtime.Activities.MemberSavingsDetail;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
@@ -26,6 +28,8 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
     private MemberSavingsAdapter mMemberSavingsAdapter;
     private RecyclerView mRecyclerView;
 
+    private FloatingActionButton mFloatingActionButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
                 false
         );
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
         mMemberSavingsAdapter = new MemberSavingsAdapter(mMemberSavings, new MemberSavingsAdapter.OnSavingClickListener() {
             @Override
@@ -50,6 +55,17 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mMemberSavingsAdapter);
+
+        // add saving
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // switch to goals fragment
+                Intent intent = new Intent(getActivity(), GroupGoalsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         // add data to mMembersSavings
         prepareMemberData();

@@ -56,7 +56,6 @@ public class GroupSavingsFragment extends Fragment {
                 // switch to goals fragment
                 Intent intent = new Intent(getActivity(), GroupGoalsActivity.class);
                 startActivity(intent);
-                getActivity().finish();
 
             }
         });

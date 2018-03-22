@@ -49,19 +49,19 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
 
     private void prepareGroupGoalsData() {
         GroupGoals groupGoals = new GroupGoals(
-                "Buy 5 Hives", "23/5/2018", "500000", "this is optional");
+                "Buy 5 Hives", "23/5/2018", "500000", "this is optional", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "14/3/1890", "23000000", "notessssss");
+        groupGoals = new GroupGoals("Buy seeds", "14/3/1890", "23000000", "notessssss", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "noruuueue");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "noruuueue", "incomplete");
         groupGoalsList.add(groupGoals);
 
         mAdapter.notifyDataSetChanged();

@@ -33,9 +33,10 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/groupGoalName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Goal"
+                        android:hint="@string/add_goal"
                         android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -57,9 +58,10 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/groupGoalAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Amount"
+                        android:hint="@string/add_amount"
                         android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -86,7 +88,8 @@
                         android:id="@+id/groupGoalDueDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Due Date"
+                        android:hint="@string/goal_deadline"
+                        android:focusable="false"
                         android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -108,9 +111,10 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/groupGoalNote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Notes (Option)"
+                        android:hint="Notes (Optional)"
                         android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -164,12 +168,14 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/groupCancelBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
                         android:layout_marginRight="2dp"
                         android:text="Cancel"/>
 
                     <Button
+                        android:id="@+id/groupSaveBtn"
                         android:layout_width="170dp"
                         android:layout_marginLeft="2dp"
                         android:layout_height="60dp"

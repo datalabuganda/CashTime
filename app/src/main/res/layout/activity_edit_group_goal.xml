@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eq62roket.cashtime.Activities.AddSavingsActivity">
+    tools:context="com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,48 +22,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/goal"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-
-                <EditText
-                    android:id="@+id/goalName"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Goal Name"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/groupGoalName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/add_goal"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/person"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"/>
-
-                <TextView
-                    android:id="@+id/memberName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Member Name"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,13 +53,20 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/savingAmount"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/groupGoalAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/add_amount"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
 
 
             <LinearLayout
@@ -91,33 +80,19 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/select_period_spinner"
-                    android:layout_margin="5dp"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/groupGoalDueDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/goal_deadline"
+                        android:focusable="false"
+                        android:layout_margin="5dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/money"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"/>
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/select_income_spinner"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.AppCompatSpinner>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -131,40 +106,82 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/savingNote"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Optionaal)"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/groupGoalNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Optional)"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/image"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"/>
+
+                    <TextView
+                        android:id="@+id/selectImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select Image"
+                        android:textSize="16sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="15dp"/>
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/groupGoalImage"
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/image"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                     <Button
-                        android:id="@+id/btnCancel"
+                        android:id="@+id/groupDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
                         android:layout_marginRight="2dp"
-                        android:text="Cancel"/>
+                        android:text="Delete"/>
 
                     <Button
-                        android:id="@+id/btnSave"
+                        android:id="@+id/groupUpdateBtn"
                         android:layout_width="170dp"
                         android:layout_marginLeft="2dp"
                         android:layout_height="60dp"
-                        android:text="Save"/>
+                        android:text="Update"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

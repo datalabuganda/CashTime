@@ -8,10 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddGroupGoalsActivity extends AppCompatActivity {
+public class EditGroupGoalActivity extends AppCompatActivity {
 
     TextView groupGoalDueDate, selectImage;
     ImageView groupGoalImage;
@@ -38,15 +37,12 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
     EditText groupGoalNote, groupGoalAmount, groupGoalName;
-    Button groupCancelBtn, groupSaveBtn;
+    Button groupDeleteBtn, groupUpdateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_group_goals);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        setContentView(R.layout.activity_edit_group_goal);
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
         selectImage = (TextView) findViewById(R.id.selectImage);
@@ -54,28 +50,62 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
         groupGoalNote = (EditText) findViewById(R.id.groupGoalNote);
         groupGoalAmount = (EditText) findViewById(R.id.groupGoalAmount);
         groupGoalName = (EditText) findViewById(R.id.groupGoalName);
-        groupSaveBtn = (Button) findViewById(R.id.groupSaveBtn);
-        groupCancelBtn = (Button) findViewById(R.id.groupCancelBtn);
+        groupUpdateBtn = (Button) findViewById(R.id.groupUpdateBtn);
+        groupDeleteBtn = (Button) findViewById(R.id.groupDeleteBtn);
 
-        groupSaveBtn.setOnClickListener(new View.OnClickListener() {
+        // get Intent data
+        Intent intent = getIntent();
+        final String nameOfGoal = intent.getStringExtra("groupGoalName");
+        String costOfGoal = intent.getStringExtra("groupGoalAmount");
+        String goalDeadline = intent.getStringExtra("groupGoalDeadline");
+        String goalNote = intent.getStringExtra("groupGoalNotes");
+
+        groupGoalName.setText(nameOfGoal);
+        groupGoalAmount.setText(costOfGoal);
+        groupGoalDueDate.setText(goalDeadline);
+        groupGoalNote.setText(goalNote);
+
+        groupUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveGroupGoal();
             }
         });
 
-        groupCancelBtn.setOnClickListener(new View.OnClickListener() {
+        groupDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTabbedGoalsActivity();
+
+                // start a dialog fragment
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
+                // Add the buttons
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Delete Saving, redirect to group goals fragment
+                        // TODO: 3/22/18 ====> delete goal record
+
+                        // start TabbedSavingActivity
+                        startTabbedGoalsActivity();
+                        Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cancel
+                    }
+                });
+
+                builder.setMessage(
+                        "Deleting Group Goal '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Group Goal");
+
+
+                // Create the AlertDialog
+                android.support.v7.app.AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
-
-
-        // init - set date to current date
-        long currentdate = System.currentTimeMillis();
-        String dateString = sdf.format(currentdate);
-        groupGoalDueDate.setText("Select Goal Deadline");
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -83,7 +113,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -96,7 +125,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -115,7 +143,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     private void SelectImage(){
         final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddGroupGoalsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditGroupGoalActivity.this);
         builder.setTitle("Add Image");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
@@ -184,7 +212,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
             startTabbedGoalsActivity();
 
-            Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Group Goal " + groupGoals.getName() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -192,7 +220,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     }
 
     public void startTabbedGoalsActivity(){
-        Intent tabbedGoalsIntent = new Intent(AddGroupGoalsActivity.this, TabbedGoalsActivity.class);
+        Intent tabbedGoalsIntent = new Intent(EditGroupGoalActivity.this, TabbedGoalsActivity.class);
         startActivity(tabbedGoalsIntent);
         finish();
     }

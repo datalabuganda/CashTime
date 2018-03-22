@@ -17,9 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
+import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
@@ -54,14 +54,20 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
             @Override
             public void onGoalClick(GroupGoals groupGoals) {
-                Toast.makeText(getContext(), "<*>" + groupGoals.getName() + " Clicked <*>", Toast.LENGTH_SHORT).show();
+                Intent editGroupGoalIntent = new Intent(getActivity(), EditGroupGoalActivity.class);
+                editGroupGoalIntent.putExtra("groupGoalName", groupGoals.getName());
+                editGroupGoalIntent.putExtra("groupGoalAmount", groupGoals.getAmount());
+                editGroupGoalIntent.putExtra("groupGoalDeadline",groupGoals.getDueDate());
+                editGroupGoalIntent.putExtra("groupGoalNotes", groupGoals.getNotes());
+                startActivity(editGroupGoalIntent);
+                getActivity().finish();
             }
         });
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
         prepareGroupGoalsData();
@@ -71,19 +77,19 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
 
     private void prepareGroupGoalsData() {
         GroupGoals groupGoals = new GroupGoals(
-                "Buy 5 Hives", "23/5/2018", "500000", "this is optional");
+                "Buy 5 Hives", "23/5/2018", "500000", "this is optional", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notes", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/12/2018", "23000", "notessssss");
+        groupGoals = new GroupGoals("Buy seeds", "23/12/2018", "23000", "notessssss", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "notedsss", "incomplete");
         groupGoalsList.add(groupGoals);
 
-        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "noruuueue");
+        groupGoals = new GroupGoals("Buy seeds", "23/5/2018", "703000", "noruuueue", "incomplete");
         groupGoalsList.add(groupGoals);
 
         mAdapter.notifyDataSetChanged();

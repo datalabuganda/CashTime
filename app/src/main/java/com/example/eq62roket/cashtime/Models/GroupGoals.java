@@ -2,10 +2,11 @@ package com.example.eq62roket.cashtime.Models;
 
 /**
  * Created by eq62roket on 2/28/18.
+ * modified by etwin 22/3/18
  */
 
 public class GroupGoals {
-    String name, dueDate, amount, notes;
+    String name, dueDate, amount, notes, groupGoalStatus;
 
     public GroupGoals() {
     }
@@ -14,11 +15,21 @@ public class GroupGoals {
             String name,
             String startDate,
             String amount,
-            String notes) {
+            String notes,
+            String groupGoalStatus) {
         this.name = name;
         this.dueDate = startDate;
         this.amount = amount;
         this.notes = notes;
+        this.groupGoalStatus = groupGoalStatus;
+    }
+
+    public String getGroupGoalStatus() {
+        return groupGoalStatus;
+    }
+
+    public void setGroupGoalStatus(String groupGoalStatus) {
+        this.groupGoalStatus = groupGoalStatus;
     }
 
     public String getNotes() {

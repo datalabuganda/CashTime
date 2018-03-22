@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
@@ -25,7 +26,8 @@ import java.util.Locale;
 public class AddMemberSavingsActivity extends AppCompatActivity {
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote, memberName;
+    private EditText goalName, savingAmount, savingNote;
+    private TextView memberName;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
@@ -39,7 +41,7 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
         goalName = (EditText) findViewById(R.id.goalName);
-        memberName = (EditText) findViewById(R.id.memberName);
+        memberName = (TextView) findViewById(R.id.memberName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
         Button btnSave = (Button) findViewById(R.id.btnSave);
@@ -137,8 +139,7 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
         String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
-                && !goalName.getText().toString().equals("")
-                && !memberName.getText().toString().equals("")){
+                && !goalName.getText().toString().equals("") ){
 
             String amountSaved = savingAmount.getText().toString();
             String note = savingNote.getText().toString();

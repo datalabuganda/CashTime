@@ -90,9 +90,10 @@
             android:label="Select A Member Goal" />
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
-            android:label="Select A Member Goal" />
+            android:label="Add A Member Goal" />
         <activity android:name=".Activities.EditMemberSavingActivity" />
-        <activity android:name=".Activities.EditGroupSavingActivity"></activity>
+        <activity android:name=".Activities.EditGroupSavingActivity" />
+        <activity android:name=".Activities.EditGroupGoalActivity"></activity>
     </application>
 
 </manifest>

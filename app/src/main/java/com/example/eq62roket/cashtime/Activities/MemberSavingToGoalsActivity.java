@@ -1,12 +1,12 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
@@ -31,7 +31,12 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
             @Override
             public void onMemberGoalClick(MembersGoals membersGoals) {
-                Toast.makeText(MemberSavingToGoalsActivity.this, "Goal " + membersGoals.getGoal() + " Clicked", Toast.LENGTH_SHORT).show();
+                // show Add Member Saving Form
+                Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
+                intent.putExtra("goalName", membersGoals.getMemberGoalName());
+                intent.putExtra("memberName",membersGoals.getMemberName());
+                startActivity(intent);
+                finish();
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -53,10 +58,10 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         newText = newText.toLowerCase();
         ArrayList<MembersGoals> newList = new ArrayList<>();
         for (MembersGoals membersGoals : membersGoalsList){
-            String name = membersGoals.getName().toLowerCase();
-            String goal = membersGoals.getGoal().toLowerCase();
-            String amount = membersGoals.getAmount().toLowerCase();
-            String date = membersGoals.getDate().toLowerCase();
+            String name = membersGoals.getMemberName().toLowerCase();
+            String goal = membersGoals.getMemberGoalName().toLowerCase();
+            String amount = membersGoals.getMemberGoalAmount().toLowerCase();
+            String date = membersGoals.getMemberGoalDueDate().toLowerCase();
             if (name.contains(newText)){
                 newList.add(membersGoals);
             }else if (goal.contains(newText)){

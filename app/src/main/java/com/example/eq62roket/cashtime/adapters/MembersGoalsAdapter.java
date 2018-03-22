@@ -38,10 +38,10 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
         }
 
         public void bind(final MembersGoals membersGoals, final OnMemberGoalClickListener memberGoalClickListener){
-            memberName.setText(membersGoals.getName());
-            memberGoalDueDate.setText(membersGoals.getDate());
-            memberGoalAmount.setText(membersGoals.getAmount());
-            memberGoalName.setText(membersGoals.getGoal());
+            memberName.setText(membersGoals.getMemberName());
+            memberGoalDueDate.setText(membersGoals.getMemberGoalDueDate());
+            memberGoalAmount.setText(membersGoals.getMemberGoalAmount());
+            memberGoalName.setText(membersGoals.getMemberGoalName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

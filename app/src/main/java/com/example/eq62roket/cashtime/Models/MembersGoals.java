@@ -5,47 +5,47 @@ package com.example.eq62roket.cashtime.Models;
  */
 
 public class MembersGoals {
-    String name, goal, amount, date;
+    String memberName, memberGoalName, memberGoalAmount, memberGoalDueDate;
 
     public MembersGoals() {
     }
 
-    public MembersGoals(String name, String goal, String amount, String date) {
-        this.name = name;
-        this.goal = goal;
-        this.amount = amount;
-        this.date = date;
+    public MembersGoals(String memberName, String memberGoalName, String memberGoalAmount, String memberGoalDueDate) {
+        this.memberName = memberName;
+        this.memberGoalName = memberGoalName;
+        this.memberGoalAmount = memberGoalAmount;
+        this.memberGoalDueDate = memberGoalDueDate;
     }
 
-    public String getName() {
-        return name;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
-    public String getGoal() {
-        return goal;
+    public String getMemberGoalName() {
+        return memberGoalName;
     }
 
-    public void setGoal(String goal) {
-        this.goal = goal;
+    public void setMemberGoalName(String memberGoalName) {
+        this.memberGoalName = memberGoalName;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getMemberGoalAmount() {
+        return memberGoalAmount;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setMemberGoalAmount(String memberGoalAmount) {
+        this.memberGoalAmount = memberGoalAmount;
     }
 
-    public String getDate() {
-        return date;
+    public String getMemberGoalDueDate() {
+        return memberGoalDueDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setMemberGoalDueDate(String memberGoalDueDate) {
+        this.memberGoalDueDate = memberGoalDueDate;
     }
 }

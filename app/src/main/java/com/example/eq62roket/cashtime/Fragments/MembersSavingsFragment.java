@@ -46,8 +46,8 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
             @Override
             public void onSavingClick(MemberSavings memberSavings) {
                 Intent intent = new Intent(getActivity(), MemberSavingsDetail.class);
-                intent.putExtra("name", memberSavings.getName());
-                intent.putExtra("amount", String.valueOf(memberSavings.getAmount()));
+                intent.putExtra("name", memberSavings.getMemberName());
+                intent.putExtra("amount", String.valueOf(memberSavings.getsavingAmount()));
                 startActivity(intent);
             }
         });
@@ -75,19 +75,19 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
 
     private void prepareMemberData(){
         MemberSavings memberSavings = null;
-        memberSavings = new MemberSavings("Jeff Kiwa", 3000);
+        memberSavings = new MemberSavings("Jeff Kiwa", "Buy A shirt", "Weekly", "Salary", "22/3/2020", 3000);
         mMemberSavings.add(memberSavings);
 
-        memberSavings = new MemberSavings("Anold Kimitu", 46200);
+        memberSavings = new MemberSavings("Anold Kimitu", "Buy A gomesi", "Monthly", "Investment", "20/3/2020",  46200);
         mMemberSavings.add(memberSavings);
 
-        memberSavings = new MemberSavings("Mukamaniwalinda Harrison", 580000000);
+        memberSavings = new MemberSavings("Mukamaniwalinda Harrison","Buy a piglet", "Daily", "Loan", "22/12/2020",  580000000);
         mMemberSavings.add(memberSavings);
 
-        memberSavings = new MemberSavings("Phifi Queen", 70000);
+        memberSavings = new MemberSavings("Phifi Queen", "Buy seeds", "Monthly", "Salary", "12/3/2020",  70000);
         mMemberSavings.add(memberSavings);
 
-        memberSavings = new MemberSavings("Waren Kintu", 46000);
+        memberSavings = new MemberSavings("Waren Kintu", "Buy A shirt", "Weekly", "Salary", "22/3/2020",  46000);
         mMemberSavings.add(memberSavings);
 
 

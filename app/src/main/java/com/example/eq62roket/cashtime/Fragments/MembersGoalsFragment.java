@@ -125,10 +125,10 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         newText = newText.toLowerCase();
         ArrayList<MembersGoals> newList = new ArrayList<>();
         for (MembersGoals membersGoals : membersGoalsList){
-            String name = membersGoals.getName().toLowerCase();
-            String goal = membersGoals.getGoal().toLowerCase();
-            String amount = membersGoals.getAmount().toLowerCase();
-            String date = membersGoals.getDate().toLowerCase();
+            String name = membersGoals.getMemberName().toLowerCase();
+            String goal = membersGoals.getMemberGoalName().toLowerCase();
+            String amount = membersGoals.getMemberGoalAmount().toLowerCase();
+            String date = membersGoals.getMemberGoalDueDate().toLowerCase();
             if (name.contains(newText)){
                 newList.add(membersGoals);
             }else if (goal.contains(newText)){

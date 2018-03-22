@@ -84,11 +84,14 @@
         <activity android:name=".Activities.NewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
-            android:label="Select A Group Goal"
-            android:name=".Activities.GroupSavingToGoalsActivity" />
+            android:name=".Activities.GroupSavingToGoalsActivity"
+            android:label="Select A Group Goal" />
+        <activity
+            android:name=".Activities.MemberSavingToGoalsActivity"
+            android:label="Select A Member Goal" />
         <activity
             android:label="Select A Member Goal"
-            android:name=".Activities.MemberSavingToGoalsActivity"></activity>
+            android:name=".Activities.AddMemberSavingsActivity"></activity>
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eq62roket.cashtime.Activities.GroupGoalsActivity;
+import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupSavingsAdapter;
@@ -54,7 +54,7 @@ public class GroupSavingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // switch to goals fragment
-                Intent intent = new Intent(getActivity(), GroupGoalsActivity.class);
+                Intent intent = new Intent(getActivity(), GroupSavingToGoalsActivity.class);
                 startActivity(intent);
 
             }
@@ -69,16 +69,16 @@ public class GroupSavingsFragment extends Fragment {
 
     private void prepareSavingData(){
 
-        GroupSavings groupSavings = new GroupSavings("Leon Bryn", "Weekly", "Salary", "Notessss",  "20000");
+        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss",  "20000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("etwin himself", "Monthly", "Loan", "Notey", "5000");
+        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Moses Ali", "Monthly", "Investment", "jot notes", "5000");
+        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "5000");
         mGroupSavings.add(groupSavings);
 
-        groupSavings = new GroupSavings("Hostin Dundey", "Daily", "Salary", "Other notes", "3990");
+        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "3990");
         mGroupSavings.add(groupSavings);
 
         mGroupSavingsAdapter.notifyDataSetChanged();

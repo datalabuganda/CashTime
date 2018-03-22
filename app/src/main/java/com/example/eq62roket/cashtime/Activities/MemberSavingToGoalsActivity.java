@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
@@ -27,7 +28,12 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
 
         recyclerView = (RecyclerView) findViewById(R.id.members_goals_recycler_view);
 
-        mAdapter = new MembersGoalsAdapter(membersGoalsList);
+        mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+            @Override
+            public void onMemberGoalClick(MembersGoals membersGoals) {
+                Toast.makeText(MemberSavingToGoalsActivity.this, "Goal " + membersGoals.getGoal() + " Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

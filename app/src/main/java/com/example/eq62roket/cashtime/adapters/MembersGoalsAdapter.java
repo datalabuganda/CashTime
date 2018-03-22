@@ -14,27 +14,47 @@ import java.util.List;
 
 /**
  * Created by eq62roket on 2/28/18.
+ * modified by etwin
  */
 
 public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapter.MembersGoalsViewHolder> {
 
+    public interface OnMemberGoalClickListener {
+        void onMemberGoalClick(MembersGoals membersGoals);
+    }
+
     private List<MembersGoals> membersGoalsList;
+    private OnMemberGoalClickListener mOnMemberGoalClickListener;
 
     public class MembersGoalsViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, date, amount, goal;
+        public TextView memberName, memberGoalDueDate, memberGoalAmount, memberGoalName;
 
         public MembersGoalsViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.membersGoalsName);
-            date = (TextView) view.findViewById(R.id.membersGoalsDate);
-            amount = (TextView) view.findViewById(R.id.membersGoalsAmount);
-            goal = (TextView) view.findViewById(R.id.membersGoals);
+            memberName = (TextView) view.findViewById(R.id.memberName);
+            memberGoalDueDate = (TextView) view.findViewById(R.id.memberGoalDueDate);
+            memberGoalAmount = (TextView) view.findViewById(R.id.memberGoalAmount);
+            memberGoalName = (TextView) view.findViewById(R.id.memberGoalName);
+        }
+
+        public void bind(final MembersGoals membersGoals, final OnMemberGoalClickListener memberGoalClickListener){
+            memberName.setText(membersGoals.getName());
+            memberGoalDueDate.setText(membersGoals.getDate());
+            memberGoalAmount.setText(membersGoals.getAmount());
+            memberGoalName.setText(membersGoals.getGoal());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    memberGoalClickListener.onMemberGoalClick(membersGoals);
+                }
+            });
         }
     }
 
 
-    public MembersGoalsAdapter(List<MembersGoals> membersGoalsList) {
+    public MembersGoalsAdapter(List<MembersGoals> membersGoalsList, OnMemberGoalClickListener onMemberGoalClickListener) {
         this.membersGoalsList = membersGoalsList;
+        mOnMemberGoalClickListener = onMemberGoalClickListener;
     }
 
     @Override
@@ -47,10 +67,7 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
 
     @Override
     public void onBindViewHolder(MembersGoalsAdapter.MembersGoalsViewHolder holder, int position) {
-        MembersGoals membersGoals = membersGoalsList.get(position);
-        holder.name.setText(membersGoals.getName());
-        holder.date.setText(membersGoals.getDate());
-        holder.amount.setText(membersGoals.getAmount());
+        holder.bind(membersGoalsList.get(position), mOnMemberGoalClickListener);
     }
 
     @Override

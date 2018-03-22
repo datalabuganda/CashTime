@@ -27,14 +27,6 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_saving_to_goals);
 
         recyclerView = (RecyclerView) findViewById(R.id.group_recycler_view);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent addGroupGoalsIntent = new Intent(GroupSavingToGoalsActivity.this, AddGroupGoalsActivity.class);
-//                startActivity(addGroupGoalsIntent);
-//            }
-//        });
 
         mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
             @Override
@@ -49,7 +41,6 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
         prepareGroupGoalsData();

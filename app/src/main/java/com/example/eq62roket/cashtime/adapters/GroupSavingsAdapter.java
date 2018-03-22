@@ -25,12 +25,12 @@ public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapte
     }
 
     public class GroupSavingsViewHolder extends RecyclerView.ViewHolder{
-        private TextView name, amount;
+        private TextView goalName, amount;
 
 
         public GroupSavingsViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.tv_memberName);
+            goalName = (TextView) view.findViewById(R.id.goalName);
             amount = (TextView) view.findViewById(R.id.tv_memberAmount);
         }
     }
@@ -46,7 +46,7 @@ public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapte
     @Override
     public void onBindViewHolder(GroupSavingsViewHolder holder, int position) {
         GroupSavings savings = mGroupSavings.get(position);
-        holder.name.setText(savings.getGoalName());
+        holder.goalName.setText(savings.getGoalName());
         holder.amount.setText(String.valueOf(savings.getAmount()));
 
 

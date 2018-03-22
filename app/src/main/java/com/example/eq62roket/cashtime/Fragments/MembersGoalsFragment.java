@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Activities.AddMembersGoalsActivity;
 import com.example.eq62roket.cashtime.R;
@@ -52,7 +53,12 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
             }
         });
 
-        mAdapter = new MembersGoalsAdapter(membersGoalsList);
+        mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+            @Override
+            public void onMemberGoalClick(MembersGoals membersGoals) {
+                Toast.makeText(getActivity(), "Was clicked from Fragment", Toast.LENGTH_SHORT).show();
+            }
+        });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

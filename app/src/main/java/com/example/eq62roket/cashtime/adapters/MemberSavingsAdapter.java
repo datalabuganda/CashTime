@@ -30,17 +30,17 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
     }
 
     public class MemberSavingViewHolder extends RecyclerView.ViewHolder{
-        TextView name, amount;
+        TextView membersName, membersSavingAmount;
 
         public MemberSavingViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.tv_memberName);
-            amount = (TextView) itemView.findViewById(R.id.tv_memberAmount);
+            membersName = (TextView) itemView.findViewById(R.id.membersName);
+            membersSavingAmount = (TextView) itemView.findViewById(R.id.membersSavingAmount);
         }
 
         public void bind(final MemberSavings memberSavings, final OnSavingClickListener listener){
-            name.setText(memberSavings.getName());
-            amount.setText(String.valueOf(memberSavings.getAmount()));
+            membersName.setText(memberSavings.getName());
+            membersSavingAmount.setText(String.valueOf(memberSavings.getAmount()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

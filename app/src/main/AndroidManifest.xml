@@ -40,10 +40,6 @@
             android:label="Add Member" />
         <activity android:name=".Activities.AddMemberGoalActivity" />
         <activity android:name=".Activities.EditGoalActivity" />
-        <activity
-            android:name=".Activities.GroupGoalsActivity"
-            android:label="Goals"
-            android:parentActivityName=".Activities.HomeActivity" />
         <activity android:name=".Activities.MembersGoalsActivity" />
         <activity
             android:name=".Activities.TabbedGoalsActivity"
@@ -70,7 +66,7 @@
         <activity android:name=".Activities.CalendarActivity" />
         <activity
             android:name=".Activities.TabbedSavingActivity"
-            android:label="@string/title_activity_tabbed_saving"
+            android:label="Savings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.MemberSavingsDetail" />
         <activity
@@ -87,8 +83,12 @@
         <activity android:name=".Activities.AddMembersGoalsActivity" />
         <activity android:name=".Activities.NewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
-        <activity android:name=".Activities.GroupSavingToGoalsActivity" />
-        <activity android:name=".Activities.MemberSavingToGoalsActivity"></activity>
+        <activity
+            android:label="Select A Group Goal"
+            android:name=".Activities.GroupSavingToGoalsActivity" />
+        <activity
+            android:label="Select A Member Goal"
+            android:name=".Activities.MemberSavingToGoalsActivity"></activity>
     </application>
 
 </manifest>

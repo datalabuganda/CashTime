@@ -8,11 +8,23 @@ public class Tip {
     private String goalName;
     private String introText;
     private String dateAdded;
+    private String dateModified;
 
     public Tip(String goalName, String introText, String dateAdded) {
         this.goalName = goalName;
         this.introText = introText;
         this.dateAdded = dateAdded;
+    }
+
+    public Tip() {
+    }
+
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 
     public String getGoalName() {

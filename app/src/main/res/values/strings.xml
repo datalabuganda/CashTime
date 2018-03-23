@@ -24,4 +24,8 @@
     <string name="add_goal_amount">Add Goal Amount</string>
     <string name="barriers">Barriers</string>
     <string name="tips">Tips</string>
+    <string name="tip_notes">Tip Notes</string>
+    <string name="goal_name">Goal Name</string>
+    <string name="delete">Delete</string>
+    <string name="update_btn">Update</string>
 </resources>

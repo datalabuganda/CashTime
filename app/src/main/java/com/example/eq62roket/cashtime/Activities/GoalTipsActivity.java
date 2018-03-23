@@ -33,8 +33,12 @@ public class GoalTipsActivity extends AppCompatActivity {
         mGoalTipAdapter = new GoalTipAdapter(tipList, new GoalTipAdapter.OnTipClickListener() {
             @Override
             public void onTipSelected(Tip tip) {
-//                Intent editTipIntent = new Intent(GoalTipsActivity.this, EditTipActivity.class);
-//                startActivity(editTipIntent);
+                Intent editTipIntent = new Intent(GoalTipsActivity.this, EditTipActivity.class);
+                editTipIntent.putExtra("nameOfGoal", tip.getGoalName());
+                editTipIntent.putExtra("tipText", tip.getIntroText());
+                editTipIntent.putExtra("tipAddDate", tip.getDateAdded());
+                startActivity(editTipIntent);
+                finish();
             }
         });
 

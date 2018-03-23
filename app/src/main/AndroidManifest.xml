@@ -101,8 +101,11 @@
             android:label="Barriers And Tips"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:label="Goal Tips"
             android:name=".Activities.GoalTipsActivity"
+            android:label="Goal Tips"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.EditTipActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

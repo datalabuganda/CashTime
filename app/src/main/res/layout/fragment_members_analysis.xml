@@ -262,7 +262,7 @@
                             android:textColor="@color/green"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Group Expenditure Analysis"/>
+                            android:text="Members Expenditure Analysis"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -281,7 +281,7 @@
                             android:textColor="@color/green"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Group Income Analysis"/>
+                            android:text="Members Income Analysis"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 

@@ -1,10 +1,12 @@
 package com.example.eq62roket.cashtime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 public class GroupAnalysisFragment extends Fragment {
     PieChart groupPieChart;
     BarChart groupBarChart;
+    CardView geaCardView, giaCardView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +40,8 @@ public class GroupAnalysisFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_group_analysis, container, false);
         groupPieChart = (PieChart)rootView.findViewById(R.id.groupPieChart);
         groupBarChart = (BarChart)rootView.findViewById(R.id.groupBarGraph);
+        geaCardView = (CardView)rootView.findViewById(R.id.geaCardView);
+        giaCardView = (CardView)rootView.findViewById(R.id.giaCardView);
 
 
         groupPieChart.setDragDecelerationFrictionCoef(0.99f);
@@ -96,6 +101,22 @@ public class GroupAnalysisFragment extends Fragment {
         groupBarChart.setScaleEnabled(false);
         groupBarChart.setVisibleXRangeMaximum(1);
         groupBarChart.setData(barData);
+
+        giaCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent giaIntent = new Intent(GroupAnalysisFragment.this.getActivity(), GroupIncomeAnalysisActivity.class);
+                startActivity(giaIntent);
+            }
+        });
+
+        geaCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent geaIntent = new Intent(GroupAnalysisFragment.this.getActivity(), GroupExpendituresAnalysisActivity.class);
+                startActivity(geaIntent);
+            }
+        });
 
         return rootView;
 

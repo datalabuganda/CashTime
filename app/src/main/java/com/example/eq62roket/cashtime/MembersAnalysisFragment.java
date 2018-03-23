@@ -1,10 +1,12 @@
 package com.example.eq62roket.cashtime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class MembersAnalysisFragment extends Fragment {
     PieChart membersPieChart;
     BarChart membersBarChart;
+    CardView miaCardView, meaCardView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +39,9 @@ public class MembersAnalysisFragment extends Fragment {
 
         membersPieChart = (PieChart) rootView.findViewById(R.id.membersPieChart);
         membersBarChart = (BarChart) rootView.findViewById(R.id.membersBarGraph);
+
+        miaCardView = (CardView)rootView.findViewById(R.id.miaCardView);
+        meaCardView = (CardView)rootView.findViewById(R.id.meaCardView);
 
 
         membersPieChart.setDragDecelerationFrictionCoef(0.99f);
@@ -99,6 +105,22 @@ public class MembersAnalysisFragment extends Fragment {
         membersBarChart.setScaleEnabled(false);
         membersBarChart.setVisibleXRangeMaximum(1);
         membersBarChart.setData(barData);
+
+        miaCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent giaIntent = new Intent(MembersAnalysisFragment.this.getActivity(), MembersIncomeAnalysisActivity.class);
+                startActivity(giaIntent);
+            }
+        });
+
+        meaCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent geaIntent = new Intent(MembersAnalysisFragment.this.getActivity(), MembersExpenditureAnalysisActivity.class);
+                startActivity(geaIntent);
+            }
+        });
 
         return rootView;
 

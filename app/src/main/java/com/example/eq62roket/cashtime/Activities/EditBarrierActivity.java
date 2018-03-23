@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,18 +16,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddBarrierActivity extends AppCompatActivity {
+public class EditBarrierActivity extends AppCompatActivity {
 
-    private Button btnCancel, btnSave;
+    private Button barrierDeleteBtn, barrierUpdateBtn;
     private EditText barrierNotes, goalName, barrierName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_barrier);
+        setContentView(R.layout.activity_edit_barrier);
 
-        Intent addBarrierIntent = getIntent();
-        String nameOfGoal = addBarrierIntent.getStringExtra("goalName");
+        Intent editBarrierIntent = getIntent();
+        String nameOfGoal = editBarrierIntent.getStringExtra("barrierGoalName");
+        final String nameOfBarrier = editBarrierIntent.getStringExtra("barrierName");
+        String barrierText = editBarrierIntent.getStringExtra("barrierNotes");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,23 +37,51 @@ public class AddBarrierActivity extends AppCompatActivity {
         goalName = (EditText) findViewById(R.id.goalName);
         barrierName = (EditText) findViewById(R.id.barrierName);
         barrierNotes = (EditText) findViewById(R.id.barrierNotes);
-        btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnSave = (Button) findViewById(R.id.btnSave);
+        barrierDeleteBtn = (Button) findViewById(R.id.barrierDeleteBtn);
+        barrierUpdateBtn = (Button) findViewById(R.id.barrierUpdateBtn);
 
         // prepopulate goalName field
         goalName.setText(nameOfGoal);
+        barrierName.setText(nameOfBarrier);
+        barrierNotes.setText(barrierText);
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        barrierUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveBarrier();
             }
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        barrierDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTabbedBarriersTipsctivity();
+                // start a dialog fragment
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
+                // Add the buttons
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Delete Saving, redirect to group goals fragment
+                        // TODO: 3/22/18 ====> delete barrier record
+
+                        // start TabbedSavingActivity
+                        startTabbedBarriersTipsctivity();
+                        Toast.makeText(EditBarrierActivity.this, "Barrier deleted successfully", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cancel
+                    }
+                });
+
+                builder.setMessage(
+                        "Deleting Barrier '" + nameOfBarrier + "' Can not be undone." + "Are You Sure You want to delete this Barrier?").setTitle("Delete Barrier   ");
+
+
+                // Create the AlertDialog
+                android.support.v7.app.AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
@@ -81,7 +112,7 @@ public class AddBarrierActivity extends AppCompatActivity {
     }
 
     public void startTabbedBarriersTipsctivity(){
-        Intent tabbedBarriersTipsActivity = new Intent(AddBarrierActivity.this, TabbedBarriersTipsActivity.class);
+        Intent tabbedBarriersTipsActivity = new Intent(EditBarrierActivity.this, TabbedBarriersTipsActivity.class);
         startActivity(tabbedBarriersTipsActivity);
         finish();
     }

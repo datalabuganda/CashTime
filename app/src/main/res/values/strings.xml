@@ -34,4 +34,8 @@
     <string name="barrier_name">Barrier Name</string>
     <string name="barrier_notes">Barrier Notes</string>
     <string name="barrier_notes_detail">This is a tip about this goal...hope this tip really helps and remember this goal is ...</string>
+    <string name="delete_barrier">Delete</string>
+    <string name="update_barrier">Update</string>
+    <string name="save_barrier">Save</string>
+    <string name="cancel_barrier">Cancel</string>
 </resources>

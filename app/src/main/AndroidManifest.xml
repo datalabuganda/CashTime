@@ -122,6 +122,10 @@
             android:label="Add A New Barrier"
             android:name=".Activities.AddBarrierActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:label="Edit Barrier"
+            android:name=".Activities.EditBarrierActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

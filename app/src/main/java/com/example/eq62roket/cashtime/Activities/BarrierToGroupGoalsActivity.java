@@ -31,9 +31,9 @@ public class BarrierToGroupGoalsActivity extends AppCompatActivity {
         mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
             @Override
             public void onGoalClick(GroupGoals groupGoals) {
-                Intent addTipsIntent = new Intent(BarrierToGroupGoalsActivity.this, AddBarrierActivity.class);
-                addTipsIntent.putExtra("goalName", groupGoals.getName());
-                startActivity(addTipsIntent);
+                Intent addBarrierIntent = new Intent(BarrierToGroupGoalsActivity.this, AddBarrierActivity.class);
+                addBarrierIntent.putExtra("goalName", groupGoals.getName());
+                startActivity(addBarrierIntent);
                 finish();
             }
         });

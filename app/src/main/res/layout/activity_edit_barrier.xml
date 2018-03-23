@@ -97,20 +97,20 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btnCancel"
+                        android:id="@+id/barrierDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
                         android:layout_marginRight="2dp"
-                        android:text="@string/cancel_barrier"
+                        android:text="@string/delete_barrier"
                         android:textColor="#fff"
                         android:backgroundTint="@color/red"/>
 
                     <Button
-                        android:id="@+id/btnSave"
+                        android:id="@+id/barrierUpdateBtn"
                         android:layout_width="170dp"
                         android:layout_marginLeft="2dp"
                         android:layout_height="60dp"
-                        android:text="@string/save_barrier"/>
+                        android:text="@string/update_barrier"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

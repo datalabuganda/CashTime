@@ -59,7 +59,10 @@
         <activity
             android:name=".Activities.AddGroupSavingsActivity"
             android:label="Add Group Saving" />
-        <activity android:name=".Activities.AddTipsActivity" />
+        <activity
+            android:label="Add A New Tip"
+            android:name=".Activities.AddTipsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
         <activity android:name=".Activities.CalendarActivity" />
@@ -106,6 +109,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.EditTipActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:label="Select A Goal To Add Tip"
+            android:name=".Activities.TipsToGroupGoalsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

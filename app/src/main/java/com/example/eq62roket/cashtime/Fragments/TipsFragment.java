@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eq62roket.cashtime.Activities.GoalTipsActivity;
-import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
+import com.example.eq62roket.cashtime.Activities.TipsToGroupGoalsActivity;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.TipsAdapter;
@@ -60,7 +60,7 @@ public class TipsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // switch to goals fragment
-                Intent intent = new Intent(getActivity(), GroupSavingToGoalsActivity.class);
+                Intent intent = new Intent(getActivity(), TipsToGroupGoalsActivity.class);
                 startActivity(intent);
 
             }

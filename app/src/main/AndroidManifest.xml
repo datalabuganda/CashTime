@@ -33,7 +33,7 @@
         <activity android:name=".Activities.SettingsActivity" />
         <activity
             android:name=".Activities.GroupMembersActivity"
-            android:label="Select A Group Members"
+            android:label="Select A Group Member"
             android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
@@ -88,10 +88,10 @@
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
             android:name=".Activities.GroupSavingToGoalsActivity"
-            android:label="Select A Group Goal" />
+            android:label="Select A Group Goal To Add Saving" />
         <activity
             android:name=".Activities.MemberSavingToGoalsActivity"
-            android:label="Select A Member Goal" />
+            android:label="Select A Member Goal To Add Saving" />
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
             android:label="Add A Member Goal" />
@@ -113,7 +113,14 @@
 
         <activity
             android:label="Select A Goal To Add Tip"
-            android:name=".Activities.TipsToGroupGoalsActivity"
+            android:name=".Activities.TipsToGroupGoalsActivity" />
+        <activity
+            android:label="Select A Goal To Add A Barrier"
+            android:name=".Activities.BarrierToGroupGoalsActivity" />
+
+        <activity
+            android:label="Add A New Barrier"
+            android:name=".Activities.AddBarrierActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

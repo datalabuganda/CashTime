@@ -11,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.eq62roket.cashtime.Activities.EditGroupSavingActivity;
-import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
-import com.example.eq62roket.cashtime.Models.GroupSavings;
+import com.example.eq62roket.cashtime.Activities.BarrierToGroupGoalsActivity;
+import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupSavingsAdapter;
+import com.example.eq62roket.cashtime.adapters.BarrierAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +24,9 @@ public class BarriersFragment extends Fragment {
 
     private static final String TAG = "GroupSavingsFragment";
 
-    List<GroupSavings> mGroupSavings = new ArrayList<>();
+    List<Barrier> mBarriersList = new ArrayList<>();
     private RecyclerView mRecyclerView;
-    private GroupSavingsAdapter mGroupSavingsAdapter;
+    private BarrierAdapter mBarrierAdapter;
 
     private FloatingActionButton mFloatingActionButton;
 
@@ -40,21 +39,18 @@ public class BarriersFragment extends Fragment {
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
 
-        mGroupSavingsAdapter = new GroupSavingsAdapter(mGroupSavings, new GroupSavingsAdapter.OnGroupSavingClickListener() {
+        mBarrierAdapter = new BarrierAdapter(mBarriersList, new BarrierAdapter.OnBarrierClickListener() {
             @Override
-            public void onGroupSavingClick(GroupSavings groupSavings) {
-                Intent intent = new Intent(getActivity(), EditGroupSavingActivity.class);
-                intent.putExtra("groupGoalName", groupSavings.getGoalName());
-                intent.putExtra("groupSavingAmount", groupSavings.getAmount());
-                intent.putExtra("groupSavingNote", groupSavings.getNotes());
-                startActivity(intent);
-                getActivity().finish();
+            public void onBarrierSelected(Barrier barrier) {
+//                Intent editBarrierIntent = new Intent(getContext(), EditBarrierActivity.class);
+//                startActivity(editBarrierIntent);
+//                getActivity().finish();
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mGroupSavingsAdapter);
+        mRecyclerView.setAdapter(mBarrierAdapter);
 
 
         // add saving
@@ -62,7 +58,7 @@ public class BarriersFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // switch to goals fragment
-                Intent intent = new Intent(getActivity(), GroupSavingToGoalsActivity.class);
+                Intent intent = new Intent(getActivity(), BarrierToGroupGoalsActivity.class);
                 startActivity(intent);
 
             }
@@ -77,19 +73,19 @@ public class BarriersFragment extends Fragment {
 
     private void prepareSavingData(){
 
-        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss", "12/1/1980",  "20000");
-        mGroupSavings.add(groupSavings);
+        Barrier barrier = new Barrier("Failed to Buy 5 Bee hives","Money was not enough" , "12/1/1980");
+        mBarriersList.add(barrier);
 
-        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "12/3/1980", "5000");
-        mGroupSavings.add(groupSavings);
+        barrier = new Barrier("Failed to Buy seeds","Stores are really far" , "12/1/2020");
+        mBarriersList.add(barrier);
 
-        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "12/11/1980", "5000");
-        mGroupSavings.add(groupSavings);
+        barrier = new Barrier("Failed to harvest 20L of honey","Looks like my bees are bored or not serious" , "12/11/2000");
+        mBarriersList.add(barrier);
 
-        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "12/12/1980","3990");
-        mGroupSavings.add(groupSavings);
+        barrier = new Barrier("Failed to get 5 sacks of cassava","Soil does not have enough cassava to give me" , "11/12/2030");
+        mBarriersList.add(barrier);
 
-        mGroupSavingsAdapter.notifyDataSetChanged();
+        mBarrierAdapter.notifyDataSetChanged();
 
     }
 }

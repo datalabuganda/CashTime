@@ -31,4 +31,7 @@
     <string name="tip_cancel">Cancel</string>
     <string name="tip_save">Save</string>
     <string name="tip_goal_name">Goal Name</string>
+    <string name="barrier_name">Barrier Name</string>
+    <string name="barrier_notes">Barrier Notes</string>
+    <string name="barrier_notes_detail">This is a tip about this goal...hope this tip really helps and remember this goal is ...</string>
 </resources>

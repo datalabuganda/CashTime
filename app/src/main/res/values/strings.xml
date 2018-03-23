@@ -22,4 +22,6 @@
     <string name="etwin_himself">etwin himself</string>
     <string name="add_goal_name">Add Goal Name</string>
     <string name="add_goal_amount">Add Goal Amount</string>
+    <string name="barriers">Barriers</string>
+    <string name="tips">Tips</string>
 </resources>

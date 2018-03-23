@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity
         tipsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent tipsIntent = new Intent(HomeActivity.this, TipsActivity.class);
+                Intent tipsIntent = new Intent(HomeActivity.this, TabbedBarriersTipsActivity.class);
                 startActivity(tipsIntent);
             }
         });

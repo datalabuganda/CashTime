@@ -95,7 +95,14 @@
         <activity android:name=".Activities.EditMemberSavingActivity" />
         <activity android:name=".Activities.EditGroupSavingActivity" />
         <activity android:name=".Activities.EditGroupGoalActivity" />
-        <activity android:name=".Activities.EditMemberGoalActivity"></activity>
+        <activity android:name=".Activities.EditMemberGoalActivity" />
+        <activity
+            android:name=".Activities.TabbedBarriersTipsActivity"
+            android:label="Barriers And Tips"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:label="Goal Tips"
+            android:name=".Activities.GoalTipsActivity"></activity>
     </application>
 
 </manifest>

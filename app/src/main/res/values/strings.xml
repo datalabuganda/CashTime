@@ -38,8 +38,8 @@
     <string name="update_barrier">Update</string>
     <string name="save_barrier">Save</string>
     <string name="cancel_barrier">Cancel</string>
-    <string name="title_activity_tabbed_expenditure">TabbedExpenditureActivity</string>
-    <string name="title_activity_tabbed_income">TabbedIncomeActivity</string>
+    <string name="title_activity_tabbed_expenditure">Expenditure</string>
+    <string name="title_activity_tabbed_income">Income</string>
 
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
 

@@ -78,7 +78,8 @@
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity
             android:name=".Activities.TabbedTransactionsActivity"
             android:label="@string/title_activity_tabbed_transactions"
@@ -86,7 +87,8 @@
         <activity
             android:name=".Activities.TabbedAnalysisActivity"
             android:label="Analysis"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity android:name=".Activities.IncomeActivity" />
         <activity android:name=".Activities.ExpenditureActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
@@ -111,7 +113,8 @@
         <activity
             android:name=".Activities.TabbedBarriersTipsActivity"
             android:label="Barriers And Tips"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity
             android:name=".Activities.GoalTipsActivity"
             android:label="Goal Tips"
@@ -141,11 +144,13 @@
         <activity
             android:name=".Activities.TabbedExpenditureActivity"
             android:label="@string/title_activity_tabbed_expenditure"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity
             android:name=".Activities.TabbedIncomeActivity"
             android:label="@string/title_activity_tabbed_income"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity android:name=".Activities.AddGroupMembersExpendituresActivity" />
         <activity android:name=".Activities.AddGroupIncomeActivity" />
         <activity android:name=".Activities.GroupExpendituresAnalysisActivity" />

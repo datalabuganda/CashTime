@@ -23,6 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="@string/back4app_server_url" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/back4app_app_id" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="@string/back4app_client_key" />
         <activity
             android:name=".Activities.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -126,6 +135,23 @@
             android:label="Edit Barrier"
             android:name=".Activities.EditBarrierActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Activities.AddGroupExpenditureActivity" />
+        <activity android:name=".Activities.GroupMembersListIncomeActivity" />
+        <activity android:name=".Activities.AddGroupMembersIncomeActivity" />
+        <activity
+            android:name=".Activities.TabbedExpenditureActivity"
+            android:label="@string/title_activity_tabbed_expenditure"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.TabbedIncomeActivity"
+            android:label="@string/title_activity_tabbed_income"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.AddGroupMembersExpendituresActivity" />
+        <activity android:name=".Activities.AddGroupIncomeActivity" />
+        <activity android:name=".Activities.GroupExpendituresAnalysisActivity" />
+        <activity android:name=".Activities.GroupIncomeAnalysisActivity" />
+        <activity android:name=".Activities.MembersExpenditureAnalysisActivity" />
+        <activity android:name=".Activities.MembersIncomeAnalysisActivity"></activity>
     </application>
 
 </manifest>

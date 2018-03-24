@@ -38,4 +38,13 @@
     <string name="update_barrier">Update</string>
     <string name="save_barrier">Save</string>
     <string name="cancel_barrier">Cancel</string>
+    <string name="title_activity_tabbed_expenditure">TabbedExpenditureActivity</string>
+    <string name="title_activity_tabbed_income">TabbedIncomeActivity</string>
+
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <string name="back4app_app_id">BGFV6AVElkUkTufl1iL9mSonZgtEMjHLnSY8xB2J</string>
+    <string name="back4app_client_key">eYEH5MBEUFuYhrW1qiU1CaQHqwXKZMNixjRpSWZr</string>
+
 </resources>
+

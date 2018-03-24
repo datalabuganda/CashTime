@@ -1,18 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.eq62roket.cashtime.Fragments.MembersGoalsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/members_goals_recycler_view"
+        android:id="@+id/group_expenditures_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabMembersGoals"
+        android:id="@+id/fabGroupExpenditures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/add"

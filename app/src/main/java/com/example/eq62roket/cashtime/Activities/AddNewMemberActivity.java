@@ -57,7 +57,8 @@ public class AddNewMemberActivity extends AppCompatActivity {
             editPhoneNumber.setText("");
             Toast.makeText(AddNewMemberActivity.this,"New member added", Toast.LENGTH_SHORT).show();
         }else {
-            Snackbar.make(editName,"Unable to insert", Snackbar.LENGTH_LONG).show();
+            Toast.makeText(AddNewMemberActivity.this, "Failed to add new member", Toast.LENGTH_SHORT).show();
+
         }
 
         databaseAdapter.close();

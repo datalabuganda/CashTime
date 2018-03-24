@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eq62roket.cashtime.Activities.AddGroupExpenditureActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/group"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
+                    android:id="@+id/groupNameExpenditure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nimukama Probuse"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/goal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+                <EditText
+                    android:id="@+id/groupExpenditureSource"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Category"
+                    android:layout_margin="5dp"/>
+                <ImageView
+                    android:id="@+id/addIncomeSource"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/category"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/money"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <EditText
+                    android:id="@+id/groupExpenditureAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Amount"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendar"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/groupExpenditureDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="02/23/2018"
+                        android:textSize="16sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="15dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendar"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/groupExpenditurePeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Period"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notes"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <EditText
+                    android:id="@+id/groupExpenditureNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Notes (Option)"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="180dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="1dp"
+                    android:text="Cancel"/>
+
+                <Button
+                    android:id="@+id/groupExpenditureSaveButton"
+                    android:layout_width="180dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_height="60dp"
+                    android:text="Save"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

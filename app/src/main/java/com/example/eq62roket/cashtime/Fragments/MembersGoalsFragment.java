@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberGoalActivity;
-import com.example.eq62roket.cashtime.Activities.GroupMembersActivity;
+import com.example.eq62roket.cashtime.Activities.MemberGoalSelectMemberActivity;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
@@ -50,7 +50,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),GroupMembersActivity.class);
+                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),MemberGoalSelectMemberActivity.class);
                 startActivity(addMembersGoalsIntent);
                 getActivity().finish();
             }

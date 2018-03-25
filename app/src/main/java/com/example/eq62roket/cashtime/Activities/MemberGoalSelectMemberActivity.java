@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -13,7 +14,6 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
@@ -22,7 +22,7 @@ import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupMembersActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MemberGoalSelectMemberActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
     private List<User> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
@@ -41,11 +41,10 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
         mMembersAdapter = new MembersAdapter(mGroupMemberUsers, new MembersAdapter.OnGroupMemberClickListener() {
             @Override
             public void onGroupMemberClick(User groupMemberUser) {
-//                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
-//                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
-//                startActivity(addMemberGoalIntent);
-//                finish();
-                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
+                Intent addMemberGoalIntent = new Intent(MemberGoalSelectMemberActivity.this, AddMembersGoalsActivity.class);
+                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
+                startActivity(addMemberGoalIntent);
+                finish();
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

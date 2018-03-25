@@ -42,7 +42,7 @@
         <activity android:name=".Activities.SettingsActivity" />
         <activity
             android:name=".Activities.GroupMembersActivity"
-            android:label="Select A Group Member"
+            android:label="All Group Members"
             android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
@@ -157,6 +157,9 @@
         <activity android:name=".Activities.GroupIncomeAnalysisActivity" />
         <activity android:name=".Activities.MembersExpenditureAnalysisActivity" />
         <activity android:name=".Activities.MembersIncomeAnalysisActivity"></activity>
+        <activity
+            android:label="Select A Group Member"
+            android:name=".Activities.MemberGoalSelectMemberActivity"></activity>
     </application>
 
 </manifest>

@@ -7,115 +7,170 @@
     android:background="#006669"
     tools:context="com.example.eq62roket.cashtime.Activities.RegistrationActivity">
 
-    <EditText
-        android:id="@+id/editText8"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:textColorHint="#999999"
-        android:textColor="#ffffff"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText8"
-        android:layout_alignStart="@+id/editText8"
-        android:layout_below="@+id/editText8"
-        android:layout_marginTop="13dp"
-        android:ems="10"
-        android:hint="Group Name"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#999999" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="District"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#999999" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText3"
-        android:layout_alignStart="@+id/editText3"
-        android:layout_below="@+id/editText3"
-        android:layout_marginTop="17dp"
-        android:ems="10"
-        android:hint="Business"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#999999" />
-
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText5"
-        android:layout_alignStart="@+id/editText5"
-        android:layout_below="@+id/editText5"
-        android:layout_marginTop="14dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#999999" />
-
-
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignStart="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textColorHint="#999999" />
-
-    <android.support.v7.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_below="@+id/editText6"
-        android:layout_centerHorizontal="true"
-        app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="10dp"
-        android:layout_marginTop="15dp">
-
-        <RelativeLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:ems="10"
+                android:hint="Username"
+                android:textColorHint="#999999"
                 android:textColor="#ffffff"
-                android:textSize="18dp"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                android:inputType="textPersonName" />
 
+            <EditText
+                android:id="@+id/userPhoneNumber"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/username"
+                android:layout_alignStart="@+id/username"
+                android:layout_below="@+id/username"
+                android:layout_marginTop="13dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/userHousehold"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userPhoneNumber"
+                android:layout_alignStart="@+id/userPhoneNumber"
+                android:layout_below="@+id/userPhoneNumber"
+                android:layout_marginTop="18dp"
+                android:ems="10"
+                android:hint="Household Composition"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/userBusiness"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userHousehold"
+                android:layout_alignStart="@+id/userHousehold"
+                android:layout_below="@+id/userHousehold"
+                android:layout_marginTop="17dp"
+                android:ems="10"
+                android:hint="Business"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+
+            <EditText
+                android:id="@+id/userGender"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userBusiness"
+                android:layout_alignStart="@+id/userBusiness"
+                android:layout_below="@+id/userBusiness"
+                android:layout_marginTop="14dp"
+                android:ems="10"
+                android:hint="Gender"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+
+            <EditText
+                android:id="@+id/userEducationLevel"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userGender"
+                android:layout_alignStart="@+id/userGender"
+                android:layout_below="@+id/userGender"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Education Level"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/userNationality"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userEducationLevel"
+                android:layout_alignStart="@+id/userEducationLevel"
+                android:layout_below="@+id/userEducationLevel"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Nationality"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/userLocation"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userNationality"
+                android:layout_alignStart="@+id/userNationality"
+                android:layout_below="@+id/userNationality"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Location"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/userPassword"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userLocation"
+                android:layout_alignStart="@+id/userLocation"
+                android:layout_below="@+id/userLocation"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/userPassword"
+                android:layout_centerHorizontal="true"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="10dp"
+                android:layout_marginTop="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/userRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:layout_centerInParent="true"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

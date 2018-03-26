@@ -38,6 +38,7 @@
                     android:src="@drawable/logo"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
+                    android:id="@+id/profileUsername"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
                     android:textStyle="bold"
                     android:textSize="22sp"/>
                 <TextView
+                    android:id="@+id/profilePhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0703467443"

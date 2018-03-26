@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -28,6 +30,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AddGroupGoalsActivity extends AppCompatActivity {
+
+    private static final String TAG = "AddGroupGoalsActivity";
 
     TextView groupGoalDueDate, selectImage;
     ImageView groupGoalImage;
@@ -45,8 +49,11 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_goals);
 
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
+
+
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
         selectImage = (TextView) findViewById(R.id.selectImage);
@@ -180,8 +187,10 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             groupGoals.setDueDate(goalDeadline);
             groupGoals.setNotes(goalNotes);
 
-            // TODO: 3/22/18 =====> save object to db
+            Log.d(TAG, "saveGroupGoal: " + groupGoals);
 
+            // TODO: 3/22/18 =====> save object to db
+            new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
             startTabbedGoalsActivity();
 
             Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();

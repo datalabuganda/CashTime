@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
         tipsCardView = (CardView)findViewById(R.id.tipsCardView);
@@ -121,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }else if(id == R.id.group){
-            Intent newGroup = new Intent(HomeActivity.this, AddNewMemberActivity.class);
+            Intent newGroup = new Intent(HomeActivity.this, NewGroupActivity.class);
             startActivity(newGroup);
         }
 

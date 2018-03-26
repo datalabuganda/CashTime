@@ -71,7 +71,10 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
 
     @Override
     public int getItemCount() {
-        return groupGoalsList.size();
+        if (groupGoalsList.size() > 0){
+            return groupGoalsList.size();
+        }
+        return 0;
     }
 
     public void setFilter(ArrayList<GroupGoals> newList) {

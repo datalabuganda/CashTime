@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -39,10 +40,15 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     EditText groupGoalNote, groupGoalAmount, groupGoalName;
     Button groupDeleteBtn, groupUpdateBtn;
 
+    private String groupGoalParseId = "";
+    private ParseHelper mParseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group_goal);
+
+        mParseHelper = new ParseHelper(this);
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
         selectImage = (TextView) findViewById(R.id.selectImage);
@@ -59,6 +65,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         String costOfGoal = intent.getStringExtra("groupGoalAmount");
         String goalDeadline = intent.getStringExtra("groupGoalDeadline");
         String goalNote = intent.getStringExtra("groupGoalNotes");
+        groupGoalParseId = intent.getStringExtra("groupGoalParseId");
 
         groupGoalName.setText(nameOfGoal);
         groupGoalAmount.setText(costOfGoal);
@@ -68,7 +75,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         groupUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveGroupGoal();
+                updateGroupGoal();
             }
         });
 
@@ -81,10 +88,10 @@ public class EditGroupGoalActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to group goals fragment
-                        // TODO: 3/22/18 ====> delete goal record
 
-                        // start TabbedSavingActivity
+                        GroupGoals groupGoalToDelete = new GroupGoals();
+                        groupGoalToDelete.setParseId(groupGoalParseId);
+                        mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
                         startTabbedGoalsActivity();
                         Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
 
@@ -192,7 +199,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         groupGoalDueDate.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void saveGroupGoal(){
+    private void updateGroupGoal(){
         // add new group goal to db
         if ( !groupGoalName.getText().toString().equals("") &&
                 !groupGoalAmount.getText().toString().equals("")){
@@ -201,18 +208,20 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             String goalDeadline = groupGoalDueDate.getText().toString();
             String goalNotes = groupGoalNote.getText().toString();
 
-            GroupGoals groupGoals = new GroupGoals();
-            groupGoals.setGroupGoalStatus("incomplete");
-            groupGoals.setAmount(costOfGoal);
-            groupGoals.setName(nameOfGoal);
-            groupGoals.setDueDate(goalDeadline);
-            groupGoals.setNotes(goalNotes);
-
-            // TODO: 3/22/18 =====> save object to db
+            GroupGoals groupGoal = new GroupGoals();
+            groupGoal.setGroupGoalStatus("incomplete");
+            groupGoal.setAmount(costOfGoal);
+            groupGoal.setName(nameOfGoal);
+            groupGoal.setDueDate(goalDeadline);
+            groupGoal.setNotes(goalNotes);
+            if (!groupGoalParseId.equals("")){
+                groupGoal.setParseId(groupGoalParseId);
+            }
+            mParseHelper.updateGroupGoalInParseDb(groupGoal);
 
             startTabbedGoalsActivity();
 
-            Toast.makeText(context, "Group Goal " + groupGoals.getName() + " Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Group Goal " + groupGoal.getName() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();

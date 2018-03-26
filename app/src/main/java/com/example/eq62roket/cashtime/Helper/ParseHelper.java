@@ -1,9 +1,11 @@
 package com.example.eq62roket.cashtime.Helper;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -74,33 +76,39 @@ public class ParseHelper {
 
     }
 
-//    public void updateGroupGoalInParseLocalDb(GroupGoals groupGoals){
-//        ParseQuery<ParseObject> groupGoalQuery = ParseQuery.getQuery("GroupGoal");
-//        groupGoalQuery.getInBackground(groupGoals.getGroupParseID(), new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject groupGoal, ParseException e) {
-//                if (e == null) {
-//                    Log.d(TAG, "object gotten>>>>>> : " + groupGoal );
-//                }else {
-//                    Log.d(TAG, "Error: " + e.getMessage());
-//                }
-//            }
-//        });
-//    }
-//
-//    public void deleteGroupGoalFromParseLocalDb(GroupGoals groupGoals){
-//        ParseQuery<ParseObject> groupGoalQuery = ParseQuery.getQuery("GroupGoal");
-//        groupGoalQuery.getInBackground(groupGoals.getGroupParseID(), new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject groupGoal, ParseException e) {
-//                if (e == null) {
-//                    groupGoal.deleteInBackground();
-//                }else {
-//                    Log.d(TAG, "Error Occured: " + e.getMessage());
-//                }
-//            }
-//        });
-//    }
+    public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
+        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("GroupGoals");
+        groupGoalQuery.getInBackground(groupGoalToUpdate.getParseId(), new GetCallback<GroupGoals>() {
+            @Override
+            public void done(GroupGoals groupGoal, ParseException e) {
+                if (e == null) {
+                    groupGoal.put("goalName", groupGoalToUpdate.getName());
+                    groupGoal.put("goalAmount", groupGoalToUpdate.getAmount());
+                    groupGoal.put("goalText", groupGoalToUpdate.getNotes());
+                    groupGoal.put("goalEndDate", groupGoalToUpdate.getDueDate());
+                    groupGoal.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete){
+        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("GroupGoals");
+        groupGoalQuery.getInBackground(groupGoalToDelete.getParseId(), new GetCallback<GroupGoals>() {
+            @Override
+            public void done(GroupGoals groupGoal, ParseException e) {
+                if (e == null) {
+                    Log.d(TAG, "Should delete now: ");
+                    groupGoal.deleteInBackground();
+                }else {
+                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
+            }
+        });
+    }
 
 
 

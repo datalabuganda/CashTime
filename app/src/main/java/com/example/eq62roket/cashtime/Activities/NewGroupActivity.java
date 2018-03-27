@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.R;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -24,6 +25,7 @@ public class NewGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_group);
+        Parse.initialize(this);
 
         groupName = (EditText)findViewById(R.id.groupName);
         groupLocation = (EditText)findViewById(R.id.groupLocation);
@@ -31,6 +33,7 @@ public class NewGroupActivity extends AppCompatActivity {
 
         groupCancelBtn = (Button)findViewById(R.id.groupCancelBtn);
         groupSaveBtn = (Button)findViewById(R.id.groupSaveBtn);
+
 
         groupSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +47,7 @@ public class NewGroupActivity extends AppCompatActivity {
                 group.put("name", name);
                 group.put("location", location);
                 group.put("center", center);
-                group.put("userId", currentUser );
+                group.put("Userid", currentUser);
 
 
                 group.saveInBackground(new SaveCallback() {

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +59,8 @@ public class AddNewMemberActivity extends AppCompatActivity {
                 String mUserLocation = groupMemberLocation.getText().toString().trim();
                 String currentUser = ParseUser.getCurrentUser().getObjectId();
 
+                Log.d("AddNewMember", "currentUser: " + currentUser);
+
                 ParseObject groupMember = new ParseObject("Members");
                 groupMember.put("username", mUsername);
                 groupMember.put("phone", mUserPhone);
@@ -68,7 +71,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                 groupMember.put("nationality", mUserNationality);
                 groupMember.put("location", mUserLocation);
                 groupMember.put("isMember", "1");
-//                groupMember.put("UserId", currentUser);
+                groupMember.put("UserId", currentUser);
 
                 groupMember.saveInBackground(new SaveCallback() {
                     @Override

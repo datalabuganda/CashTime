@@ -28,7 +28,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Parse.initialize(this);
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         if (currentUser != null){

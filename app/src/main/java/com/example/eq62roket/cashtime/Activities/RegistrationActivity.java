@@ -1,5 +1,9 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.eq62roket.cashtime.R;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +30,6 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        Parse.initialize(this);
-
-        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         username = (EditText)findViewById(R.id.username);
         userPhone = (EditText)findViewById(R.id.userPhoneNumber);

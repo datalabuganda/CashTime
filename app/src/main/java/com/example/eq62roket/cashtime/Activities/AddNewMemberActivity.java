@@ -5,15 +5,14 @@ import android.support.annotation.MainThread;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.eq62roket.cashtime.Helper.DatabaseHelper;
-import com.example.eq62roket.cashtime.adapters.DatabaseAdapter;
 
 import com.example.eq62roket.cashtime.R;
 import com.parse.Parse;
@@ -24,6 +23,9 @@ import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 public class AddNewMemberActivity extends AppCompatActivity {
+    EditText editName, editPhoneNumber, editNationality, editLocation, editLevelOfEducation;
+    TextView addNewMember;
+    Spinner  houseHoldComposition;
 
     EditText groupMemberUsername, groupMemberLocation, groupMemberPhone, groupMemberBusiness,
             groupMemberNationality, groupMemberEducationLevel, groupMemberGender, groupMemberHousehold;
@@ -34,7 +36,6 @@ public class AddNewMemberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_member);
 
-        Parse.initialize(this);
         groupMemberBusiness = (EditText) findViewById(R.id.groupMembersBusiness);
         groupMemberUsername = (EditText) findViewById(R.id.groupMemberUsername);
         groupMemberLocation = (EditText) findViewById(R.id.groupMemberLocation);
@@ -89,6 +90,10 @@ public class AddNewMemberActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addNewGroupMember(String name, String phone) {
+        Toast.makeText(this, "Adding a new Member.....", Toast.LENGTH_SHORT).show();
 
     }
 }

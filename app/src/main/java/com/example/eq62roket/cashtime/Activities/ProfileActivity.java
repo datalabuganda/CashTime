@@ -7,22 +7,29 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.R;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView editProfile;
+    TextView profilePhone, profileUsername, editProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        editProfile = (TextView)findViewById(R.id.editProfile);
+        profilePhone = (TextView)findViewById(R.id.profilePhone);
+        profileUsername = (TextView)findViewById(R.id.profileUsername);
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editProfileIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                startActivity(editProfileIntent);
-            }
-        });
+        Parse.initialize(this);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null){
+            String username = currentUser.getString("username");
+            String phone = currentUser.getString("phone");
+
+            profileUsername.setText(username);
+            profilePhone.setText(phone);
+        }
+
     }
 }

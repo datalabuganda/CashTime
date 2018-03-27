@@ -74,27 +74,27 @@ public class GroupSavingsFragment extends Fragment {
         });
 
         // Add data to arrayList
-        prepareSavingData();
+//        prepareSavingData();
 
 
         return rootView;
     }
 
-    private void prepareSavingData(){
+//    private void prepareSavingData(){
+//
+//        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss", "12/1/1980",  "20000");
+//        mGroupSavings.add(groupSavings);
+//
+//        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "12/3/1980", "5000");
+//        mGroupSavings.add(groupSavings);
+//
+//        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "12/11/1980", "5000");
+//        mGroupSavings.add(groupSavings);
+//
+//        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "12/12/1980","3990");
+//        mGroupSavings.add(groupSavings);
+//
+//        mGroupSavingsAdapter.notifyDataSetChanged();
 
-        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss", "12/1/1980",  "20000");
-        mGroupSavings.add(groupSavings);
-
-        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "12/3/1980", "5000");
-        mGroupSavings.add(groupSavings);
-
-        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "12/11/1980", "5000");
-        mGroupSavings.add(groupSavings);
-
-        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "12/12/1980","3990");
-        mGroupSavings.add(groupSavings);
-
-        mGroupSavingsAdapter.notifyDataSetChanged();
-
-    }
+//    }
 }

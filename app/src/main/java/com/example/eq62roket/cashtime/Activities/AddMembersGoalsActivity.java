@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -180,19 +181,19 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             String goalNotes = memberGoalNote.getText().toString();
             String nameOfMember = memberName.getText().toString();
 
-            MembersGoals membersGoals = new MembersGoals();
-            membersGoals.setMemberGoalStatus("incomplete");
-            membersGoals.setMemberGoalAmount(costOfGoal);
-            membersGoals.setMemberGoalName(nameOfGoal);
-            membersGoals.setMemberGoalDueDate(goalDeadline);
-            membersGoals.setMemberGoalNotes(goalNotes);
-            membersGoals.setMemberName(nameOfMember);
+            MembersGoals newMembersGoal = new MembersGoals();
+            newMembersGoal.setMemberGoalStatus("incomplete");
+            newMembersGoal.setMemberGoalAmount(costOfGoal);
+            newMembersGoal.setMemberGoalName(nameOfGoal);
+            newMembersGoal.setMemberGoalDueDate(goalDeadline);
+            newMembersGoal.setMemberGoalNotes(goalNotes);
+            newMembersGoal.setMemberName(nameOfMember);
 
-            // TODO: 3/22/18 =====> save object to db
+            new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
 
             startTabbedGoalsActivity();
 
-            Toast.makeText(context, "Group Goal " + membersGoals.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Group Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
 
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();

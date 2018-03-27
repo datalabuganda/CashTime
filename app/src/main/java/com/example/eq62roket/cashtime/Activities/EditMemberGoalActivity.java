@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -42,10 +43,15 @@ public class EditMemberGoalActivity extends AppCompatActivity {
     private TextView memberName;
     private EditText memberGoalName, memberGoalAmount, memberGoalNote;
 
+    private ParseHelper mParseHelper;
+    private String memberGoalParseId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_member_goal);
+
+        mParseHelper = new ParseHelper(this);
 
         memberGoalDueDate = (TextView) findViewById(R.id.memberGoalDueDate);
         selectMemberGoalImage = (TextView) findViewById(R.id.selectMemberGoalImage);
@@ -64,6 +70,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         String goalAmount = intent.getStringExtra("groupMemberGoalAmount");
         String goalDeadline = intent.getStringExtra("groupMemberGoalDeadline");
         String goalNotes = intent.getStringExtra("groupMemberGoalNotes");
+        memberGoalParseId = intent.getStringExtra("groupMemberParseId");
 
         // prepopulate memberName
         memberName.setText(nameOfMember);
@@ -75,7 +82,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         memberGoalUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveGroupGoal();
+                saveMemberGoal();
             }
         });
 
@@ -88,8 +95,11 @@ public class EditMemberGoalActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to group goals fragment
-                        // TODO: 3/22/18 ====> delete goal record from db
+                        // Delete Goal, redirect to member goals fragment
+                        MembersGoals memberGoalToDelete = new MembersGoals();
+                        memberGoalToDelete.setParseId(memberGoalParseId);
+                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete);
+                        // TODO: 3/27/18 ====> fix fragment switching
 
                         // start TabbedSavingActivity
                         startTabbedGoalsActivity();
@@ -200,7 +210,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         memberGoalDueDate.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void saveGroupGoal(){
+    private void saveMemberGoal(){
         // add new group goal to db
         if ( !memberGoalName.getText().toString().equals("") &&
                 !memberGoalAmount.getText().toString().equals("")){
@@ -208,21 +218,19 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             String costOfGoal = memberGoalAmount.getText().toString();
             String goalDeadline = memberGoalDueDate.getText().toString();
             String goalNotes = memberGoalNote.getText().toString();
-            String nameOfMember = memberName.getText().toString();
 
-            MembersGoals membersGoals = new MembersGoals();
-            membersGoals.setMemberGoalStatus("incomplete");
-            membersGoals.setMemberGoalAmount(costOfGoal);
-            membersGoals.setMemberGoalName(nameOfGoal);
-            membersGoals.setMemberGoalDueDate(goalDeadline);
-            membersGoals.setMemberGoalNotes(goalNotes);
-            membersGoals.setMemberName(nameOfMember);
+            MembersGoals membersGoalToUpdate = new MembersGoals();
+            membersGoalToUpdate.setMemberGoalAmount(costOfGoal);
+            membersGoalToUpdate.setMemberGoalName(nameOfGoal);
+            membersGoalToUpdate.setMemberGoalDueDate(goalDeadline);
+            membersGoalToUpdate.setMemberGoalNotes(goalNotes);
+            membersGoalToUpdate.setParseId(memberGoalParseId);
 
-            // TODO: 3/22/18 =====> save object to db
+            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate);
 
             startTabbedGoalsActivity();
 
-            Toast.makeText(context, "Group Goal " + membersGoals.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Group Goal " + membersGoalToUpdate.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
 
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();

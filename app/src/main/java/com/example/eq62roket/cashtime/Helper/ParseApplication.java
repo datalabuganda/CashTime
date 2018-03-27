@@ -3,6 +3,8 @@ package com.example.eq62roket.cashtime.Helper;
 import android.app.Application;
 
 import com.example.eq62roket.cashtime.Models.GroupGoals;
+import com.example.eq62roket.cashtime.Models.GroupSavings;
+import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -19,6 +21,8 @@ public class ParseApplication extends Application {
         Parse.enableLocalDatastore(this);
 
         ParseObject.registerSubclass(GroupGoals.class);
+        ParseObject.registerSubclass(GroupSavings.class);
+        ParseObject.registerSubclass(MembersGoals.class);
         Parse.initialize(this);
     }
 }

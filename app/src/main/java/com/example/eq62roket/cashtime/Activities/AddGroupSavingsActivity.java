@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.User;
@@ -154,11 +155,16 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             if (!savingPeriod.equals("")){
 
                 // Add saving to GroupSaving object
-                GroupSavings groupSavings = new GroupSavings(
-                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
-                Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                GroupSavings newGroupSaving = new GroupSavings();
+                newGroupSaving.setAmount(amountSaved);
+                newGroupSaving.setGoalName(nameOfGoal);
+                newGroupSaving.setNotes(note);
+                newGroupSaving.setIncomeSource(selectedIncomeSource);
+                newGroupSaving.setPeriod(savingPeriod);
 
-                // TODO: 3/21/18 ======>>>>> insert object into db 
+                new ParseHelper(this).saveGroupSavingsToParseDb(newGroupSaving);
+
+                Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
                 // Award user 3 point for saving
                 User user = new User();

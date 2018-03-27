@@ -77,30 +77,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
             }
         });
 
-        // add data to mMembersSavings
-        prepareMemberData();
-
         return rootView;
-    }
-
-    private void prepareMemberData(){
-        MemberSavings memberSavings = null;
-        memberSavings = new MemberSavings("Jeff Kiwa", "Buy A shirt", "Weekly", "Salary", "22/3/2020", "Notes here", 3000);
-        mMemberSavings.add(memberSavings);
-
-        memberSavings = new MemberSavings("Anold Kimitu", "Buy A gomesi", "Monthly", "Investment", "20/3/2020","Other Notes",  46200);
-        mMemberSavings.add(memberSavings);
-
-        memberSavings = new MemberSavings("Mukamaniwalinda Harrison","Buy a piglet", "Daily", "Loan", "22/12/2020","Other Notes",  580000000);
-        mMemberSavings.add(memberSavings);
-
-        memberSavings = new MemberSavings("Phifi Queen", "Buy seeds", "Monthly", "Salary", "12/3/2020","Other Notes",  70000);
-        mMemberSavings.add(memberSavings);
-
-        memberSavings = new MemberSavings("Waren Kintu", "Buy A shirt", "Weekly", "Salary", "22/3/2020","Other Notes",  46000);
-        mMemberSavings.add(memberSavings);
-
-
     }
 
 }

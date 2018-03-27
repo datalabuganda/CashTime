@@ -1,21 +1,27 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by probuse on 3/3/18.
  */
-
-public class GroupSavings {
+@ParseClassName("GroupSavings")
+public class GroupSavings extends ParseObject {
     private String goalName, period, incomeSource, notes, dateAdded;
     private String amount;
 
-    public GroupSavings(String goalName, String period, String incomeSource, String notes, String dateAdded, String amount) {
-        this.goalName = goalName;
-        this.period = period;
-        this.incomeSource = incomeSource;
-        this.notes = notes;
-        this.dateAdded = dateAdded;
-        this.amount = amount;
+    public GroupSavings() {
     }
+
+//    public GroupSavings(String goalName, String period, String incomeSource, String notes, String dateAdded, String amount) {
+//        this.goalName = goalName;
+//        this.period = period;
+//        this.incomeSource = incomeSource;
+//        this.notes = notes;
+//        this.dateAdded = dateAdded;
+//        this.amount = amount;
+//    }
 
     public String getDateAdded() {
         return dateAdded;

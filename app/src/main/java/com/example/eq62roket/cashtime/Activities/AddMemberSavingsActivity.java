@@ -1,8 +1,8 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
@@ -158,8 +157,8 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
             if (!savingPeriod.equals("")){
 
                 // Add saving to GroupSaving object
-                GroupSavings groupSavings = new GroupSavings(
-                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
+//                GroupSavings groupSavings = new GroupSavings(
+//                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
                 // TODO: 3/21/18 ======>>>>> insert object into db

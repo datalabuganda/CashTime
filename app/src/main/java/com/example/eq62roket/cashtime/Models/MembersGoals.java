@@ -1,28 +1,24 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by eq62roket on 3/2/18.
  */
-
-public class MembersGoals {
-    String memberName, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
+@ParseClassName("MemberGoals")
+public class MembersGoals extends ParseObject {
+    String parseId, memberName, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
 
     public MembersGoals() {
     }
 
-    public MembersGoals(
-            String memberName,
-            String memberGoalName,
-            String memberGoalAmount,
-            String memberGoalDueDate,
-            String memberGoalStatus,
-            String memberGoalNotes) {
-        this.memberName = memberName;
-        this.memberGoalName = memberGoalName;
-        this.memberGoalAmount = memberGoalAmount;
-        this.memberGoalDueDate = memberGoalDueDate;
-        this.memberGoalStatus = memberGoalStatus;
-        this.memberGoalNotes = memberGoalNotes;
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getMemberGoalNotes() {

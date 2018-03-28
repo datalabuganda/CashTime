@@ -43,7 +43,7 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
 
         public void bind(final MemberSavings memberSavings, final OnSavingClickListener listener){
             membersName.setText(memberSavings.getMemberName());
-            savingAmount.setText(String.valueOf(memberSavings.getsavingAmount()));
+            savingAmount.setText(memberSavings.getSavingAmount());
             dateAdded.setText(memberSavings.getDateAdded());
             goalName.setText(memberSavings.getGoalName());
             itemView.setOnClickListener(new View.OnClickListener() {

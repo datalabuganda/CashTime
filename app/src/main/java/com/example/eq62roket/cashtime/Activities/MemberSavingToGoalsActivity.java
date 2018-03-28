@@ -7,7 +7,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
@@ -17,7 +20,8 @@ import java.util.List;
 
 public class MemberSavingToGoalsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private List<MembersGoals> membersGoalsList = new ArrayList<>();
+    private static final String TAG = "MemberSavingToGoals";
+    private List<MembersGoals> membersGoals = new ArrayList<>();
     private RecyclerView recyclerView;
     private MembersGoalsAdapter mAdapter;
 
@@ -28,22 +32,35 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
 
         recyclerView = (RecyclerView) findViewById(R.id.members_goals_recycler_view);
 
-        mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+        new ParseHelper(this).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
-            public void onMemberGoalClick(MembersGoals membersGoals) {
-                // show Add Member Saving Form
-                Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
-                intent.putExtra("goalName", membersGoals.getMemberGoalName());
-                intent.putExtra("memberName",membersGoals.getMemberName());
-                startActivity(intent);
-                finish();
+            public void onResponse(List<MembersGoals> membersGoalsList) {
+                membersGoals = membersGoalsList;
+
+                mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                    @Override
+                    public void onMemberGoalClick(MembersGoals membersGoals) {
+                        // show Add Member Saving Form
+                        Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
+                        intent.putExtra("goalName", membersGoals.getMemberGoalName());
+                        intent.putExtra("memberName",membersGoals.getMemberName());
+                        intent.putExtra("memberSavingParseId", membersGoals.getParseId());
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MemberSavingToGoalsActivity.this);
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                recyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d(TAG, "onFailure: " + error);
             }
         });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        recyclerView.setAdapter(mAdapter);
 
     }
 
@@ -56,7 +73,7 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<MembersGoals> newList = new ArrayList<>();
-        for (MembersGoals membersGoals : membersGoalsList){
+        for (MembersGoals membersGoals : membersGoals){
             String name = membersGoals.getMemberName().toLowerCase();
             String goal = membersGoals.getMemberGoalName().toLowerCase();
             String amount = membersGoals.getMemberGoalAmount().toLowerCase();

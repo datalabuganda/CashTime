@@ -81,9 +81,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // start a dialog fragment
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         GroupSavings groupSavingToDelete = new GroupSavings();
@@ -103,12 +101,10 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                     }
                 });
 
-                // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(
                         "Deleting saving for '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this saving?").setTitle("Delete Saving");
 
 
-                // Create the AlertDialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
@@ -199,6 +195,12 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                 groupSavingToUpdate.setNotes(note);
                 groupSavingToUpdate.setParseId(groupSavingParseId);
                 groupSavingToUpdate.setDateAdded(dateToday);
+
+                if (note.trim().equals("")){
+                    groupSavingToUpdate.setNotes("No notes");
+                }else {
+                    groupSavingToUpdate.setNotes(note);
+                }
 
                 mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate);
 

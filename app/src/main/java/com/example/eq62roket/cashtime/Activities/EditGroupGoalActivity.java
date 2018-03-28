@@ -212,9 +212,13 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             groupGoal.setAmount(costOfGoal);
             groupGoal.setName(nameOfGoal);
             groupGoal.setDueDate(goalDeadline);
-            groupGoal.setNotes(goalNotes);
             if (!groupGoalParseId.equals("")){
                 groupGoal.setParseId(groupGoalParseId);
+            }
+            if (goalNotes.trim().equals("")){
+                groupGoal.setNotes("No notes");
+            }else {
+                groupGoal.setNotes(goalNotes);
             }
             mParseHelper.updateGroupGoalInParseDb(groupGoal);
 

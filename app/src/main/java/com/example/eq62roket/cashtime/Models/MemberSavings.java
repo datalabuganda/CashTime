@@ -1,12 +1,16 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by probuse on 3/3/18.
  * modiified by etwin
  */
-public class MemberSavings {
+@ParseClassName("GroupMemberSavings")
+public class MemberSavings extends ParseObject{
     private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
-    private long savingAmount;
+    private String savingAmount;
 
     public MemberSavings() {
     }
@@ -63,11 +67,11 @@ public class MemberSavings {
         this.incomeSource = incomeSource;
     }
 
-    public long getSavingAmount() {
+    public String getSavingAmount() {
         return savingAmount;
     }
 
-    public void setSavingAmount(long savingAmount) {
+    public void setSavingAmount(String savingAmount) {
         this.savingAmount = savingAmount;
     }
 
@@ -79,11 +83,4 @@ public class MemberSavings {
         this.memberName = memberName;
     }
 
-    public long getsavingAmount() {
-        return savingAmount;
-    }
-
-    public void setsavingAmount(long savingAmount) {
-        this.savingAmount = savingAmount;
-    }
 }

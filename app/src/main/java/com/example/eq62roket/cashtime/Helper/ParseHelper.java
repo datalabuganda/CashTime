@@ -5,8 +5,10 @@ import android.util.Log;
 
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
+import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -265,8 +267,49 @@ public class ParseHelper {
                 }
             }
         });
-
     }
 
+    public void saveMemberSavingsToParseDb(MemberSavings memberSavingToSave){
+        MemberSavings newMemberSaving = new MemberSavings();
+        newMemberSaving.put("memberUserName", memberSavingToSave.getMemberName());
+        newMemberSaving.put("memberSavingAmount", memberSavingToSave.getSavingAmount());
+        newMemberSaving.put("memberSavingGoalName", memberSavingToSave.getGoalName());
+        newMemberSaving.put("memberSavingIncomeSource", memberSavingToSave.getIncomeSource());
+        newMemberSaving.put("memberSavingPeriod", memberSavingToSave.getPeriod());
+        newMemberSaving.put("memberSavingNotes", memberSavingToSave.getSavingNote());
+        newMemberSaving.put("memberSavingDateAdded", memberSavingToSave.getDateAdded());
+        newMemberSaving.saveInBackground();
+    }
+
+    public void getMemberSavingsFromParseDb(final OnReturnedMemberSavingsListener onReturnedMemberSavingsListener){
+        final List<MemberSavings> memberSavingsList = new ArrayList<>();
+        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+        memberSavingsParseQuery.addDescendingOrder("updatedAt");
+        memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
+            @Override
+            public void done(List<MemberSavings> parseMemberSavings, ParseException e) {
+                if (e == null){
+                    for (MemberSavings retrievedMemberSavings: parseMemberSavings){
+                        MemberSavings memberSaving = new MemberSavings();
+                        memberSaving.setMemberName(retrievedMemberSavings.get("memberUserName").toString());
+                        memberSaving.setSavingAmount(retrievedMemberSavings.get("memberSavingAmount").toString());
+                        memberSaving.setGoalName(retrievedMemberSavings.get("memberSavingGoalName").toString());
+                        memberSaving.setIncomeSource(retrievedMemberSavings.get("memberSavingIncomeSource").toString());
+                        memberSaving.setPeriod(retrievedMemberSavings.get("memberSavingPeriod").toString());
+                        memberSaving.setSavingNote(retrievedMemberSavings.get("memberSavingNotes").toString());
+                        memberSaving.setDateAdded(retrievedMemberSavings.get("memberSavingDateAdded").toString());
+                        memberSaving.setParseId(retrievedMemberSavings.getObjectId());
+
+                        memberSavingsList.add(memberSaving);
+                    }
+                    if (onReturnedMemberSavingsListener != null){
+                        onReturnedMemberSavingsListener.onResponse(memberSavingsList);
+                    }
+                }else {
+                    onReturnedMemberSavingsListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
 
 }

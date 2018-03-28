@@ -3,7 +3,6 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -159,15 +158,14 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 GroupSavings newGroupSaving = new GroupSavings();
                 newGroupSaving.setAmount(amountSaved);
                 newGroupSaving.setGoalName(nameOfGoal);
-                if ( !note.equals("") ){
-                    Log.d(TAG, "saveSavingTransaction: " + note);
-                    newGroupSaving.setNotes(note);
-                }
-                Log.d(TAG, "saveSavingTransaction: " + note);
-                newGroupSaving.setNotes("No notes");
                 newGroupSaving.setIncomeSource(selectedIncomeSource);
                 newGroupSaving.setPeriod(selectedPeriod);
                 newGroupSaving.setDateAdded(dateToday);
+                if (note.trim().equals("")){
+                    newGroupSaving.setNotes("No notes");
+                }else {
+                    newGroupSaving.setNotes(note);
+                }
 
                 new ParseHelper(this).saveGroupSavingsToParseDb(newGroupSaving);
 

@@ -388,4 +388,24 @@ public class ParseHelper {
         });
     }
 
+    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate){
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        barrierParseQuery.getInBackground(barrierToUpdate.getParseId(), new GetCallback<Barrier>() {
+            @Override
+            public void done(Barrier parseBarrier, ParseException e) {
+                if (e == null) {
+                    parseBarrier.put("barrierName", barrierToUpdate.getBarrierName());
+                    parseBarrier.put("barrierNotes", barrierToUpdate.getBarrierText());
+                    parseBarrier.put("tipGiven", barrierToUpdate.isTipGiven());
+                    parseBarrier.put("barrierDateAdded", barrierToUpdate.getDateAdded());
+
+                    parseBarrier.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 }

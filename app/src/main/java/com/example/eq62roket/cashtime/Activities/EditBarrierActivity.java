@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -21,15 +22,21 @@ public class EditBarrierActivity extends AppCompatActivity {
     private Button barrierDeleteBtn, barrierUpdateBtn;
     private EditText barrierNotes, goalName, barrierName;
 
+    private ParseHelper mParseHelper;
+    private String barrierParseId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_barrier);
 
+        mParseHelper = new ParseHelper(this);
+
         Intent editBarrierIntent = getIntent();
         String nameOfGoal = editBarrierIntent.getStringExtra("barrierGoalName");
         final String nameOfBarrier = editBarrierIntent.getStringExtra("barrierName");
         String barrierText = editBarrierIntent.getStringExtra("barrierNotes");
+        barrierParseId = editBarrierIntent.getStringExtra("barrierParseId");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,17 +102,18 @@ public class EditBarrierActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Barrier newBarrier = new Barrier();
-            newBarrier.setGoalName(goalName.getText().toString());
-            newBarrier.setBarrierName(barrierName.getText().toString());
-            newBarrier.setBarrierText(barrierNotes.getText().toString());
-            newBarrier.setDateAdded(dateToday);
-            newBarrier.setTipGiven(false);
+            Barrier barrierToUpdate = new Barrier();
+            barrierToUpdate.setParseId(barrierParseId);
+            barrierToUpdate.setGoalName(goalName.getText().toString());
+            barrierToUpdate.setBarrierName(barrierName.getText().toString());
+            barrierToUpdate.setBarrierText(barrierNotes.getText().toString());
+            barrierToUpdate.setDateAdded(dateToday);
+            barrierToUpdate.setTipGiven(false);
 
-            // TODO: 3/23/18 ===>>> save barrier to database
+            mParseHelper.updateGroupBarriersInParseDb(barrierToUpdate);
 
             startTabbedBarriersTipsctivity();
-            Toast.makeText(this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Good to save " + barrierToUpdate.getBarrierName(), Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }

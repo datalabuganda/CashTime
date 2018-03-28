@@ -67,8 +67,11 @@ public class EditBarrierActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to group goals fragment
-                        // TODO: 3/22/18 ====> delete barrier record
+                        Barrier barrierToDelete = new Barrier();
+                        barrierToDelete.setParseId(barrierParseId);
+
+                        mParseHelper.deleteGroupBarrierFromParseDb(barrierToDelete);
+                        // TODO: 3/22/18 ====> redirect to barrier fragment
 
                         // start TabbedSavingActivity
                         startTabbedBarriersTipsctivity();

@@ -408,4 +408,18 @@ public class ParseHelper {
         });
     }
 
+    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete){
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        barrierParseQuery.getInBackground(barrierToDelete.getParseId(), new GetCallback<Barrier>() {
+            @Override
+            public void done(Barrier parseBarrier, ParseException e) {
+                if (e == null) {
+                    parseBarrier.deleteInBackground();
+                }else {
+                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 }

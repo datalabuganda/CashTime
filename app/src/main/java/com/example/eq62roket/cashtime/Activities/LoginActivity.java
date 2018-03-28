@@ -1,31 +1,38 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.CashTimeSharedPreferences;
+import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulLoginListener;
+import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
+
     EditText loginUsername, loginPassword;
 
     TextView registerView, login;
     CardView loginView;
+
+    private CashTimeSharedPreferences mCashTimeSharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Parse.initialize(this);
+        mCashTimeSharedPreferences = new CashTimeSharedPreferences(LoginActivity.this);
 
         loginUsername = (EditText)findViewById(R.id.loginUsername);
         loginPassword = (EditText)findViewById(R.id.loginPassword);
@@ -37,23 +44,35 @@ public class LoginActivity extends AppCompatActivity {
         loginView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = loginUsername.getText().toString().trim();
-                String password = loginPassword.getText().toString().trim();
 
-                ParseUser.logInInBackground(username, password, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if (e == null){
-                            Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                if (!loginUsername.getText().toString().trim().equals("") &&
+                        !loginPassword.getText().toString().trim().equals("")){
+                    String username = loginUsername.getText().toString().trim();
+                    String password = loginPassword.getText().toString().trim();
+
+                    User registeredUser = new User();
+                    registeredUser.setUserName(username);
+                    registeredUser.setPassword(password);
+
+                    new ParseRegistrationHelper(LoginActivity.this).loginUserToParseDb(registeredUser, new OnSuccessfulLoginListener() {
+                        @Override
+                        public void onResponse(String success) {
+
                             Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(loginIntent);
-                        }else {
-                            Toast.makeText(LoginActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+
                         }
 
-                    }
-                });
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(LoginActivity.this, "Failed to login " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
+                } else {
+                    Toast.makeText(LoginActivity.this, "All fields must be filled to login", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -14,11 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eq62roket.cashtime.R;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "HomeActivity";
 
     private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override

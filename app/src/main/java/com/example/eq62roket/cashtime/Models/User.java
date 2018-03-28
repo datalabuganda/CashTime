@@ -4,38 +4,39 @@ package com.example.eq62roket.cashtime.Models;
  * Created by etwin on 3/21/18.
  */
 
-public class User {
+public class User{
     private String userName, phoneNumber, business, gender, educationLevel, nationality, location;
-    private boolean isGroupMember, isLeader;
-    private int household;
+    private String household;
+    private Boolean isGroupMember, isLeader;
     private long points;
+    private String password;
 
     public User() {
     }
 
-    public User(
-            String userName,
-            String phoneNumber,
-            String business,
-            String gender,
-            String educationLevel,
-            String nationality,
-            String location,
-            boolean isGroupMember,
-            boolean isLeader,
-            int household,
-            long points) {
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.business = business;
-        this.gender = gender;
-        this.educationLevel = educationLevel;
-        this.nationality = nationality;
-        this.location = location;
-        this.isGroupMember = isGroupMember;
+
+    public Boolean getGroupMember() {
+        return isGroupMember;
+    }
+
+    public void setGroupMember(Boolean groupMember) {
+        isGroupMember = groupMember;
+    }
+
+    public Boolean getIsLeader() {
+        return isLeader;
+    }
+
+    public void setIsLeader(Boolean isLeader) {
         this.isLeader = isLeader;
-        this.household = household;
-        this.points = points;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserName() {
@@ -94,27 +95,11 @@ public class User {
         this.location = location;
     }
 
-    public boolean isGroupMember() {
-        return isGroupMember;
-    }
-
-    public void setGroupMember(boolean groupMember) {
-        isGroupMember = groupMember;
-    }
-
-    public boolean isLeader() {
-        return isLeader;
-    }
-
-    public void setLeader(boolean leader) {
-        isLeader = leader;
-    }
-
-    public int getHousehold() {
+    public String getHousehold() {
         return household;
     }
 
-    public void setHousehold(int household) {
+    public void setHousehold(String household) {
         this.household = household;
     }
 
@@ -123,6 +108,6 @@ public class User {
     }
 
     public void setPoints(long points) {
-        this.points = points;
+        this.points += points;
     }
 }

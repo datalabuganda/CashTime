@@ -54,47 +54,8 @@ public class MemberGoalSelectMemberActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mMembersAdapter);
 
-
-        addGroupMembers();
-
     }
 
-    public void addGroupMembers(){
-        User groupMemberUser = new User(
-                "Otim Tony Jeff",
-                "0705687924",
-                "honey farmer",
-                "male",
-                "secondary",
-                "Ugandan",
-                "kololo",
-                true,
-                false,
-                2,
-                3
-        );
-
-        mGroupMemberUsers.add(groupMemberUser);
-        User groupMemberUser2 = new User(
-                "etwim himself",
-                "0705687924",
-                "pig farmer",
-                "male",
-                "nursery",
-                "CheziLander",
-                "Kampala",
-                false,
-                false,
-                12,
-                3
-        );
-        mGroupMemberUsers.add(groupMemberUser2);
-        mGroupMemberUsers.add(groupMemberUser);
-        mGroupMemberUsers.add(groupMemberUser2);
-
-        mMembersAdapter.notifyDataSetChanged();
-
-    }
 
 
     @Override

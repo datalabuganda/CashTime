@@ -312,4 +312,24 @@ public class ParseHelper {
         });
     }
 
+    public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate){
+        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+        memberSavingsParseQuery.getInBackground(memberSavingToUpdate.getParseId(), new GetCallback<MemberSavings>() {
+            @Override
+            public void done(MemberSavings memberSaving, ParseException e) {
+                if (e == null) {
+                    memberSaving.put("memberSavingAmount", memberSavingToUpdate.getSavingAmount());
+                    memberSaving.put("memberSavingIncomeSource", memberSavingToUpdate.getIncomeSource());
+                    memberSaving.put("memberSavingPeriod", memberSavingToUpdate.getPeriod());
+                    memberSaving.put("memberSavingNotes", memberSavingToUpdate.getSavingNote());
+                    memberSaving.put("memberSavingDateAdded", memberSavingToUpdate.getDateAdded());
+                    memberSaving.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 }

@@ -13,8 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 
 import java.text.SimpleDateFormat;
@@ -31,10 +32,15 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     private String selectedPeriod;
     private String selectedIncomeSource;
 
+    private ParseHelper mParseHelper;
+    private String memberSavingParseId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_member_saving);
+
+        mParseHelper = new ParseHelper(EditMemberSavingActivity.this);
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
@@ -52,6 +58,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         String notes = intent.getStringExtra("savingNote");
         String period = intent.getStringExtra("savingPeriod");
         String sourceOfIncome = intent.getStringExtra("incomeSource");
+        memberSavingParseId = intent.getStringExtra("memberSavingParseId");
 
         // Prepopulate goalName and memberName
         goalName.setText(nameOfGoal);
@@ -185,21 +192,20 @@ public class EditMemberSavingActivity extends AppCompatActivity {
             }else if (selectedPeriod == "Monthly"){
                 savingPeriod = new PeriodHelper().getMonthlyDate();
             }
-            if (!savingPeriod.equals("")){
-
-                // Add saving to GroupSaving object
-//                GroupSavings groupSavings = new GroupSavings(
-//                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
+            if (!selectedPeriod.equals("")){
+                MemberSavings memberSavingToUpdate = new MemberSavings();
+                memberSavingToUpdate.setParseId(memberSavingParseId);
+                memberSavingToUpdate.setSavingAmount(amountSaved);
+                memberSavingToUpdate.setPeriod(selectedPeriod);
+                memberSavingToUpdate.setIncomeSource(selectedIncomeSource);
+                memberSavingToUpdate.setDateAdded(dateToday);
+                if (note.trim().equals("")){
+                    memberSavingToUpdate.setSavingNote("No notes");
+                } else {
+                    memberSavingToUpdate.setSavingNote(note);
+                }
+                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate);
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
-
-                // TODO: 3/21/18 ======>>>>> insert object into db
-
-                // Award user 3 point for saving
-                User user = new User();
-                user.setPoints(3);
-
-                // clear EditTexts
-                clearEditTexts();
 
                 // start TabbedSavingActivity
                 startTabbedSavingActivity();

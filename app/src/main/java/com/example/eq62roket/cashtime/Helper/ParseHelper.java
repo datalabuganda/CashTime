@@ -332,4 +332,18 @@ public class ParseHelper {
         });
     }
 
+    public void deleteMemberSavingFromParseDb(MemberSavings memberSavingToDelete){
+        ParseQuery<MemberSavings> groupGoalQuery = ParseQuery.getQuery("GroupMemberSavings");
+        groupGoalQuery.getInBackground(memberSavingToDelete.getParseId(), new GetCallback<MemberSavings>() {
+            @Override
+            public void done(MemberSavings memberSaving, ParseException e) {
+                if (e == null) {
+                    memberSaving.deleteInBackground();
+                }else {
+                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 }

@@ -85,15 +85,14 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // start a dialog fragment
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to member goals fragment
-                        // TODO: 3/22/18 ====> delete saving record....redirect to member saving fragment
+                        MemberSavings memberSavingToDelete = new MemberSavings();
+                        memberSavingToDelete.setParseId(memberSavingParseId);
+                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete);
+                        // TODO: 3/22/18 ====> redirect to member saving fragment
 
-                        // start TabbedSavingActivity
                         startTabbedSavingActivity();
                         Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
 
@@ -105,12 +104,10 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                     }
                 });
 
-                // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(
                         "Deleting saving for '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this saving?").setTitle("Delete Saving");
 
 
-                // Create the AlertDialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
 

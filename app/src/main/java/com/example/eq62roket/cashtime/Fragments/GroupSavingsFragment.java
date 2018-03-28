@@ -36,7 +36,7 @@ public class GroupSavingsFragment extends Fragment {
     // TODO: 3/3/18 - limit group name to 30 characters.
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_group_savings, container, false);
@@ -63,6 +63,7 @@ public class GroupSavingsFragment extends Fragment {
                         intent.putExtra("groupGoalName", groupSavings.getGoalName());
                         intent.putExtra("groupSavingAmount", groupSavings.getAmount());
                         intent.putExtra("groupSavingNote", groupSavings.getNotes());
+                        intent.putExtra("groupSavingParseId", groupSavings.getParseId());
                         startActivity(intent);
                         getActivity().finish();
                     }

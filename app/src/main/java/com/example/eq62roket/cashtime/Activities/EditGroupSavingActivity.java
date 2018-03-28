@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
@@ -25,16 +27,22 @@ import java.util.Locale;
 
 public class EditGroupSavingActivity extends AppCompatActivity {
 
+    private static final String TAG = "EditGroupSavingActivity";
+
     private Spinner periodSpinner, incomeSourcesSpinner;
     private EditText goalName, savingAmount, savingNote;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
+    private String groupSavingParseId;
+    private ParseHelper mParseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group_saving);
+
+        mParseHelper = new ParseHelper(EditGroupSavingActivity.this);
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
@@ -48,6 +56,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
         final String nameOfGoal = intent.getStringExtra("groupGoalName");
         String amountSaved = intent.getStringExtra("groupSavingAmount");
         String note = intent.getStringExtra("groupSavingNote");
+        groupSavingParseId = intent.getStringExtra("groupSavingParseId");
 
         // Prepopulate goalName
         goalName.setText(nameOfGoal);
@@ -77,8 +86,10 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to group goals fragment
-                        // TODO: 3/22/18 ====> delete saving record
+                        GroupSavings groupSavingToDelete = new GroupSavings();
+                        groupSavingToDelete.setParseId(groupSavingParseId);
+                        mParseHelper.deleteGroupSavingFromParseDb(groupSavingToDelete);
+                        // TODO: 3/22/18 ====> switch to groupSavingFragment
 
                         // start TabbedSavingActivity
                         startTabbedSavingActivity();
@@ -179,21 +190,25 @@ public class EditGroupSavingActivity extends AppCompatActivity {
             }else if (selectedPeriod == "Monthly"){
                 savingPeriod = new PeriodHelper().getMonthlyDate();
             }
-            if (!savingPeriod.equals("")){
+            if ( !selectedPeriod.equals("")){
+                GroupSavings groupSavingToUpdate = new GroupSavings();
+                groupSavingToUpdate.setGoalName(nameOfGoal);
+                groupSavingToUpdate.setAmount(amountSaved);
+                groupSavingToUpdate.setPeriod(selectedPeriod);
+                groupSavingToUpdate.setIncomeSource(selectedIncomeSource);
+                groupSavingToUpdate.setNotes(note);
+                groupSavingToUpdate.setParseId(groupSavingParseId);
+                groupSavingToUpdate.setDateAdded(dateToday);
 
-                // Add saving to GroupSaving object
-//                GroupSavings groupSavings = new GroupSavings(
-//                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
+                mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate);
+
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                // TODO: 3/21/18 ======>>>>> update object in db
+                // TODO: 3/21/18 ======>>>>> award user points
 
                 // Award user 3 point for saving
                 User user = new User();
                 user.setPoints(3);
-
-                // clear EditTexts
-                clearEditTexts();
 
                 // start TabbedSavingActivity
                 startTabbedSavingActivity();

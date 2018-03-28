@@ -18,7 +18,7 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Parse.enableLocalDatastore(this);
+//        Parse.enableLocalDatastore(this);
 
         ParseObject.registerSubclass(GroupGoals.class);
         ParseObject.registerSubclass(GroupSavings.class);

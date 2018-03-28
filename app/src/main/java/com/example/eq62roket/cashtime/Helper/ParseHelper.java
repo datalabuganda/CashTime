@@ -198,6 +198,7 @@ public class ParseHelper {
         newGroupSaving.put("groupSavingIncomeSource", groupSaving.getIncomeSource());
         newGroupSaving.put("groupSavingPeriod", groupSaving.getPeriod());
         newGroupSaving.put("groupSavingNotes", groupSaving.getNotes());
+        newGroupSaving.put("groupSavingDateAdded", groupSaving.getDateAdded());
         newGroupSaving.saveInBackground();
     }
 
@@ -216,6 +217,7 @@ public class ParseHelper {
                         groupSaving.setIncomeSource(retrievedGroupSavings.get("groupSavingIncomeSource").toString());
                         groupSaving.setPeriod(retrievedGroupSavings.get("groupSavingPeriod").toString());
                         groupSaving.setNotes(retrievedGroupSavings.get("groupSavingNotes").toString());
+                        groupSaving.setDateAdded(retrievedGroupSavings.get("groupSavingDateAdded").toString());
                         groupSaving.setParseId(retrievedGroupSavings.getObjectId());
 
                         groupSavingsList.add(groupSaving);
@@ -229,4 +231,42 @@ public class ParseHelper {
             }
         });
     }
+
+    public void updateGroupSavingInParseDb(final GroupSavings groupSavingToUpdate){
+        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
+        groupSavingsParseQuery.getInBackground(groupSavingToUpdate.getParseId(), new GetCallback<GroupSavings>() {
+            @Override
+            public void done(GroupSavings groupSaving, ParseException e) {
+                if (e == null) {
+                    groupSaving.put("groupSavingGoalName", groupSavingToUpdate.getGoalName());
+                    groupSaving.put("groupSavingAmount", groupSavingToUpdate.getAmount());
+                    groupSaving.put("groupSavingIncomeSource", groupSavingToUpdate.getIncomeSource());
+                    groupSaving.put("groupSavingPeriod", groupSavingToUpdate.getPeriod());
+                    groupSaving.put("groupSavingNotes", groupSavingToUpdate.getNotes());
+                    groupSaving.put("groupSavingDateAdded", groupSavingToUpdate.getDateAdded());
+                    groupSaving.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void deleteGroupSavingFromParseDb(GroupSavings groupsSavingToDelete){
+        ParseQuery<GroupSavings> groupGoalQuery = ParseQuery.getQuery("GroupSavings");
+        groupGoalQuery.getInBackground(groupsSavingToDelete.getParseId(), new GetCallback<GroupSavings>() {
+            @Override
+            public void done(GroupSavings groupSaving, ParseException e) {
+                if (e == null) {
+                    groupSaving.deleteInBackground();
+                }else {
+                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
+            }
+        });
+
+    }
+
+
 }

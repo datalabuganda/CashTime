@@ -200,7 +200,6 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     }
 
     private void updateGroupGoal(){
-        // add new group goal to db
         if ( !groupGoalName.getText().toString().equals("") &&
                 !groupGoalAmount.getText().toString().equals("")){
             String nameOfGoal = groupGoalName.getText().toString();

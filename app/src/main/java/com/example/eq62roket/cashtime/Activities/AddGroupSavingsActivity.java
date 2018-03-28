@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -152,15 +153,21 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             }else if (selectedPeriod == "Monthly"){
                 savingPeriod = new PeriodHelper().getMonthlyDate();
             }
-            if (!savingPeriod.equals("")){
+            if (!selectedPeriod.equals("")){
 
                 // Add saving to GroupSaving object
                 GroupSavings newGroupSaving = new GroupSavings();
                 newGroupSaving.setAmount(amountSaved);
                 newGroupSaving.setGoalName(nameOfGoal);
-                newGroupSaving.setNotes(note);
+                if ( !note.equals("") ){
+                    Log.d(TAG, "saveSavingTransaction: " + note);
+                    newGroupSaving.setNotes(note);
+                }
+                Log.d(TAG, "saveSavingTransaction: " + note);
+                newGroupSaving.setNotes("No notes");
                 newGroupSaving.setIncomeSource(selectedIncomeSource);
-                newGroupSaving.setPeriod(savingPeriod);
+                newGroupSaving.setPeriod(selectedPeriod);
+                newGroupSaving.setDateAdded(dateToday);
 
                 new ParseHelper(this).saveGroupSavingsToParseDb(newGroupSaving);
 
@@ -169,9 +176,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 // Award user 3 point for saving
                 User user = new User();
                 user.setPoints(3);
-
-                // clear EditTexts
-                clearEditTexts();
 
                 // start TabbedSavingActivity
                 startTabbedSavingActivity();

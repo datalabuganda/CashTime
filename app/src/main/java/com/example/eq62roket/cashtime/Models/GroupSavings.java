@@ -8,20 +8,19 @@ import com.parse.ParseObject;
  */
 @ParseClassName("GroupSavings")
 public class GroupSavings extends ParseObject {
-    private String goalName, period, incomeSource, notes, dateAdded;
+    private String parseId, goalName, period, incomeSource, notes, dateAdded;
     private String amount;
 
     public GroupSavings() {
     }
 
-//    public GroupSavings(String goalName, String period, String incomeSource, String notes, String dateAdded, String amount) {
-//        this.goalName = goalName;
-//        this.period = period;
-//        this.incomeSource = incomeSource;
-//        this.notes = notes;
-//        this.dateAdded = dateAdded;
-//        this.amount = amount;
-//    }
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
+    }
 
     public String getDateAdded() {
         return dateAdded;

@@ -90,18 +90,14 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // start a dialog fragment
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Goal, redirect to member goals fragment
                         MembersGoals memberGoalToDelete = new MembersGoals();
                         memberGoalToDelete.setParseId(memberGoalParseId);
                         mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete);
-                        // TODO: 3/27/18 ====> fix fragment switching
+                        // TODO: 3/27/18 ====> switch to member Fragment instead of tabbedGoals
 
-                        // start TabbedSavingActivity
                         startTabbedGoalsActivity();
                         Toast.makeText(EditMemberGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
 
@@ -113,12 +109,10 @@ public class EditMemberGoalActivity extends AppCompatActivity {
                     }
                 });
 
-                // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(
                         "Deleting '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Member Goal");
 
 
-                // Create the AlertDialog
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
 
@@ -211,7 +205,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
     }
 
     private void saveMemberGoal(){
-        // add new group goal to db
         if ( !memberGoalName.getText().toString().equals("") &&
                 !memberGoalAmount.getText().toString().equals("")){
             String nameOfGoal = memberGoalName.getText().toString();

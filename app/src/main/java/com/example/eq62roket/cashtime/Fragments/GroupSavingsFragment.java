@@ -14,11 +14,12 @@ import android.view.ViewGroup;
 
 import com.example.eq62roket.cashtime.Activities.EditGroupSavingActivity;
 import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupSavingsAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +27,6 @@ public class GroupSavingsFragment extends Fragment {
 
     private static final String TAG = "GroupSavingsFragment";
 
-    List<GroupSavings> mGroupSavings = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private GroupSavingsAdapter mGroupSavingsAdapter;
 
@@ -39,62 +39,46 @@ public class GroupSavingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_group_savings, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
-
-
-        mGroupSavingsAdapter = new GroupSavingsAdapter(mGroupSavings, new GroupSavingsAdapter.OnGroupSavingClickListener() {
-            @Override
-            public void onGroupSavingClick(GroupSavings groupSavings) {
-                Intent intent = new Intent(getActivity(), EditGroupSavingActivity.class);
-                intent.putExtra("groupGoalName", groupSavings.getGoalName());
-                intent.putExtra("groupSavingAmount", groupSavings.getAmount());
-                intent.putExtra("groupSavingNote", groupSavings.getNotes());
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mGroupSavingsAdapter);
-
 
         // add saving
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // switch to goals fragment
                 Intent intent = new Intent(getActivity(), GroupSavingToGoalsActivity.class);
                 startActivity(intent);
 
             }
         });
 
-        // Add data to arrayList
-//        prepareSavingData();
+        new ParseHelper(getActivity()).getGroupSavingsFromParseDb(new OnReturnedGroupSavingsListener() {
+            @Override
+            public void onResponse(List<GroupSavings> groupSavingsList) {
+                mGroupSavingsAdapter = new GroupSavingsAdapter(groupSavingsList, new GroupSavingsAdapter.OnGroupSavingClickListener() {
+                    @Override
+                    public void onGroupSavingClick(GroupSavings groupSavings) {
+                        Intent intent = new Intent(getActivity(), EditGroupSavingActivity.class);
+                        intent.putExtra("groupGoalName", groupSavings.getGoalName());
+                        intent.putExtra("groupSavingAmount", groupSavings.getAmount());
+                        intent.putExtra("groupSavingNote", groupSavings.getNotes());
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(mGroupSavingsAdapter);
+            }
 
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
 
         return rootView;
     }
-
-//    private void prepareSavingData(){
-//
-//        GroupSavings groupSavings = new GroupSavings("Buy 5 Bee hives", "Weekly", "Salary", "Notessss", "12/1/1980",  "20000");
-//        mGroupSavings.add(groupSavings);
-//
-//        groupSavings = new GroupSavings("Buy seeds", "Monthly", "Loan", "Notey", "12/3/1980", "5000");
-//        mGroupSavings.add(groupSavings);
-//
-//        groupSavings = new GroupSavings("Construct a community latrine", "Monthly", "Investment", "jot notes", "12/11/1980", "5000");
-//        mGroupSavings.add(groupSavings);
-//
-//        groupSavings = new GroupSavings("Buy a truck", "Daily", "Salary", "Other notes", "12/12/1980","3990");
-//        mGroupSavings.add(groupSavings);
-//
-//        mGroupSavingsAdapter.notifyDataSetChanged();
-
-//    }
 }

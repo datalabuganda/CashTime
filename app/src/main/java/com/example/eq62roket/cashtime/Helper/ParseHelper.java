@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
@@ -75,9 +76,7 @@ public class ParseHelper {
                     onReturnedGroupGoalsListener.onFailure(e.getMessage());
                 }
             }
-
         });
-
     }
 
     public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
@@ -189,7 +188,6 @@ public class ParseHelper {
                 }
             }
         });
-
     }
 
 
@@ -201,6 +199,34 @@ public class ParseHelper {
         newGroupSaving.put("groupSavingPeriod", groupSaving.getPeriod());
         newGroupSaving.put("groupSavingNotes", groupSaving.getNotes());
         newGroupSaving.saveInBackground();
+    }
 
+    public void getGroupSavingsFromParseDb(final OnReturnedGroupSavingsListener onReturnedGroupSavingsListener){
+        final List<GroupSavings> groupSavingsList = new ArrayList<>();
+        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
+        groupSavingsParseQuery.addDescendingOrder("updatedAt");
+        groupSavingsParseQuery.findInBackground(new FindCallback<GroupSavings>() {
+            @Override
+            public void done(List<GroupSavings> parseGroupSavings, ParseException e) {
+                if (e == null){
+                    for (GroupSavings retrievedGroupSavings: parseGroupSavings){
+                        GroupSavings groupSaving = new GroupSavings();
+                        groupSaving.setAmount(retrievedGroupSavings.get("groupSavingAmount").toString());
+                        groupSaving.setGoalName(retrievedGroupSavings.get("groupSavingGoalName").toString());
+                        groupSaving.setIncomeSource(retrievedGroupSavings.get("groupSavingIncomeSource").toString());
+                        groupSaving.setPeriod(retrievedGroupSavings.get("groupSavingPeriod").toString());
+                        groupSaving.setNotes(retrievedGroupSavings.get("groupSavingNotes").toString());
+                        groupSaving.setParseId(retrievedGroupSavings.getObjectId());
+
+                        groupSavingsList.add(groupSaving);
+                    }
+                    if (onReturnedGroupSavingsListener != null){
+                        onReturnedGroupSavingsListener.onResponse(groupSavingsList);
+                    }
+                }else {
+                    onReturnedGroupSavingsListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 }

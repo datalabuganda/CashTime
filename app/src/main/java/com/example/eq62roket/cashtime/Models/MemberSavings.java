@@ -5,10 +5,18 @@ package com.example.eq62roket.cashtime.Models;
  * modiified by etwin
  */
 public class MemberSavings {
-    private String memberName, goalName, period, incomeSource, dateAdded, savingNote;
+    private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
     private long savingAmount;
 
     public MemberSavings() {
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getSavingNote() {

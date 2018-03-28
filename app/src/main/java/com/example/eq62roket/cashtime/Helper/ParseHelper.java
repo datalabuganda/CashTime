@@ -3,9 +3,11 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
+import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
@@ -342,6 +344,46 @@ public class ParseHelper {
                 }else {
                     Log.d(TAG, "Error Occured: " + e.getMessage());
                 }
+            }
+        });
+    }
+
+    public void saveGroupBarrierToParseDb(Barrier barrierToSave){
+        Barrier newBarrier = new Barrier();
+        newBarrier.put("groupGoalName", barrierToSave.getGoalName());
+        newBarrier.put("barrierName", barrierToSave.getBarrierName());
+        newBarrier.put("barrierNotes", barrierToSave.getBarrierText());
+        newBarrier.put("tipGiven", barrierToSave.isTipGiven());
+        newBarrier.put("barrierDateAdded", barrierToSave.getDateAdded());
+        newBarrier.saveInBackground();
+    }
+
+    public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
+        final List<Barrier> barrierList = new ArrayList<>();
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        barrierParseQuery.addDescendingOrder("updatedAt");
+        barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
+            @Override
+            public void done(List<Barrier> parseBarriers, ParseException e) {
+                if (e == null){
+                    for (Barrier retrievedBarrier: parseBarriers){
+                        Barrier barrier = new Barrier();
+                        barrier.setGoalName(retrievedBarrier.get("groupGoalName").toString());
+                        barrier.setBarrierName(retrievedBarrier.get("barrierName").toString());
+                        barrier.setBarrierText(retrievedBarrier.get("barrierNotes").toString());
+                        barrier.setTipGiven((Boolean) retrievedBarrier.get("tipGiven"));
+                        barrier.setDateAdded(retrievedBarrier.get("barrierDateAdded").toString());
+                        barrier.setParseId(retrievedBarrier.getObjectId());
+
+                        barrierList.add(barrier);
+                    }
+                    if (onReturnedGroupBarrierListener != null){
+                        onReturnedGroupBarrierListener.onResponse(barrierList);
+                    }
+                } else {
+                    onReturnedGroupBarrierListener.onFailure("Error Occured");
+                }
+
             }
         });
     }

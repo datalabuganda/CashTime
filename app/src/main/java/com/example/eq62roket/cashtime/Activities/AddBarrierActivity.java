@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -17,6 +18,7 @@ import java.util.Locale;
 
 public class AddBarrierActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddBarrierActivity";
     private Button btnCancel, btnSave;
     private EditText barrierNotes, goalName, barrierName;
 
@@ -71,7 +73,7 @@ public class AddBarrierActivity extends AppCompatActivity {
             newBarrier.setDateAdded(dateToday);
             newBarrier.setTipGiven(false);
 
-            // TODO: 3/23/18 ===>>> save barrier to database
+            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier);
 
             startTabbedBarriersTipsctivity();
             Toast.makeText(this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();

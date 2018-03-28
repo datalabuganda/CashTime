@@ -1,20 +1,26 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by etwin on 3/23/18.
  */
 
-public class Barrier {
-    private String goalName, barrierName, barrierText, dateAdded;
+@ParseClassName("Barriers")
+public class Barrier extends ParseObject{
+    private String parseId, goalName, barrierName, barrierText, dateAdded;
     boolean tipGiven;
 
     public Barrier() {
     }
 
-    public Barrier(String barrierName, String barrierText, String dateAdded) {
-        this.barrierName = barrierName;
-        this.barrierText = barrierText;
-        this.dateAdded = dateAdded;
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getDateAdded() {

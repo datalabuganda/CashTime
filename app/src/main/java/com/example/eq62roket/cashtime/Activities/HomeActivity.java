@@ -145,7 +145,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.groupMembers) {
-            Intent groupMembersIntent = new Intent(HomeActivity.this, GroupMembersActivity.class);
+            Intent groupMembersIntent = new Intent(HomeActivity.this, GroupsActivity.class);
             startActivity(groupMembersIntent);
             // Handle the camera action
         } else if (id == R.id.profile) {

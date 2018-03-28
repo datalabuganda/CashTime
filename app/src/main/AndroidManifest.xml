@@ -162,6 +162,9 @@
         <activity
             android:label="Select A Group Member"
             android:name=".Activities.MemberGoalSelectMemberActivity"></activity>
+        <activity
+            android:label="Your Groups"
+            android:name=".Activities.GroupsActivity"></activity>
     </application>
 
 </manifest>

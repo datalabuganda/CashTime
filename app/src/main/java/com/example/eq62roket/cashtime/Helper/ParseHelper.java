@@ -18,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +40,12 @@ public class ParseHelper {
 
 
     private Context mContext;
+    private ParseUser currentUser;
 
 
     public ParseHelper(Context context){
         mContext = context;
+        currentUser = ParseUser.getCurrentUser();
     }
 
     public void saveGroupGoalsToParseDb(GroupGoals groupGoals){
@@ -83,6 +86,8 @@ public class ParseHelper {
                 }
             }
         });
+
+        Log.d(TAG, "Current User " + currentUser.getUsername());
     }
 
     public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){

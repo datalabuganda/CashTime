@@ -3,7 +3,6 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -63,8 +62,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     newUser.setIsLeader(false);
                     newUser.setGroupMember(false);
                     newUser.setPoints(3);
-
-                    Log.d(TAG, "newUser: " + newUser.getUserName());
 
                     new ParseRegistrationHelper(RegistrationActivity.this).saveRegisteredUserToParseDb(newUser, new OnSuccessfulRegistrationListener() {
                         @Override

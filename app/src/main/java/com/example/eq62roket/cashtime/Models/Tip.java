@@ -1,22 +1,29 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by etwin on 3/11/18.
  */
 
-public class Tip {
+@ParseClassName("Tips")
+public class Tip extends ParseObject{
     private String goalName;
+    private String tipParseId;
     private String introText;
     private String dateAdded;
     private String dateModified;
 
-    public Tip(String goalName, String introText, String dateAdded) {
-        this.goalName = goalName;
-        this.introText = introText;
-        this.dateAdded = dateAdded;
+    public Tip() {
     }
 
-    public Tip() {
+    public String getTipParseId() {
+        return tipParseId;
+    }
+
+    public void setTipParseId(String tipParseId) {
+        this.tipParseId = tipParseId;
     }
 
     public String getDateModified() {

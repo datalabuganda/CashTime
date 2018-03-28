@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -23,10 +24,15 @@ public class EditTipActivity extends AppCompatActivity {
     private EditText goalName, tipNotes;
     private Button btnUpdate, btnDelete;
 
+    private ParseHelper mParseHelper;
+    private String tipParseId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tip);
+
+        mParseHelper = new ParseHelper(EditTipActivity.this);
 
         goalName = (EditText) findViewById(R.id.goalName);
         tipNotes = (EditText) findViewById(R.id.tipNotes);
@@ -38,6 +44,7 @@ public class EditTipActivity extends AppCompatActivity {
         final String nameOfGoal = editTipIntent.getStringExtra("nameOfGoal");
         String tip = editTipIntent.getStringExtra("tipText");
         String addedDate = editTipIntent.getStringExtra("tipAddDate");
+        tipParseId = editTipIntent.getStringExtra("tipParseId");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit " + nameOfGoal);

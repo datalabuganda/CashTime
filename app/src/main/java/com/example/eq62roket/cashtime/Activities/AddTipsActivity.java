@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -66,8 +67,10 @@ public class AddTipsActivity extends AppCompatActivity {
             newTip.setGoalName(goalName.getText().toString());
             newTip.setIntroText(tipText.getText().toString());
             newTip.setDateAdded(dateToday);
+            newTip.setDateModified(dateToday);
 
-            // TODO: 3/23/18 ===>>> save tip into database 
+            new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip);
+
 
             startTabbedBarriersTipsctivity();
             Toast.makeText(this, "Good to save " + newTip.getGoalName(), Toast.LENGTH_SHORT).show();

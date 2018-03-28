@@ -55,70 +55,67 @@ public class TipsActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mTipsAdapter);
 
-        // prepare tip data
-        prepareTipData();
-
     }
 
-    private void prepareTipData(){
-        Tip tip = null;
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "23/11/2020"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "12/01/2026"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Increase Honey Sales",
-                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-                "02/04/2020"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "23/12/2021"
-        );
-        mTipList.add(tip);
-
-
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "01/01/2070"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "23/01/2103"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "23/07/2020"
-        );
-        mTipList.add(tip);
-
-        tip = new Tip(
-                "Increase Honey Sales",
-                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-                "23/06/2020"
-        );
-        mTipList.add(tip);
-
-        mTipsAdapter.notifyDataSetChanged();
-    }
+//    private void prepareTipData(){
+//        Tip tip = null;
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "23/11/2020"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "12/01/2026"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Increase Honey Sales",
+//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
+//                "02/04/2020"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "23/12/2021"
+//        );
+//        mTipList.add(tip);
+//
+//
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "01/01/2070"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "23/01/2103"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "23/07/2020"
+//        );
+//        mTipList.add(tip);
+//
+//        tip = new Tip(
+//                "Increase Honey Sales",
+//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
+//                "23/06/2020"
+//        );
+//        mTipList.add(tip);
+//
+//        mTipsAdapter.notifyDataSetChanged();
+//    }
 }

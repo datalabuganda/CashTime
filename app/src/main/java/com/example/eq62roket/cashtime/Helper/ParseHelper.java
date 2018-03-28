@@ -7,11 +7,13 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
+import com.example.eq62roket.cashtime.Models.Tip;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -418,6 +420,44 @@ public class ParseHelper {
                 }else {
                     Log.d(TAG, "Error Occured: " + e.getMessage());
                 }
+            }
+        });
+    }
+
+    public void saveTipToParseDb(Tip tipToSave){
+        Tip newTip = new Tip();
+        newTip.put("groupGoalName", tipToSave.getGoalName());
+        newTip.put("tipNotes", tipToSave.getIntroText());
+        newTip.put("dateAdded", tipToSave.getDateAdded());
+        newTip.put("dateModified", tipToSave.getDateModified());
+        newTip.saveInBackground();
+    }
+
+    public void getTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
+        final List<Tip> tipList = new ArrayList<>();
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        tipParseQuery.addDescendingOrder("updatedAt");
+        tipParseQuery.findInBackground(new FindCallback<Tip>() {
+            @Override
+            public void done(List<Tip> parseTips, ParseException e) {
+                if (e == null){
+                    for (Tip retrievedTip: parseTips){
+                        Tip tip = new Tip();
+                        tip.setGoalName(retrievedTip.get("groupGoalName").toString());
+                        tip.setIntroText(retrievedTip.get("tipNotes").toString());
+                        tip.setDateAdded(retrievedTip.get("dateAdded").toString());
+                        tip.setDateModified(retrievedTip.get("dateModified").toString());
+                        tip.setTipParseId(retrievedTip.getObjectId());
+
+                        tipList.add(tip);
+                    }
+                    if (onReturnedTipsListener != null){
+                        onReturnedTipsListener.onResponse(tipList);
+                    }
+                } else {
+                    onReturnedTipsListener.onFailure("Error Occured");
+                }
+
             }
         });
     }

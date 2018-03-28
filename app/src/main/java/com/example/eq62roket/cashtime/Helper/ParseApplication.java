@@ -7,6 +7,7 @@ import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
+import com.example.eq62roket.cashtime.Models.Tip;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -20,6 +21,7 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // TODO: 3/28/18 turn on local storage 
 //        Parse.enableLocalDatastore(this);
 
         ParseObject.registerSubclass(GroupGoals.class);
@@ -27,6 +29,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(GroupSavings.class);
         ParseObject.registerSubclass(MemberSavings.class);
         ParseObject.registerSubclass(Barrier.class);
+        ParseObject.registerSubclass(Tip.class);
         Parse.initialize(this);
     }
 }

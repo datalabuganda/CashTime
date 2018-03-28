@@ -52,78 +52,76 @@ public class GoalTipsActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mGoalTipAdapter);
 
-        prepareGoalTipData(nameOfGoal);
-
     }
 
-    private void prepareGoalTipData(String nameOfGoal){
-        Tip tip = null;
-        List<Tip> tips = new ArrayList<>();
-
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "23/11/2020"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "12/01/2026"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Increase Honey Sales",
-                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-                "02/04/2020"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "23/12/2021"
-        );
-        tips.add(tip);
-
-
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "01/01/2070"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Buy a goat",
-                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-                "23/01/2103"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Buy BeeHive",
-                "It is advisable to buy new beehives....this is because new beehives are new.",
-                "23/07/2020"
-        );
-        tips.add(tip);
-
-        tip = new Tip(
-                "Increase Honey Sales",
-                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-                "23/06/2020"
-        );
-        tips.add(tip);
-
-        for (Tip singleTip : tips){
-            if (singleTip.getGoalName().equals(nameOfGoal)){
-                tipList.add(singleTip);
-            }
-        }
-
-        mGoalTipAdapter.notifyDataSetChanged();
-
-    }
+//    private void prepareGoalTipData(String nameOfGoal){
+//        Tip tip = null;
+//        List<Tip> tips = new ArrayList<>();
+//
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "23/11/2020"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "12/01/2026"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Increase Honey Sales",
+//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
+//                "02/04/2020"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "23/12/2021"
+//        );
+//        tips.add(tip);
+//
+//
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "01/01/2070"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Buy a goat",
+//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
+//                "23/01/2103"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Buy BeeHive",
+//                "It is advisable to buy new beehives....this is because new beehives are new.",
+//                "23/07/2020"
+//        );
+//        tips.add(tip);
+//
+//        tip = new Tip(
+//                "Increase Honey Sales",
+//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
+//                "23/06/2020"
+//        );
+//        tips.add(tip);
+//
+//        for (Tip singleTip : tips){
+//            if (singleTip.getGoalName().equals(nameOfGoal)){
+//                tipList.add(singleTip);
+//            }
+//        }
+//
+//        mGoalTipAdapter.notifyDataSetChanged();
+//
+//    }
 }

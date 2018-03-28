@@ -42,7 +42,7 @@ public class EditTipActivity extends AppCompatActivity {
         // get data from intent.
         Intent editTipIntent = getIntent();
         final String nameOfGoal = editTipIntent.getStringExtra("nameOfGoal");
-        String tip = editTipIntent.getStringExtra("tipText");
+        final String tip = editTipIntent.getStringExtra("tipText");
         String addedDate = editTipIntent.getStringExtra("tipAddDate");
         tipParseId = editTipIntent.getStringExtra("tipParseId");
 
@@ -68,8 +68,11 @@ public class EditTipActivity extends AppCompatActivity {
                 // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to member goals fragment
-                        // TODO: 3/22/18 ====> delete Tip record....redirect to tips fragment
+                        Tip tipToDelete = new Tip();
+                        tipToDelete.setTipParseId(tipParseId);
+
+                        mParseHelper.deleteTipFromParseDb(tipToDelete);
+                        // TODO: 3/22/18 ====> redirect to tips fragment
 
                         // start TabbedSavingActivity
                         startTabbedBarriersTipsctivity();
@@ -105,16 +108,17 @@ public class EditTipActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Tip updatedTip = new Tip();
-            updatedTip.setGoalName(goalName.getText().toString());
-            updatedTip.setIntroText(tipNotes.getText().toString());
-            updatedTip.setDateModified(dateToday);
+            Tip tipToUpdate = new Tip();
+            tipToUpdate.setTipParseId(tipParseId);
+            tipToUpdate.setIntroText(tipNotes.getText().toString());
+            tipToUpdate.setDateModified(dateToday);
 
-            // TODO: 3/23/18 ====>>> save updatedTip to db....redirect to Tips Fragment
+            mParseHelper.updateTipsInParseDb(tipToUpdate);
+            // TODO: 3/23/18 ====>>> redirect to Tips Fragment
 
             startTabbedBarriersTipsctivity();
 
-            Toast.makeText(EditTipActivity.this, "Tip for " + updatedTip.getGoalName() + " updated Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }

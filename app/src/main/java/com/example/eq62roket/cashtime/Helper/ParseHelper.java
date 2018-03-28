@@ -172,9 +172,6 @@ public class ParseHelper {
                     membersGoal.put("memberGoalNotes", membersGoalToUpdate.getMemberGoalNotes());
                     membersGoal.put("memberGoalDeadline", membersGoalToUpdate.getMemberGoalDueDate());
                     membersGoal.saveInBackground();
-
-                    Log.d(TAG, "done:>>>>>>>>>>>>>>>>> ");
-
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -433,7 +430,7 @@ public class ParseHelper {
         newTip.saveInBackground();
     }
 
-    public void getTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
+    public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
         tipParseQuery.addDescendingOrder("updatedAt");
@@ -458,6 +455,68 @@ public class ParseHelper {
                     onReturnedTipsListener.onFailure("Error Occured");
                 }
 
+            }
+        });
+    }
+
+
+    public void getTipsOfParticularGoalFromParseDb(String nameOfGoal, final OnReturnedTipsListener onReturnedTipsListener){
+        final List<Tip> tipList = new ArrayList<>();
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        tipParseQuery.addDescendingOrder("updatedAt");
+        tipParseQuery.whereEqualTo("groupGoalName", nameOfGoal);
+        tipParseQuery.findInBackground(new FindCallback<Tip>() {
+            @Override
+            public void done(List<Tip> parseTips, ParseException e) {
+                if (e == null){
+                    for (Tip retrievedTip: parseTips){
+                        Tip tip = new Tip();
+                        tip.setGoalName(retrievedTip.get("groupGoalName").toString());
+                        tip.setIntroText(retrievedTip.get("tipNotes").toString());
+                        tip.setDateAdded(retrievedTip.get("dateAdded").toString());
+                        tip.setDateModified(retrievedTip.get("dateModified").toString());
+                        tip.setTipParseId(retrievedTip.getObjectId());
+
+                        tipList.add(tip);
+                    }
+                    if (onReturnedTipsListener != null){
+                        onReturnedTipsListener.onResponse(tipList);
+                    }
+                } else {
+                    onReturnedTipsListener.onFailure("Error Occured");
+                }
+
+            }
+        });
+    }
+
+    public void updateTipsInParseDb(final Tip tipToUpdate){
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        tipParseQuery.getInBackground(tipToUpdate.getTipParseId(), new GetCallback<Tip>() {
+            @Override
+            public void done(Tip parseTip, ParseException e) {
+                if (e == null) {
+                    parseTip.put("tipNotes", tipToUpdate.getIntroText());
+                    parseTip.put("dateModified", tipToUpdate.getDateModified());
+                    parseTip.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void deleteTipFromParseDb(Tip tipToDelete){
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        tipParseQuery.getInBackground(tipToDelete.getTipParseId(), new GetCallback<Tip>() {
+            @Override
+            public void done(Tip parseTip, ParseException e) {
+                if (e == null) {
+                    parseTip.deleteInBackground();
+                }else {
+                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
             }
         });
     }

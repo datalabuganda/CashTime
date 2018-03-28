@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class TipsFragment extends Fragment {
             }
         });
 
-        new ParseHelper(getActivity()).getTipsFromParseDb(new OnReturnedTipsListener() {
+        new ParseHelper(getActivity()).getAllTipsFromParseDb(new OnReturnedTipsListener() {
             @Override
             public void onResponse(List<Tip> tipsList) {
 
@@ -59,7 +60,6 @@ public class TipsFragment extends Fragment {
                     public void onTipSelected(Tip tip) {
                         Intent goalTipsIntent = new Intent(getActivity(), GoalTipsActivity.class);
                         goalTipsIntent.putExtra("goalName", tip.getGoalName());
-                        goalTipsIntent.putExtra("tipParseId", tip.getTipParseId());
                         startActivity(goalTipsIntent);
                     }
                 });
@@ -72,72 +72,11 @@ public class TipsFragment extends Fragment {
 
             @Override
             public void onFailure(String error) {
-
+                Log.d(TAG, "onFailure: " + error);
             }
         });
 
         return rootView;
     }
 
-//    private void prepareTipData(){
-//        Tip tip = null;
-//        tip = new Tip(
-//                "Buy BeeHive"
-//                "It is advisable to buy new beehives....this is because new beehives are new.",
-//                "23/11/2020"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Buy a goat",
-//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-//                "12/01/2026"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Increase Honey Sales",
-//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-//                "02/04/2020"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Buy a goat",
-//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-//                "23/12/2021"
-//        );
-//        tipList.add(tip);
-//
-//
-//        tip = new Tip(
-//                "Buy BeeHive",
-//                "It is advisable to buy new beehives....this is because new beehives are new.",
-//                "01/01/2070"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Buy a goat",
-//                "Female goats are good goats because...female goats have breasts that give sweet milk.",
-//                "23/01/2103"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Buy BeeHive",
-//                "It is advisable to buy new beehives....this is because new beehives are new.",
-//                "23/07/2020"
-//        );
-//        tipList.add(tip);
-//
-//        tip = new Tip(
-//                "Increase Honey Sales",
-//                "Bees make more honey if the conditions are favorable...bees need water...flowers",
-//                "23/06/2020"
-//        );
-//        tipList.add(tip);
-//
-//        mTipsAdapter.notifyDataSetChanged();
-//    }
 }

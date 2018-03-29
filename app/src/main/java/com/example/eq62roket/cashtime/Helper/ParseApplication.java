@@ -9,6 +9,7 @@ import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.Models.Tip;
+import com.example.eq62roket.cashtime.Models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -32,6 +33,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Barrier.class);
         ParseObject.registerSubclass(Tip.class);
         ParseObject.registerSubclass(Group.class);
+        ParseObject.registerSubclass(User.class);
         Parse.initialize(this);
     }
 }

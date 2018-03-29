@@ -19,74 +19,84 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
-import com.parse.GetCallback;
 import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupMembersActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+
+    private static final String TAG = "GroupMembersActivity";
+
     private List<User> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
     FloatingActionButton fabAddGroupMember;
 
-
+    private String groupParseId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_members);
         Parse.initialize(this);
 
+        Intent groupDetailIntent =getIntent();
+        String nameOfGroup = groupDetailIntent.getStringExtra("groupName");
+        groupParseId = groupDetailIntent.getStringExtra("groupParseId");
+
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(nameOfGroup);
         actionBar.setHomeButtonEnabled(true);
 
         fabAddGroupMember = (FloatingActionButton)findViewById(R.id.addNewGroupMember);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mMembersAdapter = new MembersAdapter(mGroupMemberUsers, new MembersAdapter.OnGroupMemberClickListener() {
-            @Override
-            public void onGroupMemberClick(User groupMemberUser) {
-//                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
-//                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
-//                startActivity(addMemberGoalIntent);
-//                finish();
-                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
-            }
-        });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mRecyclerView.setAdapter(mMembersAdapter);
-
         fabAddGroupMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GroupMembersActivity.this, AddNewMemberActivity.class);
+                intent.putExtra("groupParseId", groupParseId);
                 startActivity(intent);
+                finish();
             }
         });
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Members");
-        query.getInBackground("nBVOTCFNso", new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject parseObject, com.parse.ParseException e) {
-                if (e == null) {
-                    String t = parseObject.getString("username");
-                    Log.d("Username", " username" + t);
+        new ParseGroupHelper(GroupMembersActivity.this)
+                .getGroupMembersFromParseDb(groupParseId, new OnReturnedGroupMemberListener() {
+                    @Override
+                    public void onResponse(List<User> userList) {
+                        mGroupMemberUsers = userList;
+                        Log.d(TAG, "onResponse: " + userList.size());
+                        mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
+                            @Override
+                            public void onGroupMemberClick(User groupMemberUser) {
+//                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
+//                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
+//                startActivity(addMemberGoalIntent);
+//                finish();
+                                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                } else {
-                }
-            }
-        });
+                        mRecyclerView.addItemDecoration(new DividerItemDecoration(GroupMembersActivity.this, LinearLayoutManager.VERTICAL));
+                        mRecyclerView.setAdapter(mMembersAdapter);
 
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                        Log.d(TAG, "onFailure: " + error);
+                    }
+                });
 
     }
 

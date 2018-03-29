@@ -36,11 +36,12 @@ public class ParseRegistrationHelper {
         parseUser.put("isLeader", newUser.getIsLeader());
         parseUser.put("isGroupMember", newUser.getGroupMember());
         parseUser.put("userPoints", newUser.getPoints());
+        parseUser.put("groupId", newUser.getGroupId());
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null){
-                    onSuccessfulRegistrationListener.onResponse("successful login");
+                    onSuccessfulRegistrationListener.onResponse("successful sign up");
                 }else{
                     onSuccessfulRegistrationListener.onFailure( e.getMessage());
                 }

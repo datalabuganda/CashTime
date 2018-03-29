@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }else if(id == R.id.group){
-            Intent newGroup = new Intent(HomeActivity.this, NewGroupActivity.class);
+            Intent newGroup = new Intent(HomeActivity.this, AddNewGroupActivity.class);
             startActivity(newGroup);
         }
 

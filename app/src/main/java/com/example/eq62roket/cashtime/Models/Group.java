@@ -9,11 +9,19 @@ import com.parse.ParseObject;
 
 @ParseClassName("Groups")
 public class Group extends ParseObject{
-    private String locationOfGroup, groupLeaderId, groupMemberId;
+    private String locationOfGroup, groupLeaderId, groupCreatorId;
     private int groupMemberCount;
     private String groupParseId, groupName, groupCentreName, dateCreated;
 
     public Group() {
+    }
+
+    public String getGroupCreatorId() {
+        return groupCreatorId;
+    }
+
+    public void setGroupCreatorId(String groupCreatorId) {
+        this.groupCreatorId = groupCreatorId;
     }
 
     public int getGroupMemberCount() {
@@ -46,14 +54,6 @@ public class Group extends ParseObject{
 
     public void setGroupCentreName(String groupCentreName) {
         this.groupCentreName = groupCentreName;
-    }
-
-    public String getGroupMemberId() {
-        return groupMemberId;
-    }
-
-    public void setGroupMemberId(String groupMemberId) {
-        this.groupMemberId = groupMemberId;
     }
 
     public String getGroupName() {

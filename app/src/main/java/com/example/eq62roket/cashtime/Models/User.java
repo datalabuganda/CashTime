@@ -1,19 +1,38 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by etwin on 3/21/18.
  */
 
-public class User{
+@ParseClassName("User")
+public class User extends ParseObject{
     private String userName, phoneNumber, business, gender, educationLevel, nationality, location;
     private String household;
     private Boolean isGroupMember, isLeader;
     private long points;
-    private String password;
+    private String password, groupId;
 
     public User() {
     }
 
+    public Boolean getLeader() {
+        return isLeader;
+    }
+
+    public void setLeader(Boolean leader) {
+        isLeader = leader;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 
     public Boolean getGroupMember() {
         return isGroupMember;

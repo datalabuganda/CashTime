@@ -97,7 +97,7 @@
         <activity
             android:name=".Activities.AddMembersGoalsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.NewGroupActivity" />
+        <activity android:name=".Activities.AddNewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
             android:name=".Activities.GroupSavingToGoalsActivity"

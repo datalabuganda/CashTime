@@ -7,13 +7,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
@@ -59,37 +66,37 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
             }
         });
 
-//        new ParseGroupHelper(GroupMembersActivity.this)
-//                .getGroupMembersFromParseDd(groupParseId, new OnReturnedGroupMemberListener() {
-//                    @Override
-//                    public void onResponse(List<User> userList) {
-//                        mGroupMemberUsers = userList;
-//                        Log.d(TAG, "onResponse: " + userList.size());
-//                        mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
-//                            @Override
-//                            public void onGroupMemberClick(User groupMemberUser) {
-////                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
-////                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
-////                startActivity(addMemberGoalIntent);
-////                finish();
-//                                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//                        mRecyclerView.setLayoutManager(mLayoutManager);
-//                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//
-//                        mRecyclerView.addItemDecoration(new DividerItemDecoration(GroupMembersActivity.this, LinearLayoutManager.VERTICAL));
-//                        mRecyclerView.setAdapter(mMembersAdapter);
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error) {
-//
-//                        Log.d(TAG, "onFailure: " + error);
-//                    }
-//                });
+        new ParseGroupHelper(GroupMembersActivity.this)
+                .getGroupMembersFromParseDb(groupParseId, new OnReturnedGroupMemberListener() {
+                    @Override
+                    public void onResponse(List<User> userList) {
+                        mGroupMemberUsers = userList;
+                        Log.d(TAG, "onResponse: " + userList.size());
+                        mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
+                            @Override
+                            public void onGroupMemberClick(User groupMemberUser) {
+//                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
+//                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
+//                startActivity(addMemberGoalIntent);
+//                finish();
+                                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                        mRecyclerView.addItemDecoration(new DividerItemDecoration(GroupMembersActivity.this, LinearLayoutManager.VERTICAL));
+                        mRecyclerView.setAdapter(mMembersAdapter);
+
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                        Log.d(TAG, "onFailure: " + error);
+                    }
+                });
 
     }
 

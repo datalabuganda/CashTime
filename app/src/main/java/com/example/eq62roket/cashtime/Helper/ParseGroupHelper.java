@@ -1,12 +1,16 @@
 package com.example.eq62roket.cashtime.Helper;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupsListener;
 import com.example.eq62roket.cashtime.Models.Group;
+import com.example.eq62roket.cashtime.Models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,38 +70,39 @@ public class ParseGroupHelper {
         });
     }
 
-//    public void getGroupMembersFromParseDb(String groupId, final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
-//        final List<User> userList = new ArrayList<>();
-//        ParseQuery<User> userParseQuery = ParseQuery.getQuery("User");
-//        userParseQuery.whereEqualTo("groupId", groupId);
-//        userParseQuery.addDescendingOrder("updatedAt");
-//        userParseQuery.findInBackground(new FindCallback<User>() {
-//            @Override
-//            public void done(List<User> parseUserList, ParseException e) {
-//                if (e == null){
-//                    for (User returnedUser: parseUserList){
-//                        User user = new User();
-//                        user.setUserName(returnedUser.get("username").toString());
-//                        user.setPhoneNumber(returnedUser.get("userPhone").toString());
-//                        user.setHousehold(returnedUser.get("userHousehold").toString());
-//                        user.setGender(returnedUser.get("userGender").toString());
-//                        user.setBusiness(returnedUser.get("userBusiness").toString());
-//                        user.setEducationLevel(returnedUser.get("userEducationLevel").toString());
-//                        user.setNationality(returnedUser.get("userNationality").toString());
-//                        user.setLocation(returnedUser.get("userLocation").toString());
-//                        user.setIsLeader((Boolean) returnedUser.get("isLeader"));
-//                        user.setGroupMember((Boolean) returnedUser.get("isGroupMember"));
-//                        user.setPoints((Long) returnedUser.get("userPoints"));
-//
-//                        userList.add(user);
-//                    }
-//                    onReturnedGroupMemberListener.onResponse(userList);
-//                }else {
-//                    onReturnedGroupMemberListener.onFailure(e.getMessage());
-//                }
-//            }
-//        });
-//    }
+    public void getGroupMembersFromParseDb(String groupId, final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
+        final List<User> userList = new ArrayList<>();
+        ParseQuery<ParseUser> userParseQuery = ParseUser.getQuery();
+        userParseQuery.whereEqualTo("groupId", groupId);
+        userParseQuery.addDescendingOrder("updatedAt");
+
+        userParseQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> parseUserList, ParseException e) {
+                if (e == null){
+                    for (ParseUser returnedUser: parseUserList){
+                        User user = new User();
+                        user.setUserName(returnedUser.get("username").toString());
+                        user.setPhoneNumber(returnedUser.get("userPhone").toString());
+                        user.setHousehold(returnedUser.get("userHousehold").toString());
+                        user.setGender(returnedUser.get("userGender").toString());
+                        user.setBusiness(returnedUser.get("userBusiness").toString());
+                        user.setEducationLevel(returnedUser.get("userEducationLevel").toString());
+                        user.setNationality(returnedUser.get("userNationality").toString());
+                        user.setLocation(returnedUser.get("userLocation").toString());
+                        user.setIsLeader((Boolean) returnedUser.get("isLeader"));
+                        user.setGroupMember((Boolean) returnedUser.get("isGroupMember"));
+                        user.setPoints(Long.parseLong(String.valueOf(returnedUser.get("userPoints"))));
+
+                        userList.add(user);
+                    }
+                    onReturnedGroupMemberListener.onResponse(userList);
+                }else {
+                    onReturnedGroupMemberListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
 
 
 }

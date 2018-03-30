@@ -232,7 +232,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(EditGroupSavingActivity.this, TabbedSavingActivity.class);
+        Intent intent = new Intent(EditGroupSavingActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

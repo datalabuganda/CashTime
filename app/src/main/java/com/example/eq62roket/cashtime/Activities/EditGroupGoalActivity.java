@@ -1,21 +1,17 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +25,7 @@ import java.util.Locale;
 
 public class EditGroupGoalActivity extends AppCompatActivity {
 
-    TextView groupGoalDueDate, selectImage;
-    ImageView groupGoalImage;
+    TextView groupGoalDueDate;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
@@ -51,8 +46,6 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         mParseHelper = new ParseHelper(this);
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
-        selectImage = (TextView) findViewById(R.id.selectImage);
-        groupGoalImage = (ImageView)findViewById(R.id.groupGoalImage);
         groupGoalNote = (EditText) findViewById(R.id.groupGoalNote);
         groupGoalAmount = (EditText) findViewById(R.id.groupGoalAmount);
         groupGoalName = (EditText) findViewById(R.id.groupGoalName);
@@ -138,12 +131,6 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             }
         });
 
-        selectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectImage();
-            }
-        });
 
     }
 
@@ -173,26 +160,6 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK){
-
-            if (requestCode==REQUEST_CAMERA){
-
-                Bundle bundle = data.getExtras();
-                final Bitmap bmp = (Bitmap) bundle.get("data");
-                groupGoalImage.setImageBitmap(bmp);
-
-            }else if (requestCode==SELECT_FILE){
-
-                Uri selectedImageUri = data.getData();
-                groupGoalImage.setImageURI(selectedImageUri);
-            }
-        }
     }
 
     private void updateDate() {
@@ -232,7 +199,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     }
 
     public void startTabbedGoalsActivity(){
-        Intent tabbedGoalsIntent = new Intent(EditGroupGoalActivity.this, TabbedGoalsActivity.class);
+        Intent tabbedGoalsIntent = new Intent(EditGroupGoalActivity.this, HomeActivity.class);
         startActivity(tabbedGoalsIntent);
         finish();
     }

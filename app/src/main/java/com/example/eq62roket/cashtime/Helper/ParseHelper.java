@@ -40,16 +40,17 @@ public class ParseHelper {
 
 
     private Context mContext;
-    private ParseUser currentUser;
+    private String currentUserId;
 
 
     public ParseHelper(Context context){
         mContext = context;
-        currentUser = ParseUser.getCurrentUser();
+        currentUserId = ParseUser.getCurrentUser().getObjectId();
     }
 
     public void saveGroupGoalsToParseDb(GroupGoals groupGoals){
         GroupGoals newGroupGoal = new GroupGoals();
+        newGroupGoal.put("userId", currentUserId);
         newGroupGoal.put("goalName", groupGoals.getName());
         newGroupGoal.put("goalAmount", groupGoals.getAmount());
         newGroupGoal.put("goalText", groupGoals.getNotes());
@@ -63,6 +64,7 @@ public class ParseHelper {
         final List<GroupGoals> groupGoalList = new ArrayList<>();
         ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("GroupGoals");
         groupGoalsQuery.addDescendingOrder("updatedAt");
+//        groupGoalsQuery.whereEqualTo("userId", currentUserId);
         groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
             @Override
             public void done(List<GroupGoals> parseGroupGoals, ParseException e) {
@@ -87,7 +89,7 @@ public class ParseHelper {
             }
         });
 
-        Log.d(TAG, "Current User " + currentUser.getUsername());
+        Log.d(TAG, "Current User Id" + currentUserId);
     }
 
     public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
@@ -126,6 +128,7 @@ public class ParseHelper {
 
     public void saveMemberGoalsToParseDb(MembersGoals membersGoal){
         MembersGoals newMemberGoal = new MembersGoals();
+        newMemberGoal.put("userId", currentUserId);
         newMemberGoal.put("memberUsernames", membersGoal.getMemberName());
         newMemberGoal.put("memberGoalName", membersGoal.getMemberGoalName());
         newMemberGoal.put("memberGoalAmount", membersGoal.getMemberGoalAmount());
@@ -139,6 +142,7 @@ public class ParseHelper {
     public void getMemberGoalsFromParseDb(final OnReturnedMemberGoalListener onReturnedMemberGoalListener){
         final List<MembersGoals> membersGoalsList = new ArrayList<>();
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
+//        membersGoalsParseQuery.whereEqualTo("userId", currentUserId);
         membersGoalsParseQuery.addDescendingOrder("updatedAt");
         membersGoalsParseQuery.findInBackground(new FindCallback<MembersGoals>() {
             @Override
@@ -201,6 +205,7 @@ public class ParseHelper {
 
     public void saveGroupSavingsToParseDb(GroupSavings groupSaving){
         GroupSavings newGroupSaving = new GroupSavings();
+        newGroupSaving.put("userId", currentUserId);
         newGroupSaving.put("groupSavingAmount", groupSaving.getAmount());
         newGroupSaving.put("groupSavingGoalName",groupSaving.getGoalName());
         newGroupSaving.put("groupSavingIncomeSource", groupSaving.getIncomeSource());
@@ -213,6 +218,7 @@ public class ParseHelper {
     public void getGroupSavingsFromParseDb(final OnReturnedGroupSavingsListener onReturnedGroupSavingsListener){
         final List<GroupSavings> groupSavingsList = new ArrayList<>();
         ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
+//        groupSavingsParseQuery.whereEqualTo("userId", currentUserId);
         groupSavingsParseQuery.addDescendingOrder("updatedAt");
         groupSavingsParseQuery.findInBackground(new FindCallback<GroupSavings>() {
             @Override
@@ -277,6 +283,7 @@ public class ParseHelper {
 
     public void saveMemberSavingsToParseDb(MemberSavings memberSavingToSave){
         MemberSavings newMemberSaving = new MemberSavings();
+        newMemberSaving.put("userId", currentUserId);
         newMemberSaving.put("memberUserName", memberSavingToSave.getMemberName());
         newMemberSaving.put("memberSavingAmount", memberSavingToSave.getSavingAmount());
         newMemberSaving.put("memberSavingGoalName", memberSavingToSave.getGoalName());
@@ -290,6 +297,7 @@ public class ParseHelper {
     public void getMemberSavingsFromParseDb(final OnReturnedMemberSavingsListener onReturnedMemberSavingsListener){
         final List<MemberSavings> memberSavingsList = new ArrayList<>();
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+        memberSavingsParseQuery.whereEqualTo("userId", currentUserId);
         memberSavingsParseQuery.addDescendingOrder("updatedAt");
         memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
             @Override
@@ -354,6 +362,7 @@ public class ParseHelper {
 
     public void saveGroupBarrierToParseDb(Barrier barrierToSave){
         Barrier newBarrier = new Barrier();
+        newBarrier.put("userId", currentUserId);
         newBarrier.put("groupGoalName", barrierToSave.getGoalName());
         newBarrier.put("barrierName", barrierToSave.getBarrierName());
         newBarrier.put("barrierNotes", barrierToSave.getBarrierText());
@@ -365,6 +374,7 @@ public class ParseHelper {
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
         final List<Barrier> barrierList = new ArrayList<>();
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+//        barrierParseQuery.whereEqualTo("userId", currentUserId);
         barrierParseQuery.addDescendingOrder("updatedAt");
         barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
             @Override
@@ -428,6 +438,7 @@ public class ParseHelper {
 
     public void saveTipToParseDb(Tip tipToSave){
         Tip newTip = new Tip();
+        newTip.put("userId", currentUserId);
         newTip.put("groupGoalName", tipToSave.getGoalName());
         newTip.put("tipNotes", tipToSave.getIntroText());
         newTip.put("dateAdded", tipToSave.getDateAdded());
@@ -438,6 +449,7 @@ public class ParseHelper {
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+//        tipParseQuery.whereEqualTo("userId", currentUserId);
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
             @Override

@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberSavingActivity;
-import com.example.eq62roket.cashtime.Activities.MemberSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
@@ -50,8 +50,9 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MemberSavingToGoalsActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), MemberSavingToGoalsActivity.class);
+//                startActivity(intent);
+                Toast.makeText(getActivity(), "This Feature is still under development", Toast.LENGTH_SHORT).show();
 
             }
         });

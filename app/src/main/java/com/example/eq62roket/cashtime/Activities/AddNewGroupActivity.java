@@ -70,7 +70,7 @@ public class AddNewGroupActivity extends AppCompatActivity {
         groupCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeActivityIntent = new Intent(AddNewGroupActivity.this, HomeActivity.class);
+                Intent homeActivityIntent = new Intent(AddNewGroupActivity.this, GroupsActivity.class);
                 startActivity(homeActivityIntent);
                 finish();
             }

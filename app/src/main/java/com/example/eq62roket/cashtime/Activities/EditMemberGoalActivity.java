@@ -1,21 +1,17 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +28,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
     private static final String TAG = "EditMemberGoalActivity";
 
     TextView memberGoalDueDate, selectMemberGoalImage;
-    ImageView memberGoalImage;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
@@ -55,7 +50,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
 
         memberGoalDueDate = (TextView) findViewById(R.id.memberGoalDueDate);
         selectMemberGoalImage = (TextView) findViewById(R.id.selectMemberGoalImage);
-        memberGoalImage = (ImageView)findViewById(R.id.groupGoalImage);
         memberGoalNote = (EditText) findViewById(R.id.memberGoalNotes);
         memberGoalAmount = (EditText) findViewById(R.id.memberGoalAmount);
         memberGoalName = (EditText) findViewById(R.id.memberGoalName);
@@ -178,26 +172,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK){
-
-            if (requestCode==REQUEST_CAMERA){
-
-                Bundle bundle = data.getExtras();
-                final Bitmap bmp = (Bitmap) bundle.get("data");
-                memberGoalImage.setImageBitmap(bmp);
-
-            }else if (requestCode==SELECT_FILE){
-
-                Uri selectedImageUri = data.getData();
-                memberGoalImage.setImageURI(selectedImageUri);
-            }
-        }
     }
 
     private void updateDate() {

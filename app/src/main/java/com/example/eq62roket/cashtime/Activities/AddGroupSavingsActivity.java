@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
-import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
 import java.text.SimpleDateFormat;
@@ -171,9 +170,10 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                // Award user 3 point for saving
-                User user = new User();
-                user.setPoints(3);
+                // TODO: 3/29/18 ====> award the user 3 points
+//                // Award user 3 point for saving
+//                User user = new User();
+//                user.setPoints(3);
 
                 // start TabbedSavingActivity
                 startTabbedSavingActivity();
@@ -195,7 +195,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(AddGroupSavingsActivity.this, TabbedSavingActivity.class);
+        Intent intent = new Intent(AddGroupSavingsActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

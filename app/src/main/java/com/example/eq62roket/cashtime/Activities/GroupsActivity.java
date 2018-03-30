@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupsListener;
@@ -39,11 +40,12 @@ public class GroupsActivity extends AppCompatActivity {
                 mGroupAdapter = new GroupAdapter(groupsList, new GroupAdapter.OnGroupClickListener() {
                     @Override
                     public void onGroupSelected(Group group) {
-                        Intent groupDetailsIntent = new Intent(GroupsActivity.this, GroupMembersActivity.class);
-                        groupDetailsIntent.putExtra("groupParseId", group.getGroupParseId());
-                        groupDetailsIntent.putExtra("groupName", group.getGroupName());
-                        startActivity(groupDetailsIntent);
-                        finish();
+//                        Intent groupDetailsIntent = new Intent(GroupsActivity.this, GroupMembersActivity.class);
+//                        groupDetailsIntent.putExtra("groupParseId", group.getGroupParseId());
+//                        groupDetailsIntent.putExtra("groupName", group.getGroupName());
+//                        startActivity(groupDetailsIntent);
+//                        finish();
+                        Toast.makeText(GroupsActivity.this, "This Feature is still under development", Toast.LENGTH_SHORT).show();
 
                     }
                 });

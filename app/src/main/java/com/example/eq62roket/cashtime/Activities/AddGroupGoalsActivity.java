@@ -1,13 +1,10 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +29,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
     private static final String TAG = "AddGroupGoalsActivity";
 
-    TextView groupGoalDueDate, selectImage;
-    ImageView groupGoalImage;
+    TextView groupGoalDueDate;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
@@ -56,8 +51,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
-        selectImage = (TextView) findViewById(R.id.selectImage);
-        groupGoalImage = (ImageView)findViewById(R.id.groupGoalImage);
         groupGoalNote = (EditText) findViewById(R.id.groupGoalNote);
         groupGoalAmount = (EditText) findViewById(R.id.groupGoalAmount);
         groupGoalName = (EditText) findViewById(R.id.groupGoalName);
@@ -110,12 +103,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             }
         });
 
-        selectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectImage();
-            }
-        });
 
     }
 
@@ -147,26 +134,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK){
-
-            if (requestCode==REQUEST_CAMERA){
-
-                Bundle bundle = data.getExtras();
-                final Bitmap bmp = (Bitmap) bundle.get("data");
-                groupGoalImage.setImageBitmap(bmp);
-
-            }else if (requestCode==SELECT_FILE){
-
-                Uri selectedImageUri = data.getData();
-                groupGoalImage.setImageURI(selectedImageUri);
-            }
-        }
-    }
-
     private void updateDate() {
         groupGoalDueDate.setText(sdf.format(myCalendar.getTime()));
     }
@@ -189,7 +156,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
             Log.d(TAG, "saveGroupGoal: " + groupGoals);
 
-            // TODO: 3/22/18 =====> save object to db
+            // TODO: 3/22/18 =====> redirect to group fragment with updated group goals
             new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
             startTabbedGoalsActivity();
 
@@ -201,7 +168,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     }
 
     public void startTabbedGoalsActivity(){
-        Intent tabbedGoalsIntent = new Intent(AddGroupGoalsActivity.this, TabbedGoalsActivity.class);
+        Intent tabbedGoalsIntent = new Intent(AddGroupGoalsActivity.this, HomeActivity.class);
         startActivity(tabbedGoalsIntent);
         finish();
     }

@@ -1,12 +1,15 @@
 package com.example.eq62roket.cashtime.Helper;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulLoginListener;
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
 import com.example.eq62roket.cashtime.Models.User;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -15,6 +18,8 @@ import com.parse.SignUpCallback;
  */
 
 public class ParseRegistrationHelper {
+
+    private static final String TAG = "ParseRegistrationHelper";
 
     private Context mContext;
 
@@ -34,7 +39,6 @@ public class ParseRegistrationHelper {
         parseUser.put("userNationality", newUser.getNationality());
         parseUser.put("userLocation", newUser.getLocation());
         parseUser.put("isLeader", newUser.getIsLeader());
-        parseUser.put("isGroupMember", newUser.getGroupMember());
         parseUser.put("userPoints", newUser.getPoints());
         parseUser.put("groupId", newUser.getGroupId());
         parseUser.signUpInBackground(new SignUpCallback() {
@@ -48,6 +52,21 @@ public class ParseRegistrationHelper {
             }
         });
 
+    }
+
+    public void updateIsLeaderFlagInParseDb(final User userToUpdate){
+        ParseQuery<ParseUser> parseUserParseQuery = ParseUser.getQuery();
+        parseUserParseQuery.getInBackground(userToUpdate.getParseId(), new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+                if (e == null){
+                    parseUser.put("isLeader", userToUpdate.getIsLeader());
+                    parseUser.saveInBackground();
+                }else {
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
+                }
+            }
+        });
     }
 
     public void loginUserToParseDb(User registeredUser, final OnSuccessfulLoginListener onSuccessfulLoginListener){

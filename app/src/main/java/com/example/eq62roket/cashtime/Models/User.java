@@ -11,11 +11,19 @@ import com.parse.ParseObject;
 public class User extends ParseObject{
     private String userName, phoneNumber, business, gender, educationLevel, nationality, location;
     private String household;
-    private Boolean isGroupMember, isLeader;
+    private Boolean isLeader;
     private long points;
-    private String password, groupId;
+    private String password, groupId, parseId;
 
     public User() {
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public Boolean getLeader() {
@@ -32,14 +40,6 @@ public class User extends ParseObject{
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
-    }
-
-    public Boolean getGroupMember() {
-        return isGroupMember;
-    }
-
-    public void setGroupMember(Boolean groupMember) {
-        isGroupMember = groupMember;
     }
 
     public Boolean getIsLeader() {

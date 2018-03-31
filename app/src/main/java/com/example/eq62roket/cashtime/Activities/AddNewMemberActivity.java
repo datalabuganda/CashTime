@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Models.Group;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
 
 public class AddNewMemberActivity extends AppCompatActivity {
@@ -20,11 +21,16 @@ public class AddNewMemberActivity extends AppCompatActivity {
     CardView groupMemberRegister;
 
     private String groupParseId;
+    private ParseGroupHelper mParseGroupHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_member);
+
+        // TODO: 3/31/18 ===> make sure names are unique in a group 
+
+        mParseGroupHelper = new ParseGroupHelper(AddNewMemberActivity.this);
 
         Intent addNewMemberIntent = getIntent();
         groupParseId = addNewMemberIntent.getStringExtra("groupParseId");
@@ -53,6 +59,10 @@ public class AddNewMemberActivity extends AppCompatActivity {
                         !groupMemberNationality.getText().toString().equals("") &&
                         !groupMemberLocation.getText().toString().equals("")){
 
+                    Group groupToUpdate = new Group();
+                    groupToUpdate.setGroupParseId(groupParseId);
+                    mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+
                     String mUsername = groupMemberUsername.getText().toString().trim();
                     String mUserPhone = groupMemberPhone.getText().toString().trim();
                     String mUserHousehold = groupMemberHousehold.getText().toString().trim();
@@ -62,23 +72,19 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     String mUserNationality = groupMemberNationality.getText().toString().trim();
                     String mUserLocation = groupMemberLocation.getText().toString().trim();
 
-                    User newgroupMember = new User();
-                    newgroupMember.setUserName(mUsername);
-                    newgroupMember.setPhoneNumber(mUserPhone);
-                    newgroupMember.setHousehold(mUserHousehold);
-                    newgroupMember.setBusiness(mUserBusiness);
-                    newgroupMember.setGender(mUserGender);
-                    newgroupMember.setEducationLevel(mUserEducationLevel);
-                    newgroupMember.setNationality(mUserNationality);
-                    newgroupMember.setLocation(mUserLocation);
-                    newgroupMember.setPassword(mUserPhone);
-                    newgroupMember.setIsLeader(false);
-                    newgroupMember.setGroupMember(true);
-                    newgroupMember.setGroupId(groupParseId);
-                    newgroupMember.setPoints(3);
+                    GroupMember newGroupMember = new GroupMember();
+                    newGroupMember.setMemberUsername(mUsername);
+                    newGroupMember.setMemberPhoneNumber(mUserPhone);
+                    newGroupMember.setMemberHousehold(mUserHousehold);
+                    newGroupMember.setMemberBusiness(mUserBusiness);
+                    newGroupMember.setMemberGender(mUserGender);
+                    newGroupMember.setMemberEducationLevel(mUserEducationLevel);
+                    newGroupMember.setMemberNationality(mUserNationality);
+                    newGroupMember.setMemberLocation(mUserLocation);
+                    newGroupMember.setMemberGroupId(groupParseId);
+                    newGroupMember.setMemberPoints(3);
 
-                    new ParseRegistrationHelper(AddNewMemberActivity.this)
-                            .saveRegisteredUserToParseDb(newgroupMember, new OnSuccessfulRegistrationListener() {
+                    mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
                                 @Override
                                 public void onResponse(String success) {
                                     Intent intent = new Intent(AddNewMemberActivity.this, GroupMembersActivity.class);

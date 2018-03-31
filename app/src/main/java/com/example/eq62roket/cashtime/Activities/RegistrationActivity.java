@@ -60,7 +60,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     newUser.setLocation(userLocation.getText().toString());
                     newUser.setPassword(userPassword.getText().toString());
                     newUser.setIsLeader(false);
-                    newUser.setGroupMember(false);
                     newUser.setPoints(3);
 
                     new ParseRegistrationHelper(RegistrationActivity.this).saveRegisteredUserToParseDb(newUser, new OnSuccessfulRegistrationListener() {

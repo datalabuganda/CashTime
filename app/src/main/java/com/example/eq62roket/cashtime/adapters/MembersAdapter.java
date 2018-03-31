@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
 
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import java.util.List;
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHolder>{
 
     public interface OnGroupMemberClickListener {
-        void onGroupMemberClick(User groupMemberUser);
+        void onGroupMemberClick(GroupMember groupMemberUser);
     }
 
-    private List<User> mGroupMemberUsers;
+    private List<GroupMember> mGroupMemberUsers;
     private OnGroupMemberClickListener mOnGroupMemberClickListener;
 
 
@@ -36,9 +36,9 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
             memberPhoneNumber = (TextView) view.findViewById(R.id. memberPhoneNumber);
         }
 
-        public void bind(final User groupMemberUser, final OnGroupMemberClickListener onGroupMemberClickListener){
-            memberName.setText(groupMemberUser.getUserName());
-            memberPhoneNumber.setText(groupMemberUser.getPhoneNumber());
+        public void bind(final GroupMember groupMemberUser, final OnGroupMemberClickListener onGroupMemberClickListener){
+            memberName.setText(groupMemberUser.getMemberUsername());
+            memberPhoneNumber.setText(groupMemberUser.getMemberPhoneNumber());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -50,7 +50,7 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
     }
 
 
-    public MembersAdapter(List<User> groupMemberUsers, OnGroupMemberClickListener onGroupMemberClickListener) {
+    public MembersAdapter(List<GroupMember> groupMemberUsers, OnGroupMemberClickListener onGroupMemberClickListener) {
         this.mGroupMemberUsers = groupMemberUsers;
         this.mOnGroupMemberClickListener = onGroupMemberClickListener;
     }
@@ -73,8 +73,7 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
         return mGroupMemberUsers.size();
     }
 
-    public void setFilter(ArrayList<User> groupMemberUsers){
-//        groupMemberUsers = new ArrayList<>();
+    public void setFilter(ArrayList<GroupMember> groupMemberUsers){
         mGroupMemberUsers.addAll(groupMemberUsers);
         notifyDataSetChanged();
     }

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
@@ -33,6 +34,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Tip.class);
         ParseObject.registerSubclass(Group.class);
         ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(GroupMember.class);
         Parse.initialize(this);
     }
 }

@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.Group;
+import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 
@@ -55,6 +57,12 @@ public class AddNewGroupActivity extends AppCompatActivity {
                     groupTosave.setGroupMemberCount(1);
 
                     new ParseGroupHelper(AddNewGroupActivity.this).saveNewGroupToParseDb(groupTosave);
+
+                    User groupLeaderUser = new User();
+                    groupLeaderUser.setParseId(currentUserId);
+                    groupLeaderUser.setIsLeader(true);
+                    new ParseRegistrationHelper(AddNewGroupActivity.this)
+                            .updateIsLeaderFlagInParseDb(groupLeaderUser);
 
                     Intent groupIntent = new Intent(AddNewGroupActivity.this, GroupsActivity.class);
                     startActivity(groupIntent);

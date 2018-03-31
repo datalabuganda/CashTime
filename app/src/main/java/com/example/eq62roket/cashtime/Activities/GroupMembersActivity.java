@@ -17,14 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
-import com.parse.Parse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
     private static final String TAG = "GroupMembersActivity";
 
-    private List<User> mGroupMemberUsers = new ArrayList<>();
+    private List<GroupMember> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
     FloatingActionButton fabAddGroupMember;
@@ -43,11 +41,11 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_members);
-        Parse.initialize(this);
 
-        Intent groupDetailIntent =getIntent();
+        Intent groupDetailIntent = getIntent();
         String nameOfGroup = groupDetailIntent.getStringExtra("groupName");
         groupParseId = groupDetailIntent.getStringExtra("groupParseId");
+        final String groupMemberCount = groupDetailIntent.getStringExtra("groupMemberCount");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(nameOfGroup);
@@ -69,17 +67,19 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
         new ParseGroupHelper(GroupMembersActivity.this)
                 .getGroupMembersFromParseDb(groupParseId, new OnReturnedGroupMemberListener() {
                     @Override
-                    public void onResponse(List<User> userList) {
+                    public void onResponse(List<GroupMember> userList) {
                         mGroupMemberUsers = userList;
-                        Log.d(TAG, "onResponse: " + userList.size());
                         mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
                             @Override
-                            public void onGroupMemberClick(User groupMemberUser) {
-//                Intent addMemberGoalIntent = new Intent(GroupMembersActivity.this, AddMembersGoalsActivity.class);
-//                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
-//                startActivity(addMemberGoalIntent);
-//                finish();
-                                Toast.makeText(GroupMembersActivity.this, "Edit Me", Toast.LENGTH_SHORT).show();
+                            public void onGroupMemberClick(GroupMember groupMemberUser) {
+                                Intent editGroupMemberIntent = new Intent(GroupMembersActivity.this, EditGroupMemberActivity.class);
+                                editGroupMemberIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
+                                editGroupMemberIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
+                                editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
+                                editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
+                                Log.d(TAG, "onGroupMemberClick: " + groupMemberUser.getMemberGroupId());
+                                startActivity(editGroupMemberIntent);
+                                finish();
                             }
                         });
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -123,9 +123,9 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     public boolean onQueryTextChange(String newText) {
 
         newText = newText.toLowerCase();
-        ArrayList<User> groupMemberUsers = new ArrayList<>();
-        for (User groupMemberUser : mGroupMemberUsers){
-            String name = groupMemberUser.getUserName().toLowerCase();
+        ArrayList<GroupMember> groupMemberUsers = new ArrayList<>();
+        for (GroupMember groupMemberUser : mGroupMemberUsers){
+            String name = groupMemberUser.getMemberUsername().toLowerCase();
             if (name.contains(newText)){
                 groupMemberUsers.add(groupMemberUser);
             }

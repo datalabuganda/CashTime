@@ -42,6 +42,7 @@ public class GroupsActivity extends AppCompatActivity {
                         Intent groupDetailsIntent = new Intent(GroupsActivity.this, GroupMembersActivity.class);
                         groupDetailsIntent.putExtra("groupParseId", group.getGroupParseId());
                         groupDetailsIntent.putExtra("groupName", group.getGroupName());
+                        groupDetailsIntent.putExtra("groupMemberCount", String.valueOf(group.getGroupMemberCount()));
                         startActivity(groupDetailsIntent);
                         finish();
 //                        Toast.makeText(GroupsActivity.this, "This Feature is still under development", Toast.LENGTH_SHORT).show();

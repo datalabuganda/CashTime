@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberGoalSelectMemberActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
-    private List<User> mGroupMemberUsers = new ArrayList<>();
+    private List<GroupMember> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
 
@@ -40,9 +40,9 @@ public class MemberGoalSelectMemberActivity extends AppCompatActivity implements
 
         mMembersAdapter = new MembersAdapter(mGroupMemberUsers, new MembersAdapter.OnGroupMemberClickListener() {
             @Override
-            public void onGroupMemberClick(User groupMemberUser) {
+            public void onGroupMemberClick(GroupMember groupMemberUser) {
                 Intent addMemberGoalIntent = new Intent(MemberGoalSelectMemberActivity.this, AddMembersGoalsActivity.class);
-                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getUserName());
+                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
                 startActivity(addMemberGoalIntent);
                 finish();
             }
@@ -80,9 +80,9 @@ public class MemberGoalSelectMemberActivity extends AppCompatActivity implements
     public boolean onQueryTextChange(String newText) {
 
         newText = newText.toLowerCase();
-        ArrayList<User> groupMemberUsers = new ArrayList<>();
-        for (User groupMemberUser : mGroupMemberUsers){
-            String name = groupMemberUser.getUserName().toLowerCase();
+        ArrayList<GroupMember> groupMemberUsers = new ArrayList<>();
+        for (GroupMember groupMemberUser : mGroupMemberUsers){
+            String name = groupMemberUser.getMemberUsername().toLowerCase();
             if (name.contains(newText)){
                 groupMemberUsers.add(groupMemberUser);
             }

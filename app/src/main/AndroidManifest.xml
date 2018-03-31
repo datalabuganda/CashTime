@@ -167,6 +167,9 @@
         <activity
             android:label="Edit Group Member"
             android:name=".Activities.EditGroupMemberActivity"></activity>
+        <activity
+            android:label="Edit Group"
+            android:name=".Activities.EditGroupActivity"></activity>
     </application>
 
 </manifest>

@@ -35,16 +35,21 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
     FloatingActionButton fabAddGroupMember;
-
     private String groupParseId;
+    private String groupCentreName;
+    private String groupLocation;
+    private String nameOfGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_members);
 
         Intent groupDetailIntent = getIntent();
-        String nameOfGroup = groupDetailIntent.getStringExtra("groupName");
+        nameOfGroup = groupDetailIntent.getStringExtra("groupName");
         groupParseId = groupDetailIntent.getStringExtra("groupParseId");
+        groupCentreName = groupDetailIntent.getStringExtra("groupCentreName");
+        groupLocation = groupDetailIntent.getStringExtra("groupLocation");
         final String groupMemberCount = groupDetailIntent.getStringExtra("groupMemberCount");
 
         ActionBar actionBar = getSupportActionBar();
@@ -103,7 +108,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.members,menu);
+        getMenuInflater().inflate(R.menu.members, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
@@ -132,5 +137,26 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
         }
         mMembersAdapter.setFilter(groupMemberUsers);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.editGroup:
+                startEditGroupActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void startEditGroupActivity(){
+        Intent editGroupIntent = new Intent(GroupMembersActivity.this, EditGroupActivity.class);
+        editGroupIntent.putExtra("groupParseId", groupParseId);
+        editGroupIntent.putExtra("groupCentreName", groupCentreName);
+        editGroupIntent.putExtra("groupLocation", groupLocation);
+        editGroupIntent.putExtra("nameOfGroup", nameOfGroup);
+        startActivity(editGroupIntent);
+        finish();
     }
 }

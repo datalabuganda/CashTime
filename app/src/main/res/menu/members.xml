@@ -7,5 +7,10 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/editGroup"
+        android:title="edit Group"
+        app:showAsAction="always"
+        />
 
 </menu>

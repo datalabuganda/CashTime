@@ -63,9 +63,7 @@ public class EditTipActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // start a dialog fragment
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Tip tipToDelete = new Tip();
@@ -74,7 +72,6 @@ public class EditTipActivity extends AppCompatActivity {
                         mParseHelper.deleteTipFromParseDb(tipToDelete);
                         // TODO: 3/22/18 ====> redirect to tips fragment
 
-                        // start TabbedSavingActivity
                         startTabbedBarriersTipsctivity();
                         Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
 
@@ -86,13 +83,10 @@ public class EditTipActivity extends AppCompatActivity {
                     }
                 });
 
-                // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(
                         "Deleting Tip for '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this tip?")
                         .setTitle("Delete Tip");
 
-
-                // Create the AlertDialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
 

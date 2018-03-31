@@ -44,7 +44,7 @@
         <activity
             android:name=".Activities.GroupMembersActivity"
             android:label="All Group Members"
-            android:parentActivityName=".Activities.HomeActivity" />
+            android:parentActivityName=".Activities.GroupsActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
             android:label="Add Member" />
@@ -163,10 +163,11 @@
             android:name=".Activities.MemberGoalSelectMemberActivity"></activity>
         <activity
             android:label="Your Groups"
-            android:name=".Activities.GroupsActivity"></activity>
+            android:name=".Activities.GroupsActivity"
+            android:parentActivityName=".Activities.HomeActivity"/>
         <activity
             android:label="Edit Group Member"
-            android:name=".Activities.EditGroupMemberActivity"></activity>
+            android:name=".Activities.EditGroupMemberActivity" />
         <activity
             android:label="Edit Group"
             android:name=".Activities.EditGroupActivity"></activity>

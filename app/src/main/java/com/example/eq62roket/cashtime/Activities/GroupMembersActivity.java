@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
@@ -33,6 +34,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
     private List<GroupMember> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private TextView emptyView;
     private MembersAdapter mMembersAdapter;
     FloatingActionButton fabAddGroupMember;
     private String groupParseId;
@@ -58,6 +60,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
         fabAddGroupMember = (FloatingActionButton)findViewById(R.id.addNewGroupMember);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
         fabAddGroupMember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,26 +76,32 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
                 .getGroupMembersFromParseDb(groupParseId, new OnReturnedGroupMemberListener() {
                     @Override
                     public void onResponse(List<GroupMember> userList) {
-                        mGroupMemberUsers = userList;
-                        mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
-                            @Override
-                            public void onGroupMemberClick(GroupMember groupMemberUser) {
-                                Intent editGroupMemberIntent = new Intent(GroupMembersActivity.this, EditGroupMemberActivity.class);
-                                editGroupMemberIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
-                                editGroupMemberIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
-                                editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
-                                editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
-                                Log.d(TAG, "onGroupMemberClick: " + groupMemberUser.getMemberGroupId());
-                                startActivity(editGroupMemberIntent);
-                                finish();
-                            }
-                        });
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                        mRecyclerView.setLayoutManager(mLayoutManager);
-                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        if (userList.isEmpty()){
+                            mRecyclerView.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                        }else {
+                            emptyView.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
 
-                        mRecyclerView.addItemDecoration(new DividerItemDecoration(GroupMembersActivity.this, LinearLayoutManager.VERTICAL));
-                        mRecyclerView.setAdapter(mMembersAdapter);
+                            mGroupMemberUsers = userList;
+                            mMembersAdapter = new MembersAdapter(userList, new MembersAdapter.OnGroupMemberClickListener() {
+                                @Override
+                                public void onGroupMemberClick(GroupMember groupMemberUser) {
+                                    Intent editGroupMemberIntent = new Intent(GroupMembersActivity.this, EditGroupMemberActivity.class);
+                                    editGroupMemberIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
+                                    editGroupMemberIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
+                                    editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
+                                    editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
+                                    startActivity(editGroupMemberIntent);
+                                }
+                            });
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            mRecyclerView.addItemDecoration(new DividerItemDecoration(GroupMembersActivity.this, LinearLayoutManager.VERTICAL));
+                            mMembersAdapter.notifyDataSetChanged();
+                            mRecyclerView.setAdapter(mMembersAdapter);
+                        }
 
                     }
 

@@ -87,7 +87,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
                                 @Override
                                 public void onResponse(String success) {
-                                    Intent intent = new Intent(AddNewMemberActivity.this, GroupMembersActivity.class);
+                                    Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
                                     startActivity(intent);
                                     finish();
                                     Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();

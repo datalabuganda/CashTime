@@ -7,14 +7,17 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
@@ -26,33 +29,57 @@ public class MemberGoalSelectMemberActivity extends AppCompatActivity implements
     private List<GroupMember> mGroupMemberUsers = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
+    private TextView emptyView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_members);
+        setContentView(R.layout.activity_member_goal_select_member);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
-        mMembersAdapter = new MembersAdapter(mGroupMemberUsers, new MembersAdapter.OnGroupMemberClickListener() {
-            @Override
-            public void onGroupMemberClick(GroupMember groupMemberUser) {
-                Intent addMemberGoalIntent = new Intent(MemberGoalSelectMemberActivity.this, AddMembersGoalsActivity.class);
-                addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
-                startActivity(addMemberGoalIntent);
-                finish();
-            }
-        });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        new ParseGroupHelper(MemberGoalSelectMemberActivity.this)
+                .getAllMembersFromParseDb(new OnReturnedGroupMemberListener() {
+                    @Override
+                    public void onResponse(List<GroupMember> groupMembersList) {
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mRecyclerView.setAdapter(mMembersAdapter);
+                        if (groupMembersList.isEmpty()){
+                            mRecyclerView.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.VISIBLE);
+                        }else {
+                            mGroupMemberUsers = groupMembersList;
+
+                            emptyView.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                            mMembersAdapter = new MembersAdapter(groupMembersList, new MembersAdapter.OnGroupMemberClickListener() {
+                                @Override
+                                public void onGroupMemberClick(GroupMember groupMemberUser) {
+                                    Intent addMemberGoalIntent = new Intent(MemberGoalSelectMemberActivity.this, AddMembersGoalsActivity.class);
+                                    addMemberGoalIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
+                                    addMemberGoalIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
+                                    addMemberGoalIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
+                                    startActivity(addMemberGoalIntent);
+                                }
+                            });
+
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            mMembersAdapter.notifyDataSetChanged();
+                            mRecyclerView.setAdapter(mMembersAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
 
     }
 

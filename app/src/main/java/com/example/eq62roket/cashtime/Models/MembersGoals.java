@@ -8,9 +8,17 @@ import com.parse.ParseObject;
  */
 @ParseClassName("MemberGoals")
 public class MembersGoals extends ParseObject {
-    String parseId, memberName, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
+    String parseId, memberName,memberParseId, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
 
     public MembersGoals() {
+    }
+
+    public String getMemberParseId() {
+        return memberParseId;
+    }
+
+    public void setMemberParseId(String memberParseId) {
+        this.memberParseId = memberParseId;
     }
 
     public String getParseId() {

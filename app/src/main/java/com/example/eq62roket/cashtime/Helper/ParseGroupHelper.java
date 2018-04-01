@@ -196,6 +196,39 @@ public class ParseGroupHelper {
         });
     }
 
+    public void getAllMembersFromParseDb(final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
+        final List<GroupMember> groupMemberList = new ArrayList<>();
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        groupMemberParseQuery.addDescendingOrder("updatedAt");
+
+        groupMemberParseQuery.findInBackground(new FindCallback<GroupMember>() {
+            @Override
+            public void done(List<GroupMember> parseGroupMemberList, ParseException e) {
+                if (e == null){
+                    for (GroupMember returnedGroupMember: parseGroupMemberList){
+                        GroupMember groupMember = new GroupMember();
+                        groupMember.setMemberUsername(returnedGroupMember.get("memberUsername").toString());
+                        groupMember.setMemberPhoneNumber(returnedGroupMember.get("memberPhoneNumber").toString());
+                        groupMember.setMemberHousehold(returnedGroupMember.get("memberHousehold").toString());
+                        groupMember.setMemberGender(returnedGroupMember.get("memberGender").toString());
+                        groupMember.setMemberBusiness(returnedGroupMember.get("memberBusiness").toString());
+                        groupMember.setMemberEducationLevel(returnedGroupMember.get("memberEducationLevel").toString());
+                        groupMember.setMemberNationality(returnedGroupMember.get("memberNationality").toString());
+                        groupMember.setMemberLocation(returnedGroupMember.get("memberLocation").toString());
+                        groupMember.setMemberPoints(Long.parseLong(String.valueOf(returnedGroupMember.get("memberPoints"))));
+                        groupMember.setMemberGroupId(returnedGroupMember.get("memberGroupId").toString());
+                        groupMember.setMemberParseId(returnedGroupMember.getObjectId());
+
+                        groupMemberList.add(groupMember);
+                    }
+                    onReturnedGroupMemberListener.onResponse(groupMemberList);
+                }else {
+                    onReturnedGroupMemberListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
+
     public void getMemberUserFromParseDb(String groupMemberParseId, final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
         final List<GroupMember> groupMemberList = new ArrayList<>();
         ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
@@ -217,6 +250,7 @@ public class ParseGroupHelper {
                         groupMember.setMemberNationality(returnedGroupMember.get("memberNationality").toString());
                         groupMember.setMemberLocation(returnedGroupMember.get("memberLocation").toString());
                         groupMember.setMemberPoints(Long.parseLong(String.valueOf(returnedGroupMember.get("memberPoints"))));
+                        groupMember.setMemberGroupId(returnedGroupMember.get("memberGroupId").toString());
                         groupMember.setMemberParseId(returnedGroupMember.getObjectId());
 
                         groupMemberList.add(groupMember);

@@ -1,12 +1,9 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,18 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddMembersGoalsActivity extends AppCompatActivity {
 
-    TextView memberGoalDueDate, selectMemberGoalImage;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    TextView memberGoalDueDate;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
     String dateFormat = "dd/MM/yyyy";
@@ -36,17 +37,23 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
     Button memberGoalCancelBtn, memberGoalSaveBtn;
     private TextView memberName;
     private EditText memberGoalName, memberGoalAmount, memberGoalNote;
+    private String groupMemberParseId;
+    private ParseGroupHelper mParseGroupHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_members_goals);
 
+        mParseGroupHelper = new ParseGroupHelper(AddMembersGoalsActivity.this);
+
+        Intent addMemberGoalIntent = getIntent();
+        groupMemberParseId = addMemberGoalIntent.getStringExtra("groupMemberParseId");
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 
         memberGoalDueDate = (TextView) findViewById(R.id.memberGoalDueDate);
-        selectMemberGoalImage = (TextView) findViewById(R.id.selectMemberGoalImage);
         memberGoalNote = (EditText) findViewById(R.id.memberGoalNotes);
         memberGoalAmount = (EditText) findViewById(R.id.memberGoalAmount);
         memberGoalName = (EditText) findViewById(R.id.memberGoalName);
@@ -54,12 +61,17 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
         memberGoalSaveBtn = (Button) findViewById(R.id.memberGoalSaveBtn);
         memberGoalCancelBtn = (Button) findViewById(R.id.memberGoalCancelBtn);
 
-        // get intent data
-        Intent intent = getIntent();
-        String nameOfMember = intent.getStringExtra("groupMemberName");
+        mParseGroupHelper.getMemberUserFromParseDb(groupMemberParseId, new OnReturnedGroupMemberListener() {
+            @Override
+            public void onResponse(List<GroupMember> groupMembersList) {
+                memberName.setText(groupMembersList.get(0).getMemberUsername());
+            }
 
-        // prepopulate memberName
-        memberName.setText(nameOfMember);
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
 
         memberGoalSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +91,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
-        memberGoalDueDate.setText("Select Goal Deadline");
+        memberGoalDueDate.setText(new PeriodHelper().getMonthlyDate());
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -104,41 +116,6 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-        selectMemberGoalImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectImage();
-            }
-        });
-    }
-
-    private void SelectImage(){
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddMembersGoalsActivity.this);
-        builder.setTitle("Add Image");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (items[i].equals("Camera")){
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-
-                }else if (items[i].equals("Gallery")){
-
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("images/*");
-                    startActivityForResult(intent.createChooser(intent, "Select file"), SELECT_FILE);
-
-                }else if (items[i].equals("Cancel")){
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-
-        builder.show();
     }
 
     private void updateDate() {
@@ -160,9 +137,13 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             newMembersGoal.setMemberGoalAmount(costOfGoal);
             newMembersGoal.setMemberGoalName(nameOfGoal);
             newMembersGoal.setMemberGoalDueDate(goalDeadline);
-            newMembersGoal.setMemberGoalNotes(goalNotes);
             newMembersGoal.setMemberName(nameOfMember);
-
+            newMembersGoal.setMemberParseId(groupMemberParseId);
+            if (goalNotes.isEmpty()){
+                newMembersGoal.setMemberGoalNotes("No Notes Added");
+            }else {
+                newMembersGoal.setMemberGoalNotes(goalNotes);
+            }
             new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
 
             startTabbedGoalsActivity();

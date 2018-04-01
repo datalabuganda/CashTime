@@ -1,12 +1,10 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +25,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
 
     private static final String TAG = "EditMemberGoalActivity";
 
-    TextView memberGoalDueDate, selectMemberGoalImage;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    TextView memberGoalDueDate;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
     String dateFormat = "dd/MM/yyyy";
@@ -49,7 +46,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         mParseHelper = new ParseHelper(this);
 
         memberGoalDueDate = (TextView) findViewById(R.id.memberGoalDueDate);
-        selectMemberGoalImage = (TextView) findViewById(R.id.selectMemberGoalImage);
         memberGoalNote = (EditText) findViewById(R.id.memberGoalNotes);
         memberGoalAmount = (EditText) findViewById(R.id.memberGoalAmount);
         memberGoalName = (EditText) findViewById(R.id.memberGoalName);
@@ -138,40 +134,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             }
         });
 
-        selectMemberGoalImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectImage();
-            }
-        });
-    }
-
-    private void SelectImage(){
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditMemberGoalActivity.this);
-        builder.setTitle("Add Image");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (items[i].equals("Camera")){
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-
-                }else if (items[i].equals("Gallery")){
-
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("images/*");
-                    startActivityForResult(intent.createChooser(intent, "Select file"), SELECT_FILE);
-
-                }else if (items[i].equals("Cancel")){
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-
-        builder.show();
     }
 
     private void updateDate() {

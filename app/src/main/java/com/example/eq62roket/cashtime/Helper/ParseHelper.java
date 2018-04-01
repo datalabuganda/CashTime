@@ -127,13 +127,13 @@ public class ParseHelper {
 
     public void saveMemberGoalsToParseDb(MembersGoals membersGoal){
         MembersGoals newMemberGoal = new MembersGoals();
-        newMemberGoal.put("userId", currentUserId);
         newMemberGoal.put("memberUsernames", membersGoal.getMemberName());
         newMemberGoal.put("memberGoalName", membersGoal.getMemberGoalName());
         newMemberGoal.put("memberGoalAmount", membersGoal.getMemberGoalAmount());
         newMemberGoal.put("memberGoalDeadline", membersGoal.getMemberGoalDueDate());
         newMemberGoal.put("memberGoalStatus", membersGoal.getMemberGoalStatus());
         newMemberGoal.put("memberGoalNotes", membersGoal.getMemberGoalNotes());
+        newMemberGoal.put("memberParseId", membersGoal.getMemberParseId());
         newMemberGoal.saveInBackground();
 
     }
@@ -141,7 +141,6 @@ public class ParseHelper {
     public void getMemberGoalsFromParseDb(final OnReturnedMemberGoalListener onReturnedMemberGoalListener){
         final List<MembersGoals> membersGoalsList = new ArrayList<>();
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
-//        membersGoalsParseQuery.whereEqualTo("userId", currentUserId);
         membersGoalsParseQuery.addDescendingOrder("updatedAt");
         membersGoalsParseQuery.findInBackground(new FindCallback<MembersGoals>() {
             @Override
@@ -155,6 +154,7 @@ public class ParseHelper {
                         memberGoal.setMemberGoalStatus(retrievedMemberGoal.get("memberGoalStatus").toString());
                         memberGoal.setMemberGoalDueDate(retrievedMemberGoal.get("memberGoalDeadline").toString());
                         memberGoal.setMemberName(retrievedMemberGoal.get("memberUsernames").toString());
+                        memberGoal.setMemberParseId(retrievedMemberGoal.get("memberParseId").toString());
                         memberGoal.setParseId(retrievedMemberGoal.getObjectId());
 
                         membersGoalsList.add(memberGoal);

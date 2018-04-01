@@ -19,9 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberGoalActivity;
+import com.example.eq62roket.cashtime.Activities.MemberGoalSelectMemberActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
@@ -55,10 +55,10 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),MemberGoalSelectMemberActivity.class);
-//                startActivity(addMembersGoalsIntent);
-//                getActivity().finish();
-                Toast.makeText(getActivity(), "This feature is still under development", Toast.LENGTH_SHORT).show();
+                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),MemberGoalSelectMemberActivity.class);
+                startActivity(addMembersGoalsIntent);
+                getActivity().finish();
+//                Toast.makeText(getActivity(), "This feature is still under development", Toast.LENGTH_SHORT).show();
             }
         });
 

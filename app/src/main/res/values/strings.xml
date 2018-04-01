@@ -47,6 +47,7 @@
     <string name="back4app_client_key">eYEH5MBEUFuYhrW1qiU1CaQHqwXKZMNixjRpSWZr</string>
     <string name="add_group_msg">No Groups Added Yet. Click + button to add a Group</string>
     <string name="add_member_msg">No Group Members Added Yet. Click + button to add a Group Member</string>
+    <string name="no_members_msg">No Group Members Added Yet.</string>
 
     <!--level of education array-->
     <string-array name="level_of_education">

@@ -170,7 +170,10 @@
             android:name=".Activities.EditGroupMemberActivity" />
         <activity
             android:label="Edit Group"
-            android:name=".Activities.EditGroupActivity"></activity>
+            android:name=".Activities.EditGroupActivity"/>
+        <activity
+            android:label="Select A Group"
+            android:name=".Activities.GoalsToGroupActivity"/>
     </application>
 
 </manifest>

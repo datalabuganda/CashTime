@@ -34,14 +34,9 @@ public class ParseHelper {
         void onFailure(String error);
     }
 
-
-
     private static final String TAG = "ParseHelper";
-
-
     private Context mContext;
     private String currentUserId;
-
 
     public ParseHelper(Context context){
         mContext = context;
@@ -56,6 +51,8 @@ public class ParseHelper {
         newGroupGoal.put("goalText", groupGoals.getNotes());
         newGroupGoal.put("goalStatus", groupGoals.getGroupGoalStatus());
         newGroupGoal.put("goalEndDate", groupGoals.getDueDate());
+        newGroupGoal.put("groupParseId", groupGoals.getGroupId());
+        newGroupGoal.put("groupName", groupGoals.getGroupName());
         newGroupGoal.saveInBackground();
 
     }
@@ -76,6 +73,8 @@ public class ParseHelper {
                         newGroupGoal.setNotes(retrievedGroupGoal.get("goalText").toString());
                         newGroupGoal.setGroupGoalStatus(retrievedGroupGoal.get("goalStatus").toString());
                         newGroupGoal.setDueDate(retrievedGroupGoal.get("goalEndDate").toString());
+                        newGroupGoal.setGroupId(retrievedGroupGoal.get("groupParseId").toString());
+                        newGroupGoal.setGroupName(retrievedGroupGoal.get("groupName").toString());
                         newGroupGoal.setParseId(retrievedGroupGoal.getObjectId());
 
                         groupGoalList.add(newGroupGoal);

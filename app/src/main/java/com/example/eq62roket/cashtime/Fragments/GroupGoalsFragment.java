@@ -21,8 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
+import com.example.eq62roket.cashtime.Activities.GoalsToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
@@ -33,7 +33,7 @@ import java.util.List;
 
 
 public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTextListener{
-        private static final String TAG = "GroupGoalsFragment";
+    private static final String TAG = "GroupGoalsFragment";
 
     List<GroupGoals> groupGoals = null;
     private RecyclerView recyclerView;
@@ -58,7 +58,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addGroupGoalsIntent = new Intent(GroupGoalsFragment.this.getActivity(), AddGroupGoalsActivity.class);
+                Intent addGroupGoalsIntent = new Intent(GroupGoalsFragment.this.getActivity(), GoalsToGroupActivity.class);
                 startActivity(addGroupGoalsIntent);
             }
         });

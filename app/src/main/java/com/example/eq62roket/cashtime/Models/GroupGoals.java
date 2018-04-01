@@ -9,10 +9,26 @@ import com.parse.ParseObject;
  */
 @ParseClassName("GroupGoals")
 public class GroupGoals extends ParseObject {
-    String parseId, name, dueDate, amount, notes, groupGoalStatus;
+    String parseId, name, dueDate, amount, notes, groupGoalStatus, groupId, groupName;
 
     public GroupGoals() {
         super();
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getParseId() {

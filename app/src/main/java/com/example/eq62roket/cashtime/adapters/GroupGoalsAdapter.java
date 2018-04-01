@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -27,19 +28,21 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
 
 
     public class GroupGoalsViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, date, amount;
+        public TextView goalName, date, amount, groupName;
 
         public GroupGoalsViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.name);
+            goalName = (TextView) view.findViewById(R.id.goalName);
             date = (TextView) view.findViewById(R.id.endDate);
             amount = (TextView) view.findViewById(R.id.amount);
+            groupName = (TextView) view.findViewById(R.id.groupName);
         }
 
         public void bind(final GroupGoals groupGoals, final OnGoalClickListener onGoalClickListener){
-            name.setText(groupGoals.getName());
-            amount.setText(groupGoals.getAmount());
+            goalName.setText(groupGoals.getName());
+            amount.setText(new CashTimeUtils().currencyFormatter(groupGoals.getAmount()));
             date.setText(groupGoals.getDueDate());
+            groupName.setText(groupGoals.getGroupName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

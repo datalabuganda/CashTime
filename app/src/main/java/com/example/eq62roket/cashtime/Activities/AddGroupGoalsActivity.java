@@ -1,15 +1,11 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -39,16 +36,19 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     EditText groupGoalNote, groupGoalAmount, groupGoalName;
     Button groupCancelBtn, groupSaveBtn;
 
+    private String groupParseId, groupName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_goals);
 
+        Intent groupDetailsIntent = getIntent();
+        groupParseId = groupDetailsIntent.getStringExtra("groupParseId");
+        groupName = groupDetailsIntent.getStringExtra("groupName");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-
-
 
         groupGoalDueDate = (TextView) findViewById(R.id.groupGoalDueDate);
         groupGoalNote = (EditText) findViewById(R.id.groupGoalNote);
@@ -75,7 +75,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
-        groupGoalDueDate.setText("Select Goal Deadline");
+        groupGoalDueDate.setText(new PeriodHelper().getMonthlyDate());
 
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -83,7 +83,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -96,7 +95,6 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -106,40 +104,11 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
 
     }
 
-    private void SelectImage(){
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddGroupGoalsActivity.this);
-        builder.setTitle("Add Image");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (items[i].equals("Camera")){
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-
-                }else if (items[i].equals("Gallery")){
-
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("images/*");
-                    startActivityForResult(intent.createChooser(intent, "Select file"), SELECT_FILE);
-
-                }else if (items[i].equals("Cancel")){
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-
-        builder.show();
-    }
-
     private void updateDate() {
         groupGoalDueDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void saveGroupGoal(){
-        // add new group goal to db
         if ( !groupGoalName.getText().toString().equals("") &&
                 !groupGoalAmount.getText().toString().equals("")){
             String nameOfGoal = groupGoalName.getText().toString();
@@ -153,8 +122,8 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             groupGoals.setName(nameOfGoal);
             groupGoals.setDueDate(goalDeadline);
             groupGoals.setNotes(goalNotes);
-
-            Log.d(TAG, "saveGroupGoal: " + groupGoals);
+            groupGoals.setGroupId(groupParseId);
+            groupGoals.setGroupName(groupName);
 
             // TODO: 3/22/18 =====> redirect to group fragment with updated group goals
             new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);

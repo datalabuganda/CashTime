@@ -1,44 +1,39 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
-import android.support.annotation.MainThread;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Helper.ParseUserHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
-import com.example.eq62roket.cashtime.Models.User;
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
+import com.example.eq62roket.cashtime.Models.Group;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 public class AddNewMemberActivity extends AppCompatActivity {
-    private static final String TAG = "AddNewMemberActivity";
-    TextView addNewMember;
-    Spinner  houseHoldComposition;
 
     EditText groupMemberUsername, groupMemberLocation, groupMemberPhone, groupMemberBusiness,
             groupMemberNationality, groupMemberEducationLevel, groupMemberGender, groupMemberHousehold;
     CardView groupMemberRegister;
 
+    private String groupParseId;
+    private ParseGroupHelper mParseGroupHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_member);
+
+        // TODO: 3/31/18 ===> make sure names are unique in a group
+
+        mParseGroupHelper = new ParseGroupHelper(AddNewMemberActivity.this);
+
+        Intent addNewMemberIntent = getIntent();
+        groupParseId = addNewMemberIntent.getStringExtra("groupParseId");
 
         groupMemberBusiness = (EditText) findViewById(R.id.groupMembersBusiness);
         groupMemberUsername = (EditText) findViewById(R.id.groupMemberUsername);
@@ -54,53 +49,62 @@ public class AddNewMemberActivity extends AppCompatActivity {
         groupMemberRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveUser();
+
+                if (!groupMemberUsername.getText().toString().equals("") &&
+                        !groupMemberPhone.getText().toString().equals("") &&
+                        !groupMemberHousehold.getText().toString().equals("") &&
+                        !groupMemberBusiness.getText().toString().equals("") &&
+                        !groupMemberGender.getText().toString().equals("") &&
+                        !groupMemberEducationLevel.getText().toString().equals("") &&
+                        !groupMemberNationality.getText().toString().equals("") &&
+                        !groupMemberLocation.getText().toString().equals("")){
+
+                    Group groupToUpdate = new Group();
+                    groupToUpdate.setGroupParseId(groupParseId);
+                    mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+
+                    String mUsername = groupMemberUsername.getText().toString().trim();
+                    String mUserPhone = groupMemberPhone.getText().toString().trim();
+                    String mUserHousehold = groupMemberHousehold.getText().toString().trim();
+                    String mUserBusiness = groupMemberBusiness.getText().toString().trim();
+                    String mUserGender = groupMemberGender.getText().toString().trim();
+                    String mUserEducationLevel = groupMemberEducationLevel.getText().toString().trim();
+                    String mUserNationality = groupMemberNationality.getText().toString().trim();
+                    String mUserLocation = groupMemberLocation.getText().toString().trim();
+
+                    GroupMember newGroupMember = new GroupMember();
+                    newGroupMember.setMemberUsername(mUsername);
+                    newGroupMember.setMemberPhoneNumber(mUserPhone);
+                    newGroupMember.setMemberHousehold(mUserHousehold);
+                    newGroupMember.setMemberBusiness(mUserBusiness);
+                    newGroupMember.setMemberGender(mUserGender);
+                    newGroupMember.setMemberEducationLevel(mUserEducationLevel);
+                    newGroupMember.setMemberNationality(mUserNationality);
+                    newGroupMember.setMemberLocation(mUserLocation);
+                    newGroupMember.setMemberGroupId(groupParseId);
+                    newGroupMember.setMemberPoints(3);
+
+                    mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
+                        @Override
+                        public void onResponse(String success) {
+                            Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(AddNewMemberActivity.this, "Member not Added " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else {
+                    Toast.makeText(AddNewMemberActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
-    }
-
-    private void saveUser(){
-        // add new group goal to db
-        if ( !groupMemberUsername.getText().toString().equals("") &&
-                !groupMemberPhone.getText().toString().equals("")){
-            String mUsername = groupMemberUsername.getText().toString().trim();
-            String mUserPhone = groupMemberPhone.getText().toString().trim();
-            String mUserHousehold = groupMemberHousehold.getText().toString().trim();
-            String mUserBusiness = groupMemberBusiness.getText().toString().trim();
-            String mUserGender = groupMemberGender.getText().toString().trim();
-            String mUserEducationLevel = groupMemberEducationLevel.getText().toString().trim();
-            String mUserNationality = groupMemberNationality.getText().toString().trim();
-            String mUserLocation = groupMemberLocation.getText().toString().trim();
-
-
-            User user = new User();
-            user.setUserName(mUsername);
-            user.setPhoneNumber(mUserPhone);
-            user.setHousehold(mUserHousehold);
-            user.setGender(mUserGender);
-            user.setBusiness(mUserBusiness);
-            user.setEducationLevel(mUserEducationLevel);
-            user.setNationality(mUserNationality);
-            user.setLocation(mUserLocation);
-
-
-            Log.d(TAG, "user: " + user);
-
-            // TODO: 3/22/18 =====> save object to db
-            new ParseUserHelper(this).saveUserToParseDb(user);
-            startGroupMembersActivity();
-
-            Toast.makeText(AddNewMemberActivity.this, "Group Goal " + user.getUserName() + " saved", Toast.LENGTH_SHORT).show();
-
-        }else {
-            Toast.makeText(AddNewMemberActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void startGroupMembersActivity(){
-        Intent tabbedGoalsIntent = new Intent(AddNewMemberActivity.this, GroupMembersActivity.class);
-        startActivity(tabbedGoalsIntent);
-        finish();
     }
 }

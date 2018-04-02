@@ -1,8 +1,8 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,8 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Models.GroupSavings;
+import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
@@ -26,21 +27,26 @@ import java.util.Locale;
 public class AddMemberSavingsActivity extends AppCompatActivity {
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote;
-    private TextView memberName;
+    private EditText savingAmount, savingNote;
+    private TextView memberName, goalName;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
+    private String nameOfMember;
+    private String memberParseId;
 
+    private ParseHelper mParseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member_savings);
 
+        mParseHelper = new ParseHelper(AddMemberSavingsActivity.this);
+
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
-        goalName = (EditText) findViewById(R.id.goalName);
+        goalName = (TextView) findViewById(R.id.goalName);
         memberName = (TextView) findViewById(R.id.memberName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
@@ -49,20 +55,15 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
-        String nameOfMember = intent.getStringExtra("memberName");
+        nameOfMember = intent.getStringExtra("memberName");
+        memberParseId = intent.getStringExtra("memberParseId");
 
-        // Prepopulate goalName and memberName
         goalName.setText(nameOfGoal);
         memberName.setText(nameOfMember);
 
-
-        // get selected period
         getSelectPeriod();
-
-        // get selected income
         selectIncomeSource(getIncomeSources());
 
-        // Save Transaction
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +71,6 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
             }
         });
 
-        // Cancel Transaction
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,13 +83,11 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
     }
 
     public void getSelectPeriod(){
-        // Add periods to list
         List<String> periods = new ArrayList<>();
         periods.add("Daily");
         periods.add("Weekly");
         periods.add("Monthly");
 
-        // add list to adapter
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, periods
         );
@@ -112,7 +110,6 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
     }
 
     public void selectIncomeSource(List<String> incomeSourcesList){
-        // add incomeSourcesList to incomeSourcesAdapter
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, incomeSourcesList
         );
@@ -135,7 +132,6 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
 
     public void saveSavingTransaction(){
         String savingPeriod = "";
-        // pick goalName again
         String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
@@ -155,21 +151,29 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
             }else if (selectedPeriod == "Monthly"){
                 savingPeriod = new PeriodHelper().getMonthlyDate();
             }
-            if (!savingPeriod.equals("")){
+            if (!selectedPeriod.equals("")){
+                MemberSavings newMemberSaving = new MemberSavings();
+                newMemberSaving.setGoalName(nameOfGoal);
+                newMemberSaving.setMemberName(nameOfMember);
+                newMemberSaving.setSavingAmount(amountSaved);
+                newMemberSaving.setPeriod(selectedPeriod);
+                newMemberSaving.setIncomeSource(selectedIncomeSource);
+                newMemberSaving.setDateAdded(dateToday);
+                newMemberSaving.setMemberParseId(memberParseId);
+                if (note.trim().equals("")){
+                    newMemberSaving.setSavingNote("No Notes");
+                }else {
+                    newMemberSaving.setSavingNote(note);
+                }
+                mParseHelper.saveMemberSavingsToParseDb(newMemberSaving);
 
-                // Add saving to GroupSaving object
-                GroupSavings groupSavings = new GroupSavings(
-                        nameOfGoal, savingPeriod, selectedIncomeSource, note, dateToday, amountSaved);
                 Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                // TODO: 3/21/18 ======>>>>> insert object into db
+                // TODO: 3/21/18 ======>>>>> award user points
 
                 // Award user 3 point for saving
                 User user = new User();
                 user.setPoints(3);
-
-                // clear EditTexts
-                clearEditTexts();
 
                 // start TabbedSavingActivity
                 startTabbedSavingActivity();

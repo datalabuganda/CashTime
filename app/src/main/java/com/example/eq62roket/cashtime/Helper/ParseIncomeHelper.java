@@ -9,6 +9,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +53,16 @@ public class ParseIncomeHelper {
         newGroupMemberIncome.put("groupMemberIncomePeriod", groupMemberIncome.getDueDate());
         newGroupMemberIncome.put("groupMemberUsername", groupMemberIncome.getMemberUserName());
         newGroupMemberIncome.put("groupMemberParseId", groupMemberIncome.getMemberParseId());
-
+        newGroupMemberIncome.put("createdById", groupMemberIncome.getUserId());
         newGroupMemberIncome.saveInBackground();
 
     }
 
     public void getGroupMemberIncomeMemberFromParseDb(final ParseIncomeHelper.OnReturnedGroupMemberIncomeListener onReturnedGroupMemberIncomeListener){
         ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("GroupMembersIncome");
+        String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupMemberIncomeQuery.addDescendingOrder("updatedAt");
+        groupMemberIncomeQuery.whereEqualTo("createdById", currentUser);
         groupMemberIncomeQuery.findInBackground(new FindCallback<MembersIncome>() {
             @Override
             public void done(List<MembersIncome> parseGroupMemberIncome, ParseException e) {
@@ -71,6 +74,7 @@ public class ParseIncomeHelper {
                         newGroupMemberIncome.setNotes(retrievedGroupMemberIncome.get("groupMemberIncomeNotes").toString());
                         newGroupMemberIncome.setDueDate(retrievedGroupMemberIncome.get("groupMemberIncomePeriod").toString());
                         newGroupMemberIncome.setMemberUserName(retrievedGroupMemberIncome.get("groupMemberUsername").toString());
+                        newGroupMemberIncome.setUserId(retrievedGroupMemberIncome.get("createdById").toString());
                         newGroupMemberIncome.setParseId(retrievedGroupMemberIncome.getObjectId());
 
                         groupMemberIncomeList.add(newGroupMemberIncome);
@@ -130,6 +134,7 @@ public class ParseIncomeHelper {
         newGroupIncome.put("groupIncomeAmount", groupIncome.getAmount());
         newGroupIncome.put("groupIncomeNotes", groupIncome.getNotes());
         newGroupIncome.put("groupIncomePeriod", groupIncome.getPeriod());
+        newGroupIncome.put("createdById", groupIncome.getUserId());
         newGroupIncome.saveInBackground();
 
     }
@@ -145,6 +150,7 @@ public class ParseIncomeHelper {
                     groupMemberIncome.put("groupIncomeAmount", groupIncomeToUpdate.getAmount());
                     groupMemberIncome.put("groupIncomeNotes", groupIncomeToUpdate.getNotes());
                     groupMemberIncome.put("groupIncomePeriod", groupIncomeToUpdate.getPeriod());
+                    groupMemberIncome.put("createdById", groupIncomeToUpdate.getUserId());
                     groupMemberIncome.saveInBackground();
 
                 }else {
@@ -157,7 +163,9 @@ public class ParseIncomeHelper {
 
     public void getGroupIncomeFromParseDb(final ParseIncomeHelper.OnReturnedGroupIncomeListener onReturnedGroupIncomeListener){
         ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("GroupIncome");
+        String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupIncomeQuery.addDescendingOrder("updatedAt");
+        groupIncomeQuery.whereEqualTo("createdById", currentUser);
         groupIncomeQuery.findInBackground(new FindCallback<GroupIncome>() {
             @Override
             public void done(List<GroupIncome> parseGroupIncome, ParseException e) {

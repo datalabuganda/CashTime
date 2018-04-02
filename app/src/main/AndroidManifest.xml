@@ -18,7 +18,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.HomeActivity"
-            android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +46,7 @@
         <activity
             android:name=".Activities.GroupMembersActivity"
             android:label="All Group Members"
-            android:parentActivityName=".Activities.HomeActivity" />
+            android:parentActivityName=".Activities.GroupsActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
             android:label="Add Member" />
@@ -99,7 +98,7 @@
         <activity
             android:name=".Activities.AddMembersGoalsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.NewGroupActivity" />
+        <activity android:name=".Activities.AddNewGroupActivity" />
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
             android:name=".Activities.GroupSavingToGoalsActivity"
@@ -162,7 +161,6 @@
         <activity
             android:name=".Activities.MemberGoalSelectMemberActivity"
             android:label="Select A Group Member" />
-        <activity android:name=".Activities.EditGroupMemberActivity" />
         <activity android:name=".Activities.EditGroupExpenditureActivity" />
         <activity android:name=".Activities.EditGroupMemberIncomeActivity" />
         <activity android:name=".Activities.GroupMembersExpenditureListActivity" />
@@ -174,6 +172,19 @@
         <activity android:name=".Activities.AddExpenditureCategoryActivity" />
         <activity android:name=".Activities.IncomeSourcesActivity" />
         <activity android:name=".Activities.ExpenditureCategoriesActivity"></activity>
+        <activity
+            android:label="Your Groups"
+            android:name=".Activities.GroupsActivity"
+            android:parentActivityName=".Activities.HomeActivity"/>
+        <activity
+            android:label="Edit Group Member"
+            android:name=".Activities.EditGroupMemberActivity" />
+        <activity
+            android:label="Edit Group"
+            android:name=".Activities.EditGroupActivity"/>
+        <activity
+            android:label="Select A Group"
+            android:name=".Activities.GoalsToGroupActivity"/>
     </application>
 
 </manifest>

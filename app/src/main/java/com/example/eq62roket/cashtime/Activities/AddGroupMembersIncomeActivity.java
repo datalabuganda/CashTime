@@ -20,6 +20,7 @@ import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.R;
+import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.SimpleDateFormat;
@@ -167,6 +168,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             String groupMemberIncomeIncomePeriod = memberIncomePeriod.getText().toString();
             String groupMemberIncomeNotes = memberIncomeNotes.getText().toString();
             String groupMemberUsername = groupMemberUserName.getText().toString();
+            String currentUser = ParseUser.getCurrentUser().getObjectId();
 
 
             MembersIncome groupMemberIncome = new MembersIncome();
@@ -176,6 +178,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             groupMemberIncome.setNotes(groupMemberIncomeNotes);
             groupMemberIncome.setMemberUserName(groupMemberUsername);
             groupMemberIncome.setMemberParseId(groupMemberParseId);
+            groupMemberIncome.setUserId(currentUser);
 
             Log.d("Income", "groupMemberUserName: " + groupMemberIncome.getMemberUserName());
 

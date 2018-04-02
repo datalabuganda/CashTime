@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -20,24 +22,30 @@ import java.util.Locale;
 
 public class EditTipActivity extends AppCompatActivity {
 
-    private EditText goalName, tipNotes;
+    private EditText tipNotes;
+    private TextView goalName;
     private Button btnUpdate, btnDelete;
+
+    private ParseHelper mParseHelper;
+    private String tipParseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tip);
 
-        goalName = (EditText) findViewById(R.id.goalName);
+        mParseHelper = new ParseHelper(EditTipActivity.this);
+
+        goalName = (TextView) findViewById(R.id.goalName);
         tipNotes = (EditText) findViewById(R.id.tipNotes);
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
-        // get data from intent.
         Intent editTipIntent = getIntent();
         final String nameOfGoal = editTipIntent.getStringExtra("nameOfGoal");
-        String tip = editTipIntent.getStringExtra("tipText");
+        final String tip = editTipIntent.getStringExtra("tipText");
         String addedDate = editTipIntent.getStringExtra("tipAddDate");
+        tipParseId = editTipIntent.getStringExtra("tipParseId");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit " + nameOfGoal);
@@ -56,15 +64,15 @@ public class EditTipActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // start a dialog fragment
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Delete Saving, redirect to member goals fragment
-                        // TODO: 3/22/18 ====> delete Tip record....redirect to tips fragment
+                        Tip tipToDelete = new Tip();
+                        tipToDelete.setTipParseId(tipParseId);
 
-                        // start TabbedSavingActivity
+                        mParseHelper.deleteTipFromParseDb(tipToDelete);
+                        // TODO: 3/22/18 ====> redirect to tips fragment
+
                         startTabbedBarriersTipsctivity();
                         Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
 
@@ -76,13 +84,10 @@ public class EditTipActivity extends AppCompatActivity {
                     }
                 });
 
-                // 2. Chain together various setter methods to set the dialog characteristics
                 builder.setMessage(
                         "Deleting Tip for '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this tip?")
                         .setTitle("Delete Tip");
 
-
-                // Create the AlertDialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
@@ -98,16 +103,17 @@ public class EditTipActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Tip updatedTip = new Tip();
-            updatedTip.setGoalName(goalName.getText().toString());
-            updatedTip.setIntroText(tipNotes.getText().toString());
-            updatedTip.setDateModified(dateToday);
+            Tip tipToUpdate = new Tip();
+            tipToUpdate.setTipParseId(tipParseId);
+            tipToUpdate.setIntroText(tipNotes.getText().toString());
+            tipToUpdate.setDateModified(dateToday);
 
-            // TODO: 3/23/18 ====>>> save updatedTip to db....redirect to Tips Fragment
+            mParseHelper.updateTipsInParseDb(tipToUpdate);
+            // TODO: 3/23/18 ====>>> redirect to Tips Fragment
 
             startTabbedBarriersTipsctivity();
 
-            Toast.makeText(EditTipActivity.this, "Tip for " + updatedTip.getGoalName() + " updated Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }

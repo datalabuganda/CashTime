@@ -1,33 +1,34 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by probuse on 3/3/18.
  * modiified by etwin
  */
-
-public class MemberSavings {
-    private String memberName, goalName, period, incomeSource, dateAdded, savingNote;
-    private long savingAmount;
+@ParseClassName("GroupMemberSavings")
+public class MemberSavings extends ParseObject{
+    private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
+    private String savingAmount, memberParseId;
 
     public MemberSavings() {
     }
 
-    public MemberSavings(
-            String memberName,
-            String goalName,
-            String period,
-            String incomeSource,
-            String dateAdded,
-            String savingNote,
-            long savingAmount) {
+    public String getMemberParseId() {
+        return memberParseId;
+    }
 
-        this.memberName = memberName;
-        this.goalName = goalName;
-        this.period = period;
-        this.incomeSource = incomeSource;
-        this.dateAdded = dateAdded;
-        this.savingNote = savingNote;
-        this.savingAmount = savingAmount;
+    public void setMemberParseId(String memberParseId) {
+        this.memberParseId = memberParseId;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getSavingNote() {
@@ -74,11 +75,11 @@ public class MemberSavings {
         this.incomeSource = incomeSource;
     }
 
-    public long getSavingAmount() {
+    public String getSavingAmount() {
         return savingAmount;
     }
 
-    public void setSavingAmount(long savingAmount) {
+    public void setSavingAmount(String savingAmount) {
         this.savingAmount = savingAmount;
     }
 
@@ -90,11 +91,4 @@ public class MemberSavings {
         this.memberName = memberName;
     }
 
-    public long getsavingAmount() {
-        return savingAmount;
-    }
-
-    public void setsavingAmount(long savingAmount) {
-        this.savingAmount = savingAmount;
-    }
 }

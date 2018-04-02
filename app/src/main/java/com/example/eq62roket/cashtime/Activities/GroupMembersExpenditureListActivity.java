@@ -9,7 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Helper.ParseUserHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
@@ -18,7 +21,7 @@ import java.util.List;
 
 public class GroupMembersExpenditureListActivity extends AppCompatActivity {
     private static final String TAG = "GroupMembersActivity";
-    private List<User> mGroupMemberUsers = null;
+    private List<GroupMember> mGroupMemberUsers = null;
     private RecyclerView mRecyclerView;
     private MembersAdapter mMembersAdapter;
     FloatingActionButton fabAddGroupMember;
@@ -29,23 +32,23 @@ public class GroupMembersExpenditureListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_members_expenditure_list);
         mRecyclerView = (RecyclerView)findViewById(R.id.group_member_expenditure_list_recycler_view);
 
-        new ParseUserHelper(this).getUserFromParseDb(new ParseUserHelper.OnReturnedUserListener() {
+        new ParseGroupHelper(this).getAllMembersFromParseDb(new OnReturnedGroupMemberListener() {
             @Override
-            public void onResponse(List<User> usersList) {
+            public void onResponse(List<GroupMember> memberList) {
 
-                mMembersAdapter = new MembersAdapter(usersList, new MembersAdapter.OnGroupMemberClickListener() {
+                mMembersAdapter = new MembersAdapter(memberList, new MembersAdapter.OnGroupMemberClickListener() {
                     @Override
-                    public void onGroupMemberClick(User groupMemberUser) {
+                    public void onGroupMemberClick(GroupMember groupMember) {
                         Intent editUserIntent = new Intent(GroupMembersExpenditureListActivity.this, AddGroupMembersExpendituresActivity.class);
-                        editUserIntent.putExtra("userName", groupMemberUser.getUserName());
-                        editUserIntent.putExtra("phoneNumber", groupMemberUser.getPhoneNumber());
-                        editUserIntent.putExtra("business",groupMemberUser.getBusiness());
-                        editUserIntent.putExtra("gender", groupMemberUser.getGender());
-                        editUserIntent.putExtra("nationality", groupMemberUser.getNationality());
-                        editUserIntent.putExtra("location", groupMemberUser.getLocation());
-                        editUserIntent.putExtra("educationLevel", groupMemberUser.getEducationLevel());
-                        editUserIntent.putExtra("household",groupMemberUser.getHousehold());
-                        editUserIntent.putExtra("parseId", groupMemberUser.getParseId());
+                        editUserIntent.putExtra("userName", groupMember.getMemberUsername());
+                        editUserIntent.putExtra("phoneNumber", groupMember.getMemberPhoneNumber());
+                        editUserIntent.putExtra("business",groupMember.getMemberBusiness());
+                        editUserIntent.putExtra("gender", groupMember.getMemberGender());
+                        editUserIntent.putExtra("nationality", groupMember.getMemberNationality());
+                        editUserIntent.putExtra("location", groupMember.getMemberLocation());
+                        editUserIntent.putExtra("educationLevel", groupMember.getMemberEducationLevel());
+                        editUserIntent.putExtra("household",groupMember.getMemberHousehold());
+                        editUserIntent.putExtra("parseId", groupMember.getMemberParseId());
 
                         startActivity(editUserIntent);
                         finish();

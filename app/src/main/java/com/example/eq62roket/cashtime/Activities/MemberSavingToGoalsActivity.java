@@ -7,7 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
@@ -17,8 +22,10 @@ import java.util.List;
 
 public class MemberSavingToGoalsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private List<MembersGoals> membersGoalsList = new ArrayList<>();
+    private static final String TAG = "MemberSavingToGoals";
+    private List<MembersGoals> membersGoals = new ArrayList<>();
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private MembersGoalsAdapter mAdapter;
 
     @Override
@@ -27,25 +34,47 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         setContentView(R.layout.activity_member_saving_to_goals);
 
         recyclerView = (RecyclerView) findViewById(R.id.members_goals_recycler_view);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
-        mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+        new ParseHelper(this).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
-            public void onMemberGoalClick(MembersGoals membersGoals) {
-                // show Add Member Saving Form
-                Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
-                intent.putExtra("goalName", membersGoals.getMemberGoalName());
-                intent.putExtra("memberName",membersGoals.getMemberName());
-                startActivity(intent);
-                finish();
+            public void onResponse(List<MembersGoals> membersGoalsList) {
+                if (membersGoalsList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    membersGoals = membersGoalsList;
+
+                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                        @Override
+                        public void onMemberGoalClick(MembersGoals membersGoals) {
+                            // show Add Member Saving Form
+                            Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
+                            intent.putExtra("goalName", membersGoals.getMemberGoalName());
+                            intent.putExtra("memberName",membersGoals.getMemberName());
+                            intent.putExtra("memberParseId", membersGoals.getMemberParseId());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MemberSavingToGoalsActivity.this);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    recyclerView.setAdapter(mAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d(TAG, "onFailure: " + error);
             }
         });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setAdapter(mAdapter);
-
-        prepareMembersGoalsData();
     }
 
     @Override
@@ -57,7 +86,7 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<MembersGoals> newList = new ArrayList<>();
-        for (MembersGoals membersGoals : membersGoalsList){
+        for (MembersGoals membersGoals : membersGoals){
             String name = membersGoals.getMemberName().toLowerCase();
             String goal = membersGoals.getMemberGoalName().toLowerCase();
             String amount = membersGoals.getMemberGoalAmount().toLowerCase();
@@ -76,30 +105,4 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         return true;
     }
 
-    private void prepareMembersGoalsData() {
-        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Notes Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018", "incomplete", "Some Notes and notes");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019", "incomplete", "Some Notes");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-        mAdapter.notifyDataSetChanged();
-    }
 }

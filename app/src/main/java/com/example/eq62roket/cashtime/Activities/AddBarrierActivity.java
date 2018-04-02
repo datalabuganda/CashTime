@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -17,8 +19,11 @@ import java.util.Locale;
 
 public class AddBarrierActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddBarrierActivity";
     private Button btnCancel, btnSave;
-    private EditText barrierNotes, goalName, barrierName;
+    private EditText barrierNotes, barrierName;
+    private TextView goalName;
+    private String groupId, groupGoalParseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +32,13 @@ public class AddBarrierActivity extends AppCompatActivity {
 
         Intent addBarrierIntent = getIntent();
         String nameOfGoal = addBarrierIntent.getStringExtra("goalName");
+        groupId = addBarrierIntent.getStringExtra("groupId");
+        groupGoalParseId = addBarrierIntent.getStringExtra("groupGoalParseId");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        goalName = (EditText) findViewById(R.id.goalName);
+        goalName = (TextView) findViewById(R.id.goalName);
         barrierName = (EditText) findViewById(R.id.barrierName);
         barrierNotes = (EditText) findViewById(R.id.barrierNotes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -68,10 +75,12 @@ public class AddBarrierActivity extends AppCompatActivity {
             newBarrier.setGoalName(goalName.getText().toString());
             newBarrier.setBarrierName(barrierName.getText().toString());
             newBarrier.setBarrierText(barrierNotes.getText().toString());
+            newBarrier.setGroupId(groupId);
+            newBarrier.setGroupGoalParseId(groupGoalParseId);
             newBarrier.setDateAdded(dateToday);
             newBarrier.setTipGiven(false);
 
-            // TODO: 3/23/18 ===>>> save barrier to database
+            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier);
 
             startTabbedBarriersTipsctivity();
             Toast.makeText(this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();

@@ -130,6 +130,7 @@
                 android:textColorHint="#999999" />
 
             <EditText
+                android:inputType="textPassword"
                 android:id="@+id/userPassword"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -139,7 +140,6 @@
                 android:layout_marginTop="12dp"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPersonName"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 

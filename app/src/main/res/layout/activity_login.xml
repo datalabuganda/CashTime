@@ -44,6 +44,7 @@
         android:textSize="16sp"/>
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/loginPassword"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
@@ -55,7 +56,6 @@
         android:textColor="#ffff"
         android:textColorHint="#999999"
         android:drawableLeft="@drawable/ic_action_password"
-        android:inputType="textPersonName"
         android:hint="Password"
         android:textSize="16sp"/>
 

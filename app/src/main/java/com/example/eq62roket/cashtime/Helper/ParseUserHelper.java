@@ -4,6 +4,7 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.User;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -53,13 +54,13 @@ public class ParseUserHelper {
     }
 
     public void getUserFromParseDb(final ParseUserHelper.OnReturnedUserListener onReturnedUserListener){
-        ParseQuery<User> userQuery = ParseQuery.getQuery("GroupMember");
+        ParseQuery<GroupMember> userQuery = ParseQuery.getQuery("GroupMember");
         userQuery.addDescendingOrder("updatedAt");
-        userQuery.findInBackground(new FindCallback<User>() {
+        userQuery.findInBackground(new FindCallback<GroupMember>() {
             @Override
-            public void done(List<User> parseUser, ParseException e) {
+            public void done(List<GroupMember> parseUser, ParseException e) {
                 if (e == null){
-                    for (User retrievedUser: parseUser){
+                    for (GroupMember retrievedUser: parseUser){
                         User newUser = new User();
                         newUser.setUserName(retrievedUser.get("userName").toString());
                         newUser.setPhoneNumber(retrievedUser.get("phoneNumber").toString());

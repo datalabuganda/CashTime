@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Helper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by etwin on 3/21/18.
@@ -36,6 +37,13 @@ public class PeriodHelper {
         mCalendar.add(Calendar.DATE, 30);
         String dateNextMonth = mSimpleDateFormat.format(mCalendar.getTime());
         return dateNextMonth;
+    }
+
+    public String getDateToday(){
+        Date today = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        String dateToday = simpleDateFormat.format(today);
+        return dateToday;
     }
 
 

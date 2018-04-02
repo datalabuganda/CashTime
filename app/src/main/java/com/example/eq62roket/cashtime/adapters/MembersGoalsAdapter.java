@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -40,7 +41,7 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
         public void bind(final MembersGoals membersGoals, final OnMemberGoalClickListener memberGoalClickListener){
             memberName.setText(membersGoals.getMemberName());
             memberGoalDueDate.setText(membersGoals.getMemberGoalDueDate());
-            memberGoalAmount.setText(membersGoals.getMemberGoalAmount());
+            memberGoalAmount.setText(new CashTimeUtils().currencyFormatter(membersGoals.getMemberGoalAmount()));
             memberGoalName.setText(membersGoals.getMemberGoalName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

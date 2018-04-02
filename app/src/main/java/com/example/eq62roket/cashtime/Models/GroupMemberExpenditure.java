@@ -8,7 +8,15 @@ import com.parse.ParseObject;
  */
 @ParseClassName("GroupMembersExpenditure")
 public class GroupMemberExpenditure extends ParseObject {
-    String parseId, memberParseId, memberUserName, category, dueDate, amount, notes;
+    String parseId, memberParseId, memberUserName, category, dueDate, amount, notes, userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getParseId() {
         return parseId;

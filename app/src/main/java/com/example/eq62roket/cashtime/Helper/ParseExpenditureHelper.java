@@ -9,6 +9,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +51,16 @@ public class ParseExpenditureHelper {
         newGroupExpenditure.put("groupExpenditureAmount", groupExpenditure.getAmount());
         newGroupExpenditure.put("groupExpenditureNotes", groupExpenditure.getNotes());
         newGroupExpenditure.put("groupExpenditureDueDate", groupExpenditure.getDueDate());
+        newGroupExpenditure.put("createdById", groupExpenditure.getUserId());
         newGroupExpenditure.saveInBackground();
 
     }
 
     public void getGroupeExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupExpenditureListener onReturnedGroupExpenditureListener){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("GroupExpenditure");
+        String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupExpenditureQuery.addDescendingOrder("updatedAt");
+        groupExpenditureQuery.whereEqualTo("createdById", currentUser);
         groupExpenditureQuery.findInBackground(new FindCallback<GroupExpenditure>() {
             @Override
             public void done(List<GroupExpenditure> parseGroupExpenditure, ParseException e) {
@@ -126,12 +130,15 @@ public class ParseExpenditureHelper {
         newGroupMembersExpenditure.put("groupMembersExpenditureDate", groupMembersExpenditure.getDueDate());
         newGroupMembersExpenditure.put("groupMemberUsername", groupMembersExpenditure.getMemberUserName());
         newGroupMembersExpenditure.put("groupMemberParseId", groupMembersExpenditure.getMemberParseId());
+        newGroupMembersExpenditure.put("createdById", groupMembersExpenditure.getUserId());
         newGroupMembersExpenditure.saveInBackground();
     }
 
     public void getGroupMembersExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupMembersExpenditureListener onReturnedGroupMembersExpenditureListener){
         ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("GroupMembersExpenditure");
+        String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupMemberExpenditureQuery.addDescendingOrder("updatedAt");
+        groupMemberExpenditureQuery.whereEqualTo("createdById", currentUser);
         groupMemberExpenditureQuery.findInBackground(new FindCallback<GroupMemberExpenditure>() {
             @Override
             public void done(List<GroupMemberExpenditure> parseGroupMemberExpenditure, ParseException e) {

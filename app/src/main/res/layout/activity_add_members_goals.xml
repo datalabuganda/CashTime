@@ -33,7 +33,6 @@
                     android:id="@+id/memberName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/etwin_himself"
                     android:textSize="16sp"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/black"
@@ -79,12 +78,17 @@
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Select Goal Deadline"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,47 +127,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/image"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"/>
-
-                    <TextView
-                        android:id="@+id/selectMemberGoalImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Select Image"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_marginLeft="40dp"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/image"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:orientation="horizontal">
 
                 <Button

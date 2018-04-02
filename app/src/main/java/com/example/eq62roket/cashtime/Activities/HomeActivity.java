@@ -14,11 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.eq62roket.cashtime.R;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "HomeActivity";
 
     private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override
@@ -30,11 +30,12 @@ public class HomeActivity extends AppCompatActivity
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-//        if (currentUser != null){
-//        }else {
-//            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//        }
+        if (currentUser != null){
+        }else {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
@@ -131,7 +132,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }else if(id == R.id.group){
-            Intent newGroup = new Intent(HomeActivity.this, NewGroupActivity.class);
+            Intent newGroup = new Intent(HomeActivity.this, AddNewGroupActivity.class);
             startActivity(newGroup);
         }
 
@@ -145,7 +146,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.groupMembers) {
-            Intent groupMembersIntent = new Intent(HomeActivity.this, GroupMembersActivity.class);
+            Intent groupMembersIntent = new Intent(HomeActivity.this, GroupsActivity.class);
             startActivity(groupMembersIntent);
             // Handle the camera action
         } else if (id == R.id.profile) {

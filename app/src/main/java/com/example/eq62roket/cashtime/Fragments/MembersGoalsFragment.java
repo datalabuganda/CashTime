@@ -11,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberGoalActivity;
 import com.example.eq62roket.cashtime.Activities.MemberGoalSelectMemberActivity;
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
@@ -30,8 +34,11 @@ import java.util.List;
 
 
 public class MembersGoalsFragment extends Fragment implements SearchView.OnQueryTextListener{
-    private List<MembersGoals> membersGoalsList = new ArrayList<>();
+    private static final String TAG = "MembersGoalsFragment";
+
+    private List<MembersGoals> membersGoals = null;
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private MembersGoalsAdapter mAdapter;
     private FloatingActionButton fabMembersGoals;
 
@@ -46,6 +53,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.members_goals_recycler_view);
         fabMembersGoals = (FloatingActionButton) rootView.findViewById(R.id.fabMembersGoals);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,54 +64,48 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
             }
         });
 
-        mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+        new ParseHelper(getActivity()).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
-            public void onMemberGoalClick(MembersGoals membersGoals) {
-                Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);
-                editMemberGoalIntent.putExtra("groupMemberName", membersGoals.getMemberName());
-                editMemberGoalIntent.putExtra("groupMemberGoalName", membersGoals.getMemberGoalName());
-                editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
-                editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
-                editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
-                startActivity(editMemberGoalIntent);
+            public void onResponse(List<MembersGoals> membersGoalsList) {
+                if (membersGoalsList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    membersGoals = membersGoalsList;
+
+                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                        @Override
+                        public void onMemberGoalClick(MembersGoals membersGoals) {
+                            Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);
+                            editMemberGoalIntent.putExtra("groupMemberName", membersGoals.getMemberName());
+                            editMemberGoalIntent.putExtra("groupMemberGoalName", membersGoals.getMemberGoalName());
+                            editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
+                            editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
+                            editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
+                            editMemberGoalIntent.putExtra("groupMemberParseId", membersGoals.getParseId());
+                            startActivity(editMemberGoalIntent);
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d(TAG, "onFailure: " + error);
+
             }
         });
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        recyclerView.setAdapter(mAdapter);
-
-        prepareMembersGoalsData();
 
         return rootView;
-    }
-
-    private void prepareMembersGoalsData() {
-        MembersGoals membersGoals = new MembersGoals("Otim Tony", "Buy 5 hives", "500000", "12/2/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes also");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Muguya Ivan", "Buy 10 axes", "3000", "02/06/2018", "incomplete", "Some Notes");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 Hives", "500000", "02/01/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Rik Linssen", "Buy Casava stems", "300000", "11/05/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy 2 hoes", "13000", "04/08/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-
-        membersGoals = new MembersGoals("Nimukama Probuse", "Buy a Cow", "703000", "02/06/2019", "incomplete", "Some Notes Too");
-        membersGoalsList.add(membersGoals);
-        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -132,7 +134,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<MembersGoals> newList = new ArrayList<>();
-        for (MembersGoals membersGoals : membersGoalsList){
+        for (MembersGoals membersGoals : membersGoals){
             String name = membersGoals.getMemberName().toLowerCase();
             String goal = membersGoals.getMemberGoalName().toLowerCase();
             String amount = membersGoals.getMemberGoalAmount().toLowerCase();

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
+import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.SimpleDateFormat;
@@ -138,6 +139,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             String amount = incomeAmount.getText().toString();
             String notes = incomeNotes.getText().toString();
             String period = incomePeriod.getText().toString();
+            String currentUser = ParseUser.getCurrentUser().getObjectId();
 
             Log.d(TAG, "source: " + source);
             Log.d(TAG, "amount: " + amount);
@@ -149,6 +151,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setAmount(amount);
             groupIncome.setPeriod(period);
             groupIncome.setNotes(notes);
+            groupIncome.setUserId(currentUser);
 
             Log.d(TAG, "saveGroupIncome: " + groupIncome.getAmount());
 

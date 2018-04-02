@@ -1,20 +1,49 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by probuse on 3/3/18.
  */
+@ParseClassName("GroupSavings")
+public class GroupSavings extends ParseObject {
+    private String parseId, goalName, period, incomeSource, notes, dateAdded;
+    private String amount, groupParseId, userId, groupGoalParseId;
 
-public class GroupSavings {
-    private String goalName, period, incomeSource, notes, dateAdded;
-    private String amount;
+    public GroupSavings() {
+    }
 
-    public GroupSavings(String goalName, String period, String incomeSource, String notes, String dateAdded, String amount) {
-        this.goalName = goalName;
-        this.period = period;
-        this.incomeSource = incomeSource;
-        this.notes = notes;
-        this.dateAdded = dateAdded;
-        this.amount = amount;
+    public String getGroupParseId() {
+        return groupParseId;
+    }
+
+    public void setGroupParseId(String groupParseId) {
+        this.groupParseId = groupParseId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getGroupGoalParseId() {
+        return groupGoalParseId;
+    }
+
+    public void setGroupGoalParseId(String groupGoalParseId) {
+        this.groupGoalParseId = groupGoalParseId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getDateAdded() {

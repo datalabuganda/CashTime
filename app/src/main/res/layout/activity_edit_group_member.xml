@@ -1,9 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.eq62roket.cashtime.Activities.EditGroupMemberActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/groupMemberUsername"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:ems="10"
+                android:hint="Username"
+                android:textColorHint="#999999"
+                android:textColor="#ffffff"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/groupMembersPhoneNumber"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/username"
+                android:layout_alignStart="@+id/username"
+                android:layout_below="@+id/username"
+                android:layout_marginTop="13dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/groupMembersHousehold"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userPhoneNumber"
+                android:layout_alignStart="@+id/userPhoneNumber"
+                android:layout_below="@+id/userPhoneNumber"
+                android:layout_marginTop="18dp"
+                android:ems="10"
+                android:hint="Household Composition"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/groupMembersBusiness"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userHousehold"
+                android:layout_alignStart="@+id/userHousehold"
+                android:layout_below="@+id/userHousehold"
+                android:layout_marginTop="17dp"
+                android:ems="10"
+                android:hint="Business"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+
+            <EditText
+                android:id="@+id/groupMembersGender"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userBusiness"
+                android:layout_alignStart="@+id/userBusiness"
+                android:layout_below="@+id/userBusiness"
+                android:layout_marginTop="14dp"
+                android:ems="10"
+                android:hint="Gender"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+
+            <EditText
+                android:id="@+id/groupMembersEducationLevel"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userGender"
+                android:layout_alignStart="@+id/userGender"
+                android:layout_below="@+id/userGender"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Education Level"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/groupMembersNationality"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userEducationLevel"
+                android:layout_alignStart="@+id/userEducationLevel"
+                android:layout_below="@+id/userEducationLevel"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Nationality"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <EditText
+                android:id="@+id/groupMemberLocation"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/userNationality"
+                android:layout_alignStart="@+id/userNationality"
+                android:layout_below="@+id/userNationality"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="Location"
+                android:inputType="textPersonName"
+                android:textColor="#ffffff"
+                android:textColorHint="#999999" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnDelete"
+                        android:layout_width="170dp"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/delete"
+                        android:textColor="#fff"
+                        android:backgroundTint="@color/red"/>
+
+                    <Button
+                        android:id="@+id/btnUpdate"
+                        android:layout_width="170dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_height="60dp"
+                        android:text="@string/update_btn"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

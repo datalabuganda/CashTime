@@ -15,6 +15,7 @@ import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
+import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
@@ -94,6 +95,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             String groupMemberExpenditureNotes = membersExpenditureNotes.getText().toString();
             String groupMemberExpenditureDate = membersExpenditureDate.getText().toString();
             String groupMemberUsername = groupMemberUserName.getText().toString();
+            String currentUser = ParseUser.getCurrentUser().getObjectId();
 
 
             GroupMemberExpenditure groupMemberExpenditure = new GroupMemberExpenditure();
@@ -103,6 +105,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             groupMemberExpenditure.setNotes(groupMemberExpenditureDate);
             groupMemberExpenditure.setMemberUserName(groupMemberUsername);
             groupMemberExpenditure.setMemberParseId(groupMemberParseId);
+            groupMemberExpenditure.setUserId(currentUser);
 
             Log.d(TAG, "groupMemberUserName: " + groupMemberExpenditure.getMemberUserName());
 

@@ -19,6 +19,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
@@ -82,23 +83,6 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
         materialExpenditureCategorySpinner.setAdapter(expenditureCategoryAdapter);
     }
 
-//    public void groupExpenditureCategory(){
-//        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Categories");
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> list, ParseException e) {
-//                if (e == null){
-//                    ArrayList<String> categoryList = new ArrayList<>();
-//                    for (ParseObject object : list){
-//                        categoryList.add(object.getString("categoryName"));
-//                    }
-//                    ArrayAdapter adapter = new ArrayAdapter(
-//                            getApplicationContext(),android.R.layout.simple_list_item_1 ,categoryList);
-//                    mGroupExpenditureCategory.setAdapter(adapter);
-//                }
-//            }
-//        });
-//    }
 
     private void saveGroupExpenditure(){
         if ( !mGroupExpenditureCategory.getText().toString().equals("") &&
@@ -107,12 +91,14 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             String groupExpenditureAmount = mGroupExpenditureAmount.getText().toString();
             String groupExpenditureDate = mGroupExpenditureDate.getText().toString();
             String groupExpenditureNotes = mGroupExpenditureNotes.getText().toString();
+            String currentUser = ParseUser.getCurrentUser().getObjectId();
 
             GroupExpenditure groupExpenditures = new GroupExpenditure();
             groupExpenditures.setCategory(groupExpenditureCategory);
             groupExpenditures.setNotes(groupExpenditureNotes);
             groupExpenditures.setDueDate(groupExpenditureDate);
             groupExpenditures.setAmount(groupExpenditureAmount);
+            groupExpenditures.setUserId(currentUser);
 
             Log.d(TAG, "saveGroupExpenditure: " + groupExpenditures);
 

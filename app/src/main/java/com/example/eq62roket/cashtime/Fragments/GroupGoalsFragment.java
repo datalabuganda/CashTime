@@ -20,9 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupGoalsActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
+import com.example.eq62roket.cashtime.Activities.GoalsToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
@@ -33,10 +34,11 @@ import java.util.List;
 
 
 public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTextListener{
-        private static final String TAG = "GroupGoalsFragment";
+    private static final String TAG = "GroupGoalsFragment";
 
     List<GroupGoals> groupGoals = null;
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private GroupGoalsAdapter mAdapter;
 
     @Override
@@ -54,11 +56,12 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_group_goals, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.group_recycler_view);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addGroupGoalsIntent = new Intent(GroupGoalsFragment.this.getActivity(), AddGroupGoalsActivity.class);
+                Intent addGroupGoalsIntent = new Intent(GroupGoalsFragment.this.getActivity(), GoalsToGroupActivity.class);
                 startActivity(addGroupGoalsIntent);
             }
         });
@@ -66,29 +69,35 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
         new ParseHelper(getActivity()).getGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
             @Override
             public void onResponse(List<GroupGoals> groupGoalsList) {
-                groupGoals = groupGoalsList;
+                if (groupGoalsList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
-                    @Override
-                    public void onGoalClick(GroupGoals groupGoals) {
-                        Intent editGroupGoalIntent = new Intent(getActivity(), EditGroupGoalActivity.class);
-                        editGroupGoalIntent.putExtra("groupGoalName", groupGoals.getName());
-                        editGroupGoalIntent.putExtra("groupGoalAmount", groupGoals.getAmount());
-                        editGroupGoalIntent.putExtra("groupGoalDeadline",groupGoals.getDueDate());
-                        editGroupGoalIntent.putExtra("groupGoalNotes", groupGoals.getNotes());
-                        editGroupGoalIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
-                        startActivity(editGroupGoalIntent);
-                        getActivity().finish();
-                    }
-                });
+                    groupGoals = groupGoalsList;
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
+                        @Override
+                        public void onGoalClick(GroupGoals groupGoals) {
+                            Intent editGroupGoalIntent = new Intent(getActivity(), EditGroupGoalActivity.class);
+                            editGroupGoalIntent.putExtra("groupGoalName", groupGoals.getName());
+                            editGroupGoalIntent.putExtra("groupGoalAmount", groupGoals.getAmount());
+                            editGroupGoalIntent.putExtra("groupGoalDeadline",groupGoals.getDueDate());
+                            editGroupGoalIntent.putExtra("groupGoalNotes", groupGoals.getNotes());
+                            editGroupGoalIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                            startActivity(editGroupGoalIntent);
+                            getActivity().finish();
+                        }
+                    });
 
-                mAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(mAdapter);
-
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(mAdapter);
+                }
             }
 
             @Override

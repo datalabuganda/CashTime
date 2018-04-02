@@ -7,49 +7,15 @@ import com.parse.ParseObject;
  * Created by etwin on 3/21/18.
  */
 
-@ParseClassName("GroupMember")
-public class User extends ParseObject {
-    private String parseId, groupLeaderId, userName, phoneNumber, business, gender, educationLevel, nationality, location,
-            household;
-    private boolean isGroupMember, isLeader;
+@ParseClassName("User")
+public class User extends ParseObject{
+    private String userName, phoneNumber, business, gender, educationLevel, nationality, location;
+    private String household;
+    private Boolean isLeader;
     private long points;
+    private String password, groupId, parseId;
 
     public User() {
-        super();
-    }
-
-
-    public User(
-            String userName,
-            String phoneNumber,
-            String business,
-            String gender,
-            String educationLevel,
-            String nationality,
-            String location,
-            boolean isGroupMember,
-            boolean isLeader,
-            String household,
-            long points) {
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.business = business;
-        this.gender = gender;
-        this.educationLevel = educationLevel;
-        this.nationality = nationality;
-        this.location = location;
-        this.isGroupMember = isGroupMember;
-        this.isLeader = isLeader;
-        this.household = household;
-        this.points = points;
-    }
-
-    public String getGroupLeaderId() {
-        return groupLeaderId;
-    }
-
-    public void setGroupLeaderId(String groupLeaderId) {
-        this.groupLeaderId = groupLeaderId;
     }
 
     public String getParseId() {
@@ -58,6 +24,38 @@ public class User extends ParseObject {
 
     public void setParseId(String parseId) {
         this.parseId = parseId;
+    }
+
+    public Boolean getLeader() {
+        return isLeader;
+    }
+
+    public void setLeader(Boolean leader) {
+        isLeader = leader;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public Boolean getIsLeader() {
+        return isLeader;
+    }
+
+    public void setIsLeader(Boolean isLeader) {
+        this.isLeader = isLeader;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserName() {
@@ -116,22 +114,6 @@ public class User extends ParseObject {
         this.location = location;
     }
 
-    public boolean isGroupMember(String isGroupMember, int i) {
-        return this.isGroupMember;
-    }
-
-    public void setGroupMember(boolean groupMember) {
-        isGroupMember = groupMember;
-    }
-
-    public boolean isLeader() {
-        return isLeader;
-    }
-
-    public void setLeader(boolean leader) {
-        isLeader = leader;
-    }
-
     public String getHousehold() {
         return household;
     }
@@ -145,6 +127,6 @@ public class User extends ParseObject {
     }
 
     public void setPoints(long points) {
-        this.points = points;
+        this.points += points;
     }
 }

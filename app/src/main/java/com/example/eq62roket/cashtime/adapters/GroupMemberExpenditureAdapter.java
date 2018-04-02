@@ -1,11 +1,11 @@
 package com.example.eq62roket.cashtime.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
 
@@ -16,71 +16,78 @@ import java.util.List;
  * Created by eq62roket on 3/28/18.
  */
 
-public class GroupMemberExpenditureTransactionsAdapter extends RecyclerView.Adapter<GroupMemberExpenditureTransactionsAdapter.MyViewHolder>{
+public class GroupMemberExpenditureAdapter extends RecyclerView.Adapter<GroupMemberExpenditureAdapter.GroupMembersViewHolder> {
 
-    public interface OnGroupMemberClickListener {
-        void onGroupMemberClick(GroupMemberExpenditure groupMemberExpenditure);
-    }
+    private static String TAG = "GroupMemberExpenditureAdapter";
 
-    private List<GroupMemberExpenditure> mGroupMemberExpenditure;
-    private final GroupMemberExpenditureTransactionsAdapter.OnGroupMemberClickListener mOnGroupMemberClickListener;
+    public interface OnGoalClickListener {
+    void onGoalClick(GroupMemberExpenditure groupMemberExpenditure);
+}
 
+    private List<GroupMemberExpenditure> groupMemberExpenditureList;
+    private final GroupMemberExpenditureAdapter.OnGoalClickListener mOnGoalClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView category, amount, notes, date;
-
-        public MyViewHolder(View view) {
-            super(view);
-            category = (TextView) view.findViewById(R.id.groupMembersExpenditureCategory);
-            amount = (TextView) view.findViewById(R.id. groupMembersExpenditureAmount);
-
-        }
-
-        public void bind(final GroupMemberExpenditure groupMemberExpenditure, final GroupMemberExpenditureTransactionsAdapter.OnGroupMemberClickListener onGroupMemberClickListener){
-            category.setText(groupMemberExpenditure.getCategory());
-            amount.setText(groupMemberExpenditure.getAmount());
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onGroupMemberClickListener.onGroupMemberClick(groupMemberExpenditure);
-                }
-            });
-        }
+    public GroupMemberExpenditureAdapter(List<GroupMemberExpenditure> groupMembersExpenditureList, GroupMemberExpenditureAdapter.OnGoalClickListener listener) {
+        this.groupMemberExpenditureList = groupMembersExpenditureList;
+        mOnGoalClickListener = listener;
 
     }
 
 
-    public GroupMemberExpenditureTransactionsAdapter(List<GroupMemberExpenditure> groupMemberExpenditures, GroupMemberExpenditureTransactionsAdapter.OnGroupMemberClickListener onGroupMemberClickListener) {
-        this.mGroupMemberExpenditure = groupMemberExpenditures;
-        this.mOnGroupMemberClickListener = onGroupMemberClickListener;
+public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
+    public TextView category, date, amount, username, notes;
+
+    public GroupMembersViewHolder(View view) {
+        super(view);
+        category = (TextView) view.findViewById(R.id.groupMembersExpenditureCategory);
+        notes = (TextView) view.findViewById(R.id.groupMembersExpenditureNotes);
+        amount = (TextView) view.findViewById(R.id.groupMembersExpenditureAmount);
+        username =(TextView)view.findViewById(R.id.groupMembersExpenditureName);
+        date = (TextView)view.findViewById(R.id.groupMembersExpenditureDate);
     }
+
+    public void bind(final GroupMemberExpenditure groupMemberExpenditure, final GroupMemberExpenditureAdapter.OnGoalClickListener onGoalClickListener){
+        category.setText(groupMemberExpenditure.getCategory());
+        amount.setText(groupMemberExpenditure.getAmount());
+        date.setText(groupMemberExpenditure.getDueDate());
+        notes.setText(groupMemberExpenditure.getNotes());
+        username.setText(groupMemberExpenditure.getMemberUserName());
+
+        Log.d(TAG, "username" + notes);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onGoalClickListener.onGoalClick(groupMemberExpenditure);
+            }
+        });
+    }
+}
+
 
     @Override
-    public GroupMemberExpenditureTransactionsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GroupMemberExpenditureAdapter.GroupMembersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.members_row, parent, false);
+                .inflate(R.layout.group_members_expenditure_row, parent, false);
 
-        return new GroupMemberExpenditureTransactionsAdapter.MyViewHolder(itemView);
+        return new GroupMemberExpenditureAdapter.GroupMembersViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(GroupMemberExpenditureTransactionsAdapter.MyViewHolder holder, int position) {
-        holder.bind(mGroupMemberExpenditure.get(position), mOnGroupMemberClickListener);
+    public void onBindViewHolder(GroupMemberExpenditureAdapter.GroupMembersViewHolder holder, int position) {
+        holder.bind(groupMemberExpenditureList.get(position), mOnGoalClickListener);
     }
 
     @Override
     public int getItemCount() {
-        if (mGroupMemberExpenditure.size() > 0){
-            return mGroupMemberExpenditure.size();
+        if (groupMemberExpenditureList.size() > 0){
+            return groupMemberExpenditureList.size();
         }
         return 0;
     }
 
-    public void setFilter(ArrayList<GroupMemberExpenditure> groupMemberExpenditure){
-        mGroupMemberExpenditure = new ArrayList<>();
-        mGroupMemberExpenditure.addAll(groupMemberExpenditure);
+    public void setFilter(ArrayList<GroupMemberExpenditure> newList) {
+        groupMemberExpenditureList = new ArrayList<>();
+        groupMemberExpenditureList.addAll(newList);
         notifyDataSetChanged();
     }
 }
-

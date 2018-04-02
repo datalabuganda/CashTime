@@ -17,6 +17,7 @@ import java.util.List;
  * modified by etwin on 3/22/18
  */
 
+
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHolder>{
 
     public interface OnGroupMemberClickListener {
@@ -24,21 +25,24 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
     }
 
     private List<User> mGroupMemberUsers;
-    private OnGroupMemberClickListener mOnGroupMemberClickListener;
+    private final OnGroupMemberClickListener mOnGroupMemberClickListener;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView memberName, memberPhoneNumber;
+        public TextView memberName, memberPhoneNumber, memberLocation, memberBusiness, memberGender,
+            memberEducationLevel, memberNationality, memberHousehold;
 
         public MyViewHolder(View view) {
             super(view);
             memberName = (TextView) view.findViewById(R.id.memberName);
             memberPhoneNumber = (TextView) view.findViewById(R.id. memberPhoneNumber);
+
         }
 
         public void bind(final User groupMemberUser, final OnGroupMemberClickListener onGroupMemberClickListener){
             memberName.setText(groupMemberUser.getUserName());
             memberPhoneNumber.setText(groupMemberUser.getPhoneNumber());
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -70,11 +74,14 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return mGroupMemberUsers.size();
+        if (mGroupMemberUsers.size() > 0){
+            return mGroupMemberUsers.size();
+        }
+        return 0;
     }
 
     public void setFilter(ArrayList<User> groupMemberUsers){
-//        groupMemberUsers = new ArrayList<>();
+        mGroupMemberUsers = new ArrayList<>();
         mGroupMemberUsers.addAll(groupMemberUsers);
         notifyDataSetChanged();
     }

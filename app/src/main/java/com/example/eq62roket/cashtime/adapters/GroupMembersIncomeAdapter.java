@@ -16,31 +16,35 @@ import java.util.List;
  * Created by eq62roket on 3/28/18.
  */
 
-public class GroupMembersIncomeTransactionsAdapter extends RecyclerView.Adapter<GroupMembersIncomeTransactionsAdapter.MyViewHolder>{
+public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembersIncomeAdapter.MyViewHolder>{
 
     public interface OnGroupMemberClickListener {
         void onGroupMemberClick(MembersIncome groupMemberIncome);
     }
 
     private List<MembersIncome> mGroupMemberIncomes;
-    private final GroupMembersIncomeTransactionsAdapter.OnGroupMemberClickListener mOnGroupMemberClickListener;
+    private final GroupMembersIncomeAdapter.OnGroupMemberClickListener mOnGroupMemberClickListener;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView source, amount, duedate;
+        public TextView source, amount, duedate, groupMemberUserName, notes;
 
         public MyViewHolder(View view) {
             super(view);
-            source = (TextView) view.findViewById(R.id.memberIncomeSource);
-            amount = (TextView) view.findViewById(R.id. memberIncomeAmount);
-            duedate = (TextView) view.findViewById(R.id.memberIncomeDate);
+            source = (TextView) view.findViewById(R.id.groupMemberIncomeSource);
+            amount = (TextView) view.findViewById(R.id. groupMemberIncomeAmount);
+            duedate = (TextView) view.findViewById(R.id.groupMemberIncomePeriod);
+            groupMemberUserName = (TextView) view.findViewById(R.id.groupMemberIncomeName);
+            notes = (TextView)view.findViewById(R.id.groupMemberIncomeNotes);
 
         }
 
-        public void bind(final MembersIncome groupMemberIncome, final GroupMembersIncomeTransactionsAdapter.OnGroupMemberClickListener onGroupMemberClickListener){
+        public void bind(final MembersIncome groupMemberIncome, final GroupMembersIncomeAdapter.OnGroupMemberClickListener onGroupMemberClickListener){
             source.setText(groupMemberIncome.getSource());
             amount.setText(groupMemberIncome.getAmount());
             duedate.setText(groupMemberIncome.getDueDate());
+            notes.setText(groupMemberIncome.getNotes());
+            groupMemberUserName.setText(groupMemberIncome.getMemberUserName());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -53,21 +57,21 @@ public class GroupMembersIncomeTransactionsAdapter extends RecyclerView.Adapter<
     }
 
 
-    public GroupMembersIncomeTransactionsAdapter(List<MembersIncome> groupMemberIncomes, GroupMembersIncomeTransactionsAdapter.OnGroupMemberClickListener onGroupMemberClickListener) {
+    public GroupMembersIncomeAdapter(List<MembersIncome> groupMemberIncomes, GroupMembersIncomeAdapter.OnGroupMemberClickListener onGroupMemberClickListener) {
         this.mGroupMemberIncomes = groupMemberIncomes;
         this.mOnGroupMemberClickListener = onGroupMemberClickListener;
     }
 
     @Override
-    public GroupMembersIncomeTransactionsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GroupMembersIncomeAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.group_members_income_transaction_row, parent, false);
 
-        return new GroupMembersIncomeTransactionsAdapter.MyViewHolder(itemView);
+        return new GroupMembersIncomeAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(GroupMembersIncomeTransactionsAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(GroupMembersIncomeAdapter.MyViewHolder holder, int position) {
         holder.bind(mGroupMemberIncomes.get(position), mOnGroupMemberClickListener);
     }
 

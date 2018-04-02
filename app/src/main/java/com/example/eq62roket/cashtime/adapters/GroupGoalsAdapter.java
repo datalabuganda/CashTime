@@ -25,6 +25,12 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
     private List<GroupGoals> groupGoalsList;
     private final OnGoalClickListener mOnGoalClickListener;
 
+    public GroupGoalsAdapter(List<GroupGoals> groupGoalsList, OnGoalClickListener listener) {
+        this.groupGoalsList = groupGoalsList;
+        mOnGoalClickListener = listener;
+
+    }
+
 
     public class GroupGoalsViewHolder extends RecyclerView.ViewHolder {
         public TextView name, date, amount;
@@ -49,12 +55,6 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
         }
     }
 
-
-    public GroupGoalsAdapter(List<GroupGoals> groupGoalsList, OnGoalClickListener listener) {
-        this.groupGoalsList = groupGoalsList;
-        mOnGoalClickListener = listener;
-
-    }
 
     @Override
     public GroupGoalsAdapter.GroupGoalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

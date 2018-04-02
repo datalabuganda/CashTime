@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String Name = "name";
     public static final String Phone = "phone";
 
-    //Income
+    //MembersIncome
     public static final String INCOME_ID = "id";
     public static final String INCOME_SOURCE = "income_source";
     public static final String INCOME_AMOUNT = "income_amount";

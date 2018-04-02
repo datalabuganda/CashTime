@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupGoals;
+import com.example.eq62roket.cashtime.Models.Members;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -22,6 +23,7 @@ public class ParseHelper {
         void onResponse(List<GroupGoals> groupGoalsList);
         void onFailure(String error);
     }
+
 
     private static final String TAG = "ParseHelper";
     private final List<GroupGoals> groupGoalList = new ArrayList<>();
@@ -109,7 +111,5 @@ public class ParseHelper {
             }
         });
     }
-
-
 
 }

@@ -143,7 +143,21 @@ public class GroupExpendituresAnalysisActivity extends AppCompatActivity impleme
 
     }
 
+    public void totalRent(){
+        ParseQuery query = ParseQuery.getQuery("GroupExpenditure");
+        query.whereEqualTo("groupExpenditureCategory", "ent");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            int rentSum;
+            @Override
+            public void done(final List<ParseObject> objects, ParseException e) {
+                for (ParseObject p: objects){
+                    rentSum += Integer.valueOf(p.getString("groupExpenditureAmount"));
+                }
 
+            }
+
+        });
+    }
 
     public void totalGroupExpenditureByCategory(){
         final ParseQuery categoriesQuery = ParseQuery.getQuery("GroupExpenditure");
@@ -169,7 +183,6 @@ public class GroupExpendituresAnalysisActivity extends AppCompatActivity impleme
                                 Map<String, Integer> mapCategories = new HashMap<String, Integer>();
                                 mapCategories.put(categories,sum);
                                 Log.d(TAG, "mapCategories: " + mapCategories);
-
 
                             }
 

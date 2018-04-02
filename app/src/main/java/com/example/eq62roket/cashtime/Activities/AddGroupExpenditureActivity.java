@@ -26,9 +26,8 @@ import java.util.List;
 
 public class AddGroupExpenditureActivity extends AppCompatActivity {
     private static String TAG = "AddGroupExpenditureActivity";
-    EditText mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
+    EditText mGroupExpenditureCategory,  mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
     Button groupExpenditureCancelBtn, groupExpenditureSaveBtn;
-    Spinner mGroupExpenditureCategory;
     ImageView addExpenditureCategoryIcon;
 
     public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others"};
@@ -37,7 +36,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_expenditure);
-        mGroupExpenditureCategory = (Spinner) findViewById(R.id.groupExpenditureCategory);
+        mGroupExpenditureCategory = (EditText) findViewById(R.id.groupExpenditureCategory);
         mGroupExpenditureAmount = (EditText)findViewById(R.id.groupExpenditureAmount);
         mGroupExpenditureDate = (EditText)findViewById(R.id.groupExpenditureDate);
         mGroupExpenditureNotes = (EditText)findViewById(R.id.groupExpenditureNotes);
@@ -73,27 +72,38 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
     }
 
     public void groupExpenditureCategory(){
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Categories");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null){
-                    ArrayList<String> categoryList = new ArrayList<>();
-                    for (ParseObject object : list){
-                        categoryList.add(object.getString("categoryName"));
-                    }
-                    ArrayAdapter adapter = new ArrayAdapter(
-                            getApplicationContext(),android.R.layout.simple_list_item_1 ,categoryList);
-                    mGroupExpenditureCategory.setAdapter(adapter);
-                }
-            }
-        });
+        ArrayAdapter<String> expenditureCategoryAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                expenditureCategories
+        );
+
+        MaterialBetterSpinner materialExpenditureCategorySpinner = (MaterialBetterSpinner) findViewById(R.id.groupExpenditureCategory);
+        materialExpenditureCategorySpinner.setAdapter(expenditureCategoryAdapter);
     }
 
+//    public void groupExpenditureCategory(){
+//        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Categories");
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> list, ParseException e) {
+//                if (e == null){
+//                    ArrayList<String> categoryList = new ArrayList<>();
+//                    for (ParseObject object : list){
+//                        categoryList.add(object.getString("categoryName"));
+//                    }
+//                    ArrayAdapter adapter = new ArrayAdapter(
+//                            getApplicationContext(),android.R.layout.simple_list_item_1 ,categoryList);
+//                    mGroupExpenditureCategory.setAdapter(adapter);
+//                }
+//            }
+//        });
+//    }
+
     private void saveGroupExpenditure(){
-        if ( !mGroupExpenditureCategory.getSelectedItem().toString().equals("") &&
+        if ( !mGroupExpenditureCategory.getText().toString().equals("") &&
                 !mGroupExpenditureAmount.getText().toString().equals("")){
-            String groupExpenditureCategory = mGroupExpenditureCategory.getSelectedItem().toString();
+            String groupExpenditureCategory = mGroupExpenditureCategory.getText().toString();
             String groupExpenditureAmount = mGroupExpenditureAmount.getText().toString();
             String groupExpenditureDate = mGroupExpenditureDate.getText().toString();
             String groupExpenditureNotes = mGroupExpenditureNotes.getText().toString();

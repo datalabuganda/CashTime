@@ -7,8 +7,8 @@ import com.parse.ParseObject;
  * Created by eq62roket on 3/28/18.
  */
 @ParseClassName("GroupMembersIncome")
-public class Income extends ParseObject {
-    String parseId, source, dueDate, amount, notes;
+public class MembersIncome extends ParseObject {
+    String parseId, memberParseId, memberUserName, source, dueDate, amount, notes;
 
     public String getParseId() {
         return parseId;
@@ -20,6 +20,22 @@ public class Income extends ParseObject {
 
     public String getSource() {
         return source;
+    }
+
+    public String getMemberParseId() {
+        return memberParseId;
+    }
+
+    public void setMemberParseId(String memberParseId) {
+        this.memberParseId = memberParseId;
+    }
+
+    public String getMemberUserName() {
+        return memberUserName;
+    }
+
+    public void setMemberUserName(String memberUserName) {
+        this.memberUserName = memberUserName;
     }
 
     public void setSource(String source) {
@@ -50,7 +66,7 @@ public class Income extends ParseObject {
         this.notes = notes;
     }
 
-    public Income() {
+    public MembersIncome() {
         super();
     }
 

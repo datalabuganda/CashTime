@@ -1,17 +1,23 @@
 package com.example.eq62roket.cashtime.Models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by etwin on 3/21/18.
  */
 
-public class User {
-    private String userName, phoneNumber, business, gender, educationLevel, nationality, location;
+@ParseClassName("GroupMember")
+public class User extends ParseObject {
+    private String parseId, groupLeaderId, userName, phoneNumber, business, gender, educationLevel, nationality, location,
+            household;
     private boolean isGroupMember, isLeader;
-    private int household;
     private long points;
 
     public User() {
+        super();
     }
+
 
     public User(
             String userName,
@@ -23,7 +29,7 @@ public class User {
             String location,
             boolean isGroupMember,
             boolean isLeader,
-            int household,
+            String household,
             long points) {
         this.userName = userName;
         this.phoneNumber = phoneNumber;
@@ -36,6 +42,22 @@ public class User {
         this.isLeader = isLeader;
         this.household = household;
         this.points = points;
+    }
+
+    public String getGroupLeaderId() {
+        return groupLeaderId;
+    }
+
+    public void setGroupLeaderId(String groupLeaderId) {
+        this.groupLeaderId = groupLeaderId;
+    }
+
+    public String getParseId() {
+        return parseId;
+    }
+
+    public void setParseId(String parseId) {
+        this.parseId = parseId;
     }
 
     public String getUserName() {
@@ -94,8 +116,8 @@ public class User {
         this.location = location;
     }
 
-    public boolean isGroupMember() {
-        return isGroupMember;
+    public boolean isGroupMember(String isGroupMember, int i) {
+        return this.isGroupMember;
     }
 
     public void setGroupMember(boolean groupMember) {
@@ -110,11 +132,11 @@ public class User {
         isLeader = leader;
     }
 
-    public int getHousehold() {
+    public String getHousehold() {
         return household;
     }
 
-    public void setHousehold(int household) {
+    public void setHousehold(String household) {
         this.household = household;
     }
 

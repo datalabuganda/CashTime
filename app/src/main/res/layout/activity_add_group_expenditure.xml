@@ -52,7 +52,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <Spinner
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/groupExpenditureCategory"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"

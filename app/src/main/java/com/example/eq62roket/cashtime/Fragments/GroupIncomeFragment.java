@@ -6,16 +6,33 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupIncomeActivity;
+import com.example.eq62roket.cashtime.Activities.EditGroupIncomeActivity;
+import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
+import com.example.eq62roket.cashtime.adapters.GroupIncomeAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class GroupIncomeFragment extends Fragment {
+public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryTextListener{
+    private static final String TAG = "GroupIncomeFragment";
     FloatingActionButton fabGroupIncome;
+
+    List<GroupIncome> groupIncome = null;
+    private RecyclerView recyclerView;
+    private GroupIncomeAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +41,8 @@ public class GroupIncomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_group_income, container, false);
         fabGroupIncome = (FloatingActionButton) rootView.findViewById(R.id.fabGroupIncome);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.group_income_recycler_view);
+
 
         fabGroupIncome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,8 +52,62 @@ public class GroupIncomeFragment extends Fragment {
             }
         });
 
+        new ParseIncomeHelper(getActivity()).getGroupIncomeFromParseDb(new ParseIncomeHelper.OnReturnedGroupIncomeListener() {
+            @Override
+            public void onResponse(List<GroupIncome> groupIncomeList) {
+                groupIncome = groupIncomeList;
+
+                mAdapter = new GroupIncomeAdapter(groupIncomeList, new GroupIncomeAdapter.OnGroupClickListener() {
+                    @Override
+                    public void onGroupClick(GroupIncome groupIncome) {
+                        Intent editGroupIncomeIntent = new Intent(getActivity(), EditGroupIncomeActivity.class);
+                        editGroupIncomeIntent.putExtra("groupIncomeSource", groupIncome.getSource());
+                        editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
+                        editGroupIncomeIntent.putExtra("groupIncomePeriod",groupIncome.getPeriod());
+                        editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
+                        editGroupIncomeIntent.putExtra("groupIncomeParseId", groupIncome.getParseId());
+                        startActivity(editGroupIncomeIntent);
+                        getActivity().finish();
+                    }
+
+                });
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                mAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d(TAG, "onFailure: " + error);
+            }
+        });
+
+
 
         return rootView;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<GroupIncome> newList = new ArrayList<>();
+        for (GroupIncome groupIncome : groupIncome){
+            String source = groupIncome.getSource().toLowerCase();
+            if (source.contains(newText)){
+                newList.add(groupIncome);
+            }
+        }
+        mAdapter.setFilter(newList);
+        return true;
+    }
 }

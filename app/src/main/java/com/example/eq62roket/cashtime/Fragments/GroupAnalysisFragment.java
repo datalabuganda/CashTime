@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eq62roket.cashtime.Activities.GroupExpendituresAnalysisActivity;
 import com.example.eq62roket.cashtime.Activities.GroupIncomeAnalysisActivity;
+import com.example.eq62roket.cashtime.Models.GroupIncome;
+import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -25,8 +28,16 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GroupAnalysisFragment extends Fragment {
     PieChart groupPieChart;
@@ -52,8 +63,7 @@ public class GroupAnalysisFragment extends Fragment {
         groupPieChart.setHoleColor(Color.WHITE);
         groupPieChart.setDrawEntryLabels(false);
         groupPieChart.setTransparentCircleRadius(1f);
-//        summaryPieChart.setCenterText("Expenses");
-//        summaryPieChart.setCenterTextColor(Color.RED);
+
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
 
@@ -123,4 +133,5 @@ public class GroupAnalysisFragment extends Fragment {
         return rootView;
 
     }
+
 }

@@ -53,6 +53,10 @@
     <string name="add_group_goal_saving_msg">No Group Goals Added Yet.</string>
     <string name="add_member_msg">No Group Members Added Yet. Click + button to add a Group Member</string>
     <string name="no_members_msg">No Group Members Added Yet.</string>
+    <string name="no_group_barriers_msg">No Group Barriers Added Yet. Click + button to add a Barrier</string>
+    <string name="no_group_savings_msg">No Group Savings Added Yet. Click + button to add a Saving</string>
+    <string name="no_tips_msg">No Tips Added Yet. Click + button to add a Tip</string>
+
 
     <!--level of education array-->
     <string-array name="level_of_education">

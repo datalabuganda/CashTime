@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.GoalTipsActivity;
 import com.example.eq62roket.cashtime.Activities.TipsToGroupGoalsActivity;
@@ -29,6 +30,7 @@ public class TipsFragment extends Fragment {
     private static final String TAG = "GroupSavingsFragment";
 
     private RecyclerView mRecyclerView;
+    private TextView emptyView;
     private TipsAdapter mTipsAdapter;
 
     private FloatingActionButton mFloatingActionButton;
@@ -41,6 +43,7 @@ public class TipsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_tips, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,20 +57,27 @@ public class TipsFragment extends Fragment {
         new ParseHelper(getActivity()).getAllTipsFromParseDb(new OnReturnedTipsListener() {
             @Override
             public void onResponse(List<Tip> tipsList) {
+                if (tipsList.isEmpty()){
+                    mRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
 
-                mTipsAdapter = new TipsAdapter(tipsList, new TipsAdapter.OnTipClickListener() {
-                    @Override
-                    public void onTipSelected(Tip tip) {
-                        Intent goalTipsIntent = new Intent(getActivity(), GoalTipsActivity.class);
-                        goalTipsIntent.putExtra("goalName", tip.getGoalName());
-                        startActivity(goalTipsIntent);
-                    }
-                });
+                    mTipsAdapter = new TipsAdapter(tipsList, new TipsAdapter.OnTipClickListener() {
+                        @Override
+                        public void onTipSelected(Tip tip) {
+                            Intent goalTipsIntent = new Intent(getActivity(), GoalTipsActivity.class);
+                            goalTipsIntent.putExtra("goalName", tip.getGoalName());
+                            startActivity(goalTipsIntent);
+                        }
+                    });
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.setAdapter(mTipsAdapter);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerView.setAdapter(mTipsAdapter);
+                }
             }
 
             @Override
@@ -78,5 +88,4 @@ public class TipsFragment extends Fragment {
 
         return rootView;
     }
-
 }

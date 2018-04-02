@@ -9,10 +9,27 @@ import com.parse.ParseObject;
 
 @ParseClassName("Barriers")
 public class Barrier extends ParseObject{
-    private String parseId, goalName, barrierName, barrierText, dateAdded;
+    private String parseId, goalName, barrierName,
+            barrierText, dateAdded, groupId, groupGoalParseId;
     boolean tipGiven;
 
     public Barrier() {
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public String getGroupGoalParseId() {
+        return groupGoalParseId;
+    }
+
+    public void setGroupGoalParseId(String groupGoalParseId) {
+        this.groupGoalParseId = groupGoalParseId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getParseId() {

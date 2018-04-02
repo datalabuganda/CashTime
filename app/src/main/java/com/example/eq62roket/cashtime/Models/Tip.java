@@ -13,9 +13,25 @@ public class Tip extends ParseObject{
     private String tipParseId;
     private String introText;
     private String dateAdded;
-    private String dateModified;
+    private String dateModified, groupGoalParseId, groupParseId;
 
     public Tip() {
+    }
+
+    public String getGroupGoalParseId() {
+        return groupGoalParseId;
+    }
+
+    public void setGroupGoalParseId(String groupGoalParseId) {
+        this.groupGoalParseId = groupGoalParseId;
+    }
+
+    public String getGroupParseId() {
+        return groupParseId;
+    }
+
+    public void setGroupParseId(String groupParseId) {
+        this.groupParseId = groupParseId;
     }
 
     public String getTipParseId() {

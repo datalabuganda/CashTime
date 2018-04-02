@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
@@ -21,7 +22,8 @@ import java.util.Locale;
 
 public class EditTipActivity extends AppCompatActivity {
 
-    private EditText goalName, tipNotes;
+    private EditText tipNotes;
+    private TextView goalName;
     private Button btnUpdate, btnDelete;
 
     private ParseHelper mParseHelper;
@@ -34,12 +36,11 @@ public class EditTipActivity extends AppCompatActivity {
 
         mParseHelper = new ParseHelper(EditTipActivity.this);
 
-        goalName = (EditText) findViewById(R.id.goalName);
+        goalName = (TextView) findViewById(R.id.goalName);
         tipNotes = (EditText) findViewById(R.id.tipNotes);
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
-        // get data from intent.
         Intent editTipIntent = getIntent();
         final String nameOfGoal = editTipIntent.getStringExtra("nameOfGoal");
         final String tip = editTipIntent.getStringExtra("tipText");

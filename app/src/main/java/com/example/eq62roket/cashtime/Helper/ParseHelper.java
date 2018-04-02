@@ -371,13 +371,15 @@ public class ParseHelper {
         newBarrier.put("barrierNotes", barrierToSave.getBarrierText());
         newBarrier.put("tipGiven", barrierToSave.isTipGiven());
         newBarrier.put("barrierDateAdded", barrierToSave.getDateAdded());
+        newBarrier.put("groupId", barrierToSave.getGroupId());
+        newBarrier.put("groupGoalParseId", barrierToSave.getGroupGoalParseId());
         newBarrier.saveInBackground();
     }
 
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
         final List<Barrier> barrierList = new ArrayList<>();
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
-//        barrierParseQuery.whereEqualTo("userId", currentUserId);
+        barrierParseQuery.whereEqualTo("userId", currentUserId);
         barrierParseQuery.addDescendingOrder("updatedAt");
         barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
             @Override
@@ -446,13 +448,15 @@ public class ParseHelper {
         newTip.put("tipNotes", tipToSave.getIntroText());
         newTip.put("dateAdded", tipToSave.getDateAdded());
         newTip.put("dateModified", tipToSave.getDateModified());
+        newTip.put("groupParseId", tipToSave.getGroupParseId());
+        newTip.put("groupGoalParseId", tipToSave.getGroupGoalParseId());
         newTip.saveInBackground();
     }
 
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
-//        tipParseQuery.whereEqualTo("userId", currentUserId);
+        tipParseQuery.whereEqualTo("userId", currentUserId);
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
             @Override

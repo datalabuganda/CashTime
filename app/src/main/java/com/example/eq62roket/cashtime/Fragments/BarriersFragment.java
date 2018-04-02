@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.BarrierToGroupGoalsActivity;
 import com.example.eq62roket.cashtime.Activities.EditBarrierActivity;
@@ -30,6 +31,7 @@ public class BarriersFragment extends Fragment {
 
     List<Barrier> mBarriersList = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private TextView emptyView;
     private BarrierAdapter mBarrierAdapter;
 
     private FloatingActionButton mFloatingActionButton;
@@ -38,9 +40,10 @@ public class BarriersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        View rootView = inflater.inflate(R.layout.fragment_group_savings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_group_barriers, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
         // add saving
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -55,23 +58,30 @@ public class BarriersFragment extends Fragment {
         new ParseHelper(getActivity()).getGroupBarriersFromParseDb(new OnReturnedGroupBarrierListener() {
             @Override
             public void onResponse(List<Barrier> barrierList) {
-                mBarrierAdapter = new BarrierAdapter(barrierList, new BarrierAdapter.OnBarrierClickListener() {
-                    @Override
-                    public void onBarrierSelected(Barrier barrier) {
-                        Intent editBarrierIntent = new Intent(getContext(), EditBarrierActivity.class);
-                        editBarrierIntent.putExtra("barrierGoalName", barrier.getGoalName());
-                        editBarrierIntent.putExtra("barrierName", barrier.getBarrierName());
-                        editBarrierIntent.putExtra("barrierNotes", barrier.getBarrierText());
-                        editBarrierIntent.putExtra("barrierParseId", barrier.getParseId());
-                        startActivity(editBarrierIntent);
-                        getActivity().finish();
-                    }
-                });
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.setAdapter(mBarrierAdapter);
+                if (barrierList.isEmpty()){
+                    mRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
 
+                    mBarrierAdapter = new BarrierAdapter(barrierList, new BarrierAdapter.OnBarrierClickListener() {
+                        @Override
+                        public void onBarrierSelected(Barrier barrier) {
+                            Intent editBarrierIntent = new Intent(getContext(), EditBarrierActivity.class);
+                            editBarrierIntent.putExtra("barrierGoalName", barrier.getGoalName());
+                            editBarrierIntent.putExtra("barrierName", barrier.getBarrierName());
+                            editBarrierIntent.putExtra("barrierNotes", barrier.getBarrierText());
+                            editBarrierIntent.putExtra("barrierParseId", barrier.getParseId());
+                            startActivity(editBarrierIntent);
+                            getActivity().finish();
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerView.setAdapter(mBarrierAdapter);
+                }
             }
 
             @Override

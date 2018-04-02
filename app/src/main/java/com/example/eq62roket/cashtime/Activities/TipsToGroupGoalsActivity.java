@@ -12,12 +12,10 @@ import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TipsToGroupGoalsActivity extends AppCompatActivity {
 
-    private List<GroupGoals> groupGoalsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private GroupGoalsAdapter mAdapter;
 
@@ -37,6 +35,8 @@ public class TipsToGroupGoalsActivity extends AppCompatActivity {
                     public void onGoalClick(GroupGoals groupGoals) {
                         Intent addTipsIntent = new Intent(TipsToGroupGoalsActivity.this, AddTipsActivity.class);
                         addTipsIntent.putExtra("goalName", groupGoals.getName());
+                        addTipsIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                        addTipsIntent.putExtra("groupParseId", groupGoals.getGroupId());
                         startActivity(addTipsIntent);
                         finish();
                     }

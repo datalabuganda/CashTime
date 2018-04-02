@@ -30,11 +30,11 @@ public class HomeActivity extends AppCompatActivity
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        if (currentUser != null){
-        }else {
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+//        if (currentUser != null){
+//        }else {
+//            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        }
 
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);
         analyticsCardView = (CardView)findViewById(R.id.analyticsCardView);
@@ -164,7 +164,16 @@ public class HomeActivity extends AppCompatActivity
             Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
             startActivity(transactionsIntent);
 
-        } else if (id == R.id.nav_send) {
+        }if (id == R.id.incomeSources) {
+            Intent transactionsIntent = new Intent(HomeActivity.this, IncomeSourcesActivity.class);
+            startActivity(transactionsIntent);
+
+        }
+        if (id == R.id.expenditureCategories) {
+            Intent transactionsIntent = new Intent(HomeActivity.this, ExpenditureCategoriesActivity.class);
+            startActivity(transactionsIntent);
+
+        }else if (id == R.id.nav_send) {
 
         }
 

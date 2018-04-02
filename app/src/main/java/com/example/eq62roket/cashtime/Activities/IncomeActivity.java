@@ -21,7 +21,7 @@ public class IncomeActivity extends AppCompatActivity {
         selectGroupMembersForIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addMemberIntent = new Intent(IncomeActivity.this, GroupMembersListIncomeActivity.class);
+                Intent addMemberIntent = new Intent(IncomeActivity.this, GroupMemberIncomeTransactionsActivity.class);
                 startActivity(addMemberIntent);
             }
         });

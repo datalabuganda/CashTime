@@ -3,7 +3,9 @@ package com.example.eq62roket.cashtime.Activities;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -15,79 +17,40 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GroupExpendituresAnalysisActivity extends AppCompatActivity implements OnChartGestureListener, OnChartValueSelectedListener{
-    private static final String TAG = "GroupExpendituresAnalysisActivity";
+    private static String TAG = "GroupExpendituresAnalysisActivity";
     private LineChart geaLineChart;
     private PieChart geaPieChart;
+    TextView totalGroupExpenditure;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_expenditures_analysis);
+
+        totalGroupExpenditure = (TextView)findViewById(R.id.totalGroupExpenditure);
 
         geaLineChart = (LineChart)findViewById(R.id.geaLineChart);
         geaPieChart = (PieChart)findViewById(R.id.geaPieChart);
 
-        //*********************** Pie Chart *************************//
-
-        geaPieChart.setDragDecelerationFrictionCoef(0.99f);
-
-        geaPieChart.setDrawHoleEnabled(false);
-        geaPieChart.setCenterTextColor(Color.BLACK);
-        geaPieChart.setDrawEntryLabels(false);
-        geaPieChart.setTransparentCircleRadius(1f);
-        geaPieChart.setDrawEntryLabels(true);
-        geaPieChart.setHoleColor(Color.BLACK);
-        geaPieChart.setEntryLabelTextSize(10);
-        geaPieChart.setTouchEnabled(true);
-
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-
-        yValues.add(new PieEntry(30000, "Hoes"));
-        yValues.add(new PieEntry(24000, "Labor"));
-
-        yValues.add(new PieEntry(90000, "Harvesting"));
-        yValues.add(new PieEntry(27000, "Transport"));
-
-        yValues.add(new PieEntry(50000, "Shares"));
-        yValues.add(new PieEntry(5000, "Education"));
-
-        yValues.add(new PieEntry(76000, "Herbcides"));
-        yValues.add(new PieEntry(12000, "Pestcides"));
-
-        yValues.add(new PieEntry(20000, "Taxes"));
-        yValues.add(new PieEntry(19000, "Water"));
-
-        yValues.add(new PieEntry(33000, "Electricity"));
-        yValues.add(new PieEntry(36000, "Sacco"));
-
-        yValues.add(new PieEntry(61000, "Apio"));
-        yValues.add(new PieEntry(4000, "Mutegyeki"));
-
-        yValues.add(new PieEntry(64000, "Simon"));
-        yValues.add(new PieEntry(9000, "Alinda"));
-
-
-        geaPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-
-        PieDataSet dataSet = new PieDataSet(yValues, "Group Expenditure");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-        PieData data = new PieData((dataSet));
-
-        geaPieChart.setData(data);
 
         //*********************** Line Chart ************************//
         geaLineChart.setOnChartGestureListener(this);
@@ -123,6 +86,100 @@ public class GroupExpendituresAnalysisActivity extends AppCompatActivity impleme
         LineData dataPieChart = new LineData(dataSets);
 
         geaLineChart.setData(dataPieChart);
+
+        groupExpenditurePieChart();
+
+        totalGroupExpenditure();
+        totalGroupExpenditureByCategory();
+    }
+
+    public void groupExpenditurePieChart(){
+        this.totalGroupExpenditureByCategory();
+        geaPieChart.setDragDecelerationFrictionCoef(0.99f);
+
+        geaPieChart.setDrawHoleEnabled(false);
+        geaPieChart.setCenterTextColor(Color.BLACK);
+        geaPieChart.setDrawEntryLabels(false);
+        geaPieChart.setTransparentCircleRadius(1f);
+        geaPieChart.setDrawEntryLabels(true);
+        geaPieChart.setHoleColor(Color.BLACK);
+        geaPieChart.setEntryLabelTextSize(10);
+        geaPieChart.setTouchEnabled(true);
+
+        ArrayList<PieEntry> yValues = new ArrayList<>();
+
+        yValues.add(new PieEntry(24f, "Remaining"));
+
+
+        geaPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+        PieDataSet dataSet = new PieDataSet(yValues, "Group Expenditure");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        PieData data = new PieData((dataSet));
+
+
+        geaPieChart.setData(data);
+    }
+
+
+    public void totalGroupExpenditure(){
+        final ParseQuery query = ParseQuery.getQuery("GroupExpenditure");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            int sum;
+            @Override
+            public void done(final List<ParseObject> objects, ParseException e) {
+                for (ParseObject p: objects){
+                    sum += Integer.valueOf(p.getString("groupExpenditureAmount"));
+                    Log.d(TAG, "sum" + sum);
+                }
+                if (e == null){
+                    totalGroupExpenditure.setText(String.valueOf(sum));
+                }
+            }
+        });
+
+    }
+
+
+
+    public void totalGroupExpenditureByCategory(){
+        final ParseQuery categoriesQuery = ParseQuery.getQuery("GroupExpenditure");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Categories");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(final List<ParseObject> objects, ParseException e) {
+                for (ParseObject p: objects){
+                    String categories = p.getString("categoryName");
+                    String[] categoriesList = {categories};
+                    Log.d("Categories", "Categories " + categoriesList);
+                    categoriesQuery.whereContainedIn("groupExpenditureCategory", Arrays.asList(categoriesList));
+                    categoriesQuery.findInBackground(new FindCallback<ParseObject>() {
+                        int sum;
+                        @Override
+                        public void done(List<ParseObject> amounts, ParseException e) {
+                            for (ParseObject p: amounts){
+                                sum += Integer.valueOf(p.getString("groupExpenditureAmount"));
+                                final String categories = p.getString("groupExpenditureCategory");
+                                Log.d(TAG, "sum" + sum);
+                                Log.d(TAG, "categories" + categories);
+
+                                Map<String, Integer> mapCategories = new HashMap<String, Integer>();
+                                mapCategories.put(categories,sum);
+                                Log.d(TAG, "mapCategories: " + mapCategories);
+
+
+                            }
+
+                        }
+
+                    });
+                }
+            }
+        });
+
     }
 
     @Override

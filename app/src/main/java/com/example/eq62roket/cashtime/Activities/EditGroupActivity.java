@@ -88,7 +88,7 @@ public class EditGroupActivity extends AppCompatActivity {
                         Group groupToDelete = new Group();
                         groupToDelete.setGroupParseId(groupParseId);
                         mParseGroupHelper.deleteGroupFromParseDb(groupToDelete);
-                        mParseGroupHelper.deleteGroupMembersFromParseDb(groupParseId);
+                        mParseGroupHelper.deleteAllGroupMembersFromParseDb(groupParseId);
 
                         startGroupsActivity();
                         Toast.makeText(EditGroupActivity.this, "Group deleted successfully", Toast.LENGTH_SHORT).show();

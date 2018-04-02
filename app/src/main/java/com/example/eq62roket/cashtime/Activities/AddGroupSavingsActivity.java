@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
@@ -26,10 +27,13 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupSavingsActivity";
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote;
+    private EditText savingAmount, savingNote;
+    private TextView goalName;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
+    private String groupParseId;
+    private String groupGoalParseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
-        goalName = (EditText) findViewById(R.id.goalName);
+        goalName = (TextView) findViewById(R.id.goalName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
         Button btnSave = (Button) findViewById(R.id.btnSave);
@@ -46,17 +50,15 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
+        groupParseId = intent.getStringExtra("groupParseId");
+        groupGoalParseId = intent.getStringExtra("groupGoalParseId");
 
-        // Prepopulate goalName
         goalName.setText(nameOfGoal);
 
-        // get selected period
         getSelectPeriod();
 
-        // get selected income
         selectIncomeSource(getIncomeSources());
 
-        // Save Transaction
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +66,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             }
         });
 
-        // Cancel Transaction
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +86,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         periods.add("Weekly");
         periods.add("Monthly");
 
-        // add list to adapter
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, periods
         );
@@ -131,7 +131,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     public void saveSavingTransaction(){
         String savingPeriod = "";
-        // pick goalName again
         String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
@@ -152,14 +151,14 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 savingPeriod = new PeriodHelper().getMonthlyDate();
             }
             if (!selectedPeriod.equals("")){
-
-                // Add saving to GroupSaving object
                 GroupSavings newGroupSaving = new GroupSavings();
                 newGroupSaving.setAmount(amountSaved);
                 newGroupSaving.setGoalName(nameOfGoal);
                 newGroupSaving.setIncomeSource(selectedIncomeSource);
                 newGroupSaving.setPeriod(selectedPeriod);
                 newGroupSaving.setDateAdded(dateToday);
+                newGroupSaving.setGroupParseId(groupParseId);
+                newGroupSaving.setGroupGoalParseId(groupGoalParseId);
                 if (note.trim().equals("")){
                     newGroupSaving.setNotes("No notes");
                 }else {

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 
@@ -43,7 +44,7 @@ public class GroupSavingsAdapter extends RecyclerView.Adapter<GroupSavingsAdapte
 
         public void bind(final GroupSavings groupSavings, final OnGroupSavingClickListener onGroupSavingClickListener){
             goalName.setText(groupSavings.getGoalName());
-            groupAmount.setText(groupSavings.getAmount());
+            groupAmount.setText(new CashTimeUtils().currencyFormatter(groupSavings.getAmount()));
             groupSavingDate.setText(groupSavings.getDateAdded());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

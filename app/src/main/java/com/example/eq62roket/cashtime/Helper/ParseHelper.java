@@ -60,8 +60,8 @@ public class ParseHelper {
     public void getGroupGoalsFromParseDb(final OnReturnedGroupGoalsListener onReturnedGroupGoalsListener){
         final List<GroupGoals> groupGoalList = new ArrayList<>();
         ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("GroupGoals");
+        groupGoalsQuery.whereEqualTo("userId", currentUserId);
         groupGoalsQuery.addDescendingOrder("updatedAt");
-//        groupGoalsQuery.whereEqualTo("userId", currentUserId);
         groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
             @Override
             public void done(List<GroupGoals> parseGroupGoals, ParseException e) {
@@ -88,7 +88,6 @@ public class ParseHelper {
             }
         });
 
-        Log.d(TAG, "Current User Id" + currentUserId);
     }
 
     public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
@@ -134,6 +133,7 @@ public class ParseHelper {
         newMemberGoal.put("memberGoalStatus", membersGoal.getMemberGoalStatus());
         newMemberGoal.put("memberGoalNotes", membersGoal.getMemberGoalNotes());
         newMemberGoal.put("memberParseId", membersGoal.getMemberParseId());
+        newMemberGoal.put("savingCreatorId", currentUserId);
         newMemberGoal.saveInBackground();
 
     }
@@ -141,6 +141,7 @@ public class ParseHelper {
     public void getMemberGoalsFromParseDb(final OnReturnedMemberGoalListener onReturnedMemberGoalListener){
         final List<MembersGoals> membersGoalsList = new ArrayList<>();
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
+        membersGoalsParseQuery.whereEqualTo("savingCreatorId", currentUserId);
         membersGoalsParseQuery.addDescendingOrder("updatedAt");
         membersGoalsParseQuery.findInBackground(new FindCallback<MembersGoals>() {
             @Override
@@ -195,7 +196,7 @@ public class ParseHelper {
                 if (e == null) {
                     membersGoal.deleteInBackground();
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
@@ -211,13 +212,15 @@ public class ParseHelper {
         newGroupSaving.put("groupSavingPeriod", groupSaving.getPeriod());
         newGroupSaving.put("groupSavingNotes", groupSaving.getNotes());
         newGroupSaving.put("groupSavingDateAdded", groupSaving.getDateAdded());
+        newGroupSaving.put("groupParseId", groupSaving.getGroupParseId());
+        newGroupSaving.put("groupGoalParseId", groupSaving.getGroupGoalParseId());
         newGroupSaving.saveInBackground();
     }
 
     public void getGroupSavingsFromParseDb(final OnReturnedGroupSavingsListener onReturnedGroupSavingsListener){
         final List<GroupSavings> groupSavingsList = new ArrayList<>();
         ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
-//        groupSavingsParseQuery.whereEqualTo("userId", currentUserId);
+        groupSavingsParseQuery.whereEqualTo("userId", currentUserId);
         groupSavingsParseQuery.addDescendingOrder("updatedAt");
         groupSavingsParseQuery.findInBackground(new FindCallback<GroupSavings>() {
             @Override
@@ -282,7 +285,6 @@ public class ParseHelper {
 
     public void saveMemberSavingsToParseDb(MemberSavings memberSavingToSave){
         MemberSavings newMemberSaving = new MemberSavings();
-        newMemberSaving.put("userId", currentUserId);
         newMemberSaving.put("memberUserName", memberSavingToSave.getMemberName());
         newMemberSaving.put("memberSavingAmount", memberSavingToSave.getSavingAmount());
         newMemberSaving.put("memberSavingGoalName", memberSavingToSave.getGoalName());
@@ -290,13 +292,15 @@ public class ParseHelper {
         newMemberSaving.put("memberSavingPeriod", memberSavingToSave.getPeriod());
         newMemberSaving.put("memberSavingNotes", memberSavingToSave.getSavingNote());
         newMemberSaving.put("memberSavingDateAdded", memberSavingToSave.getDateAdded());
+        newMemberSaving.put("memberParseId", memberSavingToSave.getMemberParseId());
+        newMemberSaving.put("savingCreatorId", currentUserId);
         newMemberSaving.saveInBackground();
     }
 
     public void getMemberSavingsFromParseDb(final OnReturnedMemberSavingsListener onReturnedMemberSavingsListener){
         final List<MemberSavings> memberSavingsList = new ArrayList<>();
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
-        memberSavingsParseQuery.whereEqualTo("userId", currentUserId);
+        memberSavingsParseQuery.whereEqualTo("savingCreatorId", currentUserId);
         memberSavingsParseQuery.addDescendingOrder("updatedAt");
         memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
             @Override

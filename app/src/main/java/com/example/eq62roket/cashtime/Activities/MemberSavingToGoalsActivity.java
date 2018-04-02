@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
@@ -23,6 +25,7 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
     private static final String TAG = "MemberSavingToGoals";
     private List<MembersGoals> membersGoals = new ArrayList<>();
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private MembersGoalsAdapter mAdapter;
 
     @Override
@@ -31,29 +34,39 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         setContentView(R.layout.activity_member_saving_to_goals);
 
         recyclerView = (RecyclerView) findViewById(R.id.members_goals_recycler_view);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
         new ParseHelper(this).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
             public void onResponse(List<MembersGoals> membersGoalsList) {
-                membersGoals = membersGoalsList;
+                if (membersGoalsList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
-                    @Override
-                    public void onMemberGoalClick(MembersGoals membersGoals) {
-                        // show Add Member Saving Form
-                        Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
-                        intent.putExtra("goalName", membersGoals.getMemberGoalName());
-                        intent.putExtra("memberName",membersGoals.getMemberName());
-                        intent.putExtra("memberSavingParseId", membersGoals.getParseId());
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MemberSavingToGoalsActivity.this);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    membersGoals = membersGoalsList;
 
-                recyclerView.setAdapter(mAdapter);
+                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                        @Override
+                        public void onMemberGoalClick(MembersGoals membersGoals) {
+                            // show Add Member Saving Form
+                            Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
+                            intent.putExtra("goalName", membersGoals.getMemberGoalName());
+                            intent.putExtra("memberName",membersGoals.getMemberName());
+                            intent.putExtra("memberParseId", membersGoals.getMemberParseId());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MemberSavingToGoalsActivity.this);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    recyclerView.setAdapter(mAdapter);
+
+                }
             }
 
             @Override

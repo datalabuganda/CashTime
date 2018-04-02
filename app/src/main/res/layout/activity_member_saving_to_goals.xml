@@ -5,13 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.eq62roket.cashtime.Fragments.MembersGoalsFragment">
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="@string/add_member_goal_saving_msg" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/members_goals_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
-
-
 
 </FrameLayout>

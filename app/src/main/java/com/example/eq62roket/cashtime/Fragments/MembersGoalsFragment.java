@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberGoalActivity;
 import com.example.eq62roket.cashtime.Activities.MemberGoalSelectMemberActivity;
@@ -37,6 +38,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
 
     private List<MembersGoals> membersGoals = null;
     private RecyclerView recyclerView;
+    private TextView emptyView;
     private MembersGoalsAdapter mAdapter;
     private FloatingActionButton fabMembersGoals;
 
@@ -51,6 +53,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.members_goals_recycler_view);
         fabMembersGoals = (FloatingActionButton) rootView.findViewById(R.id.fabMembersGoals);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,34 +61,41 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
                 Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),MemberGoalSelectMemberActivity.class);
                 startActivity(addMembersGoalsIntent);
                 getActivity().finish();
-//                Toast.makeText(getActivity(), "This feature is still under development", Toast.LENGTH_SHORT).show();
             }
         });
 
         new ParseHelper(getActivity()).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
             public void onResponse(List<MembersGoals> membersGoalsList) {
-                membersGoals = membersGoalsList;
-                mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
-                    @Override
-                    public void onMemberGoalClick(MembersGoals membersGoals) {
-                        Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);
-                        editMemberGoalIntent.putExtra("groupMemberName", membersGoals.getMemberName());
-                        editMemberGoalIntent.putExtra("groupMemberGoalName", membersGoals.getMemberGoalName());
-                        editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
-                        editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
-                        editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
-                        editMemberGoalIntent.putExtra("groupMemberParseId", membersGoals.getParseId());
-                        startActivity(editMemberGoalIntent);
-                    }
-                });
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                if (membersGoalsList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(mAdapter);
+                    membersGoals = membersGoalsList;
 
+                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                        @Override
+                        public void onMemberGoalClick(MembersGoals membersGoals) {
+                            Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);
+                            editMemberGoalIntent.putExtra("groupMemberName", membersGoals.getMemberName());
+                            editMemberGoalIntent.putExtra("groupMemberGoalName", membersGoals.getMemberGoalName());
+                            editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
+                            editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
+                            editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
+                            editMemberGoalIntent.putExtra("groupMemberParseId", membersGoals.getParseId());
+                            startActivity(editMemberGoalIntent);
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(mAdapter);
+                }
             }
 
             @Override

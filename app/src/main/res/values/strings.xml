@@ -46,6 +46,11 @@
     <string name="back4app_app_id">BGFV6AVElkUkTufl1iL9mSonZgtEMjHLnSY8xB2J</string>
     <string name="back4app_client_key">eYEH5MBEUFuYhrW1qiU1CaQHqwXKZMNixjRpSWZr</string>
     <string name="add_group_msg">No Groups Added Yet. Click + button to add a Group</string>
+    <string name="add_member_goal_saving_msg">No Member Goals Added Yet.</string>
+    <string name="add_group_goal_msg">No Group Goals Added Yet. Click + button to add a Goal</string>
+    <string name="no_member_saving_msg">No Member Savings Added Yet. Click + button to add a Saving</string>
+    <string name="add_member_goal_msg">No Member Goals Added Yet. Click + button to add a Goal</string>
+    <string name="add_group_goal_saving_msg">No Group Goals Added Yet.</string>
     <string name="add_member_msg">No Group Members Added Yet. Click + button to add a Group Member</string>
     <string name="no_members_msg">No Group Members Added Yet.</string>
 

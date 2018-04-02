@@ -9,9 +9,33 @@ import com.parse.ParseObject;
 @ParseClassName("GroupSavings")
 public class GroupSavings extends ParseObject {
     private String parseId, goalName, period, incomeSource, notes, dateAdded;
-    private String amount;
+    private String amount, groupParseId, userId, groupGoalParseId;
 
     public GroupSavings() {
+    }
+
+    public String getGroupParseId() {
+        return groupParseId;
+    }
+
+    public void setGroupParseId(String groupParseId) {
+        this.groupParseId = groupParseId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getGroupGoalParseId() {
+        return groupGoalParseId;
+    }
+
+    public void setGroupGoalParseId(String groupGoalParseId) {
+        this.groupGoalParseId = groupGoalParseId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getParseId() {

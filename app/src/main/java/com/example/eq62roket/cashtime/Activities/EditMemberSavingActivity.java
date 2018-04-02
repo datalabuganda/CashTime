@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
@@ -27,7 +28,8 @@ import java.util.Locale;
 public class EditMemberSavingActivity extends AppCompatActivity {
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote, memberName;
+    private EditText savingAmount, savingNote;
+    private TextView goalName, memberName;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
@@ -44,8 +46,8 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
-        goalName = (EditText) findViewById(R.id.goalName);
-        memberName = (EditText) findViewById(R.id.memberName);
+        goalName = (TextView) findViewById(R.id.goalName);
+        memberName = (TextView) findViewById(R.id.memberName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
         Button btnUpdate = (Button) findViewById(R.id.btnUpdate);

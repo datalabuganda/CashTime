@@ -11,9 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditMemberSavingActivity;
+import com.example.eq62roket.cashtime.Activities.MemberSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
@@ -29,6 +30,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
 
     private MemberSavingsAdapter mMemberSavingsAdapter;
     private RecyclerView mRecyclerView;
+    private TextView emptyView;
 
     private FloatingActionButton mFloatingActionButton;
 
@@ -37,7 +39,6 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(
                 R.layout.fragment_members_savings,
                 container,
@@ -45,14 +46,13 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         );
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
-        // add saving
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), MemberSavingToGoalsActivity.class);
-//                startActivity(intent);
-                Toast.makeText(getActivity(), "This Feature is still under development", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MemberSavingToGoalsActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -60,27 +60,34 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
         new ParseHelper(getActivity()).getMemberSavingsFromParseDb(new OnReturnedMemberSavingsListener() {
             @Override
             public void onResponse(List<MemberSavings> memberSavingsList) {
+                if (memberSavingsList.isEmpty()){
+                    mRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
 
-                mMemberSavingsAdapter = new MemberSavingsAdapter(memberSavingsList, new MemberSavingsAdapter.OnSavingClickListener() {
-                    @Override
-                    public void onSavingClick(MemberSavings memberSavings) {
-                        Intent intent = new Intent(getActivity(), EditMemberSavingActivity.class);
-                        intent.putExtra("goalName", memberSavings.getGoalName());
-                        intent.putExtra("memberName",memberSavings.getMemberName());
-                        intent.putExtra("savingAmount", String.valueOf(memberSavings.getSavingAmount()));
-                        intent.putExtra("dateAdded", memberSavings.getDateAdded());
-                        intent.putExtra("savingPeriod", memberSavings.getPeriod());
-                        intent.putExtra("incomeSource", memberSavings.getIncomeSource());
-                        intent.putExtra("savingNote", memberSavings.getSavingNote());
-                        intent.putExtra("memberSavingParseId", memberSavings.getParseId());
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.setAdapter(mMemberSavingsAdapter);
+                    mMemberSavingsAdapter = new MemberSavingsAdapter(memberSavingsList, new MemberSavingsAdapter.OnSavingClickListener() {
+                        @Override
+                        public void onSavingClick(MemberSavings memberSavings) {
+                            Intent intent = new Intent(getActivity(), EditMemberSavingActivity.class);
+                            intent.putExtra("goalName", memberSavings.getGoalName());
+                            intent.putExtra("memberName",memberSavings.getMemberName());
+                            intent.putExtra("savingAmount", String.valueOf(memberSavings.getSavingAmount()));
+                            intent.putExtra("dateAdded", memberSavings.getDateAdded());
+                            intent.putExtra("savingPeriod", memberSavings.getPeriod());
+                            intent.putExtra("incomeSource", memberSavings.getIncomeSource());
+                            intent.putExtra("savingNote", memberSavings.getSavingNote());
+                            intent.putExtra("memberSavingParseId", memberSavings.getParseId());
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+                    });
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerView.setAdapter(mMemberSavingsAdapter);
+                }
             }
 
             @Override

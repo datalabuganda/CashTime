@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -36,6 +37,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     Button groupDeleteBtn, groupUpdateBtn;
 
     private String groupGoalParseId = "";
+    private String groupParseId;
     private ParseHelper mParseHelper;
 
     @Override
@@ -59,6 +61,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         String goalDeadline = intent.getStringExtra("groupGoalDeadline");
         String goalNote = intent.getStringExtra("groupGoalNotes");
         groupGoalParseId = intent.getStringExtra("groupGoalParseId");
+        groupParseId = intent.getStringExtra("groupParseId");
 
         groupGoalName.setText(nameOfGoal);
         groupGoalAmount.setText(costOfGoal);
@@ -72,41 +75,58 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             }
         });
 
-        groupDeleteBtn.setOnClickListener(new View.OnClickListener() {
+        GroupGoals groupGoal = new GroupGoals();
+        groupGoal.setParseId(groupGoalParseId);
+        groupGoal.setGroupId(groupParseId);
+
+        new ParseHelper(EditGroupGoalActivity.this).getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
             @Override
-            public void onClick(View view) {
+            public void onResponse(final int groupGoalTotalSavings) {
+                groupDeleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                // start a dialog fragment
-                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
-                // Add the buttons
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                        if (groupGoalTotalSavings > 0){
+                            Toast.makeText(context, "You can not delete this Goal...You are already Saving towards it", Toast.LENGTH_SHORT).show();
+                        }else {
 
-                        GroupGoals groupGoalToDelete = new GroupGoals();
-                        groupGoalToDelete.setParseId(groupGoalParseId);
-                        mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
-                        startTabbedGoalsActivity();
-                        Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+                            // start a dialog fragment
+                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
+                            // Add the buttons
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
+                                    GroupGoals groupGoalToDelete = new GroupGoals();
+                                    groupGoalToDelete.setParseId(groupGoalParseId);
+                                    mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
+                                    startTabbedGoalsActivity();
+                                    Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Cancel
+                                }
+                            });
+
+                            builder.setMessage(
+                                    "Deleting Group Goal '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Group Goal");
+
+
+                            // Create the AlertDialog
+                            android.support.v7.app.AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Cancel
-                    }
-                });
+            }
 
-                builder.setMessage(
-                        "Deleting Group Goal '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Group Goal");
-
-
-                // Create the AlertDialog
-                android.support.v7.app.AlertDialog dialog = builder.create();
-                dialog.show();
+            @Override
+            public void onFailure(String error) {
 
             }
         });
-
 
         date = new DatePickerDialog.OnDateSetListener() {
 

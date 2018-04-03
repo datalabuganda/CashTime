@@ -30,7 +30,7 @@ public class TipsToGroupGoalsActivity extends AppCompatActivity {
         new ParseHelper(TipsToGroupGoalsActivity.this).getGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
             @Override
             public void onResponse(List<GroupGoals> groupGoalsList) {
-                mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
+                mAdapter = new GroupGoalsAdapter(TipsToGroupGoalsActivity.this, groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
                     @Override
                     public void onGoalClick(GroupGoals groupGoals) {
                         Intent addTipsIntent = new Intent(TipsToGroupGoalsActivity.this, AddTipsActivity.class);

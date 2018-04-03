@@ -43,13 +43,15 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
                     emptyView.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
 
-                    mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
+                    mAdapter = new GroupGoalsAdapter(GroupSavingToGoalsActivity.this, groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
                         @Override
                         public void onGoalClick(GroupGoals groupGoals) {
                             Intent intent = new Intent(GroupSavingToGoalsActivity.this, AddGroupSavingsActivity.class);
                             intent.putExtra("goalName", groupGoals.getName());
                             intent.putExtra("groupParseId", groupGoals.getGroupId());
+                            intent.putExtra("groupGoalAmount", groupGoals.getAmount());
                             intent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                            intent.putExtra("groupGoalDueDate", groupGoals.getDueDate());
                             startActivity(intent);
                             finish();
                         }

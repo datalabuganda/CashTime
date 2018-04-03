@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
+import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 
@@ -34,11 +36,17 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     private String selectedIncomeSource;
     private String groupParseId;
     private String groupGoalParseId;
+    private String groupGoalAmount;
+    private String groupGoalDueDate;
+
+    private ParseHelper mParseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_savings);
+
+        mParseHelper = new ParseHelper(AddGroupSavingsActivity.this);
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
@@ -52,6 +60,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         String nameOfGoal = intent.getStringExtra("goalName");
         groupParseId = intent.getStringExtra("groupParseId");
         groupGoalParseId = intent.getStringExtra("groupGoalParseId");
+        groupGoalAmount = intent.getStringExtra("groupGoalAmount");
+        groupGoalDueDate = intent.getStringExtra("groupGoalDueDate");
 
         goalName.setText(nameOfGoal);
 
@@ -70,13 +80,9 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 clearEditTexts();
-
-                // start TabbedSavingActivity
                 startTabbedSavingActivity();
             }
         });
-
-
     }
 
     public void getSelectPeriod(){
@@ -108,7 +114,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void selectIncomeSource(List<String> incomeSourcesList){
-        // add incomeSourcesList to incomeSourcesAdapter
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, incomeSourcesList
         );
@@ -130,54 +135,101 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void saveSavingTransaction(){
-        String savingPeriod = "";
-        String nameOfGoal = goalName.getText().toString();
+        final String[] savingPeriod = {""};
+        final String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
                 && !goalName.getText().toString().equals("") ){
 
-            String amountSaved = savingAmount.getText().toString();
-            String note = savingNote.getText().toString();
+            final GroupGoals groupGoal = new GroupGoals();
+            groupGoal.setGroupId(groupParseId);
+            groupGoal.setParseId(groupGoalParseId);
+            groupGoal.setAmount(groupGoalAmount);
+            groupGoal.setDueDate(groupGoalDueDate);
+            mParseHelper.getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
+                @Override
+                public void onResponse(int groupGoalTotalSavings) {
+                    String amountSaved = savingAmount.getText().toString();
+                    String note = savingNote.getText().toString();
 
-            Date today = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-            String dateToday = simpleDateFormat.format(today);
+                    int groupGoalTotalCost = Integer.parseInt(groupGoal.getAmount());
+                    int amountToSave = Integer.valueOf(amountSaved);
+                    int amountRemaining = groupGoalTotalCost - groupGoalTotalSavings;
 
-            if (selectedPeriod == "Daily"){
-                savingPeriod = new PeriodHelper().getDailyDate();
-            }else if (selectedPeriod == "Weekly"){
-                savingPeriod = new PeriodHelper().getWeeklyDate();
-            }else if (selectedPeriod == "Monthly"){
-                savingPeriod = new PeriodHelper().getMonthlyDate();
-            }
-            if (!selectedPeriod.equals("")){
-                GroupSavings newGroupSaving = new GroupSavings();
-                newGroupSaving.setAmount(amountSaved);
-                newGroupSaving.setGoalName(nameOfGoal);
-                newGroupSaving.setIncomeSource(selectedIncomeSource);
-                newGroupSaving.setPeriod(selectedPeriod);
-                newGroupSaving.setDateAdded(dateToday);
-                newGroupSaving.setGroupParseId(groupParseId);
-                newGroupSaving.setGroupGoalParseId(groupGoalParseId);
-                if (note.trim().equals("")){
-                    newGroupSaving.setNotes("No notes");
-                }else {
-                    newGroupSaving.setNotes(note);
+                    if ( amountToSave > amountRemaining ){
+                        Toast.makeText(
+                                AddGroupSavingsActivity.this,
+                                "You can not save " + amountToSave + ", you need " + amountRemaining + " to complete your goal",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+
+                        Date today = new Date();
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                        String dateToday = simpleDateFormat.format(today);
+//                        try {
+//                            Date groupGoalDueDate = simpleDateFormat.parse(groupGoal.getDueDate());
+//                            Date todayZdate = simpleDateFormat.parse(dateToday);
+//                            GroupGoals completedGroupGoal = new GroupGoals();
+//                            completedGroupGoal.setParseId(groupGoalParseId);
+//                            completedGroupGoal.setGroupId(groupParseId);
+//
+//                            if ( amountRemaining == 0 && groupGoalDueDate.after(todayZdate) ){
+//                                completedGroupGoal.setGroupGoalStatus("completed");
+//                                completedGroupGoal.setCompletedDate(dateToday);
+//                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+//                            }else {
+//                                completedGroupGoal.setGroupGoalStatus("failed");
+//                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+//                            }
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+
+                        if (selectedPeriod == "Daily"){
+                            savingPeriod[0] = new PeriodHelper().getDailyDate();
+                        }else if (selectedPeriod == "Weekly"){
+                            savingPeriod[0] = new PeriodHelper().getWeeklyDate();
+                        }else if (selectedPeriod == "Monthly"){
+                            savingPeriod[0] = new PeriodHelper().getMonthlyDate();
+                        }
+                        if (!selectedPeriod.equals("")){
+                            GroupSavings newGroupSaving = new GroupSavings();
+                            newGroupSaving.setAmount(amountSaved);
+                            newGroupSaving.setGoalName(nameOfGoal);
+                            newGroupSaving.setIncomeSource(selectedIncomeSource);
+                            newGroupSaving.setPeriod(selectedPeriod);
+                            newGroupSaving.setDateAdded(dateToday);
+                            newGroupSaving.setGroupParseId(groupParseId);
+                            newGroupSaving.setGroupGoalParseId(groupGoalParseId);
+                            if (note.trim().equals("")){
+                                newGroupSaving.setNotes("No notes");
+                            }else {
+                                newGroupSaving.setNotes(note);
+                            }
+
+                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving);
+
+                            Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
+
+                            // TODO: 3/29/18 ====> award the user 3 points
+    //                // Award user 3 point for saving
+    //                User user = new User();
+    //                user.setPoints(3);
+
+                            // start TabbedSavingActivity
+                            startTabbedSavingActivity();
+
+                        }
+                    }
+
                 }
 
-                new ParseHelper(this).saveGroupSavingsToParseDb(newGroupSaving);
+                @Override
+                public void onFailure(String error) {
 
-                Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-                // TODO: 3/29/18 ====> award the user 3 points
-//                // Award user 3 point for saving
-//                User user = new User();
-//                user.setPoints(3);
-
-                // start TabbedSavingActivity
-                startTabbedSavingActivity();
-
-            }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }

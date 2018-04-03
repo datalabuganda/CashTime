@@ -112,8 +112,24 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progress="20"/>
+                style="@android:style/Widget.ProgressBar.Horizontal" />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/imgCompleted"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/completed"
+            android:gravity="right"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/imgFailed"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/failed"
+            android:gravity="right"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

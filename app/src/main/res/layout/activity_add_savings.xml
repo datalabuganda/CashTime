@@ -115,7 +115,7 @@
                     android:id="@+id/savingNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Notes (Optionaal)"
+                    android:hint="Notes (Optional)"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 

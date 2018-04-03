@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
@@ -53,6 +54,8 @@ public class ParseHelper {
         newGroupGoal.put("goalEndDate", groupGoals.getDueDate());
         newGroupGoal.put("groupParseId", groupGoals.getGroupId());
         newGroupGoal.put("groupName", groupGoals.getGroupName());
+        newGroupGoal.put("completedDate", groupGoals.getDueDate()); // Assume user will complete data on due date
+
         newGroupGoal.saveInBackground();
 
     }
@@ -100,6 +103,23 @@ public class ParseHelper {
                     groupGoal.put("goalAmount", groupGoalToUpdate.getAmount());
                     groupGoal.put("goalText", groupGoalToUpdate.getNotes());
                     groupGoal.put("goalEndDate", groupGoalToUpdate.getDueDate());
+                    groupGoal.saveInBackground();
+
+                }else {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void updateGroupGoalCompleteStatusInParseDb(final GroupGoals completedGroupGoal){
+        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
+        groupGoalQuery.getInBackground(completedGroupGoal.getParseId(), new GetCallback<GroupGoals>() {
+            @Override
+            public void done(GroupGoals groupGoal, ParseException e) {
+                if (e == null) {
+                    groupGoal.put("goalStatus", completedGroupGoal.getGroupGoalStatus());
+                    groupGoal.put("completedDate", completedGroupGoal.getCompletedDate());
                     groupGoal.saveInBackground();
 
                 }else {
@@ -329,26 +349,25 @@ public class ParseHelper {
         });
     }
 
-//    public void getTotalMemberSavingsFromParseDb(String memberId){
-//        final int[] sum = {0};
-//        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
-//        memberSavingsParseQuery.whereEqualTo("memberParseId", memberId);
-//        memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
-//            @Override
-//            public void done(List<MemberSavings> parseMemberSavings, ParseException e) {
-//                Log.d(TAG, "parseMemberSavings: " + parseMemberSavings.size());
-//                if (e == null){
-//                    int sum = 0;
-//                    for (MemberSavings memberSaving : parseMemberSavings){
-//                        sum += Integer.valueOf(memberSaving.getString("memberSavingAmount"));
-//                    }
-//                    Log.d(TAG, "Sum is: " + sum);
-//                }else {
-//                    Log.d(TAG, "Error Occurred: " + e.getMessage());
-//                }
-//            }
-//        });
-//    }
+    public void getTotalGroupSavingsFromParseDb(GroupGoals groupGoal, final OnReturnedGroupSavingsSumListener onReturnedGroupSavingsSumListener){
+        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("ct2_GroupSavings");
+        groupSavingsParseQuery.whereEqualTo("groupParseId", groupGoal.getGroupId());
+        groupSavingsParseQuery.whereEqualTo("groupGoalParseId", groupGoal.getParseId());
+        groupSavingsParseQuery.findInBackground(new FindCallback<GroupSavings>() {
+            @Override
+            public void done(List<GroupSavings> parseGroupSavings, ParseException e) {
+                if (e == null){
+                    int groupGoalTotalSavings = 0;
+                    for (GroupSavings groupSaving : parseGroupSavings){
+                        groupGoalTotalSavings += Integer.valueOf(groupSaving.getString("groupSavingAmount"));
+                    }
+                    onReturnedGroupSavingsSumListener.onResponse(groupGoalTotalSavings);
+                }else {
+                    onReturnedGroupSavingsSumListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
 
     public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate){
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");

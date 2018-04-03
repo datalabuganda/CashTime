@@ -78,7 +78,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
 
                     groupGoals = groupGoalsList;
 
-                    mAdapter = new GroupGoalsAdapter(groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
+                    mAdapter = new GroupGoalsAdapter(getActivity(), groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
                         @Override
                         public void onGoalClick(GroupGoals groupGoals) {
                             Intent editGroupGoalIntent = new Intent(getActivity(), EditGroupGoalActivity.class);
@@ -87,6 +87,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
                             editGroupGoalIntent.putExtra("groupGoalDeadline",groupGoals.getDueDate());
                             editGroupGoalIntent.putExtra("groupGoalNotes", groupGoals.getNotes());
                             editGroupGoalIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                            editGroupGoalIntent.putExtra("groupParseId", groupGoals.getGroupId());
                             startActivity(editGroupGoalIntent);
                             getActivity().finish();
                         }

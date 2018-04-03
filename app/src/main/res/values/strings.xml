@@ -42,7 +42,7 @@
     <string name="title_activity_tabbed_income">Income</string>
 
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
-    <string name="oxfam_server_url">https://oxfamdataservice.org/parse/</string>
+    <string name="oxfam_server_url">http://oxfamdataservice.org/parse/</string>
 
     <string name="back4app_app_id">BGFV6AVElkUkTufl1iL9mSonZgtEMjHLnSY8xB2J</string>
     <string name="oxfam_app_id">462s45ze2vn6x2vrfyfenqmksngx5xbs</string>

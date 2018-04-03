@@ -329,6 +329,27 @@ public class ParseHelper {
         });
     }
 
+//    public void getTotalMemberSavingsFromParseDb(String memberId){
+//        final int[] sum = {0};
+//        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+//        memberSavingsParseQuery.whereEqualTo("memberParseId", memberId);
+//        memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
+//            @Override
+//            public void done(List<MemberSavings> parseMemberSavings, ParseException e) {
+//                Log.d(TAG, "parseMemberSavings: " + parseMemberSavings.size());
+//                if (e == null){
+//                    int sum = 0;
+//                    for (MemberSavings memberSaving : parseMemberSavings){
+//                        sum += Integer.valueOf(memberSaving.getString("memberSavingAmount"));
+//                    }
+//                    Log.d(TAG, "Sum is: " + sum);
+//                }else {
+//                    Log.d(TAG, "Error Occurred: " + e.getMessage());
+//                }
+//            }
+//        });
+//    }
+
     public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate){
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         memberSavingsParseQuery.getInBackground(memberSavingToUpdate.getParseId(), new GetCallback<MemberSavings>() {

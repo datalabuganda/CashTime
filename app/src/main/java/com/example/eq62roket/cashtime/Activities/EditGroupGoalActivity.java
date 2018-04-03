@@ -1,12 +1,10 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +37,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     private String groupGoalParseId = "";
     private String groupParseId;
     private ParseHelper mParseHelper;
+    private int mGroupGoalTotalSaving;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +67,6 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         groupGoalDueDate.setText(goalDeadline);
         groupGoalNote.setText(goalNote);
 
-        groupUpdateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateGroupGoal();
-            }
-        });
-
         GroupGoals groupGoal = new GroupGoals();
         groupGoal.setParseId(groupGoalParseId);
         groupGoal.setGroupId(groupParseId);
@@ -82,6 +74,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         new ParseHelper(EditGroupGoalActivity.this).getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
             @Override
             public void onResponse(final int groupGoalTotalSavings) {
+                mGroupGoalTotalSaving = groupGoalTotalSavings;
                 groupDeleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -151,36 +144,20 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    private void SelectImage(){
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditGroupGoalActivity.this);
-        builder.setTitle("Add Image");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        groupUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (items[i].equals("Camera")){
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-
-                }else if (items[i].equals("Gallery")){
-
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("images/*");
-                    startActivityForResult(intent.createChooser(intent, "Select file"), SELECT_FILE);
-
-                }else if (items[i].equals("Cancel")){
-                    dialogInterface.dismiss();
+            public void onClick(View view) {
+                if (mGroupGoalTotalSaving > 0){
+                    Toast.makeText(context, "You can not update this Goal...You are already Saving towards it", Toast.LENGTH_SHORT).show();
+                }else {
+                    updateGroupGoal();
                 }
             }
         });
 
-        builder.show();
+
     }
+
 
     private void updateDate() {
         groupGoalDueDate.setText(sdf.format(myCalendar.getTime()));

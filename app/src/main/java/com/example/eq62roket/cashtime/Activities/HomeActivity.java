@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity
         }else {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
 
         goalsCardView = (CardView)findViewById(R.id.transactionsCardView);

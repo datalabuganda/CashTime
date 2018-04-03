@@ -58,6 +58,9 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
         nameOfMember = intent.getStringExtra("memberName");
         memberParseId = intent.getStringExtra("memberParseId");
 
+//        new ParseHelper(this).getTotalMemberSavingsFromParseDb(memberParseId);
+
+
         goalName.setText(nameOfGoal);
         memberName.setText(nameOfMember);
 

@@ -171,20 +171,21 @@
         <activity android:name=".Activities.AddIncomeSourceActivity" />
         <activity android:name=".Activities.AddExpenditureCategoryActivity" />
         <activity android:name=".Activities.IncomeSourcesActivity" />
-        <activity android:name=".Activities.ExpenditureCategoriesActivity"></activity>
+        <activity android:name=".Activities.ExpenditureCategoriesActivity" />
         <activity
-            android:label="Your Groups"
             android:name=".Activities.GroupsActivity"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:label="Your Groups"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
-            android:label="Edit Group Member"
-            android:name=".Activities.EditGroupMemberActivity" />
+            android:name=".Activities.EditGroupMemberActivity"
+            android:label="Edit Group Member" />
         <activity
-            android:label="Edit Group"
-            android:name=".Activities.EditGroupActivity"/>
+            android:name=".Activities.EditGroupActivity"
+            android:label="Edit Group" />
         <activity
-            android:label="Select A Group"
-            android:name=".Activities.GoalsToGroupActivity"/>
+            android:name=".Activities.GoalsToGroupActivity"
+            android:label="Select A Group" />
+        <activity android:name=".Activities.IncomeToGroupActivity"></activity>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
@@ -29,6 +30,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupIncomeActivity";
     EditText incomeSource, incomeAmount,incomeNotes;
     Button groupIncomeSaveBtn, groupIncomeCancelBtn;
+    TextView mGroupName;
 
     ImageView addIncomeSourceIcon;
 
@@ -39,6 +41,9 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     String dateFormat = "dd/MM/yyyy";
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+    private String groupParseId = "";
+    private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation"};
 
@@ -51,9 +56,19 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         incomeAmount = (EditText)findViewById(R.id.groupIncomeAmount);
         incomePeriod = (TextView) findViewById(R.id.groupIncomePeriod);
         incomeNotes = (EditText)findViewById(R.id.groupIncomeNotes);
+        mGroupName = (TextView) findViewById(R.id.groupNameIncome);
 
         groupIncomeSaveBtn = (Button)findViewById(R.id.groupIncomeSaveBtn);
         groupIncomeCancelBtn = (Button)findViewById(R.id.groupIncomeCancelBtn);
+
+        Intent intent = getIntent();
+        String groupName = intent.getStringExtra("groupName");
+        groupParseId = intent.getStringExtra("parseId");
+
+        Log.d(TAG, "username " + groupName);
+        Log.d(TAG, "parseId " + groupParseId);
+
+        mGroupName.setText(groupName);
 
         addIncomeSourceIcon = (ImageView) findViewById(R.id.addIncomeSourceIcon);
 
@@ -139,7 +154,9 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             String amount = incomeAmount.getText().toString();
             String notes = incomeNotes.getText().toString();
             String period = incomePeriod.getText().toString();
-            String currentUser = ParseUser.getCurrentUser().getObjectId();
+            String groupName = mGroupName.getText().toString();
+            String currentUserId = ParseUser.getCurrentUser().getObjectId();
+
 
             Log.d(TAG, "source: " + source);
             Log.d(TAG, "amount: " + amount);
@@ -151,7 +168,9 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setAmount(amount);
             groupIncome.setPeriod(period);
             groupIncome.setNotes(notes);
-            groupIncome.setUserId(currentUser);
+            groupIncome.setGroupParseId(groupParseId);
+            groupIncome.setGroupName(groupName);
+            groupIncome.setUserId(currentUserId);
 
             Log.d(TAG, "saveGroupIncome: " + groupIncome.getAmount());
 

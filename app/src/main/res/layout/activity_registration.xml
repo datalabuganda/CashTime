@@ -143,9 +143,8 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
-
-
             <android.support.v7.widget.CardView
+                android:id="@+id/userRegister"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
                 android:layout_below="@+id/userPassword"
@@ -160,7 +159,6 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/userRegister"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Submit"

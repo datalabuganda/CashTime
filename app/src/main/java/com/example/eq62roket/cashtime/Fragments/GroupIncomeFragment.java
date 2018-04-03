@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupIncomeActivity;
+import com.example.eq62roket.cashtime.Activities.IncomeToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
@@ -47,7 +48,7 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
         fabGroupIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GroupIncomeFragment.this.getContext(),AddGroupIncomeActivity.class);
+                Intent intent = new Intent(GroupIncomeFragment.this.getContext(),IncomeToGroupActivity.class);
                 startActivity(intent);
             }
         });

@@ -21,8 +21,8 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
 
-    TextView registerView, login;
-    CardView loginView;
+    TextView register;
+    CardView login;
 
     private CashTimeSharedPreferences mCashTimeSharedPreferences;
 
@@ -37,11 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         loginUsername = (EditText)findViewById(R.id.loginUsername);
         loginPassword = (EditText)findViewById(R.id.loginPassword);
 
-        registerView = (TextView)findViewById(R.id.register);
-        login = (TextView)findViewById(R.id.login);
-        loginView = (CardView)findViewById(R.id.cardView);
+        register = (TextView)findViewById(R.id.registerUser);
+        login = (CardView)findViewById(R.id.loginUser);
 
-        loginView.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -76,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerView.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);

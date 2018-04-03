@@ -134,6 +134,7 @@ public class ParseIncomeHelper {
         newGroupIncome.put("groupIncomeAmount", groupIncome.getAmount());
         newGroupIncome.put("groupIncomeNotes", groupIncome.getNotes());
         newGroupIncome.put("groupIncomePeriod", groupIncome.getPeriod());
+        newGroupIncome.put("groupName", groupIncome.getGroupName());
         newGroupIncome.put("createdById", groupIncome.getUserId());
         newGroupIncome.saveInBackground();
 
@@ -176,6 +177,7 @@ public class ParseIncomeHelper {
                         newGroupIncome.setAmount(retrievedGroupIncome.get("groupIncomeAmount").toString());
                         newGroupIncome.setNotes(retrievedGroupIncome.get("groupIncomeNotes").toString());
                         newGroupIncome.setPeriod(retrievedGroupIncome.get("groupIncomePeriod").toString());
+                        newGroupIncome.setGroupName(retrievedGroupIncome.get("groupName").toString());
                         newGroupIncome.setParseId(retrievedGroupIncome.getObjectId());
 
                         groupIncomeList.add(newGroupIncome);

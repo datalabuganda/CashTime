@@ -59,7 +59,7 @@ public class ParseHelper {
 
     public void getGroupGoalsFromParseDb(final OnReturnedGroupGoalsListener onReturnedGroupGoalsListener){
         final List<GroupGoals> groupGoalList = new ArrayList<>();
-        ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("GroupGoals");
+        ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalsQuery.whereEqualTo("userId", currentUserId);
         groupGoalsQuery.addDescendingOrder("updatedAt");
         groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
@@ -91,7 +91,7 @@ public class ParseHelper {
     }
 
     public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
-        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("GroupGoals");
+        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToUpdate.getParseId(), new GetCallback<GroupGoals>() {
             @Override
             public void done(GroupGoals groupGoal, ParseException e) {
@@ -110,7 +110,7 @@ public class ParseHelper {
     }
 
     public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete){
-        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("GroupGoals");
+        ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToDelete.getParseId(), new GetCallback<GroupGoals>() {
             @Override
             public void done(GroupGoals groupGoal, ParseException e) {
@@ -140,7 +140,7 @@ public class ParseHelper {
 
     public void getMemberGoalsFromParseDb(final OnReturnedMemberGoalListener onReturnedMemberGoalListener){
         final List<MembersGoals> membersGoalsList = new ArrayList<>();
-        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
+        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.whereEqualTo("savingCreatorId", currentUserId);
         membersGoalsParseQuery.addDescendingOrder("updatedAt");
         membersGoalsParseQuery.findInBackground(new FindCallback<MembersGoals>() {
@@ -171,7 +171,7 @@ public class ParseHelper {
     }
 
     public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate){
-        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
+        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToUpdate.getParseId(), new GetCallback<MembersGoals>() {
             @Override
             public void done(MembersGoals membersGoal, ParseException e) {
@@ -189,7 +189,7 @@ public class ParseHelper {
     }
 
     public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete){
-        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("MemberGoals");
+        ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToDelete.getParseId(), new GetCallback<MembersGoals>() {
             @Override
             public void done(MembersGoals membersGoal, ParseException e) {
@@ -219,7 +219,7 @@ public class ParseHelper {
 
     public void getGroupSavingsFromParseDb(final OnReturnedGroupSavingsListener onReturnedGroupSavingsListener){
         final List<GroupSavings> groupSavingsList = new ArrayList<>();
-        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
+        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("ct2_GroupSavings");
         groupSavingsParseQuery.whereEqualTo("userId", currentUserId);
         groupSavingsParseQuery.addDescendingOrder("updatedAt");
         groupSavingsParseQuery.findInBackground(new FindCallback<GroupSavings>() {
@@ -249,7 +249,7 @@ public class ParseHelper {
     }
 
     public void updateGroupSavingInParseDb(final GroupSavings groupSavingToUpdate){
-        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("GroupSavings");
+        ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("ct2_GroupSavings");
         groupSavingsParseQuery.getInBackground(groupSavingToUpdate.getParseId(), new GetCallback<GroupSavings>() {
             @Override
             public void done(GroupSavings groupSaving, ParseException e) {
@@ -270,14 +270,14 @@ public class ParseHelper {
     }
 
     public void deleteGroupSavingFromParseDb(GroupSavings groupsSavingToDelete){
-        ParseQuery<GroupSavings> groupGoalQuery = ParseQuery.getQuery("GroupSavings");
+        ParseQuery<GroupSavings> groupGoalQuery = ParseQuery.getQuery("ct2_GroupSavings");
         groupGoalQuery.getInBackground(groupsSavingToDelete.getParseId(), new GetCallback<GroupSavings>() {
             @Override
             public void done(GroupSavings groupSaving, ParseException e) {
                 if (e == null) {
                     groupSaving.deleteInBackground();
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
@@ -299,7 +299,7 @@ public class ParseHelper {
 
     public void getMemberSavingsFromParseDb(final OnReturnedMemberSavingsListener onReturnedMemberSavingsListener){
         final List<MemberSavings> memberSavingsList = new ArrayList<>();
-        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         memberSavingsParseQuery.whereEqualTo("savingCreatorId", currentUserId);
         memberSavingsParseQuery.addDescendingOrder("updatedAt");
         memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
@@ -330,7 +330,7 @@ public class ParseHelper {
     }
 
     public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate){
-        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("GroupMemberSavings");
+        ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         memberSavingsParseQuery.getInBackground(memberSavingToUpdate.getParseId(), new GetCallback<MemberSavings>() {
             @Override
             public void done(MemberSavings memberSaving, ParseException e) {
@@ -350,14 +350,14 @@ public class ParseHelper {
     }
 
     public void deleteMemberSavingFromParseDb(MemberSavings memberSavingToDelete){
-        ParseQuery<MemberSavings> groupGoalQuery = ParseQuery.getQuery("GroupMemberSavings");
+        ParseQuery<MemberSavings> groupGoalQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         groupGoalQuery.getInBackground(memberSavingToDelete.getParseId(), new GetCallback<MemberSavings>() {
             @Override
             public void done(MemberSavings memberSaving, ParseException e) {
                 if (e == null) {
                     memberSaving.deleteInBackground();
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
@@ -378,7 +378,7 @@ public class ParseHelper {
 
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
         final List<Barrier> barrierList = new ArrayList<>();
-        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.whereEqualTo("userId", currentUserId);
         barrierParseQuery.addDescendingOrder("updatedAt");
         barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
@@ -400,7 +400,7 @@ public class ParseHelper {
                         onReturnedGroupBarrierListener.onResponse(barrierList);
                     }
                 } else {
-                    onReturnedGroupBarrierListener.onFailure("Error Occured");
+                    onReturnedGroupBarrierListener.onFailure("Error Occurred");
                 }
 
             }
@@ -408,7 +408,7 @@ public class ParseHelper {
     }
 
     public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate){
-        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToUpdate.getParseId(), new GetCallback<Barrier>() {
             @Override
             public void done(Barrier parseBarrier, ParseException e) {
@@ -428,14 +428,14 @@ public class ParseHelper {
     }
 
     public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete){
-        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("Barriers");
+        ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToDelete.getParseId(), new GetCallback<Barrier>() {
             @Override
             public void done(Barrier parseBarrier, ParseException e) {
                 if (e == null) {
                     parseBarrier.deleteInBackground();
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
@@ -455,7 +455,7 @@ public class ParseHelper {
 
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
-        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.whereEqualTo("userId", currentUserId);
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
@@ -476,7 +476,7 @@ public class ParseHelper {
                         onReturnedTipsListener.onResponse(tipList);
                     }
                 } else {
-                    onReturnedTipsListener.onFailure("Error Occured");
+                    onReturnedTipsListener.onFailure("Error Occurred");
                 }
 
             }
@@ -486,7 +486,7 @@ public class ParseHelper {
 
     public void getTipsOfParticularGoalFromParseDb(String nameOfGoal, final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
-        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.whereEqualTo("groupGoalName", nameOfGoal);
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
@@ -507,7 +507,7 @@ public class ParseHelper {
                         onReturnedTipsListener.onResponse(tipList);
                     }
                 } else {
-                    onReturnedTipsListener.onFailure("Error Occured");
+                    onReturnedTipsListener.onFailure("Error Occurred");
                 }
 
             }
@@ -515,7 +515,7 @@ public class ParseHelper {
     }
 
     public void updateTipsInParseDb(final Tip tipToUpdate){
-        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.getInBackground(tipToUpdate.getTipParseId(), new GetCallback<Tip>() {
             @Override
             public void done(Tip parseTip, ParseException e) {
@@ -539,7 +539,7 @@ public class ParseHelper {
                 if (e == null) {
                     parseTip.deleteInBackground();
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });

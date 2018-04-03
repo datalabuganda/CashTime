@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by etwin on 3/28/18.
  */
 
-@ParseClassName("Groups")
+@ParseClassName("ct2_Groups")
 public class Group extends ParseObject{
     private String locationOfGroup, groupLeaderId, groupCreatorId;
     private int groupMemberCount;

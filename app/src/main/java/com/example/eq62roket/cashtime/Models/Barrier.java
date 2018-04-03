@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by etwin on 3/23/18.
  */
 
-@ParseClassName("Barriers")
+@ParseClassName("ct2_Barriers")
 public class Barrier extends ParseObject{
     private String parseId, goalName, barrierName,
             barrierText, dateAdded, groupId, groupGoalParseId;

@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by etwin on 3/31/18.
  */
 
-@ParseClassName("GroupMembers")
+@ParseClassName("ct2_GroupMembers")
 public class GroupMember extends ParseObject {
     private String memberUsername, memberPhoneNumber, memberHousehold,
             memberBusiness, memberGender, memberEducationLevel,

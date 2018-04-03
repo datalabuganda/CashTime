@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.CashTimeSharedPreferences;
 import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulLoginListener;
 import com.example.eq62roket.cashtime.Models.User;
@@ -24,15 +24,17 @@ public class LoginActivity extends AppCompatActivity {
     TextView registerView, login;
     CardView loginView;
 
-    private CashTimeSharedPreferences mCashTimeSharedPreferences;
-
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mCashTimeSharedPreferences = new CashTimeSharedPreferences(LoginActivity.this);
+        mProgressDialog = new ProgressDialog(LoginActivity.this);
+        mProgressDialog.setTitle("Logging in ...");
+        mProgressDialog.setMessage("Please Wait While We Log You in");
+        mProgressDialog.setCancelable(false);
 
         loginUsername = (EditText)findViewById(R.id.loginUsername);
         loginPassword = (EditText)findViewById(R.id.loginPassword);
@@ -44,11 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         loginView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (!loginUsername.getText().toString().trim().equals("") &&
                         !loginPassword.getText().toString().trim().equals("")){
                     String username = loginUsername.getText().toString().trim();
                     String password = loginPassword.getText().toString().trim();
+
+                    mProgressDialog.show();
 
                     User registeredUser = new User();
                     registeredUser.setUserName(username);
@@ -57,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     new ParseRegistrationHelper(LoginActivity.this).loginUserToParseDb(registeredUser, new OnSuccessfulLoginListener() {
                         @Override
                         public void onResponse(String success) {
-
+                            mProgressDialog.dismiss();
                             Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(loginIntent);
                             Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
@@ -66,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String error) {
+                            mProgressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Failed to login " + error, Toast.LENGTH_SHORT).show();
                         }
                     });

@@ -40,7 +40,6 @@ public class ParseRegistrationHelper {
         parseUser.put("userLocation", newUser.getLocation());
         parseUser.put("isLeader", newUser.getIsLeader());
         parseUser.put("userPoints", newUser.getPoints());
-        parseUser.put("groupId", newUser.getGroupId());
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {

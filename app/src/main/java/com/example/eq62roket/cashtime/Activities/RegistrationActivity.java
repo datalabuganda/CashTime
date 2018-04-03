@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,17 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText username, userPhone, userHousehold, userBusiness, userGender, userEducationLevel, userNationality, userLocation, userPassword;
     TextView userRegister;
 
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        mProgressDialog = new ProgressDialog(RegistrationActivity.this);
+        mProgressDialog.setTitle("Registration in Progress ...");
+        mProgressDialog.setMessage("Please Wait While We Register You");
+        mProgressDialog.setCancelable(false);
 
         username = (EditText)findViewById(R.id.username);
         userPhone = (EditText)findViewById(R.id.userPhoneNumber);
@@ -49,6 +56,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         !userLocation.getText().toString().equals("") &&
                         !userPassword.getText().toString().equals("")){
 
+                    mProgressDialog.show();
+
                     User newUser = new User();
                     newUser.setUserName(username.getText().toString());
                     newUser.setPhoneNumber(userPhone.getText().toString());
@@ -65,6 +74,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     new ParseRegistrationHelper(RegistrationActivity.this).saveRegisteredUserToParseDb(newUser, new OnSuccessfulRegistrationListener() {
                         @Override
                         public void onResponse(String success) {
+                            mProgressDialog.dismiss();
                             Intent homeIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
                             startActivity(homeIntent);
                             Toast.makeText(RegistrationActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
@@ -72,11 +82,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String error) {
+                            mProgressDialog.dismiss();
                             Toast.makeText(RegistrationActivity.this, "Registration Failed " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
 
-
+                }else {
+                    Toast.makeText(RegistrationActivity.this, "All Fields Must Be Filled", Toast.LENGTH_SHORT).show();
                 }
             }
         });

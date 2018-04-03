@@ -49,7 +49,7 @@ public class ParseGroupHelper {
 
     public void getAllGroupsFromParseDb(final OnReturnedGroupsListener onReturnedGroupsListener){
         final List<Group> groupList = new ArrayList<>();
-        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("Groups");
+        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.whereEqualTo("groupCreatorId", currentUserId);
         groupParseQuery.addDescendingOrder("updatedAt");
         groupParseQuery.findInBackground(new FindCallback<Group>() {
@@ -78,7 +78,7 @@ public class ParseGroupHelper {
     }
 
     public void updateGroupInParseDb(final Group groupToUpdate){
-        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("Groups");
+        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
             public void done(Group parseGroupToUpdate, ParseException e) {
@@ -95,7 +95,7 @@ public class ParseGroupHelper {
     }
 
     public void deleteGroupFromParseDb(final Group groupToUpdate){
-        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("Groups");
+        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
             public void done(Group parseGroupToUpdate, ParseException e) {
@@ -109,7 +109,7 @@ public class ParseGroupHelper {
     }
 
     public void incrementGroupMemberCount(Group groupToUpdate) {
-        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("Groups");
+        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
             public void done(Group parseGroup, ParseException e) {
@@ -127,7 +127,7 @@ public class ParseGroupHelper {
         long oldGroupMemberCount = groupToUpdate.getGroupMemberCount();
         final long newGroupMemberCount = oldGroupMemberCount - 1;
         Log.d(TAG, "decrementGroupMemberCount: " + oldGroupMemberCount + " " + groupToUpdate.getGroupParseId());
-        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("Groups");
+        ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
             public void done(Group parseGroup, ParseException e) {
@@ -169,7 +169,7 @@ public class ParseGroupHelper {
 
     public void getGroupMembersFromParseDb(String groupId, final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
         final List<GroupMember> groupMemberList = new ArrayList<>();
-        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.whereEqualTo("memberCreatorId", currentUserId);
         groupMemberParseQuery.whereEqualTo("memberGroupId", groupId);
         groupMemberParseQuery.addDescendingOrder("updatedAt");
@@ -204,7 +204,7 @@ public class ParseGroupHelper {
 
     public void getAllMembersFromParseDb(final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
         final List<GroupMember> groupMemberList = new ArrayList<>();
-        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.whereEqualTo("memberCreatorId", currentUserId);
         groupMemberParseQuery.addDescendingOrder("updatedAt");
 
@@ -238,7 +238,7 @@ public class ParseGroupHelper {
 
     public void getMemberUserFromParseDb(String groupMemberParseId, final OnReturnedGroupMemberListener onReturnedGroupMemberListener){
         final List<GroupMember> groupMemberList = new ArrayList<>();
-        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.whereEqualTo("objectId", groupMemberParseId);
         groupMemberParseQuery.addDescendingOrder("updatedAt");
 
@@ -272,7 +272,7 @@ public class ParseGroupHelper {
     }
 
     public void updateGroupMemberInParseDb(final GroupMember groupMemberToUpdate){
-        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.getInBackground(groupMemberToUpdate.getMemberParseId(), new GetCallback<GroupMember>() {
             @Override
             public void done(GroupMember parseGroupMember, ParseException e) {
@@ -294,7 +294,7 @@ public class ParseGroupHelper {
     }
 
     public void deleteGroupMemberFromParseDb(GroupMember groupMemberToDelete){
-        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.getInBackground(groupMemberToDelete.getMemberParseId(), new GetCallback<GroupMember>() {
             @Override
             public void done(GroupMember groupMember, ParseException e) {
@@ -309,7 +309,7 @@ public class ParseGroupHelper {
     }
 
     public void deleteAllGroupMembersFromParseDb(String groupId){
-        ParseQuery<GroupMember> groupParseQuery = ParseQuery.getQuery("GroupMembers");
+        ParseQuery<GroupMember> groupParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupParseQuery.whereEqualTo("memberGroupId", groupId);
         groupParseQuery.findInBackground(new FindCallback<GroupMember>() {
             @Override

@@ -6,7 +6,7 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/2/18.
  */
-@ParseClassName("MemberGoals")
+@ParseClassName("ct2_MemberGoals")
 public class MembersGoals extends ParseObject {
     String parseId, memberName,memberParseId, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
 

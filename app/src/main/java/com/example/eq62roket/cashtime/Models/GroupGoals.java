@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by eq62roket on 2/28/18.
  * modified by etwin 22/3/18
  */
-@ParseClassName("GroupGoals")
+@ParseClassName("ct2_GroupGoals")
 public class GroupGoals extends ParseObject {
     String parseId, name, dueDate, amount, notes, groupGoalStatus, groupId, groupName;
 

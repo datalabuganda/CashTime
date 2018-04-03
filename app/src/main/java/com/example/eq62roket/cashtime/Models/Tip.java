@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by etwin on 3/11/18.
  */
 
-@ParseClassName("Tips")
+@ParseClassName("ct2_Tips")
 public class Tip extends ParseObject{
     private String goalName;
     private String tipParseId;

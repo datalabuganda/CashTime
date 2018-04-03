@@ -7,7 +7,7 @@ import com.parse.ParseObject;
  * Created by probuse on 3/3/18.
  * modiified by etwin
  */
-@ParseClassName("GroupMemberSavings")
+@ParseClassName("ct2_GroupMemberSavings")
 public class MemberSavings extends ParseObject{
     private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
     private String savingAmount, memberParseId;

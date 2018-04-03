@@ -1,6 +1,5 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
+import com.example.eq62roket.cashtime.Helper.ProgressDialogHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
@@ -20,17 +20,16 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText username, userPhone, userHousehold, userBusiness, userGender, userEducationLevel, userNationality, userLocation, userPassword;
     TextView userRegister;
 
-    private ProgressDialog mProgressDialog;
+    private ProgressDialogHelper mProgressDialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        mProgressDialog = new ProgressDialog(RegistrationActivity.this);
-        mProgressDialog.setTitle("Registration in Progress ...");
-        mProgressDialog.setMessage("Please Wait While We Register You");
-        mProgressDialog.setCancelable(false);
+        mProgressDialogHelper = new ProgressDialogHelper(RegistrationActivity.this);
+        mProgressDialogHelper.setProgreDialogTitle("Registration in Progress ...");
+        mProgressDialogHelper.setProgressDialogMessage("Please Wait While We Register You");
 
         username = (EditText)findViewById(R.id.username);
         userPhone = (EditText)findViewById(R.id.userPhoneNumber);
@@ -56,7 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         !userLocation.getText().toString().equals("") &&
                         !userPassword.getText().toString().equals("")){
 
-                    mProgressDialog.show();
+                    mProgressDialogHelper.showProgressDialog();
 
                     User newUser = new User();
                     newUser.setUserName(username.getText().toString());
@@ -74,7 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     new ParseRegistrationHelper(RegistrationActivity.this).saveRegisteredUserToParseDb(newUser, new OnSuccessfulRegistrationListener() {
                         @Override
                         public void onResponse(String success) {
-                            mProgressDialog.dismiss();
+                            mProgressDialogHelper.dismissProgressDialog();
                             Intent homeIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
                             startActivity(homeIntent);
                             Toast.makeText(RegistrationActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
@@ -82,7 +81,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(String error) {
-                            mProgressDialog.dismiss();
+                            mProgressDialogHelper.dismissProgressDialog();
                             Toast.makeText(RegistrationActivity.this, "Registration Failed " + error, Toast.LENGTH_SHORT).show();
                         }
                     });

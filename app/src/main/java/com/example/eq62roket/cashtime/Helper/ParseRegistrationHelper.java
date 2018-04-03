@@ -77,6 +77,7 @@ public class ParseRegistrationHelper {
 
                 }else {
                     onSuccessfulLoginListener.onFailure(e.getMessage());
+                    Log.d(TAG, "Error: " + e.getMessage());
                 }
 
             }

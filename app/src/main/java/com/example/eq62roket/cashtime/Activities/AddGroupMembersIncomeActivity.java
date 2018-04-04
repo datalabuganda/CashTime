@@ -49,7 +49,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private String groupMemberParseId = "";
     private ParseIncomeHelper mParseHelper;
 
-    public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation"};
+    public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
 
     @SuppressLint("LongLogTag")
     @Override
@@ -112,7 +112,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
-        memberIncomePeriod.setText("Select Income Period");
 
 
         date = new DatePickerDialog.OnDateSetListener() {

@@ -28,7 +28,8 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
     private String groupMemberParseId = "";
     private ParseExpenditureHelper mParseHelper;
 
-    public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others"};
+    public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others",
+            "Communication", "Entertainment", "Gift", "Clothes"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

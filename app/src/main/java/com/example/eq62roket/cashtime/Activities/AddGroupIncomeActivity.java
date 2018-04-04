@@ -45,7 +45,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     private String groupParseId = "";
     private ParseIncomeHelper mParseHelper;
 
-    public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation"};
+    public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,22 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         incomePeriod = (TextView) findViewById(R.id.groupIncomePeriod);
         incomeNotes = (EditText)findViewById(R.id.groupIncomeNotes);
         mGroupName = (TextView) findViewById(R.id.groupNameIncome);
+        addIncomeSourceIcon = (ImageView)findViewById(R.id.addIncomeSourceIcon);
+
+        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent incomeSourceIntent = new Intent(AddGroupIncomeActivity.this, AddIncomeSourceActivity.class);
+                startActivity(incomeSourceIntent);
+            }
+        });
 
         groupIncomeSaveBtn = (Button)findViewById(R.id.groupIncomeSaveBtn);
         groupIncomeCancelBtn = (Button)findViewById(R.id.groupIncomeCancelBtn);
 
         Intent intent = getIntent();
         String groupName = intent.getStringExtra("groupName");
-        groupParseId = intent.getStringExtra("parseId");
+        groupParseId = intent.getStringExtra("groupParseId");
 
         Log.d(TAG, "username " + groupName);
         Log.d(TAG, "parseId " + groupParseId);
@@ -98,7 +107,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
-        incomePeriod.setText("Select Income Period");
 
 
         date = new DatePickerDialog.OnDateSetListener() {

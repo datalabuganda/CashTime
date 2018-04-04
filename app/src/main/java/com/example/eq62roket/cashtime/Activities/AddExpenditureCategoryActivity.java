@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureCategoryHelper;
 import com.example.eq62roket.cashtime.Models.ExpenditureCategories;
 import com.example.eq62roket.cashtime.R;
+import com.parse.ParseUser;
 
 public class AddExpenditureCategoryActivity extends AppCompatActivity {
     private static String TAG = "AddExpenditureCategoryActivity";
@@ -46,9 +47,11 @@ public class AddExpenditureCategoryActivity extends AppCompatActivity {
     private void saveExpenditureCategory(){
         if ( !expenditureCategory.getText().toString().equals("")){
             String nameOfCategory = expenditureCategory.getText().toString();
+            String currentUserId = ParseUser.getCurrentUser().getObjectId();
 
             ExpenditureCategories expenditureCategories = new ExpenditureCategories();
             expenditureCategories.setName(nameOfCategory);
+            expenditureCategories.setUserId(currentUserId);
 
 
             // TODO: 3/22/18 =====> save object to db

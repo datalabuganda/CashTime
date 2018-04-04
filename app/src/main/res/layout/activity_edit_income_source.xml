@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eq62roket.cashtime.Activities.AddNewGroupActivity">
+    tools:context="com.example.eq62roket.cashtime.Activities.EditIncomeSourceActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,46 +16,31 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/groupName"
+                android:id="@+id/sourceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Group Name"
+                android:hint="Income Source"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:textSize="18dp"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Center"
-                android:textSize="18dp"
-                android:layout_margin="10dp"
-                android:id="@+id/groupCenter"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Group Location"
-                android:textSize="18dp"
-                android:layout_margin="10dp"
-                android:id="@+id/groupLocation"/>
-
             <LinearLayout
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/groupDeleteBtn"
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
+                    android:id="@+id/DeleteBtn"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:text="Delete"
-                    android:backgroundTint="@color/red"
-                    android:textColor="#fff"
                     android:layout_marginLeft="30dp"/>
                 <Button
-                    android:id="@+id/groupUpdateBtn"
+                    android:id="@+id/UpdateBtn"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:text="Update"
@@ -63,4 +48,6 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
 </RelativeLayout>

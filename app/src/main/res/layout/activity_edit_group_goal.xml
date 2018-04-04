@@ -132,7 +132,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+
                     <Button
+                        android:backgroundTint="@color/red"
+                        android:textColor="#fff"
                         android:id="@+id/groupDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"

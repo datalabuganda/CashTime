@@ -104,6 +104,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:hint="Select Period"
                         android:id="@+id/groupIncomePeriod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

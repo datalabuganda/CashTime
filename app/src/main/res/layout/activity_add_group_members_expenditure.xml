@@ -148,6 +148,8 @@
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
                     android:text="Cancel"/>
 
                 <Button

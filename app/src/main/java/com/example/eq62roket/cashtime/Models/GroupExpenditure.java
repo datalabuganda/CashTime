@@ -8,7 +8,32 @@ import com.parse.ParseObject;
  */
 @ParseClassName("GroupExpenditure")
 public class GroupExpenditure extends ParseObject {
-    String parseId, category, categoryId, dueDate, amount, notes, userId;
+    String category, categoryId, dueDate, amount, notes, groupName;
+    String groupParseId, groupExpenditureParseId, parseId, userId;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroupParseId() {
+        return groupParseId;
+    }
+
+    public void setGroupParseId(String groupParseId) {
+        this.groupParseId = groupParseId;
+    }
+
+    public String getGroupExpenditureParseId() {
+        return groupExpenditureParseId;
+    }
+
+    public void setGroupExpenditureParseId(String groupExpenditureParseId) {
+        this.groupExpenditureParseId = groupExpenditureParseId;
+    }
 
     public String getUserId() {
         return userId;

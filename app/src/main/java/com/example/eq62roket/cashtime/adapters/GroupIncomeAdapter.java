@@ -27,7 +27,7 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView source, amount, period, notes;
+        public TextView source, amount, period, notes, groupName;
 
         public MyViewHolder(View view) {
             super(view);
@@ -35,6 +35,7 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
             amount = (TextView) view.findViewById(R.id. groupIncomeAmount);
             period = (TextView) view.findViewById(R.id.groupIncomePeriod);
             notes = (TextView)view.findViewById(R.id.groupIncomeNotes);
+            groupName =(TextView)view.findViewById(R.id.groupIncomeName);
 
         }
 
@@ -43,6 +44,7 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
             amount.setText(groupIncome.getAmount());
             notes.setText(groupIncome.getNotes());
             period.setText(groupIncome.getPeriod());
+            groupName.setText(groupIncome.getGroupName());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

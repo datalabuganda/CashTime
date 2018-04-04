@@ -10,11 +10,19 @@ import com.parse.ParseObject;
 @ParseClassName("ct2_GroupMembers")
 public class GroupMember extends ParseObject {
     private String memberUsername, memberPhoneNumber, memberHousehold,
-            memberBusiness, memberGender, memberEducationLevel,
+            memberBusiness, memberGender, memberEducationLevel, groupName,
             memberNationality, memberLocation, memberParseId, memberGroupId;
     private long memberPoints;
 
     public GroupMember() {
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getMemberUsername() {

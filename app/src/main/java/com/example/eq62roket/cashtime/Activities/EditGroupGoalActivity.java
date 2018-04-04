@@ -79,38 +79,30 @@ public class EditGroupGoalActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (groupGoalTotalSavings > 0){
-                            Toast.makeText(context, "You can not delete this Goal...You are already Saving towards it", Toast.LENGTH_SHORT).show();
-                        }else {
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                            // start a dialog fragment
-                            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
-                            // Add the buttons
-                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                            GroupGoals groupGoalToDelete = new GroupGoals();
+                            groupGoalToDelete.setParseId(groupGoalParseId);
+                            mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
+                            startTabbedGoalsActivity();
+                            Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
 
-                                    GroupGoals groupGoalToDelete = new GroupGoals();
-                                    groupGoalToDelete.setParseId(groupGoalParseId);
-                                    mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
-                                    startTabbedGoalsActivity();
-                                    Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // Cancel
-                                }
-                            });
-
-                            builder.setMessage(
-                                    "Deleting Group Goal '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Group Goal");
-
-
-                            // Create the AlertDialog
-                            android.support.v7.app.AlertDialog dialog = builder.create();
-                            dialog.show();
                         }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Cancel
+                        }
+                    });
+
+                    builder.setMessage(
+                            "Deleting Group Goal '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Group Goal");
+
+
+                    android.support.v7.app.AlertDialog dialog = builder.create();
+                    dialog.show();
                     }
                 });
             }
@@ -147,11 +139,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         groupUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mGroupGoalTotalSaving > 0){
-                    Toast.makeText(context, "You can not update this Goal...You are already Saving towards it", Toast.LENGTH_SHORT).show();
-                }else {
-                    updateGroupGoal();
-                }
+                updateGroupGoal();
             }
         });
 

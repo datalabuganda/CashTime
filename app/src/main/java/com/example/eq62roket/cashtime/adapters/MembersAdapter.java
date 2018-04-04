@@ -29,19 +29,20 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView memberName, memberPhoneNumber, memberLocation, memberBusiness, memberGender,
-            memberEducationLevel, memberNationality, memberHousehold;
+        public TextView memberName, memberPhoneNumber, memberGroupName;
 
         public MyViewHolder(View view) {
             super(view);
             memberName = (TextView) view.findViewById(R.id.memberName);
             memberPhoneNumber = (TextView) view.findViewById(R.id. memberPhoneNumber);
+//            memberGroupName = (TextView) view.findViewById(R.id.memberGroupName);
 
         }
 
         public void bind(final GroupMember groupMemberUser, final OnGroupMemberClickListener onGroupMemberClickListener){
             memberName.setText(groupMemberUser.getMemberUsername());
             memberPhoneNumber.setText(groupMemberUser.getMemberPhoneNumber());
+//            memberGroupName.setText(groupMemberUser.getGroupName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -51,7 +52,6 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.MyViewHo
         }
 
     }
-
 
     public MembersAdapter(List<GroupMember> groupMemberUsers, OnGroupMemberClickListener onGroupMemberClickListener) {
         this.mGroupMemberUsers = groupMemberUsers;

@@ -55,7 +55,7 @@ public class ParseHelper {
         newGroupGoal.put("goalEndDate", groupGoals.getDueDate());
         newGroupGoal.put("groupParseId", groupGoals.getGroupId());
         newGroupGoal.put("groupName", groupGoals.getGroupName());
-        newGroupGoal.put("completedDate", groupGoals.getDueDate()); // Assume user will complete data on due date
+        newGroupGoal.put("completedDate", groupGoals.getCompletedDate()); // Assume user will complete data on due date
 
         newGroupGoal.saveInBackground();
 
@@ -65,6 +65,74 @@ public class ParseHelper {
         final List<GroupGoals> groupGoalList = new ArrayList<>();
         ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalsQuery.whereEqualTo("userId", currentUserId);
+        groupGoalsQuery.addDescendingOrder("updatedAt");
+        groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
+            @Override
+            public void done(List<GroupGoals> parseGroupGoals, ParseException e) {
+                if (e == null){
+                    for (GroupGoals retrievedGroupGoal: parseGroupGoals){
+                        GroupGoals newGroupGoal = new GroupGoals();
+                        newGroupGoal.setName(retrievedGroupGoal.get("goalName").toString());
+                        newGroupGoal.setAmount(retrievedGroupGoal.get("goalAmount").toString());
+                        newGroupGoal.setNotes(retrievedGroupGoal.get("goalText").toString());
+                        newGroupGoal.setGroupGoalStatus(retrievedGroupGoal.get("goalStatus").toString());
+                        newGroupGoal.setDueDate(retrievedGroupGoal.get("goalEndDate").toString());
+                        newGroupGoal.setGroupId(retrievedGroupGoal.get("groupParseId").toString());
+                        newGroupGoal.setGroupName(retrievedGroupGoal.get("groupName").toString());
+                        newGroupGoal.setParseId(retrievedGroupGoal.getObjectId());
+
+                        groupGoalList.add(newGroupGoal);
+                    }
+                    if (onReturnedGroupGoalsListener != null){
+                        onReturnedGroupGoalsListener.onResponse(groupGoalList);
+                    }
+                }else {
+                    onReturnedGroupGoalsListener.onFailure(e.getMessage());
+                }
+            }
+        });
+
+    }
+
+    public void getIncompleteGroupGoalsFromParseDb(final OnReturnedGroupGoalsListener onReturnedGroupGoalsListener){
+        final List<GroupGoals> groupGoalList = new ArrayList<>();
+        ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("ct2_GroupGoals");
+        groupGoalsQuery.whereEqualTo("userId", currentUserId);
+        groupGoalsQuery.whereEqualTo("goalStatus", "incomplete");
+        groupGoalsQuery.addDescendingOrder("updatedAt");
+        groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
+            @Override
+            public void done(List<GroupGoals> parseGroupGoals, ParseException e) {
+                if (e == null){
+                    for (GroupGoals retrievedGroupGoal: parseGroupGoals){
+                        GroupGoals newGroupGoal = new GroupGoals();
+                        newGroupGoal.setName(retrievedGroupGoal.get("goalName").toString());
+                        newGroupGoal.setAmount(retrievedGroupGoal.get("goalAmount").toString());
+                        newGroupGoal.setNotes(retrievedGroupGoal.get("goalText").toString());
+                        newGroupGoal.setGroupGoalStatus(retrievedGroupGoal.get("goalStatus").toString());
+                        newGroupGoal.setDueDate(retrievedGroupGoal.get("goalEndDate").toString());
+                        newGroupGoal.setGroupId(retrievedGroupGoal.get("groupParseId").toString());
+                        newGroupGoal.setGroupName(retrievedGroupGoal.get("groupName").toString());
+                        newGroupGoal.setParseId(retrievedGroupGoal.getObjectId());
+
+                        groupGoalList.add(newGroupGoal);
+                    }
+                    if (onReturnedGroupGoalsListener != null){
+                        onReturnedGroupGoalsListener.onResponse(groupGoalList);
+                    }
+                }else {
+                    onReturnedGroupGoalsListener.onFailure(e.getMessage());
+                }
+            }
+        });
+
+    }
+
+    public void getAllFailedGroupGoalsFromParseDb(final OnReturnedGroupGoalsListener onReturnedGroupGoalsListener){
+        final List<GroupGoals> groupGoalList = new ArrayList<>();
+        ParseQuery<GroupGoals> groupGoalsQuery = ParseQuery.getQuery("ct2_GroupGoals");
+        groupGoalsQuery.whereEqualTo("userId", currentUserId);
+        groupGoalsQuery.whereEqualTo("goalStatus", "failed");
         groupGoalsQuery.addDescendingOrder("updatedAt");
         groupGoalsQuery.findInBackground(new FindCallback<GroupGoals>() {
             @Override

@@ -33,7 +33,7 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.group_recycler_view);
         emptyView = (TextView) findViewById(R.id.empty_view);
 
-        new ParseHelper(this).getGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
+        new ParseHelper(this).getIncompleteGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
             @Override
             public void onResponse(List<GroupGoals> groupGoalsList) {
                 if (groupGoalsList.isEmpty()){

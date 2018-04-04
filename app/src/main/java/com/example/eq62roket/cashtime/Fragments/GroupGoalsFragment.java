@@ -27,7 +27,7 @@ import com.example.eq62roket.cashtime.Activities.GoalsToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
+import com.example.eq62roket.cashtime.adapters.AllGroupGoalsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
     List<GroupGoals> groupGoals = null;
     private RecyclerView recyclerView;
     private TextView emptyView;
-    private GroupGoalsAdapter mAdapter;
+    private AllGroupGoalsAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
 
                     groupGoals = groupGoalsList;
 
-                    mAdapter = new GroupGoalsAdapter(getActivity(), groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {
+                    mAdapter = new AllGroupGoalsAdapter(getActivity(), groupGoalsList, new AllGroupGoalsAdapter.OnGoalClickListener() {
                         @Override
                         public void onGoalClick(GroupGoals groupGoals) {
                             Intent editGroupGoalIntent = new Intent(getActivity(), EditGroupGoalActivity.class);

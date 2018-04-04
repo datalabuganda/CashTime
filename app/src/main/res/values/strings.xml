@@ -47,17 +47,17 @@
     <string name="back4app_app_id">BGFV6AVElkUkTufl1iL9mSonZgtEMjHLnSY8xB2J</string>
     <string name="oxfam_app_id">462s45ze2vn6x2vrfyfenqmksngx5xbs</string>
     <string name="back4app_client_key">eYEH5MBEUFuYhrW1qiU1CaQHqwXKZMNixjRpSWZr</string>
-    <string name="add_group_msg">No Groups Added Yet. Click + button to add a Group</string>
-    <string name="add_member_goal_saving_msg">No Member Goals Added Yet.</string>
-    <string name="add_group_goal_msg">No Group Goals Added Yet. Click + button to add a Goal</string>
-    <string name="no_member_saving_msg">No Member Savings Added Yet. Click + button to add a Saving</string>
-    <string name="add_member_goal_msg">No Member Goals Added Yet. Click + button to add a Goal</string>
-    <string name="add_group_goal_saving_msg">No Group Goals Added Yet.</string>
-    <string name="add_member_msg">No Group Members Added Yet. Click + button to add a Group Member</string>
-    <string name="no_members_msg">No Group Members Added Yet.</string>
-    <string name="no_group_barriers_msg">No Group Barriers Added Yet. Click + button to add a Barrier</string>
-    <string name="no_group_savings_msg">No Group Savings Added Yet. Click + button to add a Saving</string>
-    <string name="no_tips_msg">No Tips Added Yet. Click + button to add a Tip</string>
+    <string name="add_group_msg">No Groups Added. Click + button to add a Group</string>
+    <string name="add_member_goal_saving_msg">No Member Goals Added.</string>
+    <string name="add_group_goal_msg">No Group Goals Added. Click + button to add a Goal</string>
+    <string name="no_member_saving_msg">No Member Savings Added. Click + button to add a Saving</string>
+    <string name="add_member_goal_msg">No Member Goals Added. Click + button to add a Goal</string>
+    <string name="add_group_goal_saving_msg">No Group Goals Added.</string>
+    <string name="add_member_msg">No Group Members Added. Click + button to add a Group Member</string>
+    <string name="no_members_msg">No Group Members Added.</string>
+    <string name="no_group_barriers_msg">No Group Barriers Added. Click + button to add a Barrier</string>
+    <string name="no_group_savings_msg">No Group Savings Added. Click + button to add a Saving</string>
+    <string name="no_tips_msg">No Tips Added. Click + button to add a Tip</string>
 
 
     <!--level of education array-->

@@ -19,6 +19,7 @@ import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -154,36 +155,47 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
                     int groupGoalTotalCost = Integer.parseInt(groupGoal.getAmount());
                     int amountToSave = Integer.valueOf(amountSaved);
-                    int amountRemaining = groupGoalTotalCost - groupGoalTotalSavings;
+                    int amountRemaining = groupGoalTotalCost - (groupGoalTotalSavings + amountToSave);
 
-                    if ( amountToSave > amountRemaining ){
+                    if ( amountToSave > amountRemaining && amountRemaining != 0 ){
+                        int userRemainingAmount = 0;
+                        if (amountRemaining < 0){
+                            userRemainingAmount = groupGoalTotalCost - groupGoalTotalSavings;
+                        }else {
+                            userRemainingAmount = amountRemaining;
+                        }
                         Toast.makeText(
                                 AddGroupSavingsActivity.this,
-                                "You can not save " + amountToSave + ", you need " + amountRemaining + " to complete your goal",
+                                "You can not save " + amountToSave + ", you need " + userRemainingAmount + " to complete your goal",
                                 Toast.LENGTH_LONG).show();
                     }else {
 
                         Date today = new Date();
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                         String dateToday = simpleDateFormat.format(today);
-//                        try {
-//                            Date groupGoalDueDate = simpleDateFormat.parse(groupGoal.getDueDate());
-//                            Date todayZdate = simpleDateFormat.parse(dateToday);
-//                            GroupGoals completedGroupGoal = new GroupGoals();
-//                            completedGroupGoal.setParseId(groupGoalParseId);
-//                            completedGroupGoal.setGroupId(groupParseId);
-//
-//                            if ( amountRemaining == 0 && groupGoalDueDate.after(todayZdate) ){
-//                                completedGroupGoal.setGroupGoalStatus("completed");
-//                                completedGroupGoal.setCompletedDate(dateToday);
-//                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
-//                            }else {
-//                                completedGroupGoal.setGroupGoalStatus("failed");
-//                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
-//                            }
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            Date groupGoalDueDate = simpleDateFormat.parse(groupGoal.getDueDate());
+                            Date todayZdate = simpleDateFormat.parse(dateToday);
+                            GroupGoals completedGroupGoal = new GroupGoals();
+                            completedGroupGoal.setParseId(groupGoalParseId);
+                            completedGroupGoal.setGroupId(groupParseId);
+
+                            if ( amountRemaining == 0 && todayZdate.before(groupGoalDueDate) ){
+                                completedGroupGoal.setGroupGoalStatus("completed");
+                                completedGroupGoal.setCompletedDate(dateToday);
+                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+                            }else if (amountRemaining == 0 && todayZdate.equals(groupGoalDueDate)){
+                                completedGroupGoal.setGroupGoalStatus("completed");
+                                completedGroupGoal.setCompletedDate(dateToday);
+                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+                            }else {
+                                completedGroupGoal.setGroupGoalStatus("failed");
+                                completedGroupGoal.setCompletedDate(dateToday);
+                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                         if (selectedPeriod == "Daily"){
                             savingPeriod[0] = new PeriodHelper().getDailyDate();

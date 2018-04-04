@@ -137,27 +137,6 @@ public class ParseIncomeHelper {
         });
     }
 
-    public void getTotalMemberIncomeFromParseDb(String groupMemberParseId, final ParseIncomeHelper.OnReturnedMemberSumOfIncomeListener onReturnedMemberSumOfIncomeListener){
-        ParseQuery<MembersIncome> memberIncomeParseQuery = ParseQuery.getQuery("GroupMembersIncome");
-        memberIncomeParseQuery.whereEqualTo("groupMemberParseId", groupMemberParseId);
-        memberIncomeParseQuery.findInBackground(new FindCallback<MembersIncome>() {
-            @Override
-            public void done(List<MembersIncome> parseMemberIncome, ParseException e) {
-                if (e == null){
-                    int sum = 0;
-                    for (MembersIncome membersIncome: parseMemberIncome){
-                        sum += Integer.valueOf(membersIncome.getString("groupMembersIncomeAmount"));
-                        Log.d("Testing", "testing" + sum);
-                    }
-                    onReturnedMemberSumOfIncomeListener.onResponse(sum);
-                }else {
-                    onReturnedMemberSumOfIncomeListener.onFailure(e.getMessage());
-                }
-            }
-        });
-    }
-
-
     /******************************** Group Income **********************************/
 
     public void saveGroupIncomeToParseDb(GroupIncome groupIncome){
@@ -242,23 +221,4 @@ public class ParseIncomeHelper {
         });
     }
 
-    public void getTotalGroupIncomeFromParseDb(String groupParseId, final ParseIncomeHelper.OnReturnedGroupSumOfIncomeListener onReturnedGroupSumOfIncomeListener){
-        ParseQuery<GroupIncome> groupIncomeParseQuery = ParseQuery.getQuery("GroupIncome");
-        groupIncomeParseQuery.whereEqualTo("groupParseId", groupParseId);
-        groupIncomeParseQuery.findInBackground(new FindCallback<GroupIncome>() {
-            @Override
-            public void done(List<GroupIncome> parseGroupIncome, ParseException e) {
-                if (e == null){
-                    int sum = 0;
-                    for (GroupIncome groupIncome: parseGroupIncome){
-                        sum += Integer.valueOf(groupIncome.getString("groupIncomeAmount"));
-                        Log.d("Testing", "testing" + sum);
-                    }
-                    onReturnedGroupSumOfIncomeListener.onResponse(sum);
-                }else {
-                    onReturnedGroupSumOfIncomeListener.onFailure(e.getMessage());
-                }
-            }
-        });
-    }
 }

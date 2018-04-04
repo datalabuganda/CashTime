@@ -51,6 +51,8 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:text="Delete"
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
                     android:layout_marginLeft="30dp"/>
                 <Button
                     android:id="@+id/groupUpdateBtn"

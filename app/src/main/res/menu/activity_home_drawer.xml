@@ -16,6 +16,17 @@
             android:id="@+id/transactions"
             android:icon="@drawable/transactionsicon"
             android:title="Transactions" />
+
+        <item
+            android:id="@+id/expenditureCategories"
+            android:icon="@drawable/transactionsicon"
+            android:title="Expenditure Categories" />
+
+        <item
+            android:id="@+id/incomeSources"
+            android:icon="@drawable/transactionsicon"
+            android:title="Income Sources" />
+
         <item
             android:id="@+id/calendar"
             android:icon="@drawable/calendar"

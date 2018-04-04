@@ -129,6 +129,8 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:backgroundTint="@color/red"
+                        android:textColor="#fff"
                         android:id="@+id/btnDelete"
                         android:layout_width="170dp"
                         android:layout_height="60dp"

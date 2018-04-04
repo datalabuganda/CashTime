@@ -30,7 +30,7 @@
                     android:layout_marginRight="5dp"/>
 
                 <TextView
-                    android:id="@+id/memberNameIncome"
+                    android:id="@+id/memberIncomeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nimukama Probuse"
@@ -51,14 +51,16 @@
                     android:src="@drawable/goal"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-                <EditText
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/memberIncomeSource"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
-                    android:hint="Income Source"
+                    android:hint="Select Income Source"
                     android:layout_margin="5dp"/>
+
                 <ImageView
-                    android:id="@+id/addIncomeSource"
+                    android:id="@+id/addIncomeSourceIcon"
                     android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,37 +87,6 @@
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/calendar"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"/>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/memberIncomeDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="02/23/2018"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,16 +98,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="5dp"/>
 
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/memberIncomePeriod"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Period"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
+                <EditText
+                    android:hint="Select Period"
+                    android:id="@+id/membersIncomePeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Period"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="15dp"/>
+
             </LinearLayout>
 
 
@@ -166,6 +139,9 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
+                    android:id="@+id/memberIncomeCancelBtn"
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"

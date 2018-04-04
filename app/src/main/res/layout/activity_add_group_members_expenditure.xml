@@ -30,7 +30,7 @@
                     android:layout_marginRight="5dp"/>
 
                 <TextView
-                    android:id="@+id/memberExpenditureName"
+                    android:id="@+id/membersExpenditureName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nimukama Probuse"
@@ -51,14 +51,16 @@
                     android:src="@drawable/goal"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-                <EditText
-                    android:id="@+id/memberExpenditureSource"
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/membersExpenditureCategory"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
-                    android:hint="Category"
+                    android:hint="Select Expenditure Category"
                     android:layout_margin="5dp"/>
+
                 <ImageView
-                    android:id="@+id/addIncomeSource"
+                    android:id="@+id/addExpenditureCategoryIcon"
                     android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,7 +80,7 @@
                     android:layout_marginRight="5dp"/>
 
                 <EditText
-                    android:id="@+id/memberExpenditureAmount"
+                    android:id="@+id/membersExpenditureAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount"
@@ -103,7 +105,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/memberExpenditureDate"
+                        android:id="@+id/membersExpenditureDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="02/23/2018"
@@ -123,36 +125,12 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/calendar"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="5dp"/>
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/memberExpenditurePeriod"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Period"
-                    android:textSize="16sp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="15dp"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:src="@drawable/notes"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
                 <EditText
-                    android:id="@+id/memberExpenditureNotes"
+                    android:id="@+id/membersExpenditureNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Notes (Option)"
@@ -166,9 +144,12 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/memberExpenditureCancelButton"
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
                     android:text="Cancel"/>
 
                 <Button

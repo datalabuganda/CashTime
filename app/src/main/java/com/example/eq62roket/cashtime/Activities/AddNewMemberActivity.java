@@ -28,7 +28,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_member);
 
-        // TODO: 3/31/18 ===> make sure names are unique in a group 
+        // TODO: 3/31/18 ===> make sure names are unique in a group
 
         mParseGroupHelper = new ParseGroupHelper(AddNewMemberActivity.this);
 
@@ -85,20 +85,20 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     newGroupMember.setMemberPoints(3);
 
                     mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
-                                @Override
-                                public void onResponse(String success) {
-                                    Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                    Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onResponse(String success) {
+                            Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();
 
-                                }
+                        }
 
-                                @Override
-                                public void onFailure(String error) {
-                                    Toast.makeText(AddNewMemberActivity.this, "Member not Added " + error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(AddNewMemberActivity.this, "Member not Added " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }else {
                     Toast.makeText(AddNewMemberActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }

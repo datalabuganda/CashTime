@@ -131,6 +131,8 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:backgroundTint="@color/red"
+                    android:textColor="#fff"
                     android:id="@+id/memberGoalCancelBtn"
                     android:layout_width="180dp"
                     android:layout_height="60dp"

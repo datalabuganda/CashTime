@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.parse.SERVER_URL"
             android:value="@string/oxfam_server_url" />
@@ -70,17 +71,17 @@
             android:name=".Activities.AddGroupSavingsActivity"
             android:label="Add Group Saving" />
         <activity
-            android:label="Add A New Tip"
             android:name=".Activities.AddTipsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Add A New Tip"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
         <activity android:name=".Activities.CalendarActivity" />
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:parentActivityName=".Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.TabbedTransactionsActivity"
             android:label="@string/title_activity_tabbed_transactions"
@@ -88,8 +89,8 @@
         <activity
             android:name=".Activities.TabbedAnalysisActivity"
             android:label="Analysis"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:parentActivityName=".Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.IncomeActivity" />
         <activity android:name=".Activities.ExpenditureActivity" />
         <activity android:name=".Activities.EditProfileActivity" />
@@ -114,66 +115,81 @@
         <activity
             android:name=".Activities.TabbedBarriersTipsActivity"
             android:label="Barriers And Tips"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:parentActivityName=".Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.GoalTipsActivity"
             android:label="Goal Tips"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.EditTipActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:label="Select A Goal To Add Tip"
-            android:name=".Activities.TipsToGroupGoalsActivity" />
+            android:name=".Activities.TipsToGroupGoalsActivity"
+            android:label="Select A Goal To Add Tip" />
         <activity
-            android:label="Select A Goal To Add A Barrier"
-            android:name=".Activities.BarrierToGroupGoalsActivity" />
-
+            android:name=".Activities.BarrierToGroupGoalsActivity"
+            android:label="Select A Goal To Add A Barrier" />
         <activity
-            android:label="Add A New Barrier"
             android:name=".Activities.AddBarrierActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Add A New Barrier"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:label="Edit Barrier"
             android:name=".Activities.EditBarrierActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="Edit Barrier"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.AddGroupExpenditureActivity" />
-        <activity android:name=".Activities.GroupMembersListIncomeActivity" />
+        <activity android:name=".Activities.GroupMemberIncomeTransactionsActivity" />
         <activity android:name=".Activities.AddGroupMembersIncomeActivity" />
         <activity
             android:name=".Activities.TabbedExpenditureActivity"
             android:label="@string/title_activity_tabbed_expenditure"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:parentActivityName=".Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.TabbedIncomeActivity"
             android:label="@string/title_activity_tabbed_income"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:parentActivityName=".Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.AddGroupMembersExpendituresActivity" />
         <activity android:name=".Activities.AddGroupIncomeActivity" />
         <activity android:name=".Activities.GroupExpendituresAnalysisActivity" />
         <activity android:name=".Activities.GroupIncomeAnalysisActivity" />
         <activity android:name=".Activities.MembersExpenditureAnalysisActivity" />
-        <activity android:name=".Activities.MembersIncomeAnalysisActivity"></activity>
+        <activity android:name=".Activities.MembersIncomeAnalysisActivity" />
         <activity
-            android:label="Select A Group Member"
-            android:name=".Activities.MemberGoalSelectMemberActivity"></activity>
+            android:name=".Activities.MemberGoalSelectMemberActivity"
+            android:label="Select A Group Member" />
+        <activity android:name=".Activities.EditGroupExpenditureActivity" />
+        <activity android:name=".Activities.EditGroupMemberIncomeActivity" />
+        <activity android:name=".Activities.GroupMembersExpenditureListActivity" />
+        <activity android:name=".Activities.GroupMembersExpenditureActivity" />
+        <activity android:name=".Activities.GroupMembersIncomeListActivity" />
+        <activity android:name=".Activities.EditGroupIncomeActivity" />
+        <activity android:name=".Activities.EditGroupMemberExpenditureActivity" />
+        <activity android:name=".Activities.AddIncomeSourceActivity" />
+        <activity android:name=".Activities.AddExpenditureCategoryActivity" />
+        <activity android:name=".Activities.IncomeSourcesActivity" />
+        <activity android:name=".Activities.ExpenditureCategoriesActivity" />
         <activity
-            android:label="Your Groups"
             android:name=".Activities.GroupsActivity"
-            android:parentActivityName=".Activities.HomeActivity"/>
+            android:label="Your Groups"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
-            android:label="Edit Group Member"
-            android:name=".Activities.EditGroupMemberActivity" />
+            android:name=".Activities.EditGroupMemberActivity"
+            android:label="Edit Group Member" />
         <activity
-            android:label="Edit Group"
-            android:name=".Activities.EditGroupActivity"/>
+            android:name=".Activities.EditGroupActivity"
+            android:label="Edit Group" />
         <activity
-            android:label="Select A Group"
-            android:name=".Activities.GoalsToGroupActivity"/>
+            android:name=".Activities.GoalsToGroupActivity"
+            android:label="Select A Group" />
+        <activity android:name=".Activities.IncomeToGroupActivity" />
+        <activity android:name=".Activities.ExpenditureToGroupActivity" />
+        <activity android:name=".Activities.EditIncomeSourceActivity" />
+        <activity android:name=".Activities.EditExpenditureCategoryActivity" />
+        <activity android:name=".Activities.GroupAnalysisActivity" />
+        <activity android:name=".Activities.MemberAnalysisActivity"></activity>
     </application>
 
 </manifest>

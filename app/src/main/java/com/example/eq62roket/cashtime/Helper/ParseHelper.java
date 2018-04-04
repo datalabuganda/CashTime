@@ -35,6 +35,7 @@ public class ParseHelper {
         void onFailure(String error);
     }
 
+
     private static final String TAG = "ParseHelper";
     private Context mContext;
     private String currentUserId;

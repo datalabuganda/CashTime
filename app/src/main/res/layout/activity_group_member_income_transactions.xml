@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_member_list_income_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/membersText"
+        android:text="balalla"
+        android:textSize="24sp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/gmitfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add"
+        android:layout_gravity="end|bottom"
+        app:elevation="10dp"
+        app:backgroundTint="#006669"
+        android:layout_marginBottom="40dp"
+        app:borderWidth="0dp"
+        app:rippleColor="#000000"/>
+
+</FrameLayout>

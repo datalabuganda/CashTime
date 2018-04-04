@@ -32,7 +32,6 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
     private final OnGoalClickListener mOnGoalClickListener;
     private Context mContext;
 
-
     public class GroupGoalsViewHolder extends RecyclerView.ViewHolder {
         public TextView goalName, date, amount, groupName;
         ProgressBar progressBar;

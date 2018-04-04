@@ -6,13 +6,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eq62roket.cashtime.Activities.AddGroupMembersIncomeActivity;
+import com.example.eq62roket.cashtime.Activities.MemberAnalysisActivity;
 import com.example.eq62roket.cashtime.Activities.MembersExpenditureAnalysisActivity;
 import com.example.eq62roket.cashtime.Activities.MembersIncomeAnalysisActivity;
+import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
+import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -27,106 +37,56 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MembersAnalysisFragment extends Fragment {
     PieChart membersPieChart;
     BarChart membersBarChart;
     CardView miaCardView, meaCardView;
 
+    private static String TAG = "MemberAnalysisActivity";
+    private List<GroupMember> mGroupMemberUsers = null;
+    private RecyclerView mRecyclerView;
+    private MembersAdapter mMembersAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_members_analysis, container, false);
 
-        membersPieChart = (PieChart) rootView.findViewById(R.id.membersPieChart);
-        membersBarChart = (BarChart) rootView.findViewById(R.id.membersBarGraph);
+        mRecyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
 
-        miaCardView = (CardView)rootView.findViewById(R.id.miaCardView);
-        meaCardView = (CardView)rootView.findViewById(R.id.meaCardView);
-
-
-        membersPieChart.setDragDecelerationFrictionCoef(0.99f);
-
-        membersPieChart.setDrawHoleEnabled(false);
-        membersPieChart.setHoleColor(Color.WHITE);
-        membersPieChart.setDrawEntryLabels(false);
-        membersPieChart.setTransparentCircleRadius(1f);
-//        summaryPieChart.setCenterText("Expenses");
-//        summaryPieChart.setCenterTextColor(Color.RED);
-
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-
-        yValues.add(new PieEntry(31f, "Rik"));
-        yValues.add(new PieEntry(24f, "Tony"));
-        yValues.add(new PieEntry(55f, "Sytskey"));
-        yValues.add(new PieEntry(45f, "Ivan"));
-        yValues.add(new PieEntry(67f, "Patricia"));
-        yValues.add(new PieEntry(10f, "Probuse"));
-
-
-        membersPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-
-        PieDataSet dataSet = new PieDataSet(yValues, "");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-        PieData data = new PieData((dataSet));
-
-        membersPieChart.setData(data);
-
-        //Expense BarChart
-
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-        entries.add(new BarEntry(1, 20));
-        entries.add(new BarEntry(2, 34));
-        entries.add(new BarEntry(3, 22));
-        entries.add(new BarEntry(4, 55));
-        entries.add(new BarEntry(5, 14));
-
-        BarDataSet barDataSet = new BarDataSet(entries, "Amount Saved");
-
-        ArrayList<String> labels = new ArrayList<>();
-        labels.add("Otim");
-        labels.add("Rik");
-        labels.add("Ivan");
-        labels.add("Patricia");
-        labels.add("Probuse");
-
-        membersBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        BarData barData = new BarData(barDataSet);
-
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        membersBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-//        summartBarChart.getXAxis().setLabelsToSkip(0);
-        membersBarChart.setTouchEnabled(false);
-        membersBarChart.setDragEnabled(false);
-        membersBarChart.setScaleEnabled(false);
-        membersBarChart.setVisibleXRangeMaximum(1);
-        membersBarChart.setData(barData);
-
-        miaCardView.setOnClickListener(new View.OnClickListener() {
+        new ParseGroupHelper(getActivity()).getAllMembersFromParseDb(new OnReturnedGroupMemberListener() {
             @Override
-            public void onClick(View view) {
-                Intent giaIntent = new Intent(MembersAnalysisFragment.this.getActivity(), MembersIncomeAnalysisActivity.class);
-                startActivity(giaIntent);
+            public void onResponse(List<GroupMember> memberList) {
+
+                mMembersAdapter = new MembersAdapter(memberList, new MembersAdapter.OnGroupMemberClickListener() {
+                    @Override
+                    public void onGroupMemberClick(GroupMember groupMember) {
+                        Intent editUserIntent = new Intent(getActivity(), MemberAnalysisActivity.class);
+                        editUserIntent.putExtra("userName", groupMember.getMemberUsername());
+                        editUserIntent.putExtra("parseId", groupMember.getMemberParseId());
+
+                        startActivity(editUserIntent);
+                        getActivity().finish();
+                    }
+
+                });
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                mRecyclerView.setAdapter(mMembersAdapter);
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d(TAG, "onFailure: " + error);
             }
         });
-
-        meaCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent geaIntent = new Intent(MembersAnalysisFragment.this.getActivity(), MembersExpenditureAnalysisActivity.class);
-                startActivity(geaIntent);
-            }
-        });
-
         return rootView;
-
     }
-
 }

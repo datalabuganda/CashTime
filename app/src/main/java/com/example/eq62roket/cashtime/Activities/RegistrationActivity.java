@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private static final String TAG = "RegistrationActivity";
     EditText username, userPhone, userHousehold, userBusiness, userGender, userEducationLevel, userNationality, userLocation, userPassword;
-    TextView userRegister;
+    CardView userRegister;
 
     private ProgressDialogHelper mProgressDialogHelper;
 
@@ -40,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
         userNationality = (EditText)findViewById(R.id.userNationality);
         userLocation = (EditText)findViewById(R.id.userLocation);
         userPassword = (EditText)findViewById(R.id.userPassword);
-        userRegister = (TextView) findViewById(R.id.userRegister);
+        userRegister = (CardView) findViewById(R.id.userRegister);
 
         userRegister.setOnClickListener(new View.OnClickListener() {
             @Override

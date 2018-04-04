@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.eq62roket.cashtime.Activities.AddGroupExpenditureActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupExpenditureActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
+import com.example.eq62roket.cashtime.Activities.ExpenditureToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
@@ -49,12 +50,12 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
         fabGroupExpenditures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GroupExpendituresFragment.this.getContext(),AddGroupExpenditureActivity.class);
+                Intent intent = new Intent(GroupExpendituresFragment.this.getContext(),ExpenditureToGroupActivity.class);
                 startActivity(intent);
             }
         });
 
-        new ParseExpenditureHelper(getActivity()).getGroupeExpenditureFromParseDb(new ParseExpenditureHelper.OnReturnedGroupExpenditureListener() {
+        new ParseExpenditureHelper(getActivity()).getGroupExpenditureFromParseDb(new ParseExpenditureHelper.OnReturnedGroupExpenditureListener() {
             @Override
             public void onResponse(List<GroupExpenditure> groupExpendituresList) {
                 groupExpenditures = groupExpendituresList;

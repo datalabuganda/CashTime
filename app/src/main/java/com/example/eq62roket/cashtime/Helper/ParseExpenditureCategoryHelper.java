@@ -9,6 +9,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,13 +40,17 @@ public class ParseExpenditureCategoryHelper {
     public void saveCategoriesToParseDb(ExpenditureCategories expenditureCategories){
         ExpenditureCategories newExpenditureCategory = new ExpenditureCategories();
         newExpenditureCategory.put("categoryName", expenditureCategories.getName());
+        newExpenditureCategory.put("createdById", expenditureCategories.getUserId());
         newExpenditureCategory.saveInBackground();
 
     }
 
+
     public void getCategoriesFromParseDb(final ParseExpenditureCategoryHelper.OnReturnedCategoryListener onReturnedCategoryListener){
         ParseQuery<ExpenditureCategories> categoriesParseQuery = ParseQuery.getQuery("Categories");
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
         categoriesParseQuery.addDescendingOrder("updatedAt");
+        categoriesParseQuery.whereEqualTo("createdById", currentUserId);
         categoriesParseQuery.findInBackground(new FindCallback<ExpenditureCategories>() {
             @Override
             public void done(List<ExpenditureCategories> parseCategories, ParseException e) {

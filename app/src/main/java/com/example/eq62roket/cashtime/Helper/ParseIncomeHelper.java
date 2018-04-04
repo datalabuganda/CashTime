@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.parse.FindCallback;
@@ -28,6 +29,16 @@ public class ParseIncomeHelper {
 
     public interface OnReturnedGroupIncomeListener{
         void onResponse(List<GroupIncome> groupIncomeList);
+        void onFailure(String error);
+    }
+
+    public interface OnReturnedGroupSumOfIncomeListener{
+        void onResponse(int sumOfGroupIncome);
+        void onFailure(String error);
+    }
+
+    public interface OnReturnedMemberSumOfIncomeListener{
+        void onResponse(int sumOfMemberIncome);
         void onFailure(String error);
     }
 
@@ -98,9 +109,9 @@ public class ParseIncomeHelper {
             public void done(MembersIncome groupMemberIncome, ParseException e) {
                 if (e == null) {
                     groupMemberIncome.put("groupMemberIncomeSource", groupMemberIncomeToUpdate.getSource());
-                    groupMemberIncome.put("groupMembersIncomeAmount", groupMemberIncomeToUpdate.getAmount());
-                    groupMemberIncome.put("groupMembersIncomeNotes", groupMemberIncomeToUpdate.getNotes());
-                    groupMemberIncome.put("groupMembersIncomedueDate", groupMemberIncomeToUpdate.getDueDate());
+                    groupMemberIncome.put("groupMemberIncomeAmount", groupMemberIncomeToUpdate.getAmount());
+                    groupMemberIncome.put("groupMemberIncomeNotes", groupMemberIncomeToUpdate.getNotes());
+                    groupMemberIncome.put("groupMemberIncomedueDate", groupMemberIncomeToUpdate.getDueDate());
                     groupMemberIncome.saveInBackground();
 
                 }else {
@@ -126,6 +137,27 @@ public class ParseIncomeHelper {
         });
     }
 
+    public void getTotalMemberIncomeFromParseDb(String groupMemberParseId, final ParseIncomeHelper.OnReturnedMemberSumOfIncomeListener onReturnedMemberSumOfIncomeListener){
+        ParseQuery<MembersIncome> memberIncomeParseQuery = ParseQuery.getQuery("GroupMembersIncome");
+        memberIncomeParseQuery.whereEqualTo("groupMemberParseId", groupMemberParseId);
+        memberIncomeParseQuery.findInBackground(new FindCallback<MembersIncome>() {
+            @Override
+            public void done(List<MembersIncome> parseMemberIncome, ParseException e) {
+                if (e == null){
+                    int sum = 0;
+                    for (MembersIncome membersIncome: parseMemberIncome){
+                        sum += Integer.valueOf(membersIncome.getString("groupMembersIncomeAmount"));
+                        Log.d("Testing", "testing" + sum);
+                    }
+                    onReturnedMemberSumOfIncomeListener.onResponse(sum);
+                }else {
+                    onReturnedMemberSumOfIncomeListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
+
+
     /******************************** Group Income **********************************/
 
     public void saveGroupIncomeToParseDb(GroupIncome groupIncome){
@@ -135,6 +167,7 @@ public class ParseIncomeHelper {
         newGroupIncome.put("groupIncomeNotes", groupIncome.getNotes());
         newGroupIncome.put("groupIncomePeriod", groupIncome.getPeriod());
         newGroupIncome.put("groupName", groupIncome.getGroupName());
+        newGroupIncome.put("groupParseId", groupIncome.getGroupParseId());
         newGroupIncome.put("createdById", groupIncome.getUserId());
         newGroupIncome.saveInBackground();
 
@@ -204,6 +237,26 @@ public class ParseIncomeHelper {
                     groupIncome.deleteInBackground();
                 }else {
                     Log.d(TAG, "Error Occured: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void getTotalGroupIncomeFromParseDb(String groupParseId, final ParseIncomeHelper.OnReturnedGroupSumOfIncomeListener onReturnedGroupSumOfIncomeListener){
+        ParseQuery<GroupIncome> groupIncomeParseQuery = ParseQuery.getQuery("GroupIncome");
+        groupIncomeParseQuery.whereEqualTo("groupParseId", groupParseId);
+        groupIncomeParseQuery.findInBackground(new FindCallback<GroupIncome>() {
+            @Override
+            public void done(List<GroupIncome> parseGroupIncome, ParseException e) {
+                if (e == null){
+                    int sum = 0;
+                    for (GroupIncome groupIncome: parseGroupIncome){
+                        sum += Integer.valueOf(groupIncome.getString("groupIncomeAmount"));
+                        Log.d("Testing", "testing" + sum);
+                    }
+                    onReturnedGroupSumOfIncomeListener.onResponse(sum);
+                }else {
+                    onReturnedGroupSumOfIncomeListener.onFailure(e.getMessage());
                 }
             }
         });

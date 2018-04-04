@@ -4,10 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
+import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -19,8 +21,6 @@ import java.util.List;
  */
 
 public class ParseExpenditureHelper {
-
-    /**********************************  Group Expenditure Helper ******************************/
     public interface OnReturnedGroupExpenditureListener{
         void onResponse(List<GroupExpenditure> groupExpendituresList);
         void onFailure(String error);
@@ -30,7 +30,6 @@ public class ParseExpenditureHelper {
         void onResponse(List<GroupMemberExpenditure> groupMembersExpendituresList);
         void onFailure(String error);
     }
-
 
     private static final String TAG = "ParseExpenditureHelper";
     private final List<GroupExpenditure> groupExpenditureList = new ArrayList<>();
@@ -45,18 +44,21 @@ public class ParseExpenditureHelper {
         mContext = context;
     }
 
+    /**********************************  Group Expenditure Parse Helper *****************************/
     public void saveGroupExpenditureToParseDb(GroupExpenditure groupExpenditure){
         GroupExpenditure newGroupExpenditure = new GroupExpenditure();
         newGroupExpenditure.put("groupExpenditureCategory", groupExpenditure.getCategory());
         newGroupExpenditure.put("groupExpenditureAmount", groupExpenditure.getAmount());
         newGroupExpenditure.put("groupExpenditureNotes", groupExpenditure.getNotes());
         newGroupExpenditure.put("groupExpenditureDueDate", groupExpenditure.getDueDate());
+        newGroupExpenditure.put("groupName", groupExpenditure.getGroupName());
+        newGroupExpenditure.put("groupParseId", groupExpenditure.getGroupParseId());
         newGroupExpenditure.put("createdById", groupExpenditure.getUserId());
         newGroupExpenditure.saveInBackground();
 
     }
 
-    public void getGroupeExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupExpenditureListener onReturnedGroupExpenditureListener){
+    public void getGroupExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupExpenditureListener onReturnedGroupExpenditureListener){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("GroupExpenditure");
         String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupExpenditureQuery.addDescendingOrder("updatedAt");
@@ -71,6 +73,7 @@ public class ParseExpenditureHelper {
                         newGroupExpenditure.setAmount(retrievedGroupExpenditure.get("groupExpenditureAmount").toString());
                         newGroupExpenditure.setNotes(retrievedGroupExpenditure.get("groupExpenditureNotes").toString());
                         newGroupExpenditure.setDueDate(retrievedGroupExpenditure.get("groupExpenditureDueDate").toString());
+                        newGroupExpenditure.setGroupName(retrievedGroupExpenditure.get("groupName").toString());
                         newGroupExpenditure.setParseId(retrievedGroupExpenditure.getObjectId());
 
                         groupExpenditureList.add(newGroupExpenditure);
@@ -121,7 +124,7 @@ public class ParseExpenditureHelper {
         });
     }
 
-    /*********************************Group Members Expenditure******************************/
+    /******************************** Members Expenditure Parse Helper ******************************/
     public void saveGroupMembersExpenditureToParseDb(GroupMemberExpenditure groupMembersExpenditure){
         GroupMemberExpenditure newGroupMembersExpenditure = new GroupMemberExpenditure();
         newGroupMembersExpenditure.put("groupMembersExpenditureCategory", groupMembersExpenditure.getCategory());
@@ -200,4 +203,5 @@ public class ParseExpenditureHelper {
             }
         });
     }
+
 }

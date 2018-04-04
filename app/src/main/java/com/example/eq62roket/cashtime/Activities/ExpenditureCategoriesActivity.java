@@ -43,7 +43,7 @@ public class ExpenditureCategoriesActivity extends AppCompatActivity {
                 mAdapter = new ExpenditureCategoryAdapter(expenditureCategoriesList, new ExpenditureCategoryAdapter.OnExpenditureCategoryClickListener() {
                     @Override
                     public void onExpenditureCategoryClick(ExpenditureCategories expenditureCategories) {
-                        Intent editExpenditureCategoryIntent = new Intent(ExpenditureCategoriesActivity.this, EditGroupGoalActivity.class);
+                        Intent editExpenditureCategoryIntent = new Intent(ExpenditureCategoriesActivity.this, EditExpenditureCategoryActivity.class);
                         editExpenditureCategoryIntent.putExtra("categoryName", expenditureCategories.getName());
                         editExpenditureCategoryIntent.putExtra("categoryParseId", expenditureCategories.getParseId());
                         startActivity(editExpenditureCategoryIntent);

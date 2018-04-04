@@ -41,6 +41,8 @@ public class GroupIncomeAnalysisActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
 
 

@@ -1,13 +1,25 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
+import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Models.GroupExpenditure;
+import com.example.eq62roket.cashtime.Models.GroupGoals;
+import com.example.eq62roket.cashtime.Models.GroupMember;
+import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
+import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -40,6 +52,8 @@ public class GroupExpendituresAnalysisActivity extends AppCompatActivity impleme
     private LineChart geaLineChart;
     private PieChart geaPieChart;
     TextView totalGroupExpenditure;
+    GroupMember groupMember;
+    GroupMemberExpenditure groupMemberExpenditure;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,22 +155,6 @@ public class GroupExpendituresAnalysisActivity extends AppCompatActivity impleme
             }
         });
 
-    }
-
-    public void totalRent(){
-        ParseQuery query = ParseQuery.getQuery("GroupExpenditure");
-        query.whereEqualTo("groupExpenditureCategory", "ent");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            int rentSum;
-            @Override
-            public void done(final List<ParseObject> objects, ParseException e) {
-                for (ParseObject p: objects){
-                    rentSum += Integer.valueOf(p.getString("groupExpenditureAmount"));
-                }
-
-            }
-
-        });
     }
 
     public void totalGroupExpenditureByCategory(){

@@ -185,7 +185,12 @@
         <activity
             android:name=".Activities.GoalsToGroupActivity"
             android:label="Select A Group" />
-        <activity android:name=".Activities.IncomeToGroupActivity"></activity>
+        <activity android:name=".Activities.IncomeToGroupActivity" />
+        <activity android:name=".Activities.ExpenditureToGroupActivity" />
+        <activity android:name=".Activities.EditIncomeSourceActivity" />
+        <activity android:name=".Activities.EditExpenditureCategoryActivity" />
+        <activity android:name=".Activities.GroupAnalysisActivity" />
+        <activity android:name=".Activities.MemberAnalysisActivity"></activity>
     </application>
 
 </manifest>

@@ -33,7 +33,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
     String dateFormat = "dd/MM/yyyy";
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-    EditText groupIncomeSource, groupIncomeAmount, groupIncomeNotes, groupIncomePeriod, groupGoalPeriod;
+    EditText groupIncomeSource, groupIncomeAmount, groupIncomeNotes, groupIncomePeriod;
     Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
 
     private String groupIncomeParseId = "";
@@ -59,6 +59,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         final String source0fIncome = intent.getStringExtra("groupIncomeSource");
         String notesAboutIncome = intent.getStringExtra("groupIncomeNotes");
         String periodOfIncome= intent.getStringExtra("groupIncomePeriod");
+        String nameOfGroup = intent.getStringExtra("groupName");
         groupIncomeParseId = intent.getStringExtra("groupIncomeParseId");
 
         groupIncomeSource.setText(source0fIncome);

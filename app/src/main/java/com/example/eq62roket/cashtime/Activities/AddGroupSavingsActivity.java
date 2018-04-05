@@ -157,6 +157,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                     int amountToSave = Integer.valueOf(amountSaved);
                     int amountRemaining = groupGoalTotalCost - (groupGoalTotalSavings + amountToSave);
 
+                    // TODO: 4/5/18 ====> toast calculation buggy... ie test 60000 and 100000...10000 
                     if ( amountToSave > amountRemaining && amountRemaining != 0 ){
                         int userRemainingAmount = 0;
                         if (amountRemaining < 0){

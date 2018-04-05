@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
@@ -28,7 +29,7 @@ import java.util.Locale;
  * modified by etwin
  */
 
-public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapter.MembersGoalsViewHolder> {
+public class AllMembersGoalsAdapter extends RecyclerView.Adapter<AllMembersGoalsAdapter.MembersGoalsViewHolder> {
 
     public interface OnMemberGoalClickListener {
         void onMemberGoalClick(MembersGoals membersGoals);
@@ -40,7 +41,7 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
     private Context mContext;
     private ParseHelper mParseHelper;
 
-    public MembersGoalsAdapter(Context context, List<MembersGoals> membersGoalsList, OnMemberGoalClickListener onMemberGoalClickListener) {
+    public AllMembersGoalsAdapter(Context context, List<MembersGoals> membersGoalsList, OnMemberGoalClickListener onMemberGoalClickListener) {
         this.membersGoalsList = membersGoalsList;
         mOnMemberGoalClickListener = onMemberGoalClickListener;
         mContext = context;
@@ -73,15 +74,13 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
 
                 if (todayZDate.after(goalEndDate) &&
                         membersGoal.getMemberGoalStatus().equals("incomplete")){
-                    MembersGoals failedMembersGoal = membersGoal;
-                    failedMembersGoal.setCompleteDate(dateToday);
-                    failedMembersGoal.setMemberGoalStatus("failed");
-                    mParseHelper.updateMemberGoalCompleteStatusInParseDb(failedMembersGoal);
+                    membersGoal.setCompleteDate(dateToday);
+                    membersGoal.setMemberGoalStatus("failed");
+                    mParseHelper.updateMemberGoalCompleteStatusInParseDb(membersGoal);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             memberName.setText(membersGoal.getMemberName());
             memberGoalDueDate.setText(membersGoal.getMemberGoalDueDate());
             memberGoalAmount.setText(new CashTimeUtils().currencyFormatter(membersGoal.getMemberGoalAmount()));
@@ -104,13 +103,28 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
                         imgFailed.setVisibility(View.VISIBLE);
                     }
 
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            memberGoalClickListener.onMemberGoalClick(membersGoal);
-                        }
-                    });
-
+                    if (membersGoal.getMemberGoalStatus().equals("failed") || membersGoal.getMemberGoalStatus().equals("completed")){
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(mContext, "You can not edit or delete this goal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (memberGoalTotalSavings > 0){
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(mContext, "You are already saving towards this goal...You can not delete or edit it", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else {
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                memberGoalClickListener.onMemberGoalClick(membersGoal);
+                            }
+                        });
+                    }
 
                 }
 
@@ -123,15 +137,15 @@ public class MembersGoalsAdapter extends RecyclerView.Adapter<MembersGoalsAdapte
     }
 
     @Override
-    public MembersGoalsAdapter.MembersGoalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AllMembersGoalsAdapter.MembersGoalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.members_goals_row, parent, false);
 
-        return new MembersGoalsAdapter.MembersGoalsViewHolder(itemView);
+        return new AllMembersGoalsAdapter.MembersGoalsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MembersGoalsAdapter.MembersGoalsViewHolder holder, int position) {
+    public void onBindViewHolder(AllMembersGoalsAdapter.MembersGoalsViewHolder holder, int position) {
         holder.bind(membersGoalsList.get(position), mOnMemberGoalClickListener);
     }
 

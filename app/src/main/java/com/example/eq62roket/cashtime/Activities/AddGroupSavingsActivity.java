@@ -188,9 +188,13 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                                 completedGroupGoal.setGroupGoalStatus("completed");
                                 completedGroupGoal.setCompletedDate(dateToday);
                                 mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
-                            }else {
+                            }else if (amountRemaining != 0 && todayZdate.after(groupGoalDueDate)){
                                 completedGroupGoal.setGroupGoalStatus("failed");
                                 completedGroupGoal.setCompletedDate(dateToday);
+                                mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
+                            }else {
+                                completedGroupGoal.setGroupGoalStatus("incomplete");
+                                completedGroupGoal.setCompletedDate("");
                                 mParseHelper.updateGroupGoalCompleteStatusInParseDb(completedGroupGoal);
                             }
                         } catch (ParseException e) {

@@ -21,8 +21,10 @@ import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -123,7 +125,6 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
     }
 
     private void saveGroupGoal(){
-        // add new group goal to db
         if ( !memberGoalName.getText().toString().equals("") &&
                 !memberGoalAmount.getText().toString().equals("")){
             String nameOfGoal = memberGoalName.getText().toString();
@@ -132,24 +133,41 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             String goalNotes = memberGoalNote.getText().toString();
             String nameOfMember = memberName.getText().toString();
 
-            MembersGoals newMembersGoal = new MembersGoals();
-            newMembersGoal.setMemberGoalStatus("incomplete");
-            newMembersGoal.setMemberGoalAmount(costOfGoal);
-            newMembersGoal.setMemberGoalName(nameOfGoal);
-            newMembersGoal.setMemberGoalDueDate(goalDeadline);
-            newMembersGoal.setMemberName(nameOfMember);
-            newMembersGoal.setMemberParseId(groupMemberParseId);
-            if (goalNotes.isEmpty()){
-                newMembersGoal.setMemberGoalNotes("No Notes Added");
-            }else {
-                newMembersGoal.setMemberGoalNotes(goalNotes);
+            String dateToday = new PeriodHelper().getDateToday();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+
+            try {
+                Date todayZDate = simpleDateFormat.parse(dateToday);
+                Date goalZDeadline = simpleDateFormat.parse(goalDeadline);
+
+                MembersGoals newMembersGoal = new MembersGoals();
+                newMembersGoal.setMemberGoalAmount(costOfGoal);
+                newMembersGoal.setMemberGoalName(nameOfGoal);
+                newMembersGoal.setMemberGoalDueDate(goalDeadline);
+                newMembersGoal.setMemberName(nameOfMember);
+                newMembersGoal.setMemberParseId(groupMemberParseId);
+                if (goalNotes.isEmpty()){
+                    newMembersGoal.setMemberGoalNotes("No Notes Added");
+                }else {
+                    newMembersGoal.setMemberGoalNotes(goalNotes);
+                }
+                if (todayZDate.after(goalZDeadline)){
+                    newMembersGoal.setMemberGoalStatus("failed");
+                    newMembersGoal.setCompleteDate(dateToday);
+                }else {
+                    newMembersGoal.setMemberGoalStatus("incomplete");
+                    newMembersGoal.setCompleteDate("");
+                }
+
+                new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
+
+                startTabbedGoalsActivity();
+
+                Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
+
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-            new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
-
-            startTabbedGoalsActivity();
-
-            Toast.makeText(context, "Group Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
-
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }

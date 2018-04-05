@@ -122,6 +122,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             try {
                 Date todayZDate = simpleDateFormat.parse(dateToday);
                 Date goalZDeadline = simpleDateFormat.parse(goalDeadline);
+
                 GroupGoals groupGoals = new GroupGoals();
                 groupGoals.setAmount(costOfGoal);
                 groupGoals.setName(nameOfGoal);

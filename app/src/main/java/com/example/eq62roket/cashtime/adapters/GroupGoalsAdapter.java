@@ -62,11 +62,11 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
                 Date todayZDate = simpleDateFormat.parse(dateToday);
                 Date goalEndDate = simpleDateFormat.parse(groupGoal.getDueDate());
 
-                if (todayZDate.after(goalEndDate) && !groupGoal.getGroupGoalStatus().equals("completed")){
-                    GroupGoals failedGroupGoal = groupGoal;
-                    failedGroupGoal.setCompletedDate(dateToday);
-                    failedGroupGoal.setGroupGoalStatus("failed");
-                    mParseHelper.updateGroupGoalCompleteStatusInParseDb(failedGroupGoal);
+                if (todayZDate.after(goalEndDate) &&
+                        groupGoal.getGroupGoalStatus().equals("incomplete")){
+                    groupGoal.setCompletedDate(dateToday);
+                    groupGoal.setGroupGoalStatus("failed");
+                    mParseHelper.updateGroupGoalCompleteStatusInParseDb(groupGoal);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

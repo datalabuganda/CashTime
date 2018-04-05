@@ -70,11 +70,11 @@ public class AllGroupGoalsAdapter extends RecyclerView.Adapter<AllGroupGoalsAdap
                 Date todayZDate = simpleDateFormat.parse(dateToday);
                 Date goalEndDate = simpleDateFormat.parse(groupGoal.getDueDate());
 
-                if (todayZDate.after(goalEndDate) && !groupGoal.getGroupGoalStatus().equals("completed")){
-                    GroupGoals failedGroupGoal = groupGoal;
-                    failedGroupGoal.setCompletedDate(dateToday);
-                    failedGroupGoal.setGroupGoalStatus("failed");
-                    mParseHelper.updateGroupGoalCompleteStatusInParseDb(failedGroupGoal);
+                if (todayZDate.after(goalEndDate) &&
+                        groupGoal.getGroupGoalStatus().equals("incomplete")){
+                    groupGoal.setCompletedDate(dateToday);
+                    groupGoal.setGroupGoalStatus("failed");
+                    mParseHelper.updateGroupGoalCompleteStatusInParseDb(groupGoal);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -92,6 +92,7 @@ public class AllGroupGoalsAdapter extends RecyclerView.Adapter<AllGroupGoalsAdap
                     float goalAmount = (float)Integer.valueOf(groupGoal.getAmount());
                     float goalSaving = startAmount + groupGoalTotalSavings;
                     int progressAmount = (int)  ((goalSaving / goalAmount) * 100);
+                    progressBar.setProgress(progressAmount);
 
                     if (groupGoal.getGroupGoalStatus().equals("completed")){
                         progressBar.setVisibility(View.GONE);
@@ -100,7 +101,6 @@ public class AllGroupGoalsAdapter extends RecyclerView.Adapter<AllGroupGoalsAdap
                         progressBar.setVisibility(View.GONE);
                         imgFailed.setVisibility(View.VISIBLE);
                     }
-                    progressBar.setProgress(progressAmount);
 
                     if (groupGoal.getGroupGoalStatus().equals("failed") || groupGoal.getGroupGoalStatus().equals("completed")){
                         itemView.setOnClickListener(new View.OnClickListener() {

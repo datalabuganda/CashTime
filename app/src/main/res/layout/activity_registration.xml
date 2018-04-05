@@ -53,7 +53,7 @@
                 android:layout_marginTop="18dp"
                 android:ems="10"
                 android:hint="Household Composition"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -72,7 +72,7 @@
                 android:textColorHint="#999999" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/userGender"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:textColorHint="#999999" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/userEducationLevel"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/userNationality"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 android:layout_below="@+id/userNationality"
                 android:layout_marginTop="12dp"
                 android:ems="10"
-                android:hint="Location"
+                android:hint="Town, City, Location"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />

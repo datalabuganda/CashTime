@@ -165,15 +165,6 @@ public class HomeActivity extends AppCompatActivity
             Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
             startActivity(transactionsIntent);
 
-        }if (id == R.id.incomeSources) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, IncomeSourcesActivity.class);
-            startActivity(transactionsIntent);
-
-        }
-        if (id == R.id.expenditureCategories) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, ExpenditureCategoriesActivity.class);
-            startActivity(transactionsIntent);
-
         }else if (id == R.id.nav_send) {
 
         }

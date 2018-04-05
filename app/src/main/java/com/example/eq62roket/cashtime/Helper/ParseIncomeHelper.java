@@ -70,7 +70,7 @@ public class ParseIncomeHelper {
     }
 
     public void getGroupMemberIncomeMemberFromParseDb(final ParseIncomeHelper.OnReturnedGroupMemberIncomeListener onReturnedGroupMemberIncomeListener){
-        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("GroupMembersIncome");
+        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
         String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupMemberIncomeQuery.addDescendingOrder("updatedAt");
         groupMemberIncomeQuery.whereEqualTo("createdById", currentUser);
@@ -103,7 +103,7 @@ public class ParseIncomeHelper {
     }
 
     public void updateGroupMemberIncomeInParseDb(final MembersIncome groupMemberIncomeToUpdate){
-        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("GroupMembersIncome");
+        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
         groupMemberIncomeQuery.getInBackground(groupMemberIncomeToUpdate.getParseId(), new GetCallback<MembersIncome>() {
             @Override
             public void done(MembersIncome groupMemberIncome, ParseException e) {
@@ -123,7 +123,7 @@ public class ParseIncomeHelper {
     }
 
     public void deleteGroupMemberIncomeFromParseDb(MembersIncome groupMemberIncomeToDelete){
-        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("GroupMembersIncome");
+        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
         groupMemberIncomeQuery.getInBackground(groupMemberIncomeToDelete.getParseId(), new GetCallback<MembersIncome>() {
             @Override
             public void done(MembersIncome groupMemberIncome, ParseException e) {
@@ -154,7 +154,7 @@ public class ParseIncomeHelper {
 
 
     public void updateGroupIncomeInParseDb(final GroupIncome groupIncomeToUpdate){
-        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("GroupIncome");
+        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
         groupIncomeQuery.getInBackground(groupIncomeToUpdate.getParseId(), new GetCallback<GroupIncome>() {
             @Override
             public void done(GroupIncome groupMemberIncome, ParseException e) {
@@ -175,7 +175,7 @@ public class ParseIncomeHelper {
     }
 
     public void getGroupIncomeFromParseDb(final ParseIncomeHelper.OnReturnedGroupIncomeListener onReturnedGroupIncomeListener){
-        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("GroupIncome");
+        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
         String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupIncomeQuery.addDescendingOrder("updatedAt");
         groupIncomeQuery.whereEqualTo("createdById", currentUser);
@@ -207,7 +207,7 @@ public class ParseIncomeHelper {
     }
 
     public void deleteGroupIncomeFromParseDb(GroupIncome groupIncomeToDelete){
-        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("GroupIncome");
+        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
         groupIncomeQuery.getInBackground(groupIncomeToDelete.getParseId(), new GetCallback<GroupIncome>() {
             @Override
             public void done(GroupIncome groupIncome, ParseException e) {

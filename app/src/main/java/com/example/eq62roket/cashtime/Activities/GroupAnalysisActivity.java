@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -44,7 +46,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     private static final String TAG = "GroupAnalysisActivity";
     TextView groupName, totalGroupExpenditure, totalGroupIncome;
     PieChart pieChart;
-    BarChart barChart, expenditureBarChart;
+    BarChart incomeBarChart, expenditureBarChart;
 
     private String groupParseId;
     private String nameOfGroup;
@@ -55,22 +57,22 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_analysis);
 
-
         mParseGroupHelper = new ParseGroupHelper(GroupAnalysisActivity.this);
 
         Intent groupIntent = getIntent();
         groupParseId = groupIntent.getStringExtra("groupParseId");
-        nameOfGroup = groupIntent.getStringExtra("nameOfGroup");
+        nameOfGroup = groupIntent.getStringExtra("groupName");
 
         groupName = (TextView) findViewById(R.id.groupName);
         totalGroupExpenditure = (TextView)findViewById(R.id.totalGroupExpenditure);
         totalGroupIncome = (TextView)findViewById(R.id.totalGroupIncome);
 
         pieChart = (PieChart) findViewById(R.id.groupPieChart);
-        barChart = (BarChart) findViewById(R.id.groupBarGraph);
+        incomeBarChart = (BarChart) findViewById(R.id.groupBarGraph);
         expenditureBarChart = (BarChart) findViewById(R.id.expenditureBarGraph);
 
-        groupName.setText(groupParseId);
+        groupName.setText(nameOfGroup);
+        Log.d(TAG, "onCreate: ");
 
         String totalIncome = String.valueOf(this.totalGroupIncome());
         String totalExpenditure = String.valueOf(this.totalGroupExpenditure());
@@ -115,17 +117,23 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         labels.add("Investment");
         labels.add("Savings");
 
-        expenditureBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        /************************************** x axis **************************************/
+        XAxis xAxis = expenditureBarChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.RED);
+        incomeBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
         BarData barData = new BarData(barDataSet);
 
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        expenditureBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        expenditureBarChart.setTouchEnabled(false);
-        expenditureBarChart.setDragEnabled(false);
-        expenditureBarChart.setScaleEnabled(false);
-        expenditureBarChart.setVisibleXRangeMaximum(1);
-        expenditureBarChart.setData(barData);
+        incomeBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        incomeBarChart.setTouchEnabled(false);
+        incomeBarChart.setDragEnabled(false);
+        incomeBarChart.setScaleEnabled(false);
+        incomeBarChart.setVisibleXRangeMaximum(1);
+        incomeBarChart.setData(barData);
     }
 
     /******************************************Expenditure BarGraph*********************************/
@@ -148,11 +156,11 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         entries.add(new BarEntry(3, totalMedical));
         entries.add(new BarEntry(4, totalTransport));
         entries.add(new BarEntry(5, totalLeisure));
-        entries.add(new BarEntry(5, totalOthers));
-        entries.add(new BarEntry(3, totalCommunication));
-        entries.add(new BarEntry(4, totalEntertainment));
-        entries.add(new BarEntry(5, totalGift));
-        entries.add(new BarEntry(5, totalClothes));
+        entries.add(new BarEntry(6, totalOthers));
+        entries.add(new BarEntry(7, totalCommunication));
+        entries.add(new BarEntry(8, totalEntertainment));
+        entries.add(new BarEntry(9, totalGift));
+        entries.add(new BarEntry(10, totalClothes));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Expenditure");
         ArrayList<String> labels = new ArrayList<>();
@@ -167,17 +175,24 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         labels.add("Gift");
         labels.add("Leisure");
 
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        /************* x axis *************************/
+        XAxis xAxis = expenditureBarChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.RED);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        expenditureBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
 
         BarData barData = new BarData(barDataSet);
 
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        barChart.setTouchEnabled(false);
-        barChart.setDragEnabled(false);
-        barChart.setScaleEnabled(false);
-        barChart.setVisibleXRangeMaximum(1);
-        barChart.setData(barData);
+        expenditureBarChart.setTouchEnabled(false);
+        expenditureBarChart.setDragEnabled(false);
+        expenditureBarChart.setScaleEnabled(false);
+        expenditureBarChart.setVisibleXRangeMaximum(1);
+        expenditureBarChart.setData(barData);
     }
 
     /*********************************Income and Expenditure PieChart****************************/
@@ -216,7 +231,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     /******************************* Total Group Expenditure ************************************/
     public int totalGroupExpenditure(){
         int sumOfExpenditure = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         try {
             List<ParseObject> results = query.find();
@@ -231,7 +246,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalGroupIncome(){
         int sumOfIncome = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         try {
             List<ParseObject> results = query.find();
@@ -247,7 +262,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     /**********************************************************************************************/
     public int totalLoan(){
         int sumOfLoan = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Loan");
         try {
@@ -264,7 +279,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalSavings(){
         int sumOfSavings = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Savings");
         try {
@@ -281,7 +296,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalSalary(){
         int sumOfSalary = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Salary");
         try {
@@ -298,7 +313,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalInvestment(){
         int sumOfInvestment = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Investment");
         try {
@@ -314,7 +329,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalWage(){
         int sumOfWage = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Wage");
         try {
@@ -330,7 +345,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalDonation(){
         int sumOfDonation = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupIncome");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupIncomeSource", "Donation");
         try {
@@ -347,7 +362,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     /**********************************************************************************************/
     public int totalRent(){
         int sumOfRent = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Rent");
         try {
@@ -363,7 +378,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalFood(){
         int sumOfFood = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Food");
         try {
@@ -379,7 +394,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalMedical(){
         int sumOfInvestment = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Medical");
         try {
@@ -395,7 +410,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalTransport(){
         int sumOfWage = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Wage");
         try {
@@ -411,7 +426,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalLeisure(){
         int sumOfDonation = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Leisure");
         try {
@@ -427,7 +442,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalOthers(){
         int sumOfDonation = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Others");
         try {
@@ -443,7 +458,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalCommunication() {
         int sumOfCommunication = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Communication");
         try {
@@ -459,7 +474,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalEntertainment() {
         int sumOfEntertainment = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Entertainment");
         try {
@@ -475,7 +490,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     public int totalGift() {
         int sumOfGift = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Gift");
         try {
@@ -491,7 +506,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     }
     public int totalClothes() {
         int sumOfClothes = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("GroupExpenditure");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
         query.whereEqualTo("groupParseId", groupParseId);
         query.whereContains("groupExpenditureCategory", "Clothes");
         try {

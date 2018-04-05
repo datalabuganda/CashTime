@@ -18,6 +18,10 @@ import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
     private static String TAG = "AddGroupMembersExpendituresActivity";
     EditText membersExpenditureCategory, membersExpenditureAmount, membersExpenditureDate,
@@ -30,6 +34,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
 
     public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others",
             "Communication", "Entertainment", "Gift", "Clothes"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
         membersExpenditureSaveBtn = (Button)findViewById(R.id.memberExpenditureSaveButton);
         membersExpenditureCancelBtn = (Button)findViewById(R.id.memberExpenditureCancelButton);
 
+        Calendar ca = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        membersExpenditureDate.setText(format.format(ca.getTime()));
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");

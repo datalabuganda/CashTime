@@ -30,7 +30,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddGroupExpenditureActivity extends AppCompatActivity {
@@ -48,6 +52,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
     private String categoryId = "";
     private ParseExpenditureHelper mParseHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +62,10 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
         mGroupExpenditureDate = (EditText)findViewById(R.id.groupExpenditureDate);
         mGroupExpenditureNotes = (EditText)findViewById(R.id.groupExpenditureNotes);
         mGroupName = (TextView) findViewById(R.id.groupName);
+
+        Calendar ca = Calendar.getInstance();
+        SimpleDateFormat  format = new SimpleDateFormat("dd/MM/yyyy");
+        mGroupExpenditureDate.setText(format.format(ca.getTime()));
 
         addExpenditureCategoryIcon = (ImageView)findViewById(R.id.addExpenditureCategoryIcon);
 

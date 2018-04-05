@@ -59,7 +59,7 @@ public class ParseExpenditureHelper {
     }
 
     public void getGroupExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupExpenditureListener onReturnedGroupExpenditureListener){
-        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("GroupExpenditure");
+        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
         String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupExpenditureQuery.addDescendingOrder("updatedAt");
         groupExpenditureQuery.whereEqualTo("createdById", currentUser);
@@ -90,7 +90,7 @@ public class ParseExpenditureHelper {
     }
 
     public void updateGroupExpenditureInParseDb(final GroupExpenditure groupExpenditureToUpdate){
-        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("GroupExpenditure");
+        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
         groupExpenditureQuery.getInBackground(groupExpenditureToUpdate.getParseId(), new GetCallback<GroupExpenditure>() {
             @Override
             public void done(GroupExpenditure groupExpenditure, ParseException e) {
@@ -110,7 +110,7 @@ public class ParseExpenditureHelper {
     }
 
     public void deleteGroupExpenditureFromParseDb(GroupExpenditure groupExpenditureToDelete){
-        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("GroupExpenditure");
+        ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
         groupExpenditureQuery.getInBackground(groupExpenditureToDelete.getParseId(), new GetCallback<GroupExpenditure>() {
             @Override
             public void done(GroupExpenditure groupExpenditure, ParseException e) {
@@ -138,7 +138,7 @@ public class ParseExpenditureHelper {
     }
 
     public void getGroupMembersExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupMembersExpenditureListener onReturnedGroupMembersExpenditureListener){
-        ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("GroupMembersExpenditure");
+        ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
         String currentUser = ParseUser.getCurrentUser().getObjectId();
         groupMemberExpenditureQuery.addDescendingOrder("updatedAt");
         groupMemberExpenditureQuery.whereEqualTo("createdById", currentUser);
@@ -170,7 +170,7 @@ public class ParseExpenditureHelper {
     }
 
     public void updateGroupMembersExpenditureInParseDb(final GroupMemberExpenditure groupMembersExpenditureToUpdate){
-        ParseQuery<GroupMemberExpenditure> groupMembersExpenditureQuery = ParseQuery.getQuery("GroupMembersExpenditure");
+        ParseQuery<GroupMemberExpenditure> groupMembersExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
         groupMembersExpenditureQuery.getInBackground(groupMembersExpenditureToUpdate.getParseId(), new GetCallback<GroupMemberExpenditure>() {
             @Override
             public void done(GroupMemberExpenditure groupMemberExpenditure, ParseException e) {
@@ -190,7 +190,7 @@ public class ParseExpenditureHelper {
     }
 
     public void deleteGroupMembersExpenditureFromParseDb(GroupMemberExpenditure groupMembersExpenditureToDelete){
-        ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("GroupMembersExpenditure");
+        ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
         groupMemberExpenditureQuery.getInBackground(groupMembersExpenditureToDelete.getParseId(), new GetCallback<GroupMemberExpenditure>() {
             @Override
             public void done(GroupMemberExpenditure groupMemberExpenditure, ParseException e) {

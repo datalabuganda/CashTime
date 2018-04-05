@@ -6,7 +6,7 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/28/18.
  */
-@ParseClassName("GroupExpenditure")
+@ParseClassName("ct2_GroupExpenditure")
 public class GroupExpenditure extends ParseObject {
     String category, categoryId, dueDate, amount, notes, groupName;
     String groupParseId, groupExpenditureParseId, parseId, userId;

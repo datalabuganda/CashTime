@@ -72,7 +72,7 @@
                 android:textColorHint="#999999" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersGender"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:textColorHint="#999999" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersEducationLevel"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersNationality"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"

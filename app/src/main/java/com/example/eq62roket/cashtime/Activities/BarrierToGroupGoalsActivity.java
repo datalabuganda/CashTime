@@ -27,7 +27,7 @@ public class BarrierToGroupGoalsActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.group_recycler_view);
 
-        new ParseHelper(BarrierToGroupGoalsActivity.this).getGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
+        new ParseHelper(BarrierToGroupGoalsActivity.this).getAllFailedGroupGoalsFromParseDb(new ParseHelper.OnReturnedGroupGoalsListener() {
             @Override
             public void onResponse(List<GroupGoals> groupGoalsList) {
                 mAdapter = new GroupGoalsAdapter(BarrierToGroupGoalsActivity.this, groupGoalsList, new GroupGoalsAdapter.OnGoalClickListener() {

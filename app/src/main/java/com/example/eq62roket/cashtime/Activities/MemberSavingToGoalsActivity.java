@@ -36,7 +36,7 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
         recyclerView = (RecyclerView) findViewById(R.id.members_goals_recycler_view);
         emptyView = (TextView) findViewById(R.id.empty_view);
 
-        new ParseHelper(this).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
+        new ParseHelper(this).getIncompleteMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
             public void onResponse(List<MembersGoals> membersGoalsList) {
                 if (membersGoalsList.isEmpty()){
@@ -48,14 +48,17 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
 
                     membersGoals = membersGoalsList;
 
-                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                    mAdapter = new MembersGoalsAdapter(MemberSavingToGoalsActivity.this, membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
                         @Override
                         public void onMemberGoalClick(MembersGoals membersGoals) {
                             // show Add Member Saving Form
                             Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
                             intent.putExtra("goalName", membersGoals.getMemberGoalName());
+                            intent.putExtra("goalParseId", membersGoals.getParseId());
                             intent.putExtra("memberName",membersGoals.getMemberName());
                             intent.putExtra("memberParseId", membersGoals.getMemberParseId());
+                            intent.putExtra("memberGoalAmount", membersGoals.getMemberGoalAmount());
+                            intent.putExtra("memberGoalDueDate", membersGoals.getMemberGoalDueDate());
                             startActivity(intent);
                             finish();
                         }

@@ -18,8 +18,10 @@ import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddGroupGoalsActivity extends AppCompatActivity {
@@ -115,22 +117,40 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
             String costOfGoal = groupGoalAmount.getText().toString();
             String goalDeadline = groupGoalDueDate.getText().toString();
             String goalNotes = groupGoalNote.getText().toString();
+            String dateToday = new PeriodHelper().getDateToday();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            try {
+                Date todayZDate = simpleDateFormat.parse(dateToday);
+                Date goalZDeadline = simpleDateFormat.parse(goalDeadline);
 
-            GroupGoals groupGoals = new GroupGoals();
-            groupGoals.setGroupGoalStatus("incomplete");
-            groupGoals.setAmount(costOfGoal);
-            groupGoals.setName(nameOfGoal);
-            groupGoals.setDueDate(goalDeadline);
-            groupGoals.setNotes(goalNotes);
-            groupGoals.setGroupId(groupParseId);
-            groupGoals.setGroupName(groupName);
+                GroupGoals groupGoals = new GroupGoals();
+                groupGoals.setAmount(costOfGoal);
+                groupGoals.setName(nameOfGoal);
+                groupGoals.setDueDate(goalDeadline);
+                groupGoals.setGroupId(groupParseId);
+                groupGoals.setGroupName(groupName);
+                if (goalNotes.trim().equals("")){
+                    groupGoals.setNotes("No notes");
+                }else {
+                    groupGoals.setNotes(goalNotes);
+                }
+                if (todayZDate.after(goalZDeadline)){
+                    groupGoals.setGroupGoalStatus("failed");
+                    groupGoals.setCompletedDate(dateToday);
+                }else {
+                    groupGoals.setGroupGoalStatus("incomplete");
+                    groupGoals.setCompletedDate("");
+                }
 
-            // TODO: 3/22/18 =====> redirect to group fragment with updated group goals
-            new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
-            startTabbedGoalsActivity();
+                // TODO: 3/22/18 =====> redirect to group fragment with updated group goals
+                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
+                startTabbedGoalsActivity();
 
-            Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
 
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }

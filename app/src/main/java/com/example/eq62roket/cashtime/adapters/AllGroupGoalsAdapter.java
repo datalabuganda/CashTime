@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
@@ -27,7 +28,7 @@ import java.util.Locale;
  * Created by eq62roket on 2/28/18.
  */
 
-public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.GroupGoalsViewHolder> {
+public class AllGroupGoalsAdapter extends RecyclerView.Adapter<AllGroupGoalsAdapter.GroupGoalsViewHolder> {
 
     public interface OnGoalClickListener {
         void onGoalClick(GroupGoals groupGoals);
@@ -37,6 +38,14 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
     private final OnGoalClickListener mOnGoalClickListener;
     private Context mContext;
     private ParseHelper mParseHelper;
+
+    public AllGroupGoalsAdapter(Context context, List<GroupGoals> groupGoalsList, OnGoalClickListener listener) {
+        mContext = context;
+        this.groupGoalsList = groupGoalsList;
+        mOnGoalClickListener = listener;
+        mParseHelper = new ParseHelper(mContext);
+
+    }
 
     public class GroupGoalsViewHolder extends RecyclerView.ViewHolder {
         public TextView goalName, date, amount, groupName;
@@ -55,7 +64,6 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
         }
 
         public void bind(final GroupGoals groupGoal, final OnGoalClickListener onGoalClickListener){
-
             String dateToday = new PeriodHelper().getDateToday();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             try {
@@ -84,6 +92,7 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
                     float goalAmount = (float)Integer.valueOf(groupGoal.getAmount());
                     float goalSaving = startAmount + groupGoalTotalSavings;
                     int progressAmount = (int)  ((goalSaving / goalAmount) * 100);
+                    progressBar.setProgress(progressAmount);
 
                     if (groupGoal.getGroupGoalStatus().equals("completed")){
                         progressBar.setVisibility(View.GONE);
@@ -92,7 +101,30 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
                         progressBar.setVisibility(View.GONE);
                         imgFailed.setVisibility(View.VISIBLE);
                     }
-                    progressBar.setProgress(progressAmount);
+
+                    if (groupGoal.getGroupGoalStatus().equals("failed") || groupGoal.getGroupGoalStatus().equals("completed")){
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(mContext, "You can not edit or delete this goal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (groupGoalTotalSavings > 0){
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(mContext, "You are already saving towards this goal...You can not delete or edit it", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else {
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                onGoalClickListener.onGoalClick(groupGoal);
+                            }
+                        });
+                    }
+
                 }
 
                 @Override
@@ -101,34 +133,19 @@ public class GroupGoalsAdapter extends RecyclerView.Adapter<GroupGoalsAdapter.Gr
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onGoalClickListener.onGoalClick(groupGoal);
-                }
-            });
         }
     }
 
-
-    public GroupGoalsAdapter(Context context, List<GroupGoals> groupGoalsList, OnGoalClickListener listener) {
-        mContext = context;
-        this.groupGoalsList = groupGoalsList;
-        mOnGoalClickListener = listener;
-        mParseHelper = new ParseHelper(mContext);
-
-    }
-
     @Override
-    public GroupGoalsAdapter.GroupGoalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AllGroupGoalsAdapter.GroupGoalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.group_goals_row, parent, false);
 
-        return new GroupGoalsAdapter.GroupGoalsViewHolder(itemView);
+        return new AllGroupGoalsAdapter.GroupGoalsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(GroupGoalsAdapter.GroupGoalsViewHolder holder, int position) {
+    public void onBindViewHolder(AllGroupGoalsAdapter.GroupGoalsViewHolder holder, int position) {
         holder.bind(groupGoalsList.get(position), mOnGoalClickListener);
     }
 

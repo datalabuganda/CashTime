@@ -27,7 +27,7 @@ import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.MembersGoalsAdapter;
+import com.example.eq62roket.cashtime.adapters.AllMembersGoalsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
     private List<MembersGoals> membersGoals = null;
     private RecyclerView recyclerView;
     private TextView emptyView;
-    private MembersGoalsAdapter mAdapter;
+    private AllMembersGoalsAdapter mAdapter;
     private FloatingActionButton fabMembersGoals;
 
     @Override
@@ -64,7 +64,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
             }
         });
 
-        new ParseHelper(getActivity()).getMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
+        new ParseHelper(getActivity()).getAllMemberGoalsFromParseDb(new OnReturnedMemberGoalListener() {
             @Override
             public void onResponse(List<MembersGoals> membersGoalsList) {
                 if (membersGoalsList.isEmpty()){
@@ -76,7 +76,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
 
                     membersGoals = membersGoalsList;
 
-                    mAdapter = new MembersGoalsAdapter(membersGoalsList, new MembersGoalsAdapter.OnMemberGoalClickListener() {
+                    mAdapter = new AllMembersGoalsAdapter(getActivity(), membersGoalsList, new AllMembersGoalsAdapter.OnMemberGoalClickListener() {
                         @Override
                         public void onMemberGoalClick(MembersGoals membersGoals) {
                             Intent editMemberGoalIntent = new Intent(getActivity(), EditMemberGoalActivity.class);

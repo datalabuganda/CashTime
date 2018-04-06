@@ -8,9 +8,18 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_MemberGoals")
 public class MembersGoals extends ParseObject {
-    String parseId, memberName,memberParseId, memberGoalName, memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
+    String parseId, memberName,memberParseId, memberGoalName, completeDate,
+            memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
 
     public MembersGoals() {
+    }
+
+    public String getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(String completeDate) {
+        this.completeDate = completeDate;
     }
 
     public String getMemberParseId() {

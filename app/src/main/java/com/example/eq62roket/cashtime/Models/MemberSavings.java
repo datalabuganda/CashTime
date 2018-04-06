@@ -10,9 +10,17 @@ import com.parse.ParseObject;
 @ParseClassName("ct2_GroupMemberSavings")
 public class MemberSavings extends ParseObject{
     private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
-    private String savingAmount, memberParseId;
+    private String savingAmount, memberParseId, goalParseId;
 
     public MemberSavings() {
+    }
+
+    public String getGoalParseId() {
+        return goalParseId;
+    }
+
+    public void setGoalParseId(String goalParseId) {
+        this.goalParseId = goalParseId;
     }
 
     public String getMemberParseId() {

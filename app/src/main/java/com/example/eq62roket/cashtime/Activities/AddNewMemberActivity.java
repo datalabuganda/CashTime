@@ -22,7 +22,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
             groupMemberNationality, groupMemberEducationLevel, groupMemberGender, groupMemberHousehold;
     CardView groupMemberRegister;
 
-    private String groupParseId;
+    private String groupParseId, groupName;
     private ParseGroupHelper mParseGroupHelper;
 
     public static String[] nationalityCategories = {"Ugandan", "Kenyan", "Rwandan", "Congolese", "Tanzanian",
@@ -72,6 +72,18 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     Group groupToUpdate = new Group();
                     groupToUpdate.setGroupParseId(groupParseId);
                     mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+//                    mParseGroupHelper.getParticularGroupFromParseDb(groupParseId, new OnReturnedGroupsListener() {
+//                        @Override
+//                        public void onResponse(List<Group> groupsList) {
+//                            groupName = groupsList.get(0).getGroupName();
+//                            Log.d("GroupName", "onResponse: " + groupName);
+//                        }
+//
+//                        @Override
+//                        public void onFailure(String error) {
+//
+//                        }
+//                    });
 
                     String mUsername = groupMemberUsername.getText().toString().trim();
                     String mUserPhone = groupMemberPhone.getText().toString().trim();
@@ -92,6 +104,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     newGroupMember.setMemberNationality(mUserNationality);
                     newGroupMember.setMemberLocation(mUserLocation);
                     newGroupMember.setMemberGroupId(groupParseId);
+//                    newGroupMember.setGroupName(groupName);
                     newGroupMember.setMemberPoints(3);
 
                     mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {

@@ -55,6 +55,32 @@
                     android:textColor="#fff"
                     android:layout_gravity="center_horizontal"
                     android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/profileNationality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Nationality"
+                    android:textColor="#fff"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/profileBusiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business"
+                    android:textColor="#fff"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/profileLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="location"
+                    android:textColor="#fff"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"/>
+
 
             </LinearLayout>
             <android.support.v7.widget.CardView
@@ -63,7 +89,7 @@
                 android:layout_height="120dp"
                 android:layout_marginLeft="30sp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="270dp">
+                android:layout_marginTop="320dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -78,10 +104,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Goals"
+                            android:text="Groups"
                             android:textColor="@color/black"
                             android:textSize="18sp"/>
                         <TextView
+                            android:id="@+id/numberOfGroups"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="8"
@@ -103,6 +130,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"/>
                         <TextView
+                            android:id="@+id/numberOfGroupMembers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12"
@@ -134,121 +162,132 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="450dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="400dp">
-                    <TextView
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Group Members"
-                        android:textSize="20sp"
-                        android:textColor="#006669"/>
+                    android:orientation="vertical">
 
-                    <android.support.v7.widget.CardView
-                        android:layout_below="@id/cardViewProfile"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:text="Group Goals"
+                            android:textSize="20dp"
+                            android:textColor="@color/red"/>
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_margin="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tony Otim"
-                                android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:textColor="#006669"/>
-
-                            <TextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="120dp"
-                                android:text="0703546765"
-                                android:textSize="16sp"
-                                android:textColor="#006669"/>
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_below="@id/cardViewProfile"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:text="Group Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green"/>
 
-                            <TextView
-                                android:layout_margin="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Probuse Nimukama"
-                                android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:textColor="#006669"/>
+                        <TextView
+                            android:id="@+id/numberOfGroupGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0777563533"
-                                android:layout_marginLeft="60dp"
-                                android:textSize="16sp"
-                                android:textColor="#006669"/>
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_below="@id/cardViewProfile"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:text="Complete Group Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green"/>
 
-                            <TextView
-                                android:layout_margin="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Allan Mike"
-                                android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:textColor="#006669"/>
+                        <TextView
+                            android:id="@+id/completeGroupGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0753675423"
-                                android:textSize="16sp"
-                                android:layout_marginLeft="125dp"
-                                android:textColor="#006669"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Incomplete Group Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green"/>
 
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                        <TextView
+                            android:id="@+id/incompleteGroupGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Failed Group Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green"/>
+
+                        <TextView
+                            android:id="@+id/failedGroupGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

@@ -142,18 +142,18 @@
 
                     <Button
                         android:id="@+id/btnDelete"
-                        android:layout_width="170dp"
+                        android:layout_width="135dp"
                         android:layout_height="60dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="5dp"
                         android:text="@string/delete"
-                        android:textColor="#fff"
-                        android:backgroundTint="@color/red"/>
+                        android:textColor="@color/red"/>
 
                     <Button
                         android:id="@+id/btnUpdate"
-                        android:layout_width="170dp"
-                        android:layout_marginLeft="2dp"
+                        android:layout_width="135dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_height="60dp"
+                        android:layout_marginRight="20dp"
                         android:text="@string/update_btn"/>
                 </LinearLayout>
             </LinearLayout>

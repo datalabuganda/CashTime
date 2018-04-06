@@ -134,8 +134,7 @@
 
 
                     <Button
-                        android:backgroundTint="@color/red"
-                        android:textColor="#fff"
+                        android:textColor="@color/red"
                         android:id="@+id/groupDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"

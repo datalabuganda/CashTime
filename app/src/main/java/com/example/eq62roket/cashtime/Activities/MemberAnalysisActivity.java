@@ -2,7 +2,9 @@ package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -41,7 +43,7 @@ import java.util.List;
 
 public class MemberAnalysisActivity extends AppCompatActivity {
     private static final String TAG = "MemberAnalysisActivity";
-    TextView name, totalExpenditure, totalIncome;
+    TextView totalExpenditure, totalIncome, totalSavings;
     PieChart pieChart;
     BarChart incomeBarChart, expenditureBarChart;
 
@@ -53,9 +55,9 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_analysis);
 
-        name = (TextView)findViewById(R.id.username);
         totalExpenditure = (TextView)findViewById(R.id.totalMemberExpenditure);
         totalIncome = (TextView)findViewById(R.id.totalMemberIncome);
+        totalSavings = (TextView)findViewById(R.id.totalMemberSavings);
 
         mParseHelper = new ParseExpenditureHelper(MemberAnalysisActivity.this);
 
@@ -70,13 +72,18 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         Log.d(TAG, "username " + memberUserName);
         Log.d(TAG, "parseId " + groupMemberParseId);
 
-        name.setText(memberUserName);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(memberUserName);
+        actionBar.setHomeButtonEnabled(true);
+
 
         String totalMemberIncome = String.valueOf(this.totalMemberIncome());
         String totalMemberExpenditure = String.valueOf(this.totalMemberExpenditure());
+        String totalMemberSavings = String.valueOf(this.totalMemberSavings());
 
         totalExpenditure.setText(totalMemberExpenditure);
         totalIncome.setText(totalMemberIncome);
+        totalSavings.setText(totalMemberSavings);
 
         totalMemberExpenditure();
         totalMemberIncome();
@@ -99,9 +106,11 @@ public class MemberAnalysisActivity extends AppCompatActivity {
 
         int totalIncome = this.totalMemberIncome();
         int totalExpenditure = this.totalMemberExpenditure();
+        int totalSavings = this.totalMemberSavings();
 
         yValues.add(new PieEntry(totalIncome, "Income"));
         yValues.add(new PieEntry(totalExpenditure, "Expenditure"));
+        yValues.add(new PieEntry(totalSavings, "Savings"));
 
         pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
@@ -142,6 +151,15 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         labels.add("Investment");
         labels.add("Savings");
 
+        final XAxis xAxis = incomeBarChart.getXAxis();
+
+        xAxis.setLabelCount(entries.size());
+        xAxis.setLabelRotationAngle(30);
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setTextColor(Color.RED);
         incomeBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
         BarData barData = new BarData(barDataSet);
@@ -153,7 +171,12 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         incomeBarChart.setScaleEnabled(false);
         incomeBarChart.setVisibleXRangeMaximum(1);
         incomeBarChart.setData(barData);
-        expenditureBarChart.setNoDataText("No expenditure entered yet");
+        incomeBarChart.setNoDataText("No expenditure entered yet");
+
+        incomeBarChart.setDescription(null);    // Hide the description
+        incomeBarChart.getAxisRight().setDrawLabels(false);
+
+        incomeBarChart.getLegend().setEnabled(false);   // Hide the legend
     }
 
     /******************************************Expenditure BarGraph*********************************/
@@ -195,6 +218,16 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         labels.add("Gift");
         labels.add("Leisure");
 
+        /************************************* x axis **************************************/
+        final XAxis xAxis = expenditureBarChart.getXAxis();
+        xAxis.setCenterAxisLabels(true);
+        expenditureBarChart.getRendererXAxis().getPaintAxisLabels().setTextAlign(Paint.Align.LEFT);
+        xAxis.setLabelRotationAngle(30);
+        xAxis.setLabelCount(entries.size());
+        xAxis.setGranularity(1f);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(Color.RED);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         expenditureBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
         BarData barData = new BarData(barDataSet);
@@ -207,8 +240,14 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         expenditureBarChart.setVisibleXRangeMaximum(1);
         expenditureBarChart.setData(barData);
         expenditureBarChart.setNoDataText("No expenditure entered yet");
+
+        expenditureBarChart.setDescription(null);    // Hide the description
+        expenditureBarChart.getAxisRight().setDrawLabels(false);
+
+        expenditureBarChart.getLegend().setEnabled(false);   // Hide the legend
     }
 
+    /************************************* Total Member Expenditure *******************************/
 
     public int totalMemberExpenditure(){
         int sumOfExpenditure = 0;
@@ -225,6 +264,8 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         return sumOfExpenditure;
     }
 
+    /***************************************** Total Member Income *********************************/
+
     public int totalMemberIncome(){
         int sumOfIncome = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
@@ -238,6 +279,23 @@ public class MemberAnalysisActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return sumOfIncome;
+    }
+
+    /******************************* Total Member Savings ****************************************/
+
+    public int totalMemberSavings(){
+        int totalSavings = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupMemberSavings");
+        query.whereEqualTo("groupMemberParseId", groupMemberParseId);
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                totalSavings += Integer.parseInt(results.get(i).getString("memberSavingAmount"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return totalSavings;
     }
 
     /**********************************************************************************************/

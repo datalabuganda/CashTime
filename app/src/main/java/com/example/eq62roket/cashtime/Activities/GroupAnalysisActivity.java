@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -30,6 +33,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.FindCallback;
@@ -44,7 +48,7 @@ import java.util.List;
 
 public class GroupAnalysisActivity extends AppCompatActivity {
     private static final String TAG = "GroupAnalysisActivity";
-    TextView groupName, totalGroupExpenditure, totalGroupIncome;
+    TextView totalGroupExpenditure, totalGroupIncome, totalGroupSavings;
     PieChart pieChart;
     BarChart incomeBarChart, expenditureBarChart;
 
@@ -63,23 +67,27 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         groupParseId = groupIntent.getStringExtra("groupParseId");
         nameOfGroup = groupIntent.getStringExtra("groupName");
 
-        groupName = (TextView) findViewById(R.id.groupName);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(nameOfGroup);
+        actionBar.setHomeButtonEnabled(true);
+
         totalGroupExpenditure = (TextView)findViewById(R.id.totalGroupExpenditure);
         totalGroupIncome = (TextView)findViewById(R.id.totalGroupIncome);
+        totalGroupSavings = (TextView)findViewById(R.id.totalGroupSavings);
 
         pieChart = (PieChart) findViewById(R.id.groupPieChart);
         incomeBarChart = (BarChart) findViewById(R.id.groupBarGraph);
         expenditureBarChart = (BarChart) findViewById(R.id.expenditureBarGraph);
 
-        groupName.setText(nameOfGroup);
         Log.d(TAG, "onCreate: ");
 
         String totalIncome = String.valueOf(this.totalGroupIncome());
         String totalExpenditure = String.valueOf(this.totalGroupExpenditure());
-
+        String totalSavings = String.valueOf(this.totalGroupSavings());
 
         totalGroupExpenditure.setText(totalExpenditure);
         totalGroupIncome.setText(totalIncome);
+        totalGroupSavings.setText(totalSavings);
 
         totalGroupExpenditure();
         totalGroupIncome();
@@ -109,7 +117,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         entries.add(new BarEntry(6, totalSavings));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Income");
-        ArrayList<String> labels = new ArrayList<>();
+        final ArrayList<String> labels = new ArrayList<>();
         labels.add("Loan");
         labels.add("Salary");
         labels.add("Donation");
@@ -117,13 +125,21 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         labels.add("Investment");
         labels.add("Savings");
 
-        /************************************** x axis **************************************/
-        XAxis xAxis = expenditureBarChart.getXAxis();
+
+
+        /***************** x axis label design ********************/
+        final XAxis xAxis = incomeBarChart.getXAxis();
+        xAxis.setLabelCount(entries.size());
+        xAxis.setXOffset(40000);
+        xAxis.setLabelRotationAngle(30);
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(true);
         xAxis.setDrawGridLines(false);
+        xAxis.setCenterAxisLabels(true);
         xAxis.setTextColor(Color.RED);
         incomeBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        incomeBarChart.getDescription().setEnabled(false);
 
         BarData barData = new BarData(barDataSet);
 
@@ -131,9 +147,14 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         incomeBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         incomeBarChart.setTouchEnabled(false);
         incomeBarChart.setDragEnabled(false);
-        incomeBarChart.setScaleEnabled(false);
+        incomeBarChart.setScaleEnabled(true);
         incomeBarChart.setVisibleXRangeMaximum(1);
         incomeBarChart.setData(barData);
+
+        incomeBarChart.setDescription(null);    // Hide the description
+        incomeBarChart.getAxisRight().setDrawLabels(false);
+
+        incomeBarChart.getLegend().setEnabled(false);   // Hide the legend
     }
 
     /******************************************Expenditure BarGraph*********************************/
@@ -163,7 +184,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         entries.add(new BarEntry(10, totalClothes));
 
         BarDataSet barDataSet = new BarDataSet(entries, "Expenditure");
-        ArrayList<String> labels = new ArrayList<>();
+        final ArrayList<String> labels = new ArrayList<>();
         labels.add("Rent");
         labels.add("Food");
         labels.add("Medical");
@@ -175,10 +196,13 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         labels.add("Gift");
         labels.add("Leisure");
 
-        /************* x axis *************************/
-        XAxis xAxis = expenditureBarChart.getXAxis();
-        xAxis.setGranularity(1f);
+        /************************************* x axis **************************************/
+        final XAxis xAxis = expenditureBarChart.getXAxis();
         xAxis.setCenterAxisLabels(true);
+        expenditureBarChart.getRendererXAxis().getPaintAxisLabels().setTextAlign(Paint.Align.LEFT);
+        xAxis.setLabelRotationAngle(30);
+        xAxis.setLabelCount(entries.size());
+        xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setTextColor(Color.RED);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -191,8 +215,13 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         expenditureBarChart.setTouchEnabled(false);
         expenditureBarChart.setDragEnabled(false);
         expenditureBarChart.setScaleEnabled(false);
-        expenditureBarChart.setVisibleXRangeMaximum(1);
         expenditureBarChart.setData(barData);
+
+
+        expenditureBarChart.setDescription(null);    // Hide the description
+        expenditureBarChart.getAxisRight().setDrawLabels(false);
+
+        expenditureBarChart.getLegend().setEnabled(false);   // Hide the legend
     }
 
     /*********************************Income and Expenditure PieChart****************************/
@@ -204,14 +233,19 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         pieChart.setHoleColor(Color.WHITE);
         pieChart.setDrawEntryLabels(false);
         pieChart.setTransparentCircleRadius(1f);
+        pieChart.setDescription(null);    // Hide the description
+
+        pieChart.getLegend().setEnabled(false);   // Hide the legend
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
 
         int totalIncome = this.totalGroupIncome();
         int totalExpenditure = this.totalGroupExpenditure();
+        int totalSavings = this.totalGroupSavings();
 
         yValues.add(new PieEntry(totalIncome, "Income"));
         yValues.add(new PieEntry(totalExpenditure, "Expenditure"));
+        yValues.add(new PieEntry(totalSavings, "Savings"));
 
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
 
@@ -226,6 +260,22 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
         pieChart.setData(data);
 
+    }
+    /******************************* Total Group Savings ****************************************/
+
+    public int totalGroupSavings(){
+        int totalSavings = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.whereEqualTo("groupParseId", groupParseId);
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                totalSavings += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return totalSavings;
     }
 
     /******************************* Total Group Expenditure ************************************/
@@ -244,6 +294,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         return sumOfExpenditure;
     }
 
+    /********************************** Total Group Income ****************************************/
     public int totalGroupIncome(){
         int sumOfIncome = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
@@ -259,7 +310,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         return sumOfIncome;
     }
 
-    /**********************************************************************************************/
+    /****************************** Total Income by Source ****************************************/
     public int totalLoan(){
         int sumOfLoan = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
@@ -359,7 +410,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         return sumOfDonation;
     }
 
-    /**********************************************************************************************/
+    /***************************** Total Expenditure by Category ***********************************/
     public int totalRent(){
         int sumOfRent = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");

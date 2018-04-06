@@ -161,11 +161,11 @@ public class HomeActivity extends AppCompatActivity
             Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settingsIntent);
 
-        } if (id == R.id.transactions) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
-            startActivity(transactionsIntent);
+        }else if (id == R.id.logout) {
+            ParseUser.logOut();
 
-        }else if (id == R.id.nav_send) {
+            Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
 
         }
 

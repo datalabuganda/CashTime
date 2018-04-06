@@ -36,8 +36,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
     Button memberIncomeSaveButton, memberIncomeCancelButton;
 
-    ImageView addIncomeSourceIcon;
-
     TextView memberIncomePeriod;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
@@ -63,16 +61,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
         memberIncomePeriod = (TextView) findViewById(R.id.membersIncomePeriod);
         memberIncomeNotes = (EditText)findViewById(R.id.memberIncomeNotes);
         membersIncomeAmount = (EditText)findViewById(R.id.memberIncomeAmount);
-
-        addIncomeSourceIcon = (ImageView) findViewById(R.id.addIncomeSourceIcon);
-
-        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent incomeSourceIntent = new Intent(AddGroupMembersIncomeActivity.this, AddIncomeSourceActivity.class);
-                startActivity(incomeSourceIntent);
-            }
-        });
 
         memberIncomeSaveButton = (Button)findViewById(R.id.memberIncomeSaveButton);
         memberIncomeCancelButton = (Button) findViewById(R.id.memberIncomeCancelBtn);

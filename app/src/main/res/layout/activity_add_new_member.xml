@@ -84,7 +84,7 @@
                 android:hint="Gender"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
@@ -99,7 +99,7 @@
                 android:hint="Education Level"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersNationality"
@@ -113,7 +113,7 @@
                 android:hint="Nationality"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
             <EditText
                 android:id="@+id/groupMemberLocation"
@@ -127,7 +127,7 @@
                 android:hint="Location"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
 
             <android.support.v7.widget.CardView

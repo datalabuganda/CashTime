@@ -41,13 +41,6 @@ public class GroupMembersExpenditureListActivity extends AppCompatActivity {
                     public void onGroupMemberClick(GroupMember groupMember) {
                         Intent editUserIntent = new Intent(GroupMembersExpenditureListActivity.this, AddGroupMembersExpendituresActivity.class);
                         editUserIntent.putExtra("userName", groupMember.getMemberUsername());
-                        editUserIntent.putExtra("phoneNumber", groupMember.getMemberPhoneNumber());
-                        editUserIntent.putExtra("business",groupMember.getMemberBusiness());
-                        editUserIntent.putExtra("gender", groupMember.getMemberGender());
-                        editUserIntent.putExtra("nationality", groupMember.getMemberNationality());
-                        editUserIntent.putExtra("location", groupMember.getMemberLocation());
-                        editUserIntent.putExtra("educationLevel", groupMember.getMemberEducationLevel());
-                        editUserIntent.putExtra("household",groupMember.getMemberHousehold());
                         editUserIntent.putExtra("parseId", groupMember.getMemberParseId());
 
                         startActivity(editUserIntent);

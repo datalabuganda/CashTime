@@ -50,7 +50,7 @@ public class ParseExpenditureHelper {
         newGroupExpenditure.put("groupExpenditureCategory", groupExpenditure.getCategory());
         newGroupExpenditure.put("groupExpenditureAmount", groupExpenditure.getAmount());
         newGroupExpenditure.put("groupExpenditureNotes", groupExpenditure.getNotes());
-        newGroupExpenditure.put("groupExpenditureDueDate", groupExpenditure.getDueDate());
+        newGroupExpenditure.put("groupExpenditureDate", groupExpenditure.getDate());
         newGroupExpenditure.put("groupName", groupExpenditure.getGroupName());
         newGroupExpenditure.put("groupParseId", groupExpenditure.getGroupParseId());
         newGroupExpenditure.put("createdById", groupExpenditure.getUserId());
@@ -72,7 +72,7 @@ public class ParseExpenditureHelper {
                         newGroupExpenditure.setCategory(retrievedGroupExpenditure.get("groupExpenditureCategory").toString());
                         newGroupExpenditure.setAmount(retrievedGroupExpenditure.get("groupExpenditureAmount").toString());
                         newGroupExpenditure.setNotes(retrievedGroupExpenditure.get("groupExpenditureNotes").toString());
-                        newGroupExpenditure.setDueDate(retrievedGroupExpenditure.get("groupExpenditureDueDate").toString());
+                        newGroupExpenditure.setDate(retrievedGroupExpenditure.get("groupExpenditureDate").toString());
                         newGroupExpenditure.setGroupName(retrievedGroupExpenditure.get("groupName").toString());
                         newGroupExpenditure.setParseId(retrievedGroupExpenditure.getObjectId());
 
@@ -98,7 +98,7 @@ public class ParseExpenditureHelper {
                     groupExpenditure.put("groupExpenditureCategory", groupExpenditureToUpdate.getCategory());
                     groupExpenditure.put("groupExpenditureAmount", groupExpenditureToUpdate.getAmount());
                     groupExpenditure.put("groupExpenditureNotes", groupExpenditureToUpdate.getNotes());
-                    groupExpenditure.put("groupExpenditureDueDate", groupExpenditureToUpdate.getDueDate());
+                    groupExpenditure.put("groupExpenditureDate", groupExpenditureToUpdate.getDate());
                     groupExpenditure.saveInBackground();
 
                 }else {
@@ -127,12 +127,12 @@ public class ParseExpenditureHelper {
     /******************************** Members Expenditure Parse Helper ******************************/
     public void saveGroupMembersExpenditureToParseDb(GroupMemberExpenditure groupMembersExpenditure){
         GroupMemberExpenditure newGroupMembersExpenditure = new GroupMemberExpenditure();
-        newGroupMembersExpenditure.put("groupMembersExpenditureCategory", groupMembersExpenditure.getCategory());
-        newGroupMembersExpenditure.put("groupMembersExpenditureAmount", groupMembersExpenditure.getAmount());
-        newGroupMembersExpenditure.put("groupMembersExpenditureNotes", groupMembersExpenditure.getNotes());
-        newGroupMembersExpenditure.put("groupMembersExpenditureDate", groupMembersExpenditure.getDueDate());
-        newGroupMembersExpenditure.put("groupMemberUsername", groupMembersExpenditure.getMemberUserName());
-        newGroupMembersExpenditure.put("groupMemberParseId", groupMembersExpenditure.getMemberParseId());
+        newGroupMembersExpenditure.put("memberExpenditureCategory", groupMembersExpenditure.getCategory());
+        newGroupMembersExpenditure.put("memberExpenditureAmount", groupMembersExpenditure.getAmount());
+        newGroupMembersExpenditure.put("memberExpenditureNotes", groupMembersExpenditure.getNotes());
+        newGroupMembersExpenditure.put("memberExpenditureDate", groupMembersExpenditure.getDate());
+        newGroupMembersExpenditure.put("memberUsername", groupMembersExpenditure.getMemberUserName());
+        newGroupMembersExpenditure.put("memberParseId", groupMembersExpenditure.getMemberParseId());
         newGroupMembersExpenditure.put("createdById", groupMembersExpenditure.getUserId());
         newGroupMembersExpenditure.saveInBackground();
     }
@@ -148,11 +148,11 @@ public class ParseExpenditureHelper {
                 if (e == null){
                     for (GroupMemberExpenditure retrievedGroupMemberExpenditure: parseGroupMemberExpenditure){
                         GroupMemberExpenditure newGroupMembersExpenditure = new GroupMemberExpenditure();
-                        newGroupMembersExpenditure.setCategory(retrievedGroupMemberExpenditure.get("groupMembersExpenditureCategory").toString());
-                        newGroupMembersExpenditure.setAmount(retrievedGroupMemberExpenditure.get("groupMembersExpenditureAmount").toString());
-                        newGroupMembersExpenditure.setNotes(retrievedGroupMemberExpenditure.get("groupMembersExpenditureNotes").toString());
-                        newGroupMembersExpenditure.setDueDate(retrievedGroupMemberExpenditure.get("groupMembersExpenditureDate").toString());
-                        newGroupMembersExpenditure.setMemberUserName(retrievedGroupMemberExpenditure.get("groupMemberUsername").toString());
+                        newGroupMembersExpenditure.setCategory(retrievedGroupMemberExpenditure.get("memberExpenditureCategory").toString());
+                        newGroupMembersExpenditure.setAmount(retrievedGroupMemberExpenditure.get("memberExpenditureAmount").toString());
+                        newGroupMembersExpenditure.setNotes(retrievedGroupMemberExpenditure.get("memberExpenditureNotes").toString());
+                        newGroupMembersExpenditure.setDate(retrievedGroupMemberExpenditure.get("memberExpenditureDate").toString());
+                        newGroupMembersExpenditure.setMemberUserName(retrievedGroupMemberExpenditure.get("memberUsername").toString());
                         newGroupMembersExpenditure.setParseId(retrievedGroupMemberExpenditure.getObjectId());
 
                         groupMembersExpenditureList.add(newGroupMembersExpenditure);
@@ -175,10 +175,10 @@ public class ParseExpenditureHelper {
             @Override
             public void done(GroupMemberExpenditure groupMemberExpenditure, ParseException e) {
                 if (e == null) {
-                    groupMemberExpenditure.put("groupMembersExpenditureCategory", groupMembersExpenditureToUpdate.getCategory());
-                    groupMemberExpenditure.put("groupMembersExpenditureAmount", groupMembersExpenditureToUpdate.getAmount());
-                    groupMemberExpenditure.put("groupMembersExpenditureNotes", groupMembersExpenditureToUpdate.getNotes());
-                    groupMemberExpenditure.put("groupMembersExpenditureDate", groupMembersExpenditureToUpdate.getDueDate());
+                    groupMemberExpenditure.put("memberExpenditureCategory", groupMembersExpenditureToUpdate.getCategory());
+                    groupMemberExpenditure.put("memberExpenditureAmount", groupMembersExpenditureToUpdate.getAmount());
+                    groupMemberExpenditure.put("memberExpenditureNotes", groupMembersExpenditureToUpdate.getNotes());
+                    groupMemberExpenditure.put("memberExpenditureDate", groupMembersExpenditureToUpdate.getDate());
                     groupMemberExpenditure.saveInBackground();
 
                 }else {

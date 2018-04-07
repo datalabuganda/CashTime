@@ -49,7 +49,7 @@ public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
     public void bind(final GroupMemberExpenditure groupMemberExpenditure, final GroupMemberExpenditureAdapter.OnGoalClickListener onGoalClickListener){
         category.setText(groupMemberExpenditure.getCategory());
         amount.setText(groupMemberExpenditure.getAmount());
-        date.setText(groupMemberExpenditure.getDueDate());
+        date.setText(groupMemberExpenditure.getDate());
         notes.setText(groupMemberExpenditure.getNotes());
         username.setText(groupMemberExpenditure.getMemberUserName());
 

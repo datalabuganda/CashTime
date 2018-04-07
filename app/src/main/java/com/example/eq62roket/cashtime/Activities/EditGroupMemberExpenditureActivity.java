@@ -49,11 +49,11 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
 
         // get Intent data
         Intent intent = getIntent();
-        final String groupMemberExpenditureCategory = intent.getStringExtra("groupMembersExpenditureCategory");
-        String groupMemberExpenditureAmount = intent.getStringExtra("groupMembersExpenditureAmount");
-        String groupMemberExpenditureDate = intent.getStringExtra("groupMembersExpenditureDate");
-        String groupMemberExpenditureNotes = intent.getStringExtra("groupMembersExpenditureNotes");
-        groupMemberExpenditureParseId = intent.getStringExtra("groupMembersExpenditureParseId");
+        final String groupMemberExpenditureCategory = intent.getStringExtra("memberExpenditureCategory");
+        String groupMemberExpenditureAmount = intent.getStringExtra("memberExpenditureAmount");
+        String groupMemberExpenditureDate = intent.getStringExtra("memberExpenditureDate");
+        String groupMemberExpenditureNotes = intent.getStringExtra("memberExpenditureNotes");
+        groupMemberExpenditureParseId = intent.getStringExtra("memberExpenditureParseId");
 
 
         mGroupExpenditureCategory.setText(groupMemberExpenditureCategory);
@@ -117,7 +117,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
             GroupMemberExpenditure groupMemberExpenditure = new GroupMemberExpenditure();
             groupMemberExpenditure.setCategory(groupMemberExpenditureCategory);
             groupMemberExpenditure.setAmount(groupMemberExpenditureAmount);
-            groupMemberExpenditure.setDueDate(groupMemberExpenditureDate);
+            groupMemberExpenditure.setDate(groupMemberExpenditureDate);
             groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
             if (!groupMemberExpenditureParseId.equals("")){
                 groupMemberExpenditure.setParseId(groupMemberExpenditureParseId);

@@ -158,7 +158,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             GroupExpenditure groupExpenditures = new GroupExpenditure();
             groupExpenditures.setCategory(groupExpenditureCategory);
             groupExpenditures.setNotes(groupExpenditureNotes);
-            groupExpenditures.setDueDate(groupExpenditureDate);
+            groupExpenditures.setDate(groupExpenditureDate);
             groupExpenditures.setAmount(groupExpenditureAmount);
             groupExpenditures.setGroupParseId(groupParseId);
             groupExpenditures.setGroupName(groupName);

@@ -161,7 +161,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             MembersIncome groupMemberIncome = new MembersIncome();
             groupMemberIncome.setSource(groupMemberIncomeSource);
             groupMemberIncome.setAmount(groupMemberIncomeAmount);
-            groupMemberIncome.setDueDate(groupMemberIncomeIncomePeriod);
+            groupMemberIncome.setPeriod(groupMemberIncomeIncomePeriod);
             groupMemberIncome.setNotes(groupMemberIncomeNotes);
             groupMemberIncome.setMemberUserName(groupMemberUsername);
             groupMemberIncome.setMemberParseId(groupMemberParseId);

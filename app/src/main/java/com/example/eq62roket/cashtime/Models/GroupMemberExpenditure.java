@@ -8,7 +8,7 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_MemberExpenditure")
 public class GroupMemberExpenditure extends ParseObject {
-    String parseId, memberParseId, memberUserName, category, dueDate, amount, notes, userId;
+    String parseId, memberParseId, memberUserName, category, date, amount, notes, userId;
 
     public String getUserId() {
         return userId;
@@ -50,12 +50,12 @@ public class GroupMemberExpenditure extends ParseObject {
         this.category = category;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAmount() {

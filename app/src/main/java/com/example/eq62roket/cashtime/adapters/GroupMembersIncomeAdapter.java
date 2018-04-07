@@ -27,13 +27,13 @@ public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembers
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView source, amount, duedate, groupMemberUserName, notes;
+        public TextView source, amount, period, groupMemberUserName, notes;
 
         public MyViewHolder(View view) {
             super(view);
             source = (TextView) view.findViewById(R.id.groupMemberIncomeSource);
             amount = (TextView) view.findViewById(R.id. groupMemberIncomeAmount);
-            duedate = (TextView) view.findViewById(R.id.groupMemberIncomePeriod);
+            period = (TextView) view.findViewById(R.id.groupMemberIncomePeriod);
             groupMemberUserName = (TextView) view.findViewById(R.id.groupMemberIncomeName);
             notes = (TextView)view.findViewById(R.id.groupMemberIncomeNotes);
 
@@ -42,7 +42,7 @@ public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembers
         public void bind(final MembersIncome groupMemberIncome, final GroupMembersIncomeAdapter.OnGroupMemberClickListener onGroupMemberClickListener){
             source.setText(groupMemberIncome.getSource());
             amount.setText(groupMemberIncome.getAmount());
-            duedate.setText(groupMemberIncome.getDueDate());
+            period.setText(groupMemberIncome.getPeriod());
             notes.setText(groupMemberIncome.getNotes());
             groupMemberUserName.setText(groupMemberIncome.getMemberUserName());
 

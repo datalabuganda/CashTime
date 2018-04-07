@@ -74,7 +74,7 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
                         Intent editGroupExpenditureIntent = new Intent(getActivity(), EditGroupExpenditureActivity.class);
                         editGroupExpenditureIntent.putExtra("groupExpenditureCategory", groupExpenditure.getCategory());
                         editGroupExpenditureIntent.putExtra("groupExpenditureAmount", groupExpenditure.getAmount());
-                        editGroupExpenditureIntent.putExtra("groupExpenditureDueDate",groupExpenditure.getDueDate());
+                        editGroupExpenditureIntent.putExtra("groupExpenditureDate",groupExpenditure.getDate());
                         editGroupExpenditureIntent.putExtra("groupExpenditureNotes", groupExpenditure.getNotes());
                         editGroupExpenditureIntent.putExtra("groupExpenditureParseId", groupExpenditure.getParseId());
                         startActivity(editGroupExpenditureIntent);
@@ -133,7 +133,7 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
             String name = groupExpenditures.getGroupName().toLowerCase();
             String category = groupExpenditures.getCategory().toLowerCase();
             String amount = groupExpenditures.getAmount().toLowerCase();
-            String date = groupExpenditures.getDueDate().toLowerCase();
+            String date = groupExpenditures.getDate().toLowerCase();
             if (name.contains(newText)){
                 newList.add(groupExpenditures);
             }else if (category.contains(newText)){

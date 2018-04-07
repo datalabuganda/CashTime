@@ -150,13 +150,13 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             GroupMemberExpenditure groupMemberExpenditure = new GroupMemberExpenditure();
             groupMemberExpenditure.setCategory(groupMemberExpenditureCategory);
             groupMemberExpenditure.setAmount(groupMemberExpenditureAmount);
-            groupMemberExpenditure.setDueDate(groupMemberExpenditureNotes);
-            groupMemberExpenditure.setNotes(groupMemberExpenditureDate);
+            groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
+            groupMemberExpenditure.setDate(groupMemberExpenditureDate);
             groupMemberExpenditure.setMemberUserName(groupMemberUsername);
             groupMemberExpenditure.setMemberParseId(groupMemberParseId);
             groupMemberExpenditure.setUserId(currentUser);
 
-            Log.d(TAG, "groupMemberUserName: " + groupMemberExpenditure.getMemberUserName());
+            Log.d(TAG, "memberUserName: " + groupMemberExpenditure.getMemberUserName());
 
             new ParseExpenditureHelper(this).saveGroupMembersExpenditureToParseDb(groupMemberExpenditure);
             startTabbedExpenditureActivity();

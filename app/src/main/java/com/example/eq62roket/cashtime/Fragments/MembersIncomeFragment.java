@@ -70,11 +70,11 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
                     @Override
                     public void onGroupMemberClick(MembersIncome groupMemberIncome) {
                         Intent editGroupMemberIncomeIntent = new Intent(getActivity(), EditGroupMemberIncomeActivity.class);
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeSource", groupMemberIncome.getSource());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeAmount", groupMemberIncome.getAmount());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomePeriod",groupMemberIncome.getDueDate());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeNotes", groupMemberIncome.getNotes());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeParseId", groupMemberIncome.getParseId());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeSource", groupMemberIncome.getSource());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomePeriod",groupMemberIncome.getPeriod());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
+                        editGroupMemberIncomeIntent.putExtra("memberParseId", groupMemberIncome.getParseId());
                         startActivity(editGroupMemberIncomeIntent);
                         getActivity().finish();
                     }
@@ -129,7 +129,7 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
             String name = membersIncome.getMemberUserName().toLowerCase();
             String incomeSource = membersIncome.getSource().toLowerCase();
             String notes = membersIncome.getNotes().toLowerCase();
-            String period = membersIncome.getDueDate().toLowerCase();
+            String period = membersIncome.getPeriod().toLowerCase();
             if (name.contains(newText)){
                 newList.add(membersIncome);
             }

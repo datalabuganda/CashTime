@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -53,11 +54,14 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
 
         // get Intent data
         Intent intent = getIntent();
-        final String amountOfIncome = intent.getStringExtra("groupMemberIncomeAmount");
-        final String source0fIncome = intent.getStringExtra("groupMemberIncomeSource");
-        final String notesAboutIncome = intent.getStringExtra("groupMemberIncomeNotes");
-        final String periodOfIncome= intent.getStringExtra("groupMemberIncomePeriod");
-        groupMemberIncomeParseId = intent.getStringExtra("groupIncomeParseId");
+        final String amountOfIncome = intent.getStringExtra("memberIncomeAmount");
+        final String source0fIncome = intent.getStringExtra("memberIncomeSource");
+        final String notesAboutIncome = intent.getStringExtra("memberIncomeNotes");
+        final String periodOfIncome = intent.getStringExtra("memberIncomePeriod");
+        groupMemberIncomeParseId = intent.getStringExtra("memberParseId");
+
+        Log.d(" member parse id", "onCreate: " + groupMemberIncomeParseId);
+
 
         groupMemberIncomeSource.setText(source0fIncome);
         groupMemberIncomeAmount.setText(amountOfIncome);
@@ -150,7 +154,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
             membersIncome.setAmount(amountOfIncome);
             membersIncome.setSource(source0fIncome);
             membersIncome.setNotes(notesAboutIncome);
-            membersIncome.setDueDate(periodOfIncome);
+            membersIncome.setPeriod(periodOfIncome);
 
             if (!groupMemberIncomeParseId.equals("")){
                 membersIncome.setParseId(groupMemberIncomeParseId);

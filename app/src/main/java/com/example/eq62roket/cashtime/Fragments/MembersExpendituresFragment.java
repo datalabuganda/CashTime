@@ -74,11 +74,11 @@ public class MembersExpendituresFragment extends Fragment implements SearchView.
                     @Override
                     public void onGoalClick(GroupMemberExpenditure groupMemberExpenditure) {
                         Intent editGroupMemberExpenditureIntent = new Intent(getActivity(), EditGroupMemberExpenditureActivity.class);
-                        editGroupMemberExpenditureIntent.putExtra("groupMembersExpenditureCategory", groupMemberExpenditure.getCategory());
-                        editGroupMemberExpenditureIntent.putExtra("groupMembersExpenditureAmount", groupMemberExpenditure.getAmount());
-                        editGroupMemberExpenditureIntent.putExtra("groupMembersExpenditureNotes",groupMemberExpenditure.getDueDate());
-                        editGroupMemberExpenditureIntent.putExtra("groupMembersExpenditureDate", groupMemberExpenditure.getNotes());
-                        editGroupMemberExpenditureIntent.putExtra("groupMembersExpenditureParseId", groupMemberExpenditure.getParseId());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureCategory", groupMemberExpenditure.getCategory());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureAmount", groupMemberExpenditure.getAmount());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureNotes",groupMemberExpenditure.getNotes());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureDate", groupMemberExpenditure.getDate());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureParseId", groupMemberExpenditure.getParseId());
                         startActivity(editGroupMemberExpenditureIntent);
                         getActivity().finish();
                     }
@@ -135,7 +135,7 @@ public class MembersExpendituresFragment extends Fragment implements SearchView.
             String category = groupMemberExpenditures.getCategory().toLowerCase();
             String notes = groupMemberExpenditures.getNotes().toLowerCase();
             String memberName = groupMemberExpenditures.getMemberUserName().toLowerCase();
-            String date = groupMemberExpenditures.getDueDate().toLowerCase();
+            String date = groupMemberExpenditures.getDate().toLowerCase();
             if (category.contains(newText)){
                 newList.add(groupMemberExpenditures);
             }else if (notes.contains(newText)){

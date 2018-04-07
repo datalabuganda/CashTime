@@ -58,12 +58,12 @@ public class ParseIncomeHelper {
 
     public void saveGroupMemberIncomeToParseDb(MembersIncome groupMemberIncome){
         MembersIncome newGroupMemberIncome = new MembersIncome();
-        newGroupMemberIncome.put("groupMemberIncomeSource", groupMemberIncome.getSource());
-        newGroupMemberIncome.put("groupMemberIncomeAmount", groupMemberIncome.getAmount());
-        newGroupMemberIncome.put("groupMemberIncomeNotes", groupMemberIncome.getNotes());
-        newGroupMemberIncome.put("groupMemberIncomePeriod", groupMemberIncome.getDueDate());
-        newGroupMemberIncome.put("groupMemberUsername", groupMemberIncome.getMemberUserName());
-        newGroupMemberIncome.put("groupMemberParseId", groupMemberIncome.getMemberParseId());
+        newGroupMemberIncome.put("memberIncomeSource", groupMemberIncome.getSource());
+        newGroupMemberIncome.put("memberIncomeAmount", groupMemberIncome.getAmount());
+        newGroupMemberIncome.put("memberIncomeNotes", groupMemberIncome.getNotes());
+        newGroupMemberIncome.put("memberIncomePeriod", groupMemberIncome.getPeriod());
+        newGroupMemberIncome.put("memberUsername", groupMemberIncome.getMemberUserName());
+        newGroupMemberIncome.put("memberParseId", groupMemberIncome.getMemberParseId());
         newGroupMemberIncome.put("createdById", groupMemberIncome.getUserId());
         newGroupMemberIncome.saveInBackground();
 
@@ -80,11 +80,11 @@ public class ParseIncomeHelper {
                 if (e == null){
                     for (MembersIncome retrievedGroupMemberIncome: parseGroupMemberIncome){
                         MembersIncome newGroupMemberIncome = new MembersIncome();
-                        newGroupMemberIncome.setSource(retrievedGroupMemberIncome.get("groupMemberIncomeSource").toString());
-                        newGroupMemberIncome.setAmount(retrievedGroupMemberIncome.get("groupMemberIncomeAmount").toString());
-                        newGroupMemberIncome.setNotes(retrievedGroupMemberIncome.get("groupMemberIncomeNotes").toString());
-                        newGroupMemberIncome.setDueDate(retrievedGroupMemberIncome.get("groupMemberIncomePeriod").toString());
-                        newGroupMemberIncome.setMemberUserName(retrievedGroupMemberIncome.get("groupMemberUsername").toString());
+                        newGroupMemberIncome.setSource(retrievedGroupMemberIncome.get("memberIncomeSource").toString());
+                        newGroupMemberIncome.setAmount(retrievedGroupMemberIncome.get("memberIncomeAmount").toString());
+                        newGroupMemberIncome.setNotes(retrievedGroupMemberIncome.get("memberIncomeNotes").toString());
+                        newGroupMemberIncome.setPeriod(retrievedGroupMemberIncome.get("memberIncomePeriod").toString());
+                        newGroupMemberIncome.setMemberUserName(retrievedGroupMemberIncome.get("memberUsername").toString());
                         newGroupMemberIncome.setUserId(retrievedGroupMemberIncome.get("createdById").toString());
                         newGroupMemberIncome.setParseId(retrievedGroupMemberIncome.getObjectId());
 
@@ -108,10 +108,10 @@ public class ParseIncomeHelper {
             @Override
             public void done(MembersIncome groupMemberIncome, ParseException e) {
                 if (e == null) {
-                    groupMemberIncome.put("groupMemberIncomeSource", groupMemberIncomeToUpdate.getSource());
-                    groupMemberIncome.put("groupMemberIncomeAmount", groupMemberIncomeToUpdate.getAmount());
-                    groupMemberIncome.put("groupMemberIncomeNotes", groupMemberIncomeToUpdate.getNotes());
-                    groupMemberIncome.put("groupMemberIncomedueDate", groupMemberIncomeToUpdate.getDueDate());
+                    groupMemberIncome.put("memberIncomeSource", groupMemberIncomeToUpdate.getSource());
+                    groupMemberIncome.put("memberIncomeAmount", groupMemberIncomeToUpdate.getAmount());
+                    groupMemberIncome.put("memberIncomeNotes", groupMemberIncomeToUpdate.getNotes());
+                    groupMemberIncome.put("memberIncomePeriod", groupMemberIncomeToUpdate.getPeriod());
                     groupMemberIncome.saveInBackground();
 
                 }else {

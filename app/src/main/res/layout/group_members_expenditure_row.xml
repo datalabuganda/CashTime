@@ -75,7 +75,7 @@
                         android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/groupMembersExpenditureNotes"
+                        android:id="@+id/groupMembersExpenditureDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Notes"
@@ -86,14 +86,14 @@
 
                 <LinearLayout
                     android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="match_parent"git
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/groupMembersExpenditureDate"/>
+                        android:id="@+id/groupMembersExpenditureNotes"/>
                 </LinearLayout>
 
             </LinearLayout>

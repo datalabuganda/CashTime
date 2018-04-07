@@ -3,6 +3,10 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
@@ -10,17 +14,24 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
+import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
+import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.Models.Tip;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +57,7 @@ public class ParseHelper {
         currentUserId = ParseUser.getCurrentUser().getObjectId();
     }
 
-    public void saveGroupGoalsToParseDb(GroupGoals groupGoals){
+    public void saveGroupGoalsToParseDb(GroupGoals groupGoals, final SaveGoalListener saveGoalListener){
         GroupGoals newGroupGoal = new GroupGoals();
         newGroupGoal.put("userId", currentUserId);
         newGroupGoal.put("goalName", groupGoals.getName());
@@ -57,8 +68,16 @@ public class ParseHelper {
         newGroupGoal.put("groupParseId", groupGoals.getGroupId());
         newGroupGoal.put("groupName", groupGoals.getGroupName());
         newGroupGoal.put("completedDate", groupGoals.getCompletedDate()); // Assume user will complete data on due date
-
-        newGroupGoal.saveInBackground();
+        newGroupGoal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveGoalListener.onResponse("saved");
+                }else {
+                    saveGoalListener.onFailure(e.getMessage());
+                }
+            }
+        });
 
     }
 
@@ -163,7 +182,7 @@ public class ParseHelper {
 
     }
 
-    public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
+    public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate, final UpdateGoalListener updateGoalListener){
         ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToUpdate.getParseId(), new GetCallback<GroupGoals>() {
             @Override
@@ -173,7 +192,16 @@ public class ParseHelper {
                     groupGoal.put("goalAmount", groupGoalToUpdate.getAmount());
                     groupGoal.put("goalText", groupGoalToUpdate.getNotes());
                     groupGoal.put("goalEndDate", groupGoalToUpdate.getDueDate());
-                    groupGoal.saveInBackground();
+                    groupGoal.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateGoalListener.onResponse("updated");
+                            }else {
+                                updateGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -199,22 +227,31 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete){
+    public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete, final DeleteGoalListener deleteGoalListener){
         ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToDelete.getParseId(), new GetCallback<GroupGoals>() {
             @Override
             public void done(GroupGoals groupGoal, ParseException e) {
                 if (e == null) {
-                    groupGoal.deleteInBackground();
+                    groupGoal.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteGoalListener.onResponse("deleted");
+                            }else {
+                                deleteGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
 
     }
 
-    public void saveMemberGoalsToParseDb(MembersGoals membersGoal){
+    public void saveMemberGoalsToParseDb(MembersGoals membersGoal, final SaveGoalListener saveGoalListener){
         MembersGoals newMemberGoal = new MembersGoals();
         newMemberGoal.put("memberUsernames", membersGoal.getMemberName());
         newMemberGoal.put("memberGoalName", membersGoal.getMemberGoalName());
@@ -225,7 +262,16 @@ public class ParseHelper {
         newMemberGoal.put("memberParseId", membersGoal.getMemberParseId());
         newMemberGoal.put("completeDate", membersGoal.getCompleteDate());
         newMemberGoal.put("savingCreatorId", currentUserId);
-        newMemberGoal.saveInBackground();
+        newMemberGoal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveGoalListener.onResponse("saved");
+                }else {
+                    saveGoalListener.onFailure(e.getMessage());
+                }
+            }
+        });
 
     }
 
@@ -297,7 +343,7 @@ public class ParseHelper {
     }
 
 
-    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate){
+    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate, final UpdateGoalListener updateGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToUpdate.getParseId(), new GetCallback<MembersGoals>() {
             @Override
@@ -307,7 +353,16 @@ public class ParseHelper {
                     membersGoal.put("memberGoalAmount", membersGoalToUpdate.getMemberGoalAmount());
                     membersGoal.put("memberGoalNotes", membersGoalToUpdate.getMemberGoalNotes());
                     membersGoal.put("memberGoalDeadline", membersGoalToUpdate.getMemberGoalDueDate());
-                    membersGoal.saveInBackground();
+                    membersGoal.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateGoalListener.onResponse("updated");
+                            }else {
+                                updateGoalListener.onFailure( e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -333,13 +388,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete){
+    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete, final DeleteGoalListener deleteGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToDelete.getParseId(), new GetCallback<MembersGoals>() {
             @Override
             public void done(MembersGoals membersGoal, ParseException e) {
                 if (e == null) {
-                    membersGoal.deleteInBackground();
+                    membersGoal.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteGoalListener.onResponse("deleted");
+                            }else {
+                                deleteGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -348,7 +412,7 @@ public class ParseHelper {
     }
 
 
-    public void saveGroupSavingsToParseDb(GroupSavings groupSaving){
+    public void saveGroupSavingsToParseDb(GroupSavings groupSaving, final AddSavingListener addSavingListener){
         GroupSavings newGroupSaving = new GroupSavings();
         newGroupSaving.put("userId", currentUserId);
         newGroupSaving.put("groupSavingAmount", groupSaving.getAmount());
@@ -359,7 +423,16 @@ public class ParseHelper {
         newGroupSaving.put("groupSavingDateAdded", groupSaving.getDateAdded());
         newGroupSaving.put("groupParseId", groupSaving.getGroupParseId());
         newGroupSaving.put("groupGoalParseId", groupSaving.getGroupGoalParseId());
-        newGroupSaving.saveInBackground();
+        newGroupSaving.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    addSavingListener.onResponse("saved");
+                }else {
+                    addSavingListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getGroupSavingsFromParseDb(final OnReturnedGroupSavingsListener onReturnedGroupSavingsListener){
@@ -414,7 +487,7 @@ public class ParseHelper {
     }
 
 
-    public void updateGroupSavingInParseDb(final GroupSavings groupSavingToUpdate){
+    public void updateGroupSavingInParseDb(final GroupSavings groupSavingToUpdate, final UpdateSavingListener updateSavingListener){
         ParseQuery<GroupSavings> groupSavingsParseQuery = ParseQuery.getQuery("ct2_GroupSavings");
         groupSavingsParseQuery.getInBackground(groupSavingToUpdate.getParseId(), new GetCallback<GroupSavings>() {
             @Override
@@ -426,7 +499,16 @@ public class ParseHelper {
                     groupSaving.put("groupSavingPeriod", groupSavingToUpdate.getPeriod());
                     groupSaving.put("groupSavingNotes", groupSavingToUpdate.getNotes());
                     groupSaving.put("groupSavingDateAdded", groupSavingToUpdate.getDateAdded());
-                    groupSaving.saveInBackground();
+                    groupSaving.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateSavingListener.onResponse("updated");
+                            }else {
+                                updateSavingListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -435,13 +517,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupSavingFromParseDb(GroupSavings groupsSavingToDelete){
+    public void deleteGroupSavingFromParseDb(GroupSavings groupsSavingToDelete, final DeleteSavingListener deleteSavingListener){
         ParseQuery<GroupSavings> groupGoalQuery = ParseQuery.getQuery("ct2_GroupSavings");
         groupGoalQuery.getInBackground(groupsSavingToDelete.getParseId(), new GetCallback<GroupSavings>() {
             @Override
             public void done(GroupSavings groupSaving, ParseException e) {
                 if (e == null) {
-                    groupSaving.deleteInBackground();
+                    groupSaving.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteSavingListener.onResponse("deleted");
+                            }else {
+                                deleteSavingListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -449,7 +540,7 @@ public class ParseHelper {
         });
     }
 
-    public void saveMemberSavingsToParseDb(MemberSavings memberSavingToSave){
+    public void saveMemberSavingsToParseDb(MemberSavings memberSavingToSave, final AddSavingListener addSavingListener){
         MemberSavings newMemberSaving = new MemberSavings();
         newMemberSaving.put("memberUserName", memberSavingToSave.getMemberName());
         newMemberSaving.put("memberSavingAmount", memberSavingToSave.getSavingAmount());
@@ -461,7 +552,16 @@ public class ParseHelper {
         newMemberSaving.put("memberParseId", memberSavingToSave.getMemberParseId());
         newMemberSaving.put("memberGoalParseId", memberSavingToSave.getGoalParseId());
         newMemberSaving.put("savingCreatorId", currentUserId);
-        newMemberSaving.saveInBackground();
+        newMemberSaving.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    addSavingListener.onResponse("saved");
+                }else {
+                    addSavingListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getMemberSavingsFromParseDb(final OnReturnedMemberSavingsListener onReturnedMemberSavingsListener){
@@ -517,7 +617,7 @@ public class ParseHelper {
         });
     }
 
-    public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate){
+    public void updateMemberSavingInParseDb(final MemberSavings memberSavingToUpdate, final UpdateSavingListener updateSavingListener){
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         memberSavingsParseQuery.getInBackground(memberSavingToUpdate.getParseId(), new GetCallback<MemberSavings>() {
             @Override
@@ -528,7 +628,16 @@ public class ParseHelper {
                     memberSaving.put("memberSavingPeriod", memberSavingToUpdate.getPeriod());
                     memberSaving.put("memberSavingNotes", memberSavingToUpdate.getSavingNote());
                     memberSaving.put("memberSavingDateAdded", memberSavingToUpdate.getDateAdded());
-                    memberSaving.saveInBackground();
+                    memberSaving.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateSavingListener.onResponse("updated");
+                            }else {
+                                updateSavingListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -537,13 +646,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteMemberSavingFromParseDb(MemberSavings memberSavingToDelete){
+    public void deleteMemberSavingFromParseDb(MemberSavings memberSavingToDelete, final DeleteSavingListener deleteSavingListener){
         ParseQuery<MemberSavings> groupGoalQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         groupGoalQuery.getInBackground(memberSavingToDelete.getParseId(), new GetCallback<MemberSavings>() {
             @Override
             public void done(MemberSavings memberSaving, ParseException e) {
                 if (e == null) {
-                    memberSaving.deleteInBackground();
+                    memberSaving.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteSavingListener.onResponse("deleted");
+                            }else {
+                                deleteSavingListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -551,7 +669,7 @@ public class ParseHelper {
         });
     }
 
-    public void saveGroupBarrierToParseDb(Barrier barrierToSave){
+    public void saveGroupBarrierToParseDb(Barrier barrierToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
         Barrier newBarrier = new Barrier();
         newBarrier.put("userId", currentUserId);
         newBarrier.put("groupGoalName", barrierToSave.getGoalName());
@@ -561,7 +679,16 @@ public class ParseHelper {
         newBarrier.put("barrierDateAdded", barrierToSave.getDateAdded());
         newBarrier.put("groupId", barrierToSave.getGroupId());
         newBarrier.put("groupGoalParseId", barrierToSave.getGroupGoalParseId());
-        newBarrier.saveInBackground();
+        newBarrier.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveBarrierAndTipListener.onResponse("saved");
+                }else {
+                    saveBarrierAndTipListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
@@ -595,7 +722,7 @@ public class ParseHelper {
         });
     }
 
-    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate){
+    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToUpdate.getParseId(), new GetCallback<Barrier>() {
             @Override
@@ -605,8 +732,16 @@ public class ParseHelper {
                     parseBarrier.put("barrierNotes", barrierToUpdate.getBarrierText());
                     parseBarrier.put("tipGiven", barrierToUpdate.isTipGiven());
                     parseBarrier.put("barrierDateAdded", barrierToUpdate.getDateAdded());
-
-                    parseBarrier.saveInBackground();
+                    parseBarrier.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateBarrierAndTipListener.onResponse("updated");
+                            }else {
+                                updateBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -615,13 +750,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete){
+    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToDelete.getParseId(), new GetCallback<Barrier>() {
             @Override
             public void done(Barrier parseBarrier, ParseException e) {
                 if (e == null) {
-                    parseBarrier.deleteInBackground();
+                    parseBarrier.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteBarrierAndTipListener.onResponse("deleted");
+                            }else {
+                                deleteBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -629,7 +773,7 @@ public class ParseHelper {
         });
     }
 
-    public void saveTipToParseDb(Tip tipToSave){
+    public void saveTipToParseDb(Tip tipToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
         Tip newTip = new Tip();
         newTip.put("userId", currentUserId);
         newTip.put("groupGoalName", tipToSave.getGoalName());
@@ -638,7 +782,16 @@ public class ParseHelper {
         newTip.put("dateModified", tipToSave.getDateModified());
         newTip.put("groupParseId", tipToSave.getGroupParseId());
         newTip.put("groupGoalParseId", tipToSave.getGroupGoalParseId());
-        newTip.saveInBackground();
+        newTip.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveBarrierAndTipListener.onResponse("saved");
+                }else {
+                    saveBarrierAndTipListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
@@ -702,7 +855,7 @@ public class ParseHelper {
         });
     }
 
-    public void updateTipsInParseDb(final Tip tipToUpdate){
+    public void updateTipsInParseDb(final Tip tipToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.getInBackground(tipToUpdate.getTipParseId(), new GetCallback<Tip>() {
             @Override
@@ -710,7 +863,16 @@ public class ParseHelper {
                 if (e == null) {
                     parseTip.put("tipNotes", tipToUpdate.getIntroText());
                     parseTip.put("dateModified", tipToUpdate.getDateModified());
-                    parseTip.saveInBackground();
+                    parseTip.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateBarrierAndTipListener.onResponse("updated");
+                            }else {
+                                updateBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -719,13 +881,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteTipFromParseDb(Tip tipToDelete){
-        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+    public void deleteTipFromParseDb(Tip tipToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.getInBackground(tipToDelete.getTipParseId(), new GetCallback<Tip>() {
             @Override
             public void done(Tip parseTip, ParseException e) {
                 if (e == null) {
-                    parseTip.deleteInBackground();
+                    parseTip.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteBarrierAndTipListener.onResponse("deleted");
+                            }else {
+                                deleteBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

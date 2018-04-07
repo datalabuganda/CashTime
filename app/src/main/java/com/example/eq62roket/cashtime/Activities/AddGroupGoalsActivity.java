@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -27,17 +28,15 @@ import java.util.Locale;
 public class AddGroupGoalsActivity extends AppCompatActivity {
 
     private static final String TAG = "AddGroupGoalsActivity";
-
-    TextView groupGoalDueDate;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
-    Calendar myCalendar = Calendar.getInstance();
-    Context context = this;
-    String dateFormat = "dd/MM/yyyy";
-    DatePickerDialog.OnDateSetListener date;
-    SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-    EditText groupGoalNote, groupGoalAmount, groupGoalName;
-    Button groupCancelBtn, groupSaveBtn;
-
+    private TextView groupGoalDueDate;
+    private Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+    private Calendar myCalendar = Calendar.getInstance();
+    private Context context = this;
+    private String dateFormat = "dd/MM/yyyy";
+    private DatePickerDialog.OnDateSetListener date;
+    private SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+    private EditText groupGoalNote, groupGoalAmount, groupGoalName;
+    private Button groupCancelBtn, groupSaveBtn;
     private String groupParseId, groupName;
 
     @Override
@@ -123,7 +122,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
                 Date todayZDate = simpleDateFormat.parse(dateToday);
                 Date goalZDeadline = simpleDateFormat.parse(goalDeadline);
 
-                GroupGoals groupGoals = new GroupGoals();
+                final GroupGoals groupGoals = new GroupGoals();
                 groupGoals.setAmount(costOfGoal);
                 groupGoals.setName(nameOfGoal);
                 groupGoals.setDueDate(goalDeadline);
@@ -141,13 +140,18 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
                     groupGoals.setGroupGoalStatus("incomplete");
                     groupGoals.setCompletedDate("");
                 }
+                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals, new SaveGoalListener() {
+                    @Override
+                    public void onResponse(String saveMessage) {
+                        startTabbedGoalsActivity();
+                        Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
+                    }
 
-                // TODO: 3/22/18 =====> redirect to group fragment with updated group goals
-                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
-                startTabbedGoalsActivity();
-
-                Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
-
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(context, "Error While Saving Goal " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -157,7 +161,8 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     }
 
     public void startTabbedGoalsActivity(){
-        Intent tabbedGoalsIntent = new Intent(AddGroupGoalsActivity.this, HomeActivity.class);
+        Intent tabbedGoalsIntent = new Intent(AddGroupGoalsActivity.this, TabbedGoalsActivity.class);
+        tabbedGoalsIntent.putExtra("position", "0");
         startActivity(tabbedGoalsIntent);
         finish();
     }

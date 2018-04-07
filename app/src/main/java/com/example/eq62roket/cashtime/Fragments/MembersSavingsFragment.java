@@ -80,7 +80,6 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
                             intent.putExtra("savingNote", memberSavings.getSavingNote());
                             intent.putExtra("memberSavingParseId", memberSavings.getParseId());
                             startActivity(intent);
-                            getActivity().finish();
                         }
                     });
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

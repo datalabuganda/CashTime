@@ -75,7 +75,6 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
                             intent.putExtra("groupSavingNote", groupSavings.getNotes());
                             intent.putExtra("groupSavingParseId", groupSavings.getParseId());
                             startActivity(intent);
-                            getActivity().finish();
                         }
                     });
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

@@ -44,6 +44,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
 
         Intent addNewMemberIntent = getIntent();
         groupParseId = addNewMemberIntent.getStringExtra("groupParseId");
+        groupName = addNewMemberIntent.getStringExtra("groupName");
 
         groupMemberBusiness = (EditText) findViewById(R.id.groupMembersBusiness);
         groupMemberUsername = (EditText) findViewById(R.id.groupMemberUsername);

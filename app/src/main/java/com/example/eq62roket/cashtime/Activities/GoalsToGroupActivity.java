@@ -56,6 +56,7 @@ public class GoalsToGroupActivity extends AppCompatActivity {
 //                        groupDetailsIntent.putExtra("groupLocation", group.getLocationOfGroup());
 //                        groupDetailsIntent.putExtra("groupMemberCount", String.valueOf(group.getGroupMemberCount()));
                         startActivity(groupDetailsIntent);
+                        finish();
 
                         }
                     });

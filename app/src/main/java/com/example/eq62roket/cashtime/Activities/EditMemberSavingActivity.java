@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 
@@ -92,12 +94,18 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         MemberSavings memberSavingToDelete = new MemberSavings();
                         memberSavingToDelete.setParseId(memberSavingParseId);
-                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete);
-                        // TODO: 3/22/18 ====> redirect to member saving fragment
+                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete, new DeleteSavingListener() {
+                            @Override
+                            public void onResponse(String deleteMessage) {
+                                startTabbedSavingActivity();
+                                Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
-                        startTabbedSavingActivity();
-                        Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
-
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(EditMemberSavingActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -118,13 +126,11 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     }
 
     public void getSelectPeriod(){
-        // Add periods to list
         List<String> periods = new ArrayList<>();
         periods.add("Daily");
         periods.add("Weekly");
         periods.add("Monthly");
 
-        // add list to adapter
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, periods
         );
@@ -147,7 +153,6 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     }
 
     public void selectIncomeSource(List<String> incomeSourcesList){
-        // add incomeSourcesList to incomeSourcesAdapter
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, incomeSourcesList
         );
@@ -170,7 +175,6 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
     public void saveSavingTransaction(){
         String savingPeriod = "";
-        // pick goalName again
         String nameOfGoal = goalName.getText().toString();
 
         if ( !savingAmount.getText().toString().equals("")
@@ -203,12 +207,18 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                 } else {
                     memberSavingToUpdate.setSavingNote(note);
                 }
-                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate);
-                Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate, new UpdateSavingListener() {
+                    @Override
+                    public void onResponse(String updateMessage) {
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditMemberSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
+                    }
 
-                // start TabbedSavingActivity
-                startTabbedSavingActivity();
-
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(EditMemberSavingActivity.this, "Error Occured While Deleting " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
@@ -226,14 +236,9 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(EditMemberSavingActivity.this, TabbedSavingActivity.class);
-        startActivity(intent);
+        Intent tabbedSavingIntent = new Intent(EditMemberSavingActivity.this, TabbedSavingActivity.class);
+        tabbedSavingIntent.putExtra("position", "1");
+        startActivity(tabbedSavingIntent);
         finish();
-    }
-
-    public void clearEditTexts(){
-        goalName.setText("");
-        savingAmount.setText("");
-        savingNote.setText("");
     }
 }

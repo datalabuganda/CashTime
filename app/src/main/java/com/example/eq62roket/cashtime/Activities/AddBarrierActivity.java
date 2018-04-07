@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -71,7 +72,7 @@ public class AddBarrierActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Barrier newBarrier = new Barrier();
+            final Barrier newBarrier = new Barrier();
             newBarrier.setGoalName(goalName.getText().toString());
             newBarrier.setBarrierName(barrierName.getText().toString());
             newBarrier.setBarrierText(barrierNotes.getText().toString());
@@ -80,10 +81,18 @@ public class AddBarrierActivity extends AppCompatActivity {
             newBarrier.setDateAdded(dateToday);
             newBarrier.setTipGiven(false);
 
-            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier);
+            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier, new SaveBarrierAndTipListener() {
+                @Override
+                public void onResponse(String saveMessage) {
+                    startTabbedBarriersTipsctivity();
+                    Toast.makeText(AddBarrierActivity.this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();
+                }
 
-            startTabbedBarriersTipsctivity();
-            Toast.makeText(this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(AddBarrierActivity.this, "Error Occurred While Saving Barrier " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }
@@ -91,6 +100,7 @@ public class AddBarrierActivity extends AppCompatActivity {
 
     public void startTabbedBarriersTipsctivity(){
         Intent tabbedBarriersTipsActivity = new Intent(AddBarrierActivity.this, TabbedBarriersTipsActivity.class);
+        tabbedBarriersTipsActivity.putExtra("position", "0");
         startActivity(tabbedBarriersTipsActivity);
         finish();
     }

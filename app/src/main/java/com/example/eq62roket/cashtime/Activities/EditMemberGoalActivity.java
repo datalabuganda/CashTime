@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -85,11 +87,18 @@ public class EditMemberGoalActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         MembersGoals memberGoalToDelete = new MembersGoals();
                         memberGoalToDelete.setParseId(memberGoalParseId);
-                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete);
-                        // TODO: 3/27/18 ====> switch to member Fragment instead of tabbedGoals
+                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete, new DeleteGoalListener() {
+                            @Override
+                            public void onResponse(String deleteMessage) {
+                                startTabbedGoalsActivity();
+                                Toast.makeText(EditMemberGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
-                        startTabbedGoalsActivity();
-                        Toast.makeText(EditMemberGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(context, "Error deleting goal " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });
@@ -101,7 +110,6 @@ public class EditMemberGoalActivity extends AppCompatActivity {
 
                 builder.setMessage(
                         "Deleting '" + nameOfGoal + "' Can not be undone." + "Are You Sure You want to delete this goal?").setTitle("Delete Member Goal");
-
 
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
@@ -148,19 +156,28 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             String goalDeadline = memberGoalDueDate.getText().toString();
             String goalNotes = memberGoalNote.getText().toString();
 
-            MembersGoals membersGoalToUpdate = new MembersGoals();
+            final MembersGoals membersGoalToUpdate = new MembersGoals();
             membersGoalToUpdate.setMemberGoalAmount(costOfGoal);
             membersGoalToUpdate.setMemberGoalName(nameOfGoal);
             membersGoalToUpdate.setMemberGoalDueDate(goalDeadline);
             membersGoalToUpdate.setMemberGoalNotes(goalNotes);
             membersGoalToUpdate.setParseId(memberGoalParseId);
 
-            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate);
+            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate, new UpdateGoalListener() {
+                @Override
+                public void onResponse(String updateMessage) {
+                    startTabbedGoalsActivity();
+                    Toast.makeText(
+                            context,
+                            "Group Goal " + membersGoalToUpdate.getMemberGoalName() + " saved",
+                            Toast.LENGTH_SHORT).show();
+                }
 
-            startTabbedGoalsActivity();
-
-            Toast.makeText(context, "Group Goal " + membersGoalToUpdate.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
-
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(context, "Error Updating Member Goal " + error , Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }
@@ -168,6 +185,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
 
     public void startTabbedGoalsActivity(){
         Intent tabbedGoalsIntent = new Intent(EditMemberGoalActivity.this, TabbedGoalsActivity.class);
+        tabbedGoalsIntent.putExtra("position", "1");
         startActivity(tabbedGoalsIntent);
         finish();
     }

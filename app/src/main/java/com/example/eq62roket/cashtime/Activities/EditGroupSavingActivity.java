@@ -11,12 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
-import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +32,8 @@ public class EditGroupSavingActivity extends AppCompatActivity {
     private static final String TAG = "EditGroupSavingActivity";
 
     private Spinner periodSpinner, incomeSourcesSpinner;
-    private EditText goalName, savingAmount, savingNote;
+    private EditText savingAmount, savingNote;
+    private TextView goalName;
 
     private String selectedPeriod;
     private String selectedIncomeSource;
@@ -46,7 +49,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
 
         periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
         incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
-        goalName = (EditText) findViewById(R.id.goalName);
+        goalName = (TextView) findViewById(R.id.goalName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
         Button btnUpdate = (Button) findViewById(R.id.btnUpdate);
@@ -58,18 +61,14 @@ public class EditGroupSavingActivity extends AppCompatActivity {
         String note = intent.getStringExtra("groupSavingNote");
         groupSavingParseId = intent.getStringExtra("groupSavingParseId");
 
-        // Prepopulate goalName
         goalName.setText(nameOfGoal);
         savingAmount.setText(amountSaved);
         savingNote.setText(note);
 
-        // get selected period
         getSelectPeriod();
 
-        // get selected income
         selectIncomeSource(getIncomeSources());
 
-        // Save Transaction
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +76,6 @@ public class EditGroupSavingActivity extends AppCompatActivity {
             }
         });
 
-        // Cancel Transaction
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,13 +84,19 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         GroupSavings groupSavingToDelete = new GroupSavings();
                         groupSavingToDelete.setParseId(groupSavingParseId);
-                        mParseHelper.deleteGroupSavingFromParseDb(groupSavingToDelete);
-                        // TODO: 3/22/18 ====> switch to groupSavingFragment
+                        mParseHelper.deleteGroupSavingFromParseDb(groupSavingToDelete, new DeleteSavingListener() {
+                            @Override
+                            public void onResponse(String deleteMessage) {
+                                // TODO: 4/7/18 ==== deduct 3 points that were added for this goal
+                                startTabbedSavingActivity();
+                                Toast.makeText(EditGroupSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
-                        // start TabbedSavingActivity
-                        startTabbedSavingActivity();
-                        Toast.makeText(EditGroupSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
-
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(EditGroupSavingActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -202,19 +206,18 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                     groupSavingToUpdate.setNotes(note);
                 }
 
-                mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate);
+                mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate, new UpdateSavingListener() {
+                    @Override
+                    public void onResponse(String updateMessage) {
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditGroupSavingActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                    }
 
-                Toast.makeText(this, "Saving recorded", Toast.LENGTH_SHORT).show();
-
-                // TODO: 3/21/18 ======>>>>> award user points
-
-                // Award user 3 point for saving
-                User user = new User();
-                user.setPoints(3);
-
-                // start TabbedSavingActivity
-                startTabbedSavingActivity();
-
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(EditGroupSavingActivity.this, "Error occurred while updating " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
@@ -232,14 +235,9 @@ public class EditGroupSavingActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(EditGroupSavingActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        Intent tabbedSavingIntent = new Intent(EditGroupSavingActivity.this, TabbedSavingActivity.class);
+        tabbedSavingIntent.putExtra("position", "0");
+        startActivity(tabbedSavingIntent);
     }
 
-    public void clearEditTexts(){
-        goalName.setText("");
-        savingAmount.setText("");
-        savingNote.setText("");
-    }
 }

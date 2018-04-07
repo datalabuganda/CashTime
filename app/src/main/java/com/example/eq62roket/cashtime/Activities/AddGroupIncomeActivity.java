@@ -3,8 +3,8 @@ package com.example.eq62roket.cashtime.Activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
@@ -114,7 +113,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -127,7 +125,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -165,12 +162,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             String groupName = mGroupName.getText().toString();
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
 
-
-            Log.d(TAG, "source: " + source);
-            Log.d(TAG, "amount: " + amount);
-            Log.d(TAG, "notes: " + notes);
-            Log.d(TAG, "period: " + period);
-
             GroupIncome groupIncome = new GroupIncome();
             groupIncome.setSource(source);
             groupIncome.setAmount(amount);
@@ -179,8 +170,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setGroupParseId(groupParseId);
             groupIncome.setGroupName(groupName);
             groupIncome.setUserId(currentUserId);
-
-            Log.d(TAG, "saveGroupIncome: " + groupIncome.getAmount());
 
             new ParseIncomeHelper(this).saveGroupIncomeToParseDb(groupIncome);
             startTabbedIncomeActivity();

@@ -3,12 +3,12 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListen
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupSavingsActivity";
-    private Spinner periodSpinner, incomeSourcesSpinner;
+    private MaterialBetterSpinner materialIncomeSourceSpinner, materialPeriodSpinner;
     private EditText savingAmount, savingNote;
     private TextView goalName;
     private String selectedPeriod;
@@ -47,8 +48,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         mParseHelper = new ParseHelper(AddGroupSavingsActivity.this);
 
-        periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
-        incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
+        materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.select_period_spinner);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.select_income_spinner);
         goalName = (TextView) findViewById(R.id.goalName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
@@ -91,21 +92,26 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         periods.add("Monthly");
 
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, periods
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                periods
         );
-        periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        periodSpinner.setAdapter(periodAdapter);
+        materialPeriodSpinner.setAdapter(periodAdapter);
 
-        periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialPeriodSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Get selected period
-                selectedPeriod = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedPeriod = editable.toString();
             }
         });
 
@@ -113,20 +119,26 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     public void selectIncomeSource(List<String> incomeSourcesList){
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, incomeSourcesList
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                incomeSourcesList
         );
-        incomeSourcesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        incomeSourcesSpinner.setAdapter(incomeSourcesAdapter);
+        materialIncomeSourceSpinner.setAdapter(incomeSourcesAdapter);
 
-        incomeSourcesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialIncomeSourceSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedIncomeSource = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedIncomeSource = editable.toString();
             }
         });
 
@@ -136,8 +148,10 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         final String[] savingPeriod = {""};
         final String nameOfGoal = goalName.getText().toString();
 
-        if ( !savingAmount.getText().toString().equals("")
-                && !goalName.getText().toString().equals("") ){
+        if ( !savingAmount.getText().toString().equals("") &&
+                !goalName.getText().toString().equals("") &&
+                selectedPeriod != null &&
+                selectedIncomeSource != null){
 
             final GroupGoals groupGoal = new GroupGoals();
             groupGoal.setGroupId(groupParseId);
@@ -258,9 +272,12 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     public List<String> getIncomeSources(){
         List<String> incomeSourcesList = new ArrayList<>();
-        incomeSourcesList.add("Salary");
+        incomeSourcesList.add("Donation");
+        incomeSourcesList.add("Investment");
         incomeSourcesList.add("Loan");
-        incomeSourcesList.add("Investments");
+        incomeSourcesList.add("Salary");
+        incomeSourcesList.add("Saving");
+        incomeSourcesList.add("Wage");
 
         return incomeSourcesList;
     }

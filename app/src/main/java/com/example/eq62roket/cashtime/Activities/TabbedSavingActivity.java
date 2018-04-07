@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,13 @@ public class TabbedSavingActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        Intent intent = getIntent();
+        String position = intent.getStringExtra("position");
+        if (position != null){
+            int pos = Integer.valueOf(position);
+            mViewPager.setCurrentItem(pos);
+        }
 
     }
 

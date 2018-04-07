@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
@@ -34,13 +35,11 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
     private Spinner periodSpinner, incomeSourcesSpinner;
     private EditText savingAmount, savingNote;
     private TextView memberName, goalName;
-
     private String selectedPeriod;
     private String selectedIncomeSource;
     private String nameOfMember;
     private String memberParseId;
     private String goalParseId, memberGoalAmount, memberGoalDueDate;
-
     private ParseHelper mParseHelper;
 
     @Override
@@ -84,9 +83,6 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clearEditTexts();
-
-                // start TabbedSavingActivity
                 startTabbedSavingActivity();
             }
         });
@@ -230,19 +226,23 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
                             }else {
                                 newMemberSaving.setSavingNote(note);
                             }
-                            mParseHelper.saveMemberSavingsToParseDb(newMemberSaving);
+                            mParseHelper.saveMemberSavingsToParseDb(newMemberSaving, new AddSavingListener() {
+                                @Override
+                                public void onResponse(String savedMessage) {
+                                    startTabbedSavingActivity();
+                                    Toast.makeText(AddMemberSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(AddMemberSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                                    // TODO: 3/21/18 ======>>>>> award user points
+                                    // Award user 3 point for saving
+                                    User user = new User();
+                                    user.setPoints(3);
+                                }
 
-                            // TODO: 3/21/18 ======>>>>> award user points
-
-                            // Award user 3 point for saving
-                            User user = new User();
-                            user.setPoints(3);
-
-                            // start TabbedSavingActivity
-                            startTabbedSavingActivity();
-
+                                @Override
+                                public void onFailure(String error) {
+                                    Toast.makeText(AddMemberSavingsActivity.this, "Error Occurred While Saving " + error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                 }
@@ -268,14 +268,9 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(AddMemberSavingsActivity.this, TabbedSavingActivity.class);
-        startActivity(intent);
+        Intent tabbedSavingIntent = new Intent(AddMemberSavingsActivity.this, TabbedSavingActivity.class);
+        tabbedSavingIntent.putExtra("position", "1");
+        startActivity(tabbedSavingIntent);
         finish();
-    }
-
-    public void clearEditTexts(){
-        goalName.setText("");
-        savingAmount.setText("");
-        savingNote.setText("");
     }
 }

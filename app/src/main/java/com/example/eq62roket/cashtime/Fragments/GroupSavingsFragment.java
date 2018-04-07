@@ -74,7 +74,6 @@ public class GroupSavingsFragment extends Fragment {
                             intent.putExtra("groupSavingNote", groupSavings.getNotes());
                             intent.putExtra("groupSavingParseId", groupSavings.getParseId());
                             startActivity(intent);
-                            getActivity().finish();
                         }
                     });
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

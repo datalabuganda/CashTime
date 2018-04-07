@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
+import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
@@ -28,18 +29,15 @@ import java.util.Locale;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupSavingsActivity";
-
     private Spinner periodSpinner, incomeSourcesSpinner;
     private EditText savingAmount, savingNote;
     private TextView goalName;
-
     private String selectedPeriod;
     private String selectedIncomeSource;
     private String groupParseId;
     private String groupGoalParseId;
     private String groupGoalAmount;
     private String groupGoalDueDate;
-
     private ParseHelper mParseHelper;
 
     @Override
@@ -87,7 +85,6 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void getSelectPeriod(){
-        // Add periods to list
         List<String> periods = new ArrayList<>();
         periods.add("Daily");
         periods.add("Weekly");
@@ -224,18 +221,24 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                                 newGroupSaving.setNotes(note);
                             }
 
-                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving);
+                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving, new AddSavingListener() {
+                                @Override
+                                public void onResponse(String savedMessage) {
+                                    startTabbedSavingActivity();
+                                    Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                                    // TODO: 3/29/18 ====> award the user 3 points
+                                    //                // Award user 3 point for saving
+                                    //                User user = new User();
+                                    //                user.setPoints(3);
 
-                            // TODO: 3/29/18 ====> award the user 3 points
-    //                // Award user 3 point for saving
-    //                User user = new User();
-    //                user.setPoints(3);
+                                }
 
-                            // start TabbedSavingActivity
-                            startTabbedSavingActivity();
-
+                                @Override
+                                public void onFailure(String error) {
+                                    Toast.makeText(AddGroupSavingsActivity.this, "Error Occurred while saving " + error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
 
@@ -263,8 +266,9 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     }
 
     public void startTabbedSavingActivity(){
-        Intent intent = new Intent(AddGroupSavingsActivity.this, HomeActivity.class);
-        startActivity(intent);
+        Intent tabbedSavingIntent = new Intent(AddGroupSavingsActivity.this, TabbedSavingActivity.class);
+        tabbedSavingIntent.putExtra("position", "0");
+        startActivity(tabbedSavingIntent);
         finish();
     }
 

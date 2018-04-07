@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
@@ -13,7 +14,9 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
+import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
@@ -666,7 +669,7 @@ public class ParseHelper {
         });
     }
 
-    public void saveGroupBarrierToParseDb(Barrier barrierToSave){
+    public void saveGroupBarrierToParseDb(Barrier barrierToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
         Barrier newBarrier = new Barrier();
         newBarrier.put("userId", currentUserId);
         newBarrier.put("groupGoalName", barrierToSave.getGoalName());
@@ -676,7 +679,16 @@ public class ParseHelper {
         newBarrier.put("barrierDateAdded", barrierToSave.getDateAdded());
         newBarrier.put("groupId", barrierToSave.getGroupId());
         newBarrier.put("groupGoalParseId", barrierToSave.getGroupGoalParseId());
-        newBarrier.saveInBackground();
+        newBarrier.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveBarrierAndTipListener.onResponse("saved");
+                }else {
+                    saveBarrierAndTipListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
@@ -710,7 +722,7 @@ public class ParseHelper {
         });
     }
 
-    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate){
+    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToUpdate.getParseId(), new GetCallback<Barrier>() {
             @Override
@@ -720,8 +732,16 @@ public class ParseHelper {
                     parseBarrier.put("barrierNotes", barrierToUpdate.getBarrierText());
                     parseBarrier.put("tipGiven", barrierToUpdate.isTipGiven());
                     parseBarrier.put("barrierDateAdded", barrierToUpdate.getDateAdded());
-
-                    parseBarrier.saveInBackground();
+                    parseBarrier.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateBarrierAndTipListener.onResponse("updated");
+                            }else {
+                                updateBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -730,13 +750,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete){
+    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
         barrierParseQuery.getInBackground(barrierToDelete.getParseId(), new GetCallback<Barrier>() {
             @Override
             public void done(Barrier parseBarrier, ParseException e) {
                 if (e == null) {
-                    parseBarrier.deleteInBackground();
+                    parseBarrier.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteBarrierAndTipListener.onResponse("deleted");
+                            }else {
+                                deleteBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -744,7 +773,7 @@ public class ParseHelper {
         });
     }
 
-    public void saveTipToParseDb(Tip tipToSave){
+    public void saveTipToParseDb(Tip tipToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
         Tip newTip = new Tip();
         newTip.put("userId", currentUserId);
         newTip.put("groupGoalName", tipToSave.getGoalName());
@@ -753,7 +782,16 @@ public class ParseHelper {
         newTip.put("dateModified", tipToSave.getDateModified());
         newTip.put("groupParseId", tipToSave.getGroupParseId());
         newTip.put("groupGoalParseId", tipToSave.getGroupGoalParseId());
-        newTip.saveInBackground();
+        newTip.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveBarrierAndTipListener.onResponse("saved");
+                }else {
+                    saveBarrierAndTipListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
@@ -817,7 +855,7 @@ public class ParseHelper {
         });
     }
 
-    public void updateTipsInParseDb(final Tip tipToUpdate){
+    public void updateTipsInParseDb(final Tip tipToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.getInBackground(tipToUpdate.getTipParseId(), new GetCallback<Tip>() {
             @Override
@@ -825,7 +863,16 @@ public class ParseHelper {
                 if (e == null) {
                     parseTip.put("tipNotes", tipToUpdate.getIntroText());
                     parseTip.put("dateModified", tipToUpdate.getDateModified());
-                    parseTip.saveInBackground();
+                    parseTip.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateBarrierAndTipListener.onResponse("updated");
+                            }else {
+                                updateBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -834,13 +881,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteTipFromParseDb(Tip tipToDelete){
-        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("Tips");
+    public void deleteTipFromParseDb(Tip tipToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
+        ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
         tipParseQuery.getInBackground(tipToDelete.getTipParseId(), new GetCallback<Tip>() {
             @Override
             public void done(Tip parseTip, ParseException e) {
                 if (e == null) {
-                    parseTip.deleteInBackground();
+                    parseTip.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteBarrierAndTipListener.onResponse("deleted");
+                            }else {
+                                deleteBarrierAndTipListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

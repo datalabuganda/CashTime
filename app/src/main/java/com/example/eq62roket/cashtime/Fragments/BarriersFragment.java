@@ -21,7 +21,6 @@ import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.BarrierAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +28,6 @@ public class BarriersFragment extends Fragment {
 
     private static final String TAG = "GroupSavingsFragment";
 
-    List<Barrier> mBarriersList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private TextView emptyView;
     private BarrierAdapter mBarrierAdapter;
@@ -45,7 +43,6 @@ public class BarriersFragment extends Fragment {
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
         emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
-        // add saving
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

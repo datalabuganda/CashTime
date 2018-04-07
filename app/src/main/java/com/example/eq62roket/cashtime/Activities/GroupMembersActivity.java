@@ -93,6 +93,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
                                     editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
                                     editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
                                     startActivity(editGroupMemberIntent);
+                                    finish();
                                 }
                             });
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

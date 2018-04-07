@@ -44,7 +44,7 @@ public class AddNewGroupActivity extends AppCompatActivity {
                     String locationOfGroup = groupLocation.getText().toString().trim();
                     String groupCentreName = groupCenter.getText().toString().trim();
 
-                    String currentUserId = ParseUser.getCurrentUser().getObjectId();
+                    final String currentUserId = ParseUser.getCurrentUser().getObjectId();
                     String dateToday = new PeriodHelper().getDateToday();
 
                     Group groupTosave = new Group();
@@ -56,18 +56,28 @@ public class AddNewGroupActivity extends AppCompatActivity {
                     groupTosave.setLocationOfGroup(locationOfGroup);
                     groupTosave.setGroupMemberCount(1);
 
-                    new ParseGroupHelper(AddNewGroupActivity.this).saveNewGroupToParseDb(groupTosave);
+                    new ParseGroupHelper(AddNewGroupActivity.this)
+                            .saveNewGroupToParseDb(groupTosave, new ParseGroupHelper.SaveGroupListener() {
+                                @Override
+                                public void onResponse(String saveMessage) {
 
-                    User groupLeaderUser = new User();
-                    groupLeaderUser.setParseId(currentUserId);
-                    groupLeaderUser.setIsLeader(true);
-                    new ParseRegistrationHelper(AddNewGroupActivity.this)
-                            .updateIsLeaderFlagInParseDb(groupLeaderUser);
+                                    User groupLeaderUser = new User();
+                                    groupLeaderUser.setParseId(currentUserId);
+                                    groupLeaderUser.setIsLeader(true);
+                                    new ParseRegistrationHelper(AddNewGroupActivity.this)
+                                            .updateIsLeaderFlagInParseDb(groupLeaderUser);
 
-                    Intent groupIntent = new Intent(AddNewGroupActivity.this, GroupsActivity.class);
-                    startActivity(groupIntent);
-                    finish();
-                    Toast.makeText(AddNewGroupActivity.this, "Your group has been created", Toast.LENGTH_SHORT).show();
+                                    Intent groupIntent = new Intent(AddNewGroupActivity.this, GroupsActivity.class);
+                                    startActivity(groupIntent);
+                                    finish();
+                                    Toast.makeText(AddNewGroupActivity.this, "Your group has been created", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(String error) {
+                                    Toast.makeText(AddNewGroupActivity.this, "Error While Saving Group " + error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }else {
                     Toast.makeText(AddNewGroupActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }

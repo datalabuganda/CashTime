@@ -68,10 +68,18 @@ public class EditGroupActivity extends AppCompatActivity {
                     groupToUpdate.setLocationOfGroup(locationOfGroup);
                     groupToUpdate.setGroupParseId(groupParseId);
 
-                    mParseGroupHelper.updateGroupInParseDb(groupToUpdate);
+                    mParseGroupHelper.updateGroupInParseDb(groupToUpdate, new ParseGroupHelper.UpdateGroupListener() {
+                        @Override
+                        public void onResponse(String updateMessage) {
+                            startGroupsActivity();
+                            Toast.makeText(EditGroupActivity.this, "Your group has been updated", Toast.LENGTH_SHORT).show();
+                        }
 
-                    startGroupsActivity();
-                    Toast.makeText(EditGroupActivity.this, "Your group has been updated", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(String error) {
+                            Toast.makeText(EditGroupActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }else {
                     Toast.makeText(EditGroupActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }
@@ -87,11 +95,19 @@ public class EditGroupActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         Group groupToDelete = new Group();
                         groupToDelete.setGroupParseId(groupParseId);
-                        mParseGroupHelper.deleteGroupFromParseDb(groupToDelete);
                         mParseGroupHelper.deleteAllGroupMembersFromParseDb(groupParseId);
+                        mParseGroupHelper.deleteGroupFromParseDb(groupToDelete, new ParseGroupHelper.DeleteGroupListener() {
+                            @Override
+                            public void onResponse(String updateMessage) {
+                                startGroupsActivity();
+                                Toast.makeText(EditGroupActivity.this, "Group deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
-                        startGroupsActivity();
-                        Toast.makeText(EditGroupActivity.this, "Group deleted successfully", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(EditGroupActivity.this, "Error While Deleting " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });

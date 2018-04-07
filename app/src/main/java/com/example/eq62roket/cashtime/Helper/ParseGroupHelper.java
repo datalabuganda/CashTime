@@ -8,6 +8,7 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.Models.GroupMember;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -24,8 +25,27 @@ import java.util.List;
 
 public class ParseGroupHelper {
 
-    private String currentUserId;
+    public interface SaveGroupListener{
+        void onResponse(String saveMessage);
+        void onFailure(String error);
+    }
 
+    public interface UpdateGroupListener{
+        void onResponse(String updateMessage);
+        void onFailure(String error);
+    }
+
+    public interface DeleteGroupListener{
+        void onResponse(String updateMessage);
+        void onFailure(String error);
+    }
+
+    public interface UpdateGroupMemberListener{
+        void onResponse(String updateMessage);
+        void onFailure(String error);
+    }
+
+    private String currentUserId;
     private static final String TAG = "ParseGroupHelper";
     private Context mContext;
 
@@ -34,7 +54,7 @@ public class ParseGroupHelper {
         currentUserId = ParseUser.getCurrentUser().getObjectId();
     }
 
-    public void saveNewGroupToParseDb(Group groupToSave) {
+    public void saveNewGroupToParseDb(Group groupToSave, final SaveGroupListener saveGroupListener) {
         Group newGroup = new Group();
         newGroup.put("groupName", groupToSave.getGroupName());
         newGroup.put("groupLocation", groupToSave.getLocationOfGroup());
@@ -43,8 +63,16 @@ public class ParseGroupHelper {
         newGroup.put("groupLeaderId", groupToSave.getGroupLeaderId());
         newGroup.put("groupMemberCount", groupToSave.getGroupMemberCount());
         newGroup.put("groupDateCreated", groupToSave.getDateCreated());
-
-        newGroup.saveInBackground();
+        newGroup.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveGroupListener.onResponse("saved");
+                }else {
+                    saveGroupListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void getAllGroupsFromParseDb(final OnReturnedGroupsListener onReturnedGroupsListener){
@@ -108,7 +136,7 @@ public class ParseGroupHelper {
         });
     }
 
-    public void updateGroupInParseDb(final Group groupToUpdate){
+    public void updateGroupInParseDb(final Group groupToUpdate, final UpdateGroupListener updateGroupListener){
         ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
@@ -117,7 +145,16 @@ public class ParseGroupHelper {
                     parseGroupToUpdate.put("groupName", groupToUpdate.getGroupName());
                     parseGroupToUpdate.put("groupLocation", groupToUpdate.getLocationOfGroup());
                     parseGroupToUpdate.put("groupCentreName", groupToUpdate.getGroupCentreName());
-                    parseGroupToUpdate.saveInBackground();
+                    parseGroupToUpdate.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateGroupListener.onResponse("updated");
+                            }else {
+                                updateGroupListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occured: " + e.getMessage());
                 }
@@ -125,13 +162,22 @@ public class ParseGroupHelper {
         });
     }
 
-    public void deleteGroupFromParseDb(final Group groupToUpdate){
+    public void deleteGroupFromParseDb(final Group groupToUpdate, final DeleteGroupListener deleteGroupListener){
         ParseQuery<Group> groupParseQuery = ParseQuery.getQuery("ct2_Groups");
         groupParseQuery.getInBackground(groupToUpdate.getGroupParseId(), new GetCallback<Group>() {
             @Override
             public void done(Group parseGroupToUpdate, ParseException e) {
                 if (e == null){
-                   parseGroupToUpdate.deleteInBackground();
+                   parseGroupToUpdate.deleteInBackground(new DeleteCallback() {
+                       @Override
+                       public void done(ParseException e) {
+                           if (e == null){
+                               deleteGroupListener.onResponse("deleted");
+                           }else {
+                               deleteGroupListener.onFailure(e.getMessage());
+                           }
+                       }
+                   });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -190,7 +236,7 @@ public class ParseGroupHelper {
             @Override
             public void done(ParseException e) {
                 if (e == null){
-                    onSuccessfulRegistrationListener.onResponse("successful sign up");
+                    onSuccessfulRegistrationListener.onResponse("registered");
                 }else{
                     onSuccessfulRegistrationListener.onFailure( e.getMessage());
                 }
@@ -305,7 +351,7 @@ public class ParseGroupHelper {
         });
     }
 
-    public void updateGroupMemberInParseDb(final GroupMember groupMemberToUpdate){
+    public void updateGroupMemberInParseDb(final GroupMember groupMemberToUpdate, final UpdateGroupMemberListener updateGroupMemberListener){
         ParseQuery<GroupMember> groupMemberParseQuery = ParseQuery.getQuery("ct2_GroupMembers");
         groupMemberParseQuery.getInBackground(groupMemberToUpdate.getMemberParseId(), new GetCallback<GroupMember>() {
             @Override
@@ -319,7 +365,16 @@ public class ParseGroupHelper {
                     parseGroupMember.put("memberEducationLevel", groupMemberToUpdate.getMemberEducationLevel());
                     parseGroupMember.put("memberNationality", groupMemberToUpdate.getMemberNationality());
                     parseGroupMember.put("memberLocation", groupMemberToUpdate.getMemberLocation());
-                    parseGroupMember.saveInBackground();
+                    parseGroupMember.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateGroupMemberListener.onResponse("updated");
+                            }else {
+                                updateGroupMemberListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

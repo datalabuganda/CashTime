@@ -72,9 +72,7 @@ public class EditGroupMemberActivity extends AppCompatActivity {
                         groupToUpdate.setGroupParseId(groupMemberGroupId);
                         mParseGroupHelper.decrementGroupMemberCount(groupToUpdate);
 
-                        // TODO: 3/22/18 ====> redirect to member saving fragment
-
-                        startHomeActivity();
+                        startGroupMembersActivity();
                         Toast.makeText(EditGroupMemberActivity.this, "Member deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
@@ -100,7 +98,6 @@ public class EditGroupMemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateMemberUserInfo();
-                startHomeActivity();
             }
         });
 
@@ -151,16 +148,28 @@ public class EditGroupMemberActivity extends AppCompatActivity {
             groupMemberToUpdate.setMemberLocation(groupMemberLocation.getText().toString().trim());
             groupMemberToUpdate.setMemberParseId(groupMemberParseId);
 
-            mParseGroupHelper.updateGroupMemberInParseDb(groupMemberToUpdate);
-            Toast.makeText(EditGroupMemberActivity.this, "Group Member Successfully Updated", Toast.LENGTH_SHORT).show();
+            mParseGroupHelper.updateGroupMemberInParseDb(groupMemberToUpdate, new ParseGroupHelper.UpdateGroupMemberListener() {
+                @Override
+                public void onResponse(String updateMessage) {
+                    startGroupMembersActivity();
+                    Toast.makeText(
+                            EditGroupMemberActivity.this,
+                            "Group Member Successfully Updated",
+                            Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(EditGroupMemberActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(EditGroupMemberActivity.this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void startHomeActivity(){
-        Intent intent = new Intent(EditGroupMemberActivity.this, HomeActivity.class);
+    public void startGroupMembersActivity(){
+        Intent intent = new Intent(EditGroupMemberActivity.this, GroupsActivity.class);
         startActivity(intent);
         finish();
     }

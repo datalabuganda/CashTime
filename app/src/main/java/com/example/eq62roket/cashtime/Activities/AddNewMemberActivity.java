@@ -29,6 +29,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_member);
 
         // TODO: 3/31/18 ===> make sure names are unique in a group
+        // TODO: 4/7/18  ===> Adding a new member does not update immediately(needs refresh first.)
 
         mParseGroupHelper = new ParseGroupHelper(AddNewMemberActivity.this);
 
@@ -60,9 +61,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                         !groupMemberNationality.getText().toString().equals("") &&
                         !groupMemberLocation.getText().toString().equals("")){
 
-                    Group groupToUpdate = new Group();
-                    groupToUpdate.setGroupParseId(groupParseId);
-                    mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+
 //                    mParseGroupHelper.getParticularGroupFromParseDb(groupParseId, new OnReturnedGroupsListener() {
 //                        @Override
 //                        public void onResponse(List<Group> groupsList) {
@@ -101,6 +100,11 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
                         @Override
                         public void onResponse(String success) {
+
+                            Group groupToUpdate = new Group();
+                            groupToUpdate.setGroupParseId(groupParseId);
+                            mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+
                             Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
                             startActivity(intent);
                             finish();

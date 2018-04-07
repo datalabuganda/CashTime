@@ -82,14 +82,6 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             }
         });
 
-        memberGoalCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startTabbedGoalsActivity();
-            }
-        });
-
-
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
@@ -108,6 +100,14 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             }
 
         };
+
+        memberGoalCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTabbedGoalsActivity();
+            }
+        });
+
 
         memberGoalDueDate.setOnClickListener(new View.OnClickListener() {
 
@@ -160,9 +160,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                 }
 
                 new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
-
                 startTabbedGoalsActivity();
-
                 Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
 
             } catch (ParseException e) {
@@ -175,6 +173,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
 
     public void startTabbedGoalsActivity(){
         Intent tabbedGoalsIntent = new Intent(AddMembersGoalsActivity.this, TabbedGoalsActivity.class);
+        tabbedGoalsIntent.putExtra("position", "1");
         startActivity(tabbedGoalsIntent);
         finish();
     }

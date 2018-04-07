@@ -1,5 +1,6 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.example.eq62roket.cashtime.Fragments.MembersGoalsFragment;
 import com.example.eq62roket.cashtime.R;
 
 public class TabbedGoalsActivity extends AppCompatActivity {
+    private static final String TAG = "TabbedGoalsActivity";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -42,6 +44,12 @@ public class TabbedGoalsActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        Intent intent = getIntent();
+        String position = intent.getStringExtra("position");
+        if (position != null){
+            int pos = Integer.valueOf(position);
+            mViewPager.setCurrentItem(pos);
+        }
     }
 
 

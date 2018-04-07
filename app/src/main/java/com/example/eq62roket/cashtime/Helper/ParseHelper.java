@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.DeleteMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
@@ -10,17 +11,20 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateMemberGoalListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.Models.Tip;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -297,7 +301,7 @@ public class ParseHelper {
     }
 
 
-    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate){
+    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate, final UpdateMemberGoalListener updateMemberGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToUpdate.getParseId(), new GetCallback<MembersGoals>() {
             @Override
@@ -307,7 +311,16 @@ public class ParseHelper {
                     membersGoal.put("memberGoalAmount", membersGoalToUpdate.getMemberGoalAmount());
                     membersGoal.put("memberGoalNotes", membersGoalToUpdate.getMemberGoalNotes());
                     membersGoal.put("memberGoalDeadline", membersGoalToUpdate.getMemberGoalDueDate());
-                    membersGoal.saveInBackground();
+                    membersGoal.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateMemberGoalListener.onResponse("updated");
+                            }else {
+                                updateMemberGoalListener.onFailure( e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -333,13 +346,22 @@ public class ParseHelper {
         });
     }
 
-    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete){
+    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete, final DeleteMemberGoalListener deleteMemberGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToDelete.getParseId(), new GetCallback<MembersGoals>() {
             @Override
             public void done(MembersGoals membersGoal, ParseException e) {
                 if (e == null) {
-                    membersGoal.deleteInBackground();
+                    membersGoal.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteMemberGoalListener.onResponse("deleted");
+                            }else {
+                                deleteMemberGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

@@ -72,7 +72,7 @@
                 android:textColorHint="#999999" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersGender"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -84,10 +84,10 @@
                 android:hint="Gender"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersEducationLevel"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -99,9 +99,9 @@
                 android:hint="Education Level"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
-            <EditText
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/groupMembersNationality"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 android:hint="Nationality"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
             <EditText
                 android:id="@+id/groupMemberLocation"
@@ -127,7 +127,7 @@
                 android:hint="Location"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#999999" />
+                android:textColorHint="#ffffff" />
 
 
             <android.support.v7.widget.CardView

@@ -43,7 +43,7 @@ public class GroupExpenditureAdapter extends RecyclerView.Adapter<GroupExpenditu
             category.setText(groupExpenditure.getCategory());
             amount.setText(groupExpenditure.getAmount());
             notes.setText(groupExpenditure.getNotes());
-            duedate.setText(groupExpenditure.getDueDate());
+            duedate.setText(groupExpenditure.getDate());
             groupName.setText(groupExpenditure.getGroupName());
 
             itemView.setOnClickListener(new View.OnClickListener() {

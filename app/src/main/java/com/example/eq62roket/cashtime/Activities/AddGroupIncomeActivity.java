@@ -31,8 +31,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     Button groupIncomeSaveBtn, groupIncomeCancelBtn;
     TextView mGroupName;
 
-    ImageView addIncomeSourceIcon;
-
     TextView incomePeriod;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
@@ -56,15 +54,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         incomePeriod = (TextView) findViewById(R.id.groupIncomePeriod);
         incomeNotes = (EditText)findViewById(R.id.groupIncomeNotes);
         mGroupName = (TextView) findViewById(R.id.groupNameIncome);
-        addIncomeSourceIcon = (ImageView)findViewById(R.id.addIncomeSourceIcon);
-
-        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent incomeSourceIntent = new Intent(AddGroupIncomeActivity.this, AddIncomeSourceActivity.class);
-                startActivity(incomeSourceIntent);
-            }
-        });
 
         groupIncomeSaveBtn = (Button)findViewById(R.id.groupIncomeSaveBtn);
         groupIncomeCancelBtn = (Button)findViewById(R.id.groupIncomeCancelBtn);
@@ -78,15 +67,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
         mGroupName.setText(groupName);
 
-        addIncomeSourceIcon = (ImageView) findViewById(R.id.addIncomeSourceIcon);
-
-        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent incomeSourceIntent = new Intent(AddGroupIncomeActivity.this, AddIncomeSourceActivity.class);
-                startActivity(incomeSourceIntent);
-            }
-        });
 
         groupIncomeSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +163,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(AddGroupIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("fragment_index_key", 2);
         startActivity(tabbedIncomeIntent);
         finish();
     }

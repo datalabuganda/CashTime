@@ -40,7 +40,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String groupExpenditureCategory = intent.getStringExtra("groupExpenditureCategory");
         String groupExpenditureAmount = intent.getStringExtra("groupExpenditureAmount");
-        String groupExpenditureDate = intent.getStringExtra("groupExpenditureDueDate");
+        String groupExpenditureDate = intent.getStringExtra("groupExpenditureDate");
         String groupExpenditureNotes = intent.getStringExtra("groupExpenditureNotes");
         groupExpenditureParseId = intent.getStringExtra("groupExpenditureParseId");
 
@@ -105,7 +105,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
             GroupExpenditure groupExpenditure = new GroupExpenditure();
             groupExpenditure.setCategory(groupExpenditureCategory);
             groupExpenditure.setAmount(groupExpenditureAmount);
-            groupExpenditure.setDueDate(groupExpenditureDate);
+            groupExpenditure.setDate(groupExpenditureDate);
             groupExpenditure.setNotes(groupExpenditureNotes);
             if (!groupExpenditureParseId.equals("")){
                 groupExpenditure.setParseId(groupExpenditureParseId);

@@ -6,9 +6,9 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/28/18.
  */
-@ParseClassName("GroupExpenditure")
+@ParseClassName("ct2_GroupExpenditure")
 public class GroupExpenditure extends ParseObject {
-    String category, categoryId, dueDate, amount, notes, groupName;
+    String category, categoryId, date, amount, notes, groupName;
     String groupParseId, groupExpenditureParseId, parseId, userId;
 
     public String getGroupName() {
@@ -67,12 +67,12 @@ public class GroupExpenditure extends ParseObject {
         this.category = category;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAmount() {

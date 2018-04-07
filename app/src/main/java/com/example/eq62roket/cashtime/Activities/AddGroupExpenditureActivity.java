@@ -1,5 +1,7 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -30,16 +33,25 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddGroupExpenditureActivity extends AppCompatActivity {
     private static String TAG = "AddGroupExpenditureActivity";
     EditText  mGroupExpenditureCategory, mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
     Button groupExpenditureCancelBtn, groupExpenditureSaveBtn;
-    ImageView addExpenditureCategoryIcon;
     TextView mGroupName;
 
+    Calendar myCalendar = Calendar.getInstance();
+    Context context = this;
+    String dateFormat = "dd/MM/yyyy";
+    DatePickerDialog.OnDateSetListener date;
+    SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
     public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others", "Communication",
             "Entertainment", "Gift", "Clothes"};
@@ -47,6 +59,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
     private String groupParseId = "";
     private String categoryId = "";
     private ParseExpenditureHelper mParseHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +71,9 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
         mGroupExpenditureNotes = (EditText)findViewById(R.id.groupExpenditureNotes);
         mGroupName = (TextView) findViewById(R.id.groupName);
 
-        addExpenditureCategoryIcon = (ImageView)findViewById(R.id.addExpenditureCategoryIcon);
-
-        addExpenditureCategoryIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent expenditureCategory = new Intent(AddGroupExpenditureActivity.this, AddExpenditureCategoryActivity.class);
-                startActivity(expenditureCategory);
-            }
-        });
+        Calendar ca = Calendar.getInstance();
+        SimpleDateFormat  format = new SimpleDateFormat("dd/MM/yyyy");
+        mGroupExpenditureDate.setText(format.format(ca.getTime()));
 
         groupExpenditureSaveBtn = (Button)findViewById(R.id.groupExpenditureSaveBtn);
         groupExpenditureCancelBtn = (Button)findViewById(R.id.groupExpenditureCancelBtn);
@@ -94,7 +101,37 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             }
         });
 
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDate();
+            }
+
+        };
+
+        mGroupExpenditureDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(context, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
         groupExpenditureCategory();
+    }
+
+    private void updateDate() {
+        mGroupExpenditureDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     public void groupExpenditureCategory(){
@@ -121,7 +158,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             GroupExpenditure groupExpenditures = new GroupExpenditure();
             groupExpenditures.setCategory(groupExpenditureCategory);
             groupExpenditures.setNotes(groupExpenditureNotes);
-            groupExpenditures.setDueDate(groupExpenditureDate);
+            groupExpenditures.setDate(groupExpenditureDate);
             groupExpenditures.setAmount(groupExpenditureAmount);
             groupExpenditures.setGroupParseId(groupParseId);
             groupExpenditures.setGroupName(groupName);

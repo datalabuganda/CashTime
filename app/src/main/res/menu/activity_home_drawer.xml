@@ -12,20 +12,6 @@
             android:id="@+id/profile"
             android:icon="@drawable/person"
             android:title="Profile" />
-        <item
-            android:id="@+id/transactions"
-            android:icon="@drawable/transactionsicon"
-            android:title="Transactions" />
-
-        <item
-            android:id="@+id/expenditureCategories"
-            android:icon="@drawable/transactionsicon"
-            android:title="Expenditure Categories" />
-
-        <item
-            android:id="@+id/incomeSources"
-            android:icon="@drawable/transactionsicon"
-            android:title="Income Sources" />
 
         <item
             android:id="@+id/calendar"
@@ -37,16 +23,12 @@
             android:title="Settings" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Logout">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/logout"
+                android:icon="@drawable/settings"
+                android:title="Logout" />
         </menu>
     </item>
 

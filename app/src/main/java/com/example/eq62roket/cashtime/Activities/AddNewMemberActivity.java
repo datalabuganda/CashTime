@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListene
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class AddNewMemberActivity extends AppCompatActivity {
 
@@ -22,6 +24,14 @@ public class AddNewMemberActivity extends AppCompatActivity {
 
     private String groupParseId, groupName;
     private ParseGroupHelper mParseGroupHelper;
+
+    public static String[] nationalityCategories = {"Ugandan", "Kenyan", "Rwandan", "Congolese", "Tanzanian",
+            "South Sudanese"};
+
+    public static String[] genderCategories = {"Male", "Female"};
+
+    public static String[] levelOfEducationCategories = {"Primary", "O Level", "A Level", "University",
+            "Institution"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,5 +134,43 @@ public class AddNewMemberActivity extends AppCompatActivity {
             }
         });
 
+        nationalityCategory();
+        genderCategory();
+        levelOfEducationCategory();
+
     }
+
+    public void nationalityCategory(){
+        ArrayAdapter<String> nationalityAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                nationalityCategories
+        );
+
+        MaterialBetterSpinner materialNationalitySpinner = (MaterialBetterSpinner) findViewById(R.id.groupMembersNationality);
+        materialNationalitySpinner.setAdapter(nationalityAdapter);
+    }
+
+    public void genderCategory(){
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                genderCategories
+        );
+
+        MaterialBetterSpinner materialGenderSpinner = (MaterialBetterSpinner) findViewById(R.id.groupMembersGender);
+        materialGenderSpinner.setAdapter(genderAdapter);
+    }
+
+    public void levelOfEducationCategory(){
+        ArrayAdapter<String> levelOfEducationAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                levelOfEducationCategories
+        );
+
+        MaterialBetterSpinner materialLevelOfEducationSpinner = (MaterialBetterSpinner) findViewById(R.id.groupMembersEducationLevel);
+        materialLevelOfEducationSpinner.setAdapter(levelOfEducationAdapter);
+    }
+
 }

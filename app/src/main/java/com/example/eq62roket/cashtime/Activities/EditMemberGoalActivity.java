@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteMemberGoalListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateMemberGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -87,7 +87,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         MembersGoals memberGoalToDelete = new MembersGoals();
                         memberGoalToDelete.setParseId(memberGoalParseId);
-                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete, new DeleteMemberGoalListener() {
+                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete, new DeleteGoalListener() {
                             @Override
                             public void onResponse(String deleteMessage) {
                                 startTabbedGoalsActivity();
@@ -163,7 +163,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             membersGoalToUpdate.setMemberGoalNotes(goalNotes);
             membersGoalToUpdate.setParseId(memberGoalParseId);
 
-            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate, new UpdateMemberGoalListener() {
+            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate, new UpdateGoalListener() {
                 @Override
                 public void onResponse(String updateMessage) {
                     startTabbedGoalsActivity();

@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -85,10 +87,18 @@ public class EditGroupGoalActivity extends AppCompatActivity {
 
                             GroupGoals groupGoalToDelete = new GroupGoals();
                             groupGoalToDelete.setParseId(groupGoalParseId);
-                            mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
-                            startTabbedGoalsActivity();
-                            Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+                            mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete, new DeleteGoalListener() {
+                                @Override
+                                public void onResponse(String deleteMessage) {
+                                    startTabbedGoalsActivity();
+                                    Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+                                }
 
+                                @Override
+                                public void onFailure(String error) {
+                                    Toast.makeText(context, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -159,7 +169,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             String goalDeadline = groupGoalDueDate.getText().toString();
             String goalNotes = groupGoalNote.getText().toString();
 
-            GroupGoals groupGoal = new GroupGoals();
+            final GroupGoals groupGoal = new GroupGoals();
             groupGoal.setGroupGoalStatus("incomplete");
             groupGoal.setAmount(costOfGoal);
             groupGoal.setName(nameOfGoal);
@@ -172,19 +182,24 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             }else {
                 groupGoal.setNotes(goalNotes);
             }
-            mParseHelper.updateGroupGoalInParseDb(groupGoal);
-
-            startTabbedGoalsActivity();
-
-            Toast.makeText(context, "Group Goal " + groupGoal.getName() + " Updated", Toast.LENGTH_SHORT).show();
-
+            mParseHelper.updateGroupGoalInParseDb(groupGoal, new UpdateGoalListener() {
+                @Override
+                public void onResponse(String updateMessage) {
+                    startTabbedGoalsActivity();
+                    Toast.makeText(context, "Group Goal " + groupGoal.getName() + " Updated", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(context, "Error occurred while updating " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void startTabbedGoalsActivity(){
-        Intent tabbedGoalsIntent = new Intent(EditGroupGoalActivity.this, HomeActivity.class);
+        Intent tabbedGoalsIntent = new Intent(EditGroupGoalActivity.this, TabbedGoalsActivity.class);
         startActivity(tabbedGoalsIntent);
         finish();
     }

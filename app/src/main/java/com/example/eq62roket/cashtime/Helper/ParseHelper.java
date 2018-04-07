@@ -3,7 +3,7 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.eq62roket.cashtime.Interfaces.DeleteMemberGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
@@ -11,7 +11,8 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateMemberGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
@@ -50,7 +51,7 @@ public class ParseHelper {
         currentUserId = ParseUser.getCurrentUser().getObjectId();
     }
 
-    public void saveGroupGoalsToParseDb(GroupGoals groupGoals){
+    public void saveGroupGoalsToParseDb(GroupGoals groupGoals, final SaveGoalListener saveGoalListener){
         GroupGoals newGroupGoal = new GroupGoals();
         newGroupGoal.put("userId", currentUserId);
         newGroupGoal.put("goalName", groupGoals.getName());
@@ -61,8 +62,16 @@ public class ParseHelper {
         newGroupGoal.put("groupParseId", groupGoals.getGroupId());
         newGroupGoal.put("groupName", groupGoals.getGroupName());
         newGroupGoal.put("completedDate", groupGoals.getCompletedDate()); // Assume user will complete data on due date
-
-        newGroupGoal.saveInBackground();
+        newGroupGoal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveGoalListener.onResponse("saved");
+                }else {
+                    saveGoalListener.onFailure(e.getMessage());
+                }
+            }
+        });
 
     }
 
@@ -167,7 +176,7 @@ public class ParseHelper {
 
     }
 
-    public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate){
+    public void updateGroupGoalInParseDb(final GroupGoals groupGoalToUpdate, final UpdateGoalListener updateGoalListener){
         ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToUpdate.getParseId(), new GetCallback<GroupGoals>() {
             @Override
@@ -177,7 +186,16 @@ public class ParseHelper {
                     groupGoal.put("goalAmount", groupGoalToUpdate.getAmount());
                     groupGoal.put("goalText", groupGoalToUpdate.getNotes());
                     groupGoal.put("goalEndDate", groupGoalToUpdate.getDueDate());
-                    groupGoal.saveInBackground();
+                    groupGoal.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                updateGoalListener.onResponse("updated");
+                            }else {
+                                updateGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
 
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
@@ -203,22 +221,31 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete){
+    public void deleteGroupGoalFromParseDb(GroupGoals groupGoalToDelete, final DeleteGoalListener deleteGoalListener){
         ParseQuery<GroupGoals> groupGoalQuery = ParseQuery.getQuery("ct2_GroupGoals");
         groupGoalQuery.getInBackground(groupGoalToDelete.getParseId(), new GetCallback<GroupGoals>() {
             @Override
             public void done(GroupGoals groupGoal, ParseException e) {
                 if (e == null) {
-                    groupGoal.deleteInBackground();
+                    groupGoal.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                deleteGoalListener.onResponse("deleted");
+                            }else {
+                                deleteGoalListener.onFailure(e.getMessage());
+                            }
+                        }
+                    });
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
 
     }
 
-    public void saveMemberGoalsToParseDb(MembersGoals membersGoal){
+    public void saveMemberGoalsToParseDb(MembersGoals membersGoal, final SaveGoalListener saveGoalListener){
         MembersGoals newMemberGoal = new MembersGoals();
         newMemberGoal.put("memberUsernames", membersGoal.getMemberName());
         newMemberGoal.put("memberGoalName", membersGoal.getMemberGoalName());
@@ -229,7 +256,16 @@ public class ParseHelper {
         newMemberGoal.put("memberParseId", membersGoal.getMemberParseId());
         newMemberGoal.put("completeDate", membersGoal.getCompleteDate());
         newMemberGoal.put("savingCreatorId", currentUserId);
-        newMemberGoal.saveInBackground();
+        newMemberGoal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    saveGoalListener.onResponse("saved");
+                }else {
+                    saveGoalListener.onFailure(e.getMessage());
+                }
+            }
+        });
 
     }
 
@@ -301,7 +337,7 @@ public class ParseHelper {
     }
 
 
-    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate, final UpdateMemberGoalListener updateMemberGoalListener){
+    public void updateMemberGoalInParseDb(final MembersGoals membersGoalToUpdate, final UpdateGoalListener updateGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToUpdate.getParseId(), new GetCallback<MembersGoals>() {
             @Override
@@ -315,9 +351,9 @@ public class ParseHelper {
                         @Override
                         public void done(ParseException e) {
                             if (e == null){
-                                updateMemberGoalListener.onResponse("updated");
+                                updateGoalListener.onResponse("updated");
                             }else {
-                                updateMemberGoalListener.onFailure( e.getMessage());
+                                updateGoalListener.onFailure( e.getMessage());
                             }
                         }
                     });
@@ -346,7 +382,7 @@ public class ParseHelper {
         });
     }
 
-    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete, final DeleteMemberGoalListener deleteMemberGoalListener){
+    public void deleteMemberGoalFromParseDb(MembersGoals membersGoalToDelete, final DeleteGoalListener deleteGoalListener){
         ParseQuery<MembersGoals> membersGoalsParseQuery = ParseQuery.getQuery("ct2_MemberGoals");
         membersGoalsParseQuery.getInBackground(membersGoalToDelete.getParseId(), new GetCallback<MembersGoals>() {
             @Override
@@ -356,9 +392,9 @@ public class ParseHelper {
                         @Override
                         public void done(ParseException e) {
                             if (e == null){
-                                deleteMemberGoalListener.onResponse("deleted");
+                                deleteGoalListener.onResponse("deleted");
                             }else {
-                                deleteMemberGoalListener.onFailure(e.getMessage());
+                                deleteGoalListener.onFailure(e.getMessage());
                             }
                         }
                     });

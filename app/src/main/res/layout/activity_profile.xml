@@ -152,6 +152,7 @@
                             android:textColor="@color/black"
                             android:textSize="18sp"/>
                         <TextView
+                            android:id="@+id/tips"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2"
@@ -196,7 +197,6 @@
                             android:text="Group Goals"
                             android:textSize="16sp"
                             android:layout_margin="5dp"
-                            android:textStyle="bold"
                             android:textColor="@color/green"/>
 
                         <TextView
@@ -221,7 +221,6 @@
                             android:text="Complete Group Goals"
                             android:textSize="16sp"
                             android:layout_margin="5dp"
-                            android:textStyle="bold"
                             android:textColor="@color/green"/>
 
                         <TextView
@@ -246,7 +245,6 @@
                             android:text="Incomplete Group Goals"
                             android:textSize="16sp"
                             android:layout_margin="5dp"
-                            android:textStyle="bold"
                             android:textColor="@color/green"/>
 
                         <TextView
@@ -271,7 +269,6 @@
                             android:text="Failed Group Goals"
                             android:textSize="16sp"
                             android:layout_margin="5dp"
-                            android:textStyle="bold"
                             android:textColor="@color/green"/>
 
                         <TextView
@@ -288,6 +285,130 @@
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="610dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Group Members Goals"
+                            android:textSize="20dp"
+                            android:textColor="@color/red"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Group Members Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/green"/>
+
+                        <TextView
+                            android:id="@+id/numberOfMembersGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Complete Group Members Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/green"/>
+
+                        <TextView
+                            android:id="@+id/completeMembersGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Incomplete Group Members Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/green"/>
+
+                        <TextView
+                            android:id="@+id/incompleteMembersGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Failed Group Members Goals"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/green"/>
+
+                        <TextView
+                            android:id="@+id/failedMembersGoals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textSize="16sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

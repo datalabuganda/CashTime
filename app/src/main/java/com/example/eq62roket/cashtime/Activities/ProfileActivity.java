@@ -3,11 +3,19 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
+import com.example.eq62roket.cashtime.Helper.ParseUserHelper;
+import com.example.eq62roket.cashtime.Models.GroupExpenditure;
+import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
+import com.example.eq62roket.cashtime.adapters.GroupExpenditureAdapter;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -19,8 +27,11 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     TextView profilePhone, profileUsername, profileNationality, profileLocation, profileBusiness,
             numberOfGroups, numberOfGroupGoals, numberOfMemberGoals, numberOfCompletedGroupGoals,
-            numberOfIncompleteGroupGoals, numberOfFailedGroupGoals, numberOfMembersCompletedGoals, numberOfMembersIncompleteGoals,
-            numberOfGroupMembers;
+            numberOfIncompleteGroupGoals, numberOfFailedGroupGoals, numberOfMembersCompletedGoals,
+            numberOfMembersIncompleteGoals,  numberOfGroupMembers, numberOfMembersFailedGoals,
+            numberOfTips;
+
+    List<User> users = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +48,13 @@ public class ProfileActivity extends AppCompatActivity {
         numberOfCompletedGroupGoals = (TextView)findViewById(R.id.completeGroupGoals);
         numberOfIncompleteGroupGoals = (TextView)findViewById(R.id.incompleteGroupGoals);
         numberOfFailedGroupGoals = (TextView)findViewById(R.id.failedGroupGoals);
+        numberOfMemberGoals = (TextView)findViewById(R.id.numberOfMembersGoals);
+        numberOfMembersCompletedGoals = (TextView)findViewById(R.id.completeMembersGoals);
+        numberOfMembersIncompleteGoals = (TextView)findViewById(R.id.incompleteMembersGoals);
+        numberOfMembersFailedGoals = (TextView)findViewById(R.id.failedMembersGoals);
+        numberOfTips = (TextView)findViewById(R.id.tips);
 
-        Parse.initialize(this);
+
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null){
@@ -49,6 +65,15 @@ public class ProfileActivity extends AppCompatActivity {
             String nationality = currentUser.getString("userNationality");
             int totalGroups = this.totalNumberOfGroups();
             int totalGroupMembers = this.totalNumberOfGroupMembers();
+            int totalGroupGoals = this.totalNumberOfGroupGoals();
+            int totalIncompleteGoals = this.totalNumberOfIncompleteGroupGoals();
+            int totalFailedGroupGoals = this.totalNumberOfFailedGroupGoals();
+            int totalCompleteGroupGoals = this.totalNumberOfCompleteGroupGoals();
+            int totalCompleteMembersGoals = this.totalNumberOfCompleteMembersGoals();
+            int totalIncompleteMembersGoals = this.totalNumberOfIncompleteMembersGoals();
+            int totalFailedMembersGoals = this.totalNumberOfFailedMembersGoals();
+            int totalMembersGoals = this.totalNumberOfMembersGoals();
+            int totalTips = this.totalNumberOfTips();
 
             profileUsername.setText(username);
             profilePhone.setText(phone);
@@ -57,6 +82,16 @@ public class ProfileActivity extends AppCompatActivity {
             profileBusiness.setText(business);
             numberOfGroups.setText(Integer.toString(totalGroups));
             numberOfGroupMembers.setText(Integer.toString(totalGroupMembers));
+            numberOfGroupGoals.setText(Integer.toString(totalGroupGoals));
+            numberOfIncompleteGroupGoals.setText(Integer.toString(totalIncompleteGoals));
+            numberOfFailedGroupGoals.setText(Integer.toString(totalFailedGroupGoals));
+            numberOfCompletedGroupGoals.setText(Integer.toString(totalCompleteGroupGoals));
+            numberOfMembersFailedGoals.setText(Integer.toString(totalFailedMembersGoals));
+            numberOfMembersCompletedGoals.setText(Integer.toString(totalCompleteMembersGoals));
+            numberOfMembersIncompleteGoals.setText(Integer.toString(totalIncompleteMembersGoals));
+            numberOfMemberGoals.setText(Integer.toString(totalMembersGoals));
+            numberOfTips.setText(Integer.toString(totalTips));
+
         }
         totalNumberOfGroups();
         totalNumberOfGroupGoals();
@@ -64,6 +99,10 @@ public class ProfileActivity extends AppCompatActivity {
         totalNumberOfCompleteGroupGoals();
         totalNumberOfIncompleteGroupGoals();
         totalNumberOfFailedGroupGoals();
+        totalNumberOfCompleteMembersGoals();
+        totalNumberOfIncompleteMembersGoals();
+        totalNumberOfFailedMembersGoals();
+        totalNumberOfMembersGoals();
     }
 
     public int totalNumberOfGroups(){
@@ -116,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
         return numberOfIncompleteGroupGoals;
     }
 
-    /********************************* Total Number Of Group Goals ********************************/
+    /********************************* Total Number Of complete Group Goals ********************************/
 
     public int totalNumberOfCompleteGroupGoals(){
         int numberOfCompleteGroupGoals = 0;
@@ -134,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
         return numberOfCompleteGroupGoals;
     }
 
-    /********************************* Total Number Of Group Goals ********************************/
+    /********************************* Total Number Of Failed Group Goals ********************************/
 
     public int totalNumberOfFailedGroupGoals(){
         int numberOfFailedGroupGoals = 0;
@@ -169,5 +208,94 @@ public class ProfileActivity extends AppCompatActivity {
         return numberOfGroupMembers;
     }
 
-    /****************************** Total Number Of incomplete group goals*************************/
+    /********************************* Total Number Of  Members Goals ********************************/
+
+    public int totalNumberOfMembersGoals(){
+        int numberOfIncompleteGroupGoals = 0;
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.whereEqualTo("savingCreatorId", currentUserId);
+//        query.whereContains("memberGoalStatus", "incomplete");
+        try {
+            List<ParseObject> results = query.find();
+            numberOfIncompleteGroupGoals = results.size();
+            Log.d("Total members goals", "totalNumberOfMembersGoals: " + results.size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numberOfIncompleteGroupGoals;
+    }
+
+
+    /********************************* Total Number Of complete Group Goals ********************************/
+
+    public int totalNumberOfCompleteMembersGoals(){
+        int numberOfCompleteGroupGoals = 0;
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.whereEqualTo("savingCreatorId", currentUserId);
+        query.whereContains("memberGoalStatus", "completed");
+        try {
+            List<ParseObject> results = query.find();
+            numberOfCompleteGroupGoals = results.size();
+            Log.d("Complete member goals", "totalNumberOfCompleteMembersGoals: " + results.size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numberOfCompleteGroupGoals;
+    }
+
+    /********************************* Total Number Of incomplete Group Goals ********************************/
+
+    public int totalNumberOfIncompleteMembersGoals(){
+        int numberOfIncompleteGroupGoals = 0;
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.whereEqualTo("savingCreatorId", currentUserId);
+        query.whereContains("memberGoalStatus", "incomplete");
+        try {
+            List<ParseObject> results = query.find();
+            numberOfIncompleteGroupGoals = results.size();
+            Log.d("Complete members goals", "totalNumberOfCompleteMembersGoals: " + results.size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numberOfIncompleteGroupGoals;
+    }
+
+    /********************************* Total Number Of Failed Group Goals ********************************/
+
+    public int totalNumberOfFailedMembersGoals(){
+        int numberOfFailedGroupGoals = 0;
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.whereEqualTo("savingCreatorId", currentUserId);
+        query.whereContains("memberGoalStatus", "failed");
+        try {
+            List<ParseObject> results = query.find();
+            numberOfFailedGroupGoals = results.size();
+            Log.d("Failed members goals", "totalNumberOfFailedMembersGoals: " + results.size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numberOfFailedGroupGoals;
+    }
+
+
+    /********************************* Total Number Of Tips ********************************/
+
+    public int totalNumberOfTips(){
+        int numberOfTips = 0;
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_Tips");
+        query.whereEqualTo("userId", currentUserId);
+        try {
+            List<ParseObject> results = query.find();
+            numberOfTips = results.size();
+            Log.d("Tips", "totalNumberOfTips: " + results.size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return numberOfTips;
+    }
 }

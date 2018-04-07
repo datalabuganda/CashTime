@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -56,7 +57,7 @@ public class AddTipsActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTabbedBarriersTipsctivity();
+                startTabbedBarriersTipsActivity();
             }
         });
     }
@@ -69,7 +70,7 @@ public class AddTipsActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Tip newTip = new Tip();
+            final Tip newTip = new Tip();
             newTip.setGoalName(goalName.getText().toString());
             newTip.setIntroText(tipText.getText().toString());
             newTip.setDateAdded(dateToday);
@@ -77,18 +78,26 @@ public class AddTipsActivity extends AppCompatActivity {
             newTip.setGroupParseId(groupParseId);
             newTip.setGroupGoalParseId(groupGoalParseId);
 
-            new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip);
+            new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip, new SaveBarrierAndTipListener() {
+                @Override
+                public void onResponse(String saveMessage) {
+                    startTabbedBarriersTipsActivity();
+                    Toast.makeText(AddTipsActivity.this, "Tip " + newTip.getGoalName() + " saved", Toast.LENGTH_SHORT).show();
+                }
 
-
-            startTabbedBarriersTipsctivity();
-            Toast.makeText(this, "Good to save " + newTip.getGoalName(), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(AddTipsActivity.this, "Error While Saving " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void startTabbedBarriersTipsctivity(){
+    public void startTabbedBarriersTipsActivity(){
         Intent tabbedBarriersTipsActivity = new Intent(AddTipsActivity.this, TabbedBarriersTipsActivity.class);
+        tabbedBarriersTipsActivity.putExtra("position", "1");
         startActivity(tabbedBarriersTipsActivity);
         finish();
     }

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -22,6 +24,7 @@ import java.util.Locale;
 
 public class EditTipActivity extends AppCompatActivity {
 
+    private static final String TAG = "EditTipActivity";
     private EditText tipNotes;
     private TextView goalName;
     private Button btnUpdate, btnDelete;
@@ -69,13 +72,18 @@ public class EditTipActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         Tip tipToDelete = new Tip();
                         tipToDelete.setTipParseId(tipParseId);
+                        mParseHelper.deleteTipFromParseDb(tipToDelete, new DeleteBarrierAndTipListener() {
+                            @Override
+                            public void onResponse(String deleteMessage) {
+                                startTabbedBarriersTipsActivity();
+                                Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
-                        mParseHelper.deleteTipFromParseDb(tipToDelete);
-                        // TODO: 3/22/18 ====> redirect to tips fragment
-
-                        startTabbedBarriersTipsctivity();
-                        Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
-
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(EditTipActivity.this, "Error While Deleting " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -103,24 +111,31 @@ public class EditTipActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Tip tipToUpdate = new Tip();
+            final Tip tipToUpdate = new Tip();
             tipToUpdate.setTipParseId(tipParseId);
             tipToUpdate.setIntroText(tipNotes.getText().toString());
             tipToUpdate.setDateModified(dateToday);
 
-            mParseHelper.updateTipsInParseDb(tipToUpdate);
-            // TODO: 3/23/18 ====>>> redirect to Tips Fragment
+            mParseHelper.updateTipsInParseDb(tipToUpdate, new UpdateBarrierAndTipListener() {
+                @Override
+                public void onResponse(String updateMessage) {
+                    startTabbedBarriersTipsActivity();
+                    Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
+                }
 
-            startTabbedBarriersTipsctivity();
-
-            Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(EditTipActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void startTabbedBarriersTipsctivity(){
+    public void startTabbedBarriersTipsActivity(){
         Intent tabbedBarriersTipsActivity = new Intent(EditTipActivity.this, TabbedBarriersTipsActivity.class);
+        tabbedBarriersTipsActivity.putExtra("position", "1");
         startActivity(tabbedBarriersTipsActivity);
         finish();
     }

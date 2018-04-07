@@ -36,7 +36,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     private RecyclerView mRecyclerView;
     private TextView emptyView;
     private MembersAdapter mMembersAdapter;
-    FloatingActionButton fabAddGroupMember;
+    private FloatingActionButton fabAddGroupMember;
     private String groupParseId;
     private String groupCentreName;
     private String groupLocation;

@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
+import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -70,13 +72,19 @@ public class EditBarrierActivity extends AppCompatActivity {
                         Barrier barrierToDelete = new Barrier();
                         barrierToDelete.setParseId(barrierParseId);
 
-                        mParseHelper.deleteGroupBarrierFromParseDb(barrierToDelete);
-                        // TODO: 3/22/18 ====> redirect to barrier fragment
+                        mParseHelper.deleteGroupBarrierFromParseDb(barrierToDelete, new DeleteBarrierAndTipListener() {
+                            @Override
+                            public void onResponse(String deleteMessage) {
+                                startTabbedBarriersTipsActivity();
+                                Toast.makeText(EditBarrierActivity.this, "Barrier deleted successfully", Toast.LENGTH_SHORT).show();
 
-                        // start TabbedSavingActivity
-                        startTabbedBarriersTipsctivity();
-                        Toast.makeText(EditBarrierActivity.this, "Barrier deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
 
+                            @Override
+                            public void onFailure(String error) {
+                                Toast.makeText(EditBarrierActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -105,7 +113,7 @@ public class EditBarrierActivity extends AppCompatActivity {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
             String dateToday = simpleDateFormat.format(today);
 
-            Barrier barrierToUpdate = new Barrier();
+            final Barrier barrierToUpdate = new Barrier();
             barrierToUpdate.setParseId(barrierParseId);
             barrierToUpdate.setGoalName(goalName.getText().toString());
             barrierToUpdate.setBarrierName(barrierName.getText().toString());
@@ -113,17 +121,26 @@ public class EditBarrierActivity extends AppCompatActivity {
             barrierToUpdate.setDateAdded(dateToday);
             barrierToUpdate.setTipGiven(false);
 
-            mParseHelper.updateGroupBarriersInParseDb(barrierToUpdate);
+            mParseHelper.updateGroupBarriersInParseDb(barrierToUpdate, new UpdateBarrierAndTipListener() {
+                @Override
+                public void onResponse(String updateMessage) {
+                    startTabbedBarriersTipsActivity();
+                    Toast.makeText(EditBarrierActivity.this, "Barrier " + barrierToUpdate.getBarrierName() + " saved", Toast.LENGTH_SHORT).show();
+                }
 
-            startTabbedBarriersTipsctivity();
-            Toast.makeText(this, "Good to save " + barrierToUpdate.getBarrierName(), Toast.LENGTH_SHORT).show();
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(EditBarrierActivity.this, "Error Occurred While Updating " + error, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void startTabbedBarriersTipsctivity(){
+    public void startTabbedBarriersTipsActivity(){
         Intent tabbedBarriersTipsActivity = new Intent(EditBarrierActivity.this, TabbedBarriersTipsActivity.class);
+        tabbedBarriersTipsActivity.putExtra("position", "0");
         startActivity(tabbedBarriersTipsActivity);
         finish();
     }

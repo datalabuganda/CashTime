@@ -17,6 +17,7 @@ import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
+import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
@@ -82,14 +83,6 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             }
         });
 
-        memberGoalCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startTabbedGoalsActivity();
-            }
-        });
-
-
         // init - set date to current date
         long currentdate = System.currentTimeMillis();
         String dateString = sdf.format(currentdate);
@@ -108,6 +101,14 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
             }
 
         };
+
+        memberGoalCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTabbedGoalsActivity();
+            }
+        });
+
 
         memberGoalDueDate.setOnClickListener(new View.OnClickListener() {
 
@@ -140,7 +141,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                 Date todayZDate = simpleDateFormat.parse(dateToday);
                 Date goalZDeadline = simpleDateFormat.parse(goalDeadline);
 
-                MembersGoals newMembersGoal = new MembersGoals();
+                final MembersGoals newMembersGoal = new MembersGoals();
                 newMembersGoal.setMemberGoalAmount(costOfGoal);
                 newMembersGoal.setMemberGoalName(nameOfGoal);
                 newMembersGoal.setMemberGoalDueDate(goalDeadline);
@@ -159,12 +160,17 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                     newMembersGoal.setCompleteDate("");
                 }
 
-                new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
-
-                startTabbedGoalsActivity();
-
-                Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
-
+                new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal, new SaveGoalListener() {
+                    @Override
+                    public void onResponse(String saveMessage) {
+                        startTabbedGoalsActivity();
+                        Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(context, "Error " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -175,6 +181,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
 
     public void startTabbedGoalsActivity(){
         Intent tabbedGoalsIntent = new Intent(AddMembersGoalsActivity.this, TabbedGoalsActivity.class);
+        tabbedGoalsIntent.putExtra("position", "1");
         startActivity(tabbedGoalsIntent);
         finish();
     }

@@ -63,6 +63,7 @@ public class AllGroupGoalsAdapter extends RecyclerView.Adapter<AllGroupGoalsAdap
             imgCompleted = (ImageView) view.findViewById(R.id.imgCompleted);
         }
 
+        // TODO: 4/5/18 ===> buggy failed badges on scroll 
         public void bind(final GroupGoals groupGoal, final OnGoalClickListener onGoalClickListener){
             String dateToday = new PeriodHelper().getDateToday();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);

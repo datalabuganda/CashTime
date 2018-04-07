@@ -58,9 +58,8 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
         fabMembersGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(),MemberGoalSelectMemberActivity.class);
+                Intent addMembersGoalsIntent = new Intent(MembersGoalsFragment.this.getContext(), MemberGoalSelectMemberActivity.class);
                 startActivity(addMembersGoalsIntent);
-                getActivity().finish();
             }
         });
 

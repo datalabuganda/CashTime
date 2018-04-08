@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
@@ -163,6 +164,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 public void onResponse(int groupGoalTotalSavings) {
                     String amountSaved = savingAmount.getText().toString();
                     String note = savingNote.getText().toString();
+
+                    new ParseIncomeHelper(AddGroupSavingsActivity.this).getTotalGroupIncomeFromParseDb(groupParseId);
 
                     int groupGoalTotalCost = Integer.parseInt(groupGoal.getAmount());
                     int amountToSave = Integer.valueOf(amountSaved);

@@ -67,6 +67,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
             public void onClick(View view) {
                 Intent intent = new Intent(GroupMembersActivity.this, AddNewMemberActivity.class);
                 intent.putExtra("groupLocalUniqueID", groupLocalUniqueID);
+                intent.putExtra("groupName", nameOfGroup);
                 startActivity(intent);
                 finish();
             }
@@ -89,8 +90,8 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
                                 public void onGroupMemberClick(GroupMember groupMemberUser) {
                                     Intent editGroupMemberIntent = new Intent(GroupMembersActivity.this, EditGroupMemberActivity.class);
                                     editGroupMemberIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
-                                    editGroupMemberIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
-                                    editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupLocalUniqueId());
+                                    editGroupMemberIntent.putExtra("groupMemberLocalUniqueID", groupMemberUser.getLocalUniqueID());
+                                    editGroupMemberIntent.putExtra("memberGroupLocalUniqueId", groupMemberUser.getMemberGroupLocalUniqueId());
                                     editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
                                     startActivity(editGroupMemberIntent);
                                     finish();

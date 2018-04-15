@@ -11,7 +11,7 @@ import com.parse.ParseObject;
 public class GroupMember extends ParseObject {
     private String memberUsername, memberPhoneNumber, memberHousehold,
             memberBusiness, memberGender, memberEducationLevel, groupName,
-            memberNationality, memberLocation, memberParseId, memberGroupLocalUniqueId,
+            memberNationality, memberLocation, memberGroupLocalUniqueId,
             localUniqueID;
     private long memberPoints;
 
@@ -104,14 +104,6 @@ public class GroupMember extends ParseObject {
 
     public void setMemberLocation(String memberLocation) {
         this.memberLocation = memberLocation;
-    }
-
-    public String getMemberParseId() {
-        return memberParseId;
-    }
-
-    public void setMemberParseId(String memberParseId) {
-        this.memberParseId = memberParseId;
     }
 
     public long getMemberPoints() {

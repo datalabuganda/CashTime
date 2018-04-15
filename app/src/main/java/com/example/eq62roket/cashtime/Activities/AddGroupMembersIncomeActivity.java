@@ -42,7 +42,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
-    private String groupMemberParseId = "";
+    private String groupMemberLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
@@ -76,7 +76,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberParseId = intent.getStringExtra("parseId");
+        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -160,7 +160,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             groupMemberIncome.setPeriod(groupMemberIncomeIncomePeriod);
             groupMemberIncome.setNotes(groupMemberIncomeNotes);
             groupMemberIncome.setMemberUserName(groupMemberUsername);
-            groupMemberIncome.setMemberParseId(groupMemberParseId);
+            groupMemberIncome.setMemberParseId(groupMemberLocalUniqueID);
             groupMemberIncome.setUserId(currentUser);
 
             Log.d("Income", "groupMemberUserName: " + groupMemberIncome.getMemberUserName());

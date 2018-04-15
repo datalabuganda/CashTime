@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,7 @@ public class EditGroupMemberActivity extends AppCompatActivity {
             groupMemberGender, groupMemberHousehold;
     private Button btnDelete, btnUpdate;
 
-    private String groupMemberParseId;
+    private String groupMemberLocalUniqueID;
     private ParseGroupHelper mParseGroupHelper;
 
     @Override
@@ -39,8 +40,8 @@ public class EditGroupMemberActivity extends AppCompatActivity {
         mParseGroupHelper = new ParseGroupHelper(EditGroupMemberActivity.this);
 
         Intent editGroupMemberIntent = getIntent();
-        groupMemberParseId = editGroupMemberIntent.getStringExtra("groupMemberParseId");
-        final String groupMemberGroupId = editGroupMemberIntent.getStringExtra("groupMemberGroupId");
+        groupMemberLocalUniqueID = editGroupMemberIntent.getStringExtra("groupMemberLocalUniqueID");
+        final String memberGroupLocalUniqueId = editGroupMemberIntent.getStringExtra("memberGroupLocalUniqueId");
         final String usernameOfGroupUser = editGroupMemberIntent.getStringExtra("groupMemberName");
         final String groupMemberCount = editGroupMemberIntent.getStringExtra("groupMemberCount");
 
@@ -64,12 +65,12 @@ public class EditGroupMemberActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         GroupMember groupMemberToDelete = new GroupMember();
-                        groupMemberToDelete.setMemberParseId(groupMemberParseId);
+                        groupMemberToDelete.setLocalUniqueID(groupMemberLocalUniqueID);
                         mParseGroupHelper.deleteGroupMemberFromParseDb(groupMemberToDelete);
 
                         Group groupToUpdate = new Group();
                         groupToUpdate.setGroupMemberCount(Integer.parseInt(groupMemberCount));
-                        groupToUpdate.setLocalUniqueID(groupMemberGroupId);
+                        groupToUpdate.setLocalUniqueID(memberGroupLocalUniqueId);
                         mParseGroupHelper.decrementGroupMemberCount(groupToUpdate);
 
                         startGroupMembersActivity();
@@ -105,7 +106,7 @@ public class EditGroupMemberActivity extends AppCompatActivity {
 
     public void prepopulateUIWithUserInfo(){
 
-        new ParseGroupHelper(EditGroupMemberActivity.this).getMemberUserFromParseDb(groupMemberParseId, new OnReturnedGroupMemberListener() {
+        new ParseGroupHelper(EditGroupMemberActivity.this).getMemberUserFromParseDb(groupMemberLocalUniqueID, new OnReturnedGroupMemberListener() {
             @Override
             public void onResponse(List<GroupMember> groupMemberList) {
                 groupMemberUsername.setText(groupMemberList.get(0).getMemberUsername());
@@ -146,23 +147,15 @@ public class EditGroupMemberActivity extends AppCompatActivity {
             groupMemberToUpdate.setMemberEducationLevel(groupMemberEducationLevel.getText().toString().trim());
             groupMemberToUpdate.setMemberNationality(groupMemberNationality.getText().toString().trim());
             groupMemberToUpdate.setMemberLocation(groupMemberLocation.getText().toString().trim());
-            groupMemberToUpdate.setMemberParseId(groupMemberParseId);
+            groupMemberToUpdate.setLocalUniqueID(groupMemberLocalUniqueID);
+            mParseGroupHelper.updateGroupMemberInParseDb(groupMemberToUpdate);
 
-            mParseGroupHelper.updateGroupMemberInParseDb(groupMemberToUpdate, new ParseGroupHelper.UpdateGroupMemberListener() {
-                @Override
-                public void onResponse(String updateMessage) {
-                    startGroupMembersActivity();
-                    Toast.makeText(
-                            EditGroupMemberActivity.this,
-                            "Group Member Successfully Updated",
-                            Toast.LENGTH_SHORT).show();
-                }
+            startGroupMembersActivity();
+            Toast.makeText(
+                    EditGroupMemberActivity.this,
+                    "Group Member Successfully Updated",
+                    Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(EditGroupMemberActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
         }else {
             Toast.makeText(EditGroupMemberActivity.this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }

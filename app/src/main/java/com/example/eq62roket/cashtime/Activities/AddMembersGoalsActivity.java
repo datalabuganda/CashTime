@@ -40,7 +40,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
     Button memberGoalCancelBtn, memberGoalSaveBtn;
     private TextView memberName;
     private EditText memberGoalName, memberGoalAmount, memberGoalNote;
-    private String groupMemberParseId;
+    private String groupMemberLocalUniqueID;
     private ParseGroupHelper mParseGroupHelper;
 
     @Override
@@ -51,7 +51,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
         mParseGroupHelper = new ParseGroupHelper(AddMembersGoalsActivity.this);
 
         Intent addMemberGoalIntent = getIntent();
-        groupMemberParseId = addMemberGoalIntent.getStringExtra("groupMemberParseId");
+        groupMemberLocalUniqueID = addMemberGoalIntent.getStringExtra("groupMemberLocalUniqueID");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -64,7 +64,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
         memberGoalSaveBtn = (Button) findViewById(R.id.memberGoalSaveBtn);
         memberGoalCancelBtn = (Button) findViewById(R.id.memberGoalCancelBtn);
 
-        mParseGroupHelper.getMemberUserFromParseDb(groupMemberParseId, new OnReturnedGroupMemberListener() {
+        mParseGroupHelper.getMemberUserFromParseDb(groupMemberLocalUniqueID, new OnReturnedGroupMemberListener() {
             @Override
             public void onResponse(List<GroupMember> groupMembersList) {
                 memberName.setText(groupMembersList.get(0).getMemberUsername());
@@ -146,7 +146,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                 newMembersGoal.setMemberGoalName(nameOfGoal);
                 newMembersGoal.setMemberGoalDueDate(goalDeadline);
                 newMembersGoal.setMemberName(nameOfMember);
-                newMembersGoal.setMemberParseId(groupMemberParseId);
+                newMembersGoal.setMemberParseId(groupMemberLocalUniqueID);
                 if (goalNotes.isEmpty()){
                     newMembersGoal.setMemberGoalNotes("No Notes Added");
                 }else {

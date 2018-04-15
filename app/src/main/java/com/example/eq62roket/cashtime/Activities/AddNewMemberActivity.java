@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
-import com.example.eq62roket.cashtime.Interfaces.OnSuccessfulRegistrationListener;
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.R;
@@ -90,29 +89,19 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     newGroupMember.setMemberNationality(mUserNationality);
                     newGroupMember.setMemberLocation(mUserLocation);
                     newGroupMember.setMemberGroupLocalUniqueId(groupLocalUniqueID);
-//                    newGroupMember.setGroupName(groupName);
+                    newGroupMember.setGroupName(groupName);
                     newGroupMember.setMemberPoints(3);
+                    mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember);
 
-                    mParseGroupHelper.saveGroupMemberUserToParseDb(newGroupMember, new OnSuccessfulRegistrationListener() {
-                        @Override
-                        public void onResponse(String success) {
+                    Group groupToUpdate = new Group();
+                    groupToUpdate.setLocalUniqueID(groupLocalUniqueID);
+                    mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
 
-                            Group groupToUpdate = new Group();
-                            groupToUpdate.setLocalUniqueID(groupLocalUniqueID);
-                            mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
+                    Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);
-                            startActivity(intent);
-                            finish();
-                            Toast.makeText(AddNewMemberActivity.this, "Group Member Added", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        @Override
-                        public void onFailure(String error) {
-                            Toast.makeText(AddNewMemberActivity.this, "Member not Added " + error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }else {
                     Toast.makeText(AddNewMemberActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }

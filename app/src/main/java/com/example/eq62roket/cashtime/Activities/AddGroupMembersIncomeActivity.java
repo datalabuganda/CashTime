@@ -12,11 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.R;
@@ -107,7 +105,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -120,7 +117,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -169,8 +165,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
             Log.d("Income", "groupMemberUserName: " + groupMemberIncome.getMemberUserName());
 
-
-            // TODO: 3/22/18 =====> save object to db
             new ParseIncomeHelper(this).saveGroupMemberIncomeToParseDb(groupMemberIncome);
             startTabbedIncomeActivity();
 
@@ -183,6 +177,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(AddGroupMembersIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("position", "1");
         startActivity(tabbedIncomeIntent);
         finish();
     }

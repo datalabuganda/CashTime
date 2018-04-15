@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -163,7 +162,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(AddGroupIncomeActivity.this, TabbedIncomeActivity.class);
-        tabbedIncomeIntent.putExtra("fragment_index_key", 2);
+        tabbedIncomeIntent.putExtra("position", "0");
         startActivity(tabbedIncomeIntent);
         finish();
     }

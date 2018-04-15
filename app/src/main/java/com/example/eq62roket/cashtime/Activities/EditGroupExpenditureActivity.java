@@ -123,6 +123,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(EditGroupExpenditureActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "0");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

@@ -3,42 +3,25 @@ package com.example.eq62roket.cashtime.Activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseExpenditureCategoryHelper;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Models.ExpenditureCategories;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupExpenditureAdapter;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AddGroupExpenditureActivity extends AppCompatActivity {
@@ -164,9 +147,6 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             groupExpenditures.setGroupName(groupName);
             groupExpenditures.setUserId(currentUserId);
 
-            Log.d(TAG, "saveGroupExpenditure: " + groupExpenditures);
-
-            // TODO: 3/22/18 =====> save object to db
             new ParseExpenditureHelper(this).saveGroupExpenditureToParseDb(groupExpenditures);
             startTabbedExpenditureActivity();
 
@@ -179,6 +159,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(AddGroupExpenditureActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "0");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

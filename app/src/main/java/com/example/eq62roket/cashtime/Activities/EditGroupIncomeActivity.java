@@ -4,19 +4,16 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
 
@@ -171,6 +168,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(EditGroupIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("position", "0");
         startActivity(tabbedIncomeIntent);
         finish();
     }

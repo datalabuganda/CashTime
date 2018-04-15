@@ -3,8 +3,8 @@ package com.example.eq62roket.cashtime.Activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,13 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -156,8 +154,6 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             groupMemberExpenditure.setMemberParseId(groupMemberParseId);
             groupMemberExpenditure.setUserId(currentUser);
 
-            Log.d(TAG, "memberUserName: " + groupMemberExpenditure.getMemberUserName());
-
             new ParseExpenditureHelper(this).saveGroupMembersExpenditureToParseDb(groupMemberExpenditure);
             startTabbedExpenditureActivity();
 
@@ -170,6 +166,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(AddGroupMembersExpendituresActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "1");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

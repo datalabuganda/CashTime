@@ -37,7 +37,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     Button groupDeleteBtn, groupUpdateBtn;
 
     private String groupGoalParseId = "";
-    private String groupParseId;
+    private String groupLocalUniqueID;
     private ParseHelper mParseHelper;
     private int mGroupGoalTotalSaving;
 
@@ -62,7 +62,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         String goalDeadline = intent.getStringExtra("groupGoalDeadline");
         String goalNote = intent.getStringExtra("groupGoalNotes");
         groupGoalParseId = intent.getStringExtra("groupGoalParseId");
-        groupParseId = intent.getStringExtra("groupParseId");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
 
         groupGoalName.setText(nameOfGoal);
         groupGoalAmount.setText(costOfGoal);
@@ -71,7 +71,7 @@ public class EditGroupGoalActivity extends AppCompatActivity {
 
         GroupGoals groupGoal = new GroupGoals();
         groupGoal.setParseId(groupGoalParseId);
-        groupGoal.setGroupId(groupParseId);
+        groupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
 
         new ParseHelper(EditGroupGoalActivity.this).getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
             @Override

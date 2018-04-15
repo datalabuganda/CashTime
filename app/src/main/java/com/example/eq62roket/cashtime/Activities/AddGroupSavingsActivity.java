@@ -37,7 +37,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     private TextView goalName;
     private String selectedPeriod;
     private String selectedIncomeSource;
-    private String groupParseId;
+    private String groupLocalUniqueID;
     private String groupGoalParseId;
     private String groupGoalAmount;
     private String groupGoalDueDate;
@@ -60,7 +60,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
-        groupParseId = intent.getStringExtra("groupParseId");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
         groupGoalParseId = intent.getStringExtra("groupGoalParseId");
         groupGoalAmount = intent.getStringExtra("groupGoalAmount");
         groupGoalDueDate = intent.getStringExtra("groupGoalDueDate");
@@ -156,7 +156,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 selectedIncomeSource != null){
 
             final GroupGoals groupGoal = new GroupGoals();
-            groupGoal.setGroupId(groupParseId);
+            groupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
             groupGoal.setParseId(groupGoalParseId);
             groupGoal.setAmount(groupGoalAmount);
             groupGoal.setDueDate(groupGoalDueDate);
@@ -166,7 +166,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                     String amountSaved = savingAmount.getText().toString();
                     String note = savingNote.getText().toString();
 
-                    new ParseIncomeHelper(AddGroupSavingsActivity.this).getTotalGroupIncomeFromParseDb(groupParseId);
+                    new ParseIncomeHelper(AddGroupSavingsActivity.this).getTotalGroupIncomeFromParseDb(groupLocalUniqueID);
 
                     int groupGoalTotalCost = Integer.parseInt(groupGoal.getAmount());
                     int amountToSave = Integer.valueOf(amountSaved);
@@ -194,7 +194,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             Date todayZdate = simpleDateFormat.parse(dateToday);
                             GroupGoals completedGroupGoal = new GroupGoals();
                             completedGroupGoal.setParseId(groupGoalParseId);
-                            completedGroupGoal.setGroupId(groupParseId);
+                            completedGroupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
 
                             if ( amountRemaining == 0 && todayZdate.before(groupGoalDueDate) ){
                                 completedGroupGoal.setGroupGoalStatus("completed");
@@ -231,7 +231,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             newGroupSaving.setIncomeSource(selectedIncomeSource);
                             newGroupSaving.setPeriod(selectedPeriod);
                             newGroupSaving.setDateAdded(dateToday);
-                            newGroupSaving.setGroupParseId(groupParseId);
+                            newGroupSaving.setGroupParseId(groupLocalUniqueID);
                             newGroupSaving.setGroupGoalParseId(groupGoalParseId);
                             if (note.trim().equals("")){
                                 newGroupSaving.setNotes("No notes");

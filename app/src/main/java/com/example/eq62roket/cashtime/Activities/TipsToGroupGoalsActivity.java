@@ -36,7 +36,7 @@ public class TipsToGroupGoalsActivity extends AppCompatActivity {
                         Intent addTipsIntent = new Intent(TipsToGroupGoalsActivity.this, AddTipsActivity.class);
                         addTipsIntent.putExtra("goalName", groupGoals.getName());
                         addTipsIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
-                        addTipsIntent.putExtra("groupParseId", groupGoals.getGroupId());
+                        addTipsIntent.putExtra("groupLocalUniqueID", groupGoals.getGroupLocalUniqueID());
                         startActivity(addTipsIntent);
                         finish();
                     }

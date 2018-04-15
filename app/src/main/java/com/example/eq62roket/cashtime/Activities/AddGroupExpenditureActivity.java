@@ -39,7 +39,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
     public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others", "Communication",
             "Entertainment", "Gift", "Clothes"};
 
-    private String groupParseId = "";
+    private String groupLocalUniqueID = "";
     private String categoryId = "";
     private ParseExpenditureHelper mParseHelper;
 
@@ -63,10 +63,10 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String groupName = intent.getStringExtra("groupName");
-        groupParseId = intent.getStringExtra("groupParseId");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
 
         Log.d(TAG, "username " + groupName);
-        Log.d(TAG, "parseId " + groupParseId);
+        Log.d(TAG, "groupLocalUniqueID " + groupLocalUniqueID);
 
         mGroupName.setText(groupName);
 
@@ -143,7 +143,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             groupExpenditures.setNotes(groupExpenditureNotes);
             groupExpenditures.setDate(groupExpenditureDate);
             groupExpenditures.setAmount(groupExpenditureAmount);
-            groupExpenditures.setGroupParseId(groupParseId);
+            groupExpenditures.setGroupParseId(groupLocalUniqueID);
             groupExpenditures.setGroupName(groupName);
             groupExpenditures.setUserId(currentUserId);
 

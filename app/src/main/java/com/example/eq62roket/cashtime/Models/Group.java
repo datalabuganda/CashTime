@@ -9,11 +9,19 @@ import com.parse.ParseObject;
 
 @ParseClassName("ct2_Groups")
 public class Group extends ParseObject{
-    private String locationOfGroup, groupLeaderId, groupCreatorId;
+    private String locationOfGroup, groupLeaderId, groupCreatorId, localUniqueID;
     private int groupMemberCount;
-    private String groupParseId, groupName, groupCentreName, dateCreated;
+    private String groupName, groupCentreName, dateCreated;
 
     public Group() {
+    }
+
+    public String getLocalUniqueID() {
+        return localUniqueID;
+    }
+
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getGroupCreatorId() {
@@ -38,14 +46,6 @@ public class Group extends ParseObject{
 
     public void setGroupMemberCount(int groupMemberCount) {
         this.groupMemberCount += groupMemberCount;
-    }
-
-    public String getGroupParseId() {
-        return groupParseId;
-    }
-
-    public void setGroupParseId(String groupParseId) {
-        this.groupParseId = groupParseId;
     }
 
     public String getGroupCentreName() {

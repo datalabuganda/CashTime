@@ -69,7 +69,7 @@ public class EditGroupMemberActivity extends AppCompatActivity {
 
                         Group groupToUpdate = new Group();
                         groupToUpdate.setGroupMemberCount(Integer.parseInt(groupMemberCount));
-                        groupToUpdate.setGroupParseId(groupMemberGroupId);
+                        groupToUpdate.setLocalUniqueID(groupMemberGroupId);
                         mParseGroupHelper.decrementGroupMemberCount(groupToUpdate);
 
                         startGroupMembersActivity();

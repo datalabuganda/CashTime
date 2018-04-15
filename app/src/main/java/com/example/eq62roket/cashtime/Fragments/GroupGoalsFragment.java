@@ -87,7 +87,7 @@ public class GroupGoalsFragment extends Fragment implements SearchView.OnQueryTe
                             editGroupGoalIntent.putExtra("groupGoalDeadline",groupGoals.getDueDate());
                             editGroupGoalIntent.putExtra("groupGoalNotes", groupGoals.getNotes());
                             editGroupGoalIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
-                            editGroupGoalIntent.putExtra("groupParseId", groupGoals.getGroupId());
+                            editGroupGoalIntent.putExtra("groupLocalUniqueID", groupGoals.getGroupLocalUniqueID());
                             startActivity(editGroupGoalIntent);
                         }
                     });

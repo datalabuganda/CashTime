@@ -35,7 +35,7 @@ public class BarrierToGroupGoalsActivity extends AppCompatActivity {
                     public void onGoalClick(GroupGoals groupGoals) {
                         Intent addBarrierIntent = new Intent(BarrierToGroupGoalsActivity.this, AddBarrierActivity.class);
                         addBarrierIntent.putExtra("goalName", groupGoals.getName());
-                        addBarrierIntent.putExtra("groupId", groupGoals.getGroupId());
+                        addBarrierIntent.putExtra("groupLocalUniqueID", groupGoals.getGroupLocalUniqueID());
                         addBarrierIntent.putExtra("groupGoalParseId", groupGoals.getParseId());
                         startActivity(addBarrierIntent);
                         finish();

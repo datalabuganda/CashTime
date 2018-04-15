@@ -37,7 +37,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
     private TextView emptyView;
     private MembersAdapter mMembersAdapter;
     private FloatingActionButton fabAddGroupMember;
-    private String groupParseId;
+    private String groupLocalUniqueID;
     private String groupCentreName;
     private String groupLocation;
     private String nameOfGroup;
@@ -49,7 +49,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
         Intent groupDetailIntent = getIntent();
         nameOfGroup = groupDetailIntent.getStringExtra("groupName");
-        groupParseId = groupDetailIntent.getStringExtra("groupParseId");
+        groupLocalUniqueID = groupDetailIntent.getStringExtra("groupLocalUniqueID");
         groupCentreName = groupDetailIntent.getStringExtra("groupCentreName");
         groupLocation = groupDetailIntent.getStringExtra("groupLocation");
         final String groupMemberCount = groupDetailIntent.getStringExtra("groupMemberCount");
@@ -66,14 +66,14 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GroupMembersActivity.this, AddNewMemberActivity.class);
-                intent.putExtra("groupParseId", groupParseId);
+                intent.putExtra("groupLocalUniqueID", groupLocalUniqueID);
                 startActivity(intent);
                 finish();
             }
         });
 
         new ParseGroupHelper(GroupMembersActivity.this)
-                .getGroupMembersFromParseDb(groupParseId, new OnReturnedGroupMemberListener() {
+                .getGroupMembersFromParseDb(groupLocalUniqueID, new OnReturnedGroupMemberListener() {
                     @Override
                     public void onResponse(List<GroupMember> userList) {
                         if (userList.isEmpty()){
@@ -90,7 +90,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
                                     Intent editGroupMemberIntent = new Intent(GroupMembersActivity.this, EditGroupMemberActivity.class);
                                     editGroupMemberIntent.putExtra("groupMemberName", groupMemberUser.getMemberUsername());
                                     editGroupMemberIntent.putExtra("groupMemberParseId", groupMemberUser.getMemberParseId());
-                                    editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupId());
+                                    editGroupMemberIntent.putExtra("groupMemberGroupId", groupMemberUser.getMemberGroupLocalUniqueId());
                                     editGroupMemberIntent.putExtra("groupMemberCount", groupMemberCount);
                                     startActivity(editGroupMemberIntent);
                                     finish();
@@ -162,7 +162,7 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
 
     public void startEditGroupActivity(){
         Intent editGroupIntent = new Intent(GroupMembersActivity.this, EditGroupActivity.class);
-        editGroupIntent.putExtra("groupParseId", groupParseId);
+        editGroupIntent.putExtra("groupLocalUniqueID", groupLocalUniqueID);
         editGroupIntent.putExtra("groupCentreName", groupCentreName);
         editGroupIntent.putExtra("groupLocation", groupLocation);
         editGroupIntent.putExtra("nameOfGroup", nameOfGroup);

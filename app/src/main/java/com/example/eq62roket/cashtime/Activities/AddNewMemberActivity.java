@@ -22,7 +22,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
             groupMemberNationality, groupMemberEducationLevel, groupMemberGender, groupMemberHousehold;
     CardView groupMemberRegister;
 
-    private String groupParseId, groupName;
+    private String groupLocalUniqueID, groupName;
     private ParseGroupHelper mParseGroupHelper;
 
     public static String[] nationalityCategories = {"Ugandan", "Kenyan", "Rwandan", "Congolese", "Tanzanian",
@@ -44,7 +44,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
         mParseGroupHelper = new ParseGroupHelper(AddNewMemberActivity.this);
 
         Intent addNewMemberIntent = getIntent();
-        groupParseId = addNewMemberIntent.getStringExtra("groupParseId");
+        groupLocalUniqueID = addNewMemberIntent.getStringExtra("groupLocalUniqueID");
         groupName = addNewMemberIntent.getStringExtra("groupName");
 
         groupMemberBusiness = (EditText) findViewById(R.id.groupMembersBusiness);
@@ -71,20 +71,6 @@ public class AddNewMemberActivity extends AppCompatActivity {
                         !groupMemberNationality.getText().toString().equals("") &&
                         !groupMemberLocation.getText().toString().equals("")){
 
-
-//                    mParseGroupHelper.getParticularGroupFromParseDb(groupParseId, new OnReturnedGroupsListener() {
-//                        @Override
-//                        public void onResponse(List<Group> groupsList) {
-//                            groupName = groupsList.get(0).getGroupName();
-//                            Log.d("GroupName", "onResponse: " + groupName);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(String error) {
-//
-//                        }
-//                    });
-
                     String mUsername = groupMemberUsername.getText().toString().trim();
                     String mUserPhone = groupMemberPhone.getText().toString().trim();
                     String mUserHousehold = groupMemberHousehold.getText().toString().trim();
@@ -103,7 +89,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                     newGroupMember.setMemberEducationLevel(mUserEducationLevel);
                     newGroupMember.setMemberNationality(mUserNationality);
                     newGroupMember.setMemberLocation(mUserLocation);
-                    newGroupMember.setMemberGroupId(groupParseId);
+                    newGroupMember.setMemberGroupLocalUniqueId(groupLocalUniqueID);
 //                    newGroupMember.setGroupName(groupName);
                     newGroupMember.setMemberPoints(3);
 
@@ -112,7 +98,7 @@ public class AddNewMemberActivity extends AppCompatActivity {
                         public void onResponse(String success) {
 
                             Group groupToUpdate = new Group();
-                            groupToUpdate.setGroupParseId(groupParseId);
+                            groupToUpdate.setLocalUniqueID(groupLocalUniqueID);
                             mParseGroupHelper.incrementGroupMemberCount(groupToUpdate);
 
                             Intent intent = new Intent(AddNewMemberActivity.this, GroupsActivity.class);

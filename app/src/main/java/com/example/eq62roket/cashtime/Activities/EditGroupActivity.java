@@ -19,7 +19,7 @@ public class EditGroupActivity extends AppCompatActivity {
     EditText groupName, groupLocation, groupCenter;
     Button groupDeleteBtn, groupUpdateBtn;
 
-    private String groupParseId;
+    private String groupLocalUniqueID;
     private String locationOfGroup;
     private String groupCentreName;
     private String nameOfGroup;
@@ -33,7 +33,7 @@ public class EditGroupActivity extends AppCompatActivity {
         mParseGroupHelper = new ParseGroupHelper(EditGroupActivity.this);
 
         Intent groupIntent = getIntent();
-        groupParseId = groupIntent.getStringExtra("groupParseId");
+        groupLocalUniqueID = groupIntent.getStringExtra("groupLocalUniqueID");
         groupCentreName = groupIntent.getStringExtra("groupCentreName");
         locationOfGroup = groupIntent.getStringExtra("groupLocation");
         nameOfGroup = groupIntent.getStringExtra("nameOfGroup");
@@ -66,20 +66,12 @@ public class EditGroupActivity extends AppCompatActivity {
                     groupToUpdate.setGroupName(nameOfGroup);
                     groupToUpdate.setGroupCentreName(groupCentreName);
                     groupToUpdate.setLocationOfGroup(locationOfGroup);
-                    groupToUpdate.setGroupParseId(groupParseId);
+                    groupToUpdate.setLocalUniqueID(groupLocalUniqueID);
+                    mParseGroupHelper.updateGroupInParseDb(groupToUpdate);
 
-                    mParseGroupHelper.updateGroupInParseDb(groupToUpdate, new ParseGroupHelper.UpdateGroupListener() {
-                        @Override
-                        public void onResponse(String updateMessage) {
-                            startGroupsActivity();
-                            Toast.makeText(EditGroupActivity.this, "Your group has been updated", Toast.LENGTH_SHORT).show();
-                        }
+                    startGroupsActivity();
+                    Toast.makeText(EditGroupActivity.this, "Your group has been updated", Toast.LENGTH_SHORT).show();
 
-                        @Override
-                        public void onFailure(String error) {
-                            Toast.makeText(EditGroupActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }else {
                     Toast.makeText(EditGroupActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }
@@ -94,20 +86,12 @@ public class EditGroupActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Group groupToDelete = new Group();
-                        groupToDelete.setGroupParseId(groupParseId);
-                        mParseGroupHelper.deleteAllGroupMembersFromParseDb(groupParseId);
-                        mParseGroupHelper.deleteGroupFromParseDb(groupToDelete, new ParseGroupHelper.DeleteGroupListener() {
-                            @Override
-                            public void onResponse(String updateMessage) {
-                                startGroupsActivity();
-                                Toast.makeText(EditGroupActivity.this, "Group deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        groupToDelete.setLocalUniqueID(groupLocalUniqueID);
+                        mParseGroupHelper.deleteAllGroupMembersFromParseDb(groupLocalUniqueID);
+                        mParseGroupHelper.deleteGroupFromParseDb(groupToDelete);
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditGroupActivity.this, "Error While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        startGroupsActivity();
+                        Toast.makeText(EditGroupActivity.this, "Group deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 });

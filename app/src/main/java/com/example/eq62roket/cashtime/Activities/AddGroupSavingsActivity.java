@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
+
     private static final String TAG = "AddGroupSavingsActivity";
     private MaterialBetterSpinner materialIncomeSourceSpinner, materialPeriodSpinner;
     private EditText savingAmount, savingNote;

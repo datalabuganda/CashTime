@@ -39,7 +39,8 @@
                 android:layout_marginTop="13dp"
                 android:ems="10"
                 android:hint="Phone Number"
-                android:inputType="textPersonName"
+                android:maxLength="12"
+                android:inputType="phone"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -53,7 +54,8 @@
                 android:layout_marginTop="18dp"
                 android:ems="10"
                 android:hint="Household Composition"
-                android:inputType="textPersonName"
+                android:maxLength="2"
+                android:inputType="number"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -127,7 +129,7 @@
                 android:hint="Location"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
+                android:textColorHint="#999999"/>
 
 
             <android.support.v7.widget.CardView

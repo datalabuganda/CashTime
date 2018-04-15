@@ -32,7 +32,6 @@ import java.util.Locale;
 public class AddMemberSavingsActivity extends AppCompatActivity {
 
     private static final String TAG = "AddMemberSavings";
-
     private MaterialBetterSpinner materialIncomeSourceSpinner, materialPeriodSpinner;
     private EditText savingAmount, savingNote;
     private TextView memberName, goalName;

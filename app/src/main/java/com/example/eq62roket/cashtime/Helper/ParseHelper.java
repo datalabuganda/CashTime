@@ -498,7 +498,6 @@ public class ParseHelper {
                     groupSaving.put("groupSavingIncomeSource", groupSavingToUpdate.getIncomeSource());
                     groupSaving.put("groupSavingPeriod", groupSavingToUpdate.getPeriod());
                     groupSaving.put("groupSavingNotes", groupSavingToUpdate.getNotes());
-                    groupSaving.put("groupSavingDateAdded", groupSavingToUpdate.getDateAdded());
                     groupSaving.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -627,7 +626,6 @@ public class ParseHelper {
                     memberSaving.put("memberSavingIncomeSource", memberSavingToUpdate.getIncomeSource());
                     memberSaving.put("memberSavingPeriod", memberSavingToUpdate.getPeriod());
                     memberSaving.put("memberSavingNotes", memberSavingToUpdate.getSavingNote());
-                    memberSaving.put("memberSavingDateAdded", memberSavingToUpdate.getDateAdded());
                     memberSaving.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

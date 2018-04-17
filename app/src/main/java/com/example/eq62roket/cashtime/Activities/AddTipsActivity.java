@@ -24,7 +24,7 @@ public class AddTipsActivity extends AppCompatActivity {
     private EditText tipText;
     private TextView goalName;
 
-    private String groupGoalParseId, groupParseId;
+    private String groupGoalLocalUniqueID, groupParseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class AddTipsActivity extends AppCompatActivity {
         Intent addTipsIntent = getIntent();
         String nameOfGoal = addTipsIntent.getStringExtra("goalName");
         groupParseId = addTipsIntent.getStringExtra("groupParseId");
-        groupGoalParseId = addTipsIntent.getStringExtra("groupGoalParseId");
+        groupGoalLocalUniqueID = addTipsIntent.getStringExtra("groupGoalLocalUniqueID");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,7 +76,7 @@ public class AddTipsActivity extends AppCompatActivity {
             newTip.setDateAdded(dateToday);
             newTip.setDateModified(dateToday);
             newTip.setGroupParseId(groupParseId);
-            newTip.setGroupGoalParseId(groupGoalParseId);
+            newTip.setGroupGoalParseId(groupGoalLocalUniqueID);
 
             new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip, new SaveBarrierAndTipListener() {
                 @Override

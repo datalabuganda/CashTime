@@ -24,7 +24,7 @@ public class AddBarrierActivity extends AppCompatActivity {
     private Button btnCancel, btnSave;
     private EditText barrierNotes, barrierName;
     private TextView goalName;
-    private String groupId, groupGoalParseId;
+    private String groupId, groupGoalLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class AddBarrierActivity extends AppCompatActivity {
         Intent addBarrierIntent = getIntent();
         String nameOfGoal = addBarrierIntent.getStringExtra("goalName");
         groupId = addBarrierIntent.getStringExtra("groupId");
-        groupGoalParseId = addBarrierIntent.getStringExtra("groupGoalParseId");
+        groupGoalLocalUniqueID = addBarrierIntent.getStringExtra("groupGoalLocalUniqueID");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,7 +77,7 @@ public class AddBarrierActivity extends AppCompatActivity {
             newBarrier.setBarrierName(barrierName.getText().toString());
             newBarrier.setBarrierText(barrierNotes.getText().toString());
             newBarrier.setGroupId(groupId);
-            newBarrier.setGroupGoalParseId(groupGoalParseId);
+            newBarrier.setGroupGoalParseId(groupGoalLocalUniqueID);
             newBarrier.setDateAdded(dateToday);
             newBarrier.setTipGiven(false);
 

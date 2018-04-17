@@ -9,7 +9,7 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_GroupGoals")
 public class GroupGoals extends ParseObject {
-    String parseId, name, dueDate, amount, completedDate,
+    private String name, dueDate, amount, completedDate,
             notes, groupGoalStatus, groupLocalUniqueID, groupName, localUniqueID;
 
 
@@ -47,14 +47,6 @@ public class GroupGoals extends ParseObject {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public String getParseId() {
-        return parseId;
-    }
-
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
     }
 
     public String getGroupGoalStatus() {

@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -37,7 +35,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
 
     private String selectedPeriod;
     private String selectedIncomeSource;
-    private String groupSavingParseId;
+    private String groupSavingLocalUniqueID;
     private ParseHelper mParseHelper;
 
     @Override
@@ -59,7 +57,7 @@ public class EditGroupSavingActivity extends AppCompatActivity {
         final String nameOfGoal = intent.getStringExtra("groupGoalName");
         String amountSaved = intent.getStringExtra("groupSavingAmount");
         String note = intent.getStringExtra("groupSavingNote");
-        groupSavingParseId = intent.getStringExtra("groupSavingParseId");
+        groupSavingLocalUniqueID = intent.getStringExtra("groupSavingLocalUniqueID");
 
         goalName.setText(nameOfGoal);
         savingAmount.setText(amountSaved);
@@ -83,20 +81,13 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         GroupSavings groupSavingToDelete = new GroupSavings();
-                        groupSavingToDelete.setParseId(groupSavingParseId);
-                        mParseHelper.deleteGroupSavingFromParseDb(groupSavingToDelete, new DeleteSavingListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                // TODO: 4/7/18 ==== deduct 3 points that were added for this goal
-                                startTabbedSavingActivity();
-                                Toast.makeText(EditGroupSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        groupSavingToDelete.setLocalUniqueID(groupSavingLocalUniqueID);
+                        mParseHelper.deleteGroupSavingFromParseDb(groupSavingToDelete);
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditGroupSavingActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        // TODO: 4/7/18 ==== deduct 3 points that were added for this goal
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditGroupSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -208,26 +199,17 @@ public class EditGroupSavingActivity extends AppCompatActivity {
                 groupSavingToUpdate.setPeriod(selectedPeriod);
                 groupSavingToUpdate.setIncomeSource(selectedIncomeSource);
                 groupSavingToUpdate.setNotes(note);
-                groupSavingToUpdate.setParseId(groupSavingParseId);
+                groupSavingToUpdate.setLocalUniqueID(groupSavingLocalUniqueID);
 
                 if (note.trim().equals("")){
                     groupSavingToUpdate.setNotes("No notes");
                 }else {
                     groupSavingToUpdate.setNotes(note);
                 }
+                mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate);
 
-                mParseHelper.updateGroupSavingInParseDb(groupSavingToUpdate, new UpdateSavingListener() {
-                    @Override
-                    public void onResponse(String updateMessage) {
-                        startTabbedSavingActivity();
-                        Toast.makeText(EditGroupSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(EditGroupSavingActivity.this, "Error occurred while updating " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                startTabbedSavingActivity();
+                Toast.makeText(EditGroupSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();

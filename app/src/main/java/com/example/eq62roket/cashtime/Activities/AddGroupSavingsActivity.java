@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
@@ -38,7 +37,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
     private String selectedPeriod;
     private String selectedIncomeSource;
     private String groupLocalUniqueID;
-    private String groupGoalParseId;
+    private String groupGoalLocalUniqueID;
     private String groupGoalAmount;
     private String groupGoalDueDate;
     private ParseHelper mParseHelper;
@@ -61,7 +60,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
         groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
-        groupGoalParseId = intent.getStringExtra("groupGoalParseId");
+        groupGoalLocalUniqueID = intent.getStringExtra("groupGoalLocalUniqueID");
         groupGoalAmount = intent.getStringExtra("groupGoalAmount");
         groupGoalDueDate = intent.getStringExtra("groupGoalDueDate");
 
@@ -157,7 +156,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
             final GroupGoals groupGoal = new GroupGoals();
             groupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
-            groupGoal.setParseId(groupGoalParseId);
+            groupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
             groupGoal.setAmount(groupGoalAmount);
             groupGoal.setDueDate(groupGoalDueDate);
             mParseHelper.getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
@@ -193,7 +192,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             Date groupGoalDueDate = simpleDateFormat.parse(groupGoal.getDueDate());
                             Date todayZdate = simpleDateFormat.parse(dateToday);
                             GroupGoals completedGroupGoal = new GroupGoals();
-                            completedGroupGoal.setParseId(groupGoalParseId);
+                            completedGroupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
                             completedGroupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
 
                             if ( amountRemaining == 0 && todayZdate.before(groupGoalDueDate) ){
@@ -231,32 +230,18 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             newGroupSaving.setIncomeSource(selectedIncomeSource);
                             newGroupSaving.setPeriod(selectedPeriod);
                             newGroupSaving.setDateAdded(dateToday);
-                            newGroupSaving.setGroupParseId(groupLocalUniqueID);
-                            newGroupSaving.setGroupGoalParseId(groupGoalParseId);
+                            newGroupSaving.setGroupLocalUniqueID(groupLocalUniqueID);
+                            newGroupSaving.setGroupGoalLocalUniqueID(groupGoalLocalUniqueID);
                             if (note.trim().equals("")){
                                 newGroupSaving.setNotes("No notes");
                             }else {
                                 newGroupSaving.setNotes(note);
                             }
+                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving);
+                            // TODO: 3/29/18 ====> award the user 3 points
+                            startTabbedSavingActivity();
+                            Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving, new AddSavingListener() {
-                                @Override
-                                public void onResponse(String savedMessage) {
-                                    startTabbedSavingActivity();
-                                    Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
-
-                                    // TODO: 3/29/18 ====> award the user 3 points
-                                    //                // Award user 3 point for saving
-                                    //                User user = new User();
-                                    //                user.setPoints(3);
-
-                                }
-
-                                @Override
-                                public void onFailure(String error) {
-                                    Toast.makeText(AddGroupSavingsActivity.this, "Error Occurred while saving " + error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
                         }
                     }
 

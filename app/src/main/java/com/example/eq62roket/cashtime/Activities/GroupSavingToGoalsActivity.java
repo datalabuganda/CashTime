@@ -50,7 +50,7 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
                             intent.putExtra("goalName", groupGoals.getName());
                             intent.putExtra("groupLocalUniqueID", groupGoals.getGroupLocalUniqueID());
                             intent.putExtra("groupGoalAmount", groupGoals.getAmount());
-                            intent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                            intent.putExtra("groupGoalLocalUniqueID", groupGoals.getLocalUniqueID());
                             intent.putExtra("groupGoalDueDate", groupGoals.getDueDate());
                             startActivity(intent);
                             finish();

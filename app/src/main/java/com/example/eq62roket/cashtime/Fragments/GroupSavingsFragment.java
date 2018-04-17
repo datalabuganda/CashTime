@@ -73,7 +73,7 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
                             intent.putExtra("groupGoalName", groupSavings.getGoalName());
                             intent.putExtra("groupSavingAmount", groupSavings.getAmount());
                             intent.putExtra("groupSavingNote", groupSavings.getNotes());
-                            intent.putExtra("groupSavingParseId", groupSavings.getParseId());
+                            intent.putExtra("groupSavingLocalUniqueID", groupSavings.getLocalUniqueID());
                             startActivity(intent);
                         }
                     });

@@ -142,18 +142,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
                 new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
                 startTabbedGoalsActivity();
                 Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
-//                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals, new SaveGoalListener() {
-//                    @Override
-//                    public void onResponse(String saveMessage) {
-//                        startTabbedGoalsActivity();
-//                        Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error) {
-//                        Toast.makeText(context, "Error While Saving Goal " + error, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }

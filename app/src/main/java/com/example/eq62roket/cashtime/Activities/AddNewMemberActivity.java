@@ -24,8 +24,8 @@ public class AddNewMemberActivity extends AppCompatActivity {
     private String groupLocalUniqueID, groupName;
     private ParseGroupHelper mParseGroupHelper;
 
-    public static String[] nationalityCategories = {"Ugandan", "Kenyan", "Rwandan", "Congolese", "Tanzanian",
-            "South Sudanese"};
+    public static String[] nationalityCategories = {"Uganda", "Kenya", "Rwanda", "Congo", "Tanzania",
+            "South Sudan"};
 
     public static String[] genderCategories = {"Male", "Female"};
 

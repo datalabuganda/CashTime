@@ -58,6 +58,15 @@
     <string name="no_group_barriers_msg">No Group Barriers Added. Click + button to add a Barrier</string>
     <string name="no_group_savings_msg">No Group Savings Added. Click + button to add a Saving</string>
     <string name="no_tips_msg">No Tips Added. Click + button to add a Tip</string>
+    <string name="username">Usernames</string>
+    <string name="enter_phone_number">Enter Phone Number e.g 07xxxxxxxx</string>
+    <string name="family_size_e_g_3">Enter Family Size e.g 3</string>
+    <string name="occupation_e_g_coffee_farmer">Enter Occupation e.g Coffee farmer</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="select_level_of_education">Select Level Of Education</string>
+    <string name="select_country_of_birth">Select Country Of Birth</string>
+    <string name="where_does_member_live">Where does Member live?</string>
+    <string name="submit">Submit</string>
 
 
     <!--level of education array-->

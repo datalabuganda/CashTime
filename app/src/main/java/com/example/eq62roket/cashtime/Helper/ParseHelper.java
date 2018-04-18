@@ -513,7 +513,7 @@ public class ParseHelper {
         newMemberSaving.put("memberSavingNotes", memberSavingToSave.getSavingNote());
         newMemberSaving.put("memberSavingDateAdded", memberSavingToSave.getDateAdded());
         newMemberSaving.put("memberLocalUniqueID", memberSavingToSave.getMemberLocalUniqueID());
-        newMemberSaving.put("memberGoalParseId", memberSavingToSave.getGoalParseId());
+        newMemberSaving.put("memberGoalLocalUniqueID", memberSavingToSave.getMemberGoalLocalUniqueID());
         newMemberSaving.put("savingCreatorId", currentUserId);
         newMemberSaving.pinInBackground();
         newMemberSaving.saveEventually();
@@ -538,7 +538,7 @@ public class ParseHelper {
                         memberSaving.setPeriod(retrievedMemberSavings.get("memberSavingPeriod").toString());
                         memberSaving.setSavingNote(retrievedMemberSavings.get("memberSavingNotes").toString());
                         memberSaving.setDateAdded(retrievedMemberSavings.get("memberSavingDateAdded").toString());
-                        memberSaving.setGoalParseId(retrievedMemberSavings.get("memberGoalParseId").toString());
+                        memberSaving.setMemberGoalLocalUniqueID(retrievedMemberSavings.get("memberGoalLocalUniqueID").toString());
                         memberSaving.setLocalUniqueID(retrievedMemberSavings.get("memberSavingLocalUniqueID").toString());
 
                         memberSavingsList.add(memberSaving);
@@ -557,7 +557,7 @@ public class ParseHelper {
         ParseQuery<MemberSavings> memberSavingsParseQuery = ParseQuery.getQuery("ct2_GroupMemberSavings");
         memberSavingsParseQuery.fromLocalDatastore();
         memberSavingsParseQuery.whereEqualTo("memberLocalUniqueID", memberGoal.getMemberLocalUniqueID());
-        memberSavingsParseQuery.whereEqualTo("memberGoalParseId", memberGoal.getLocalUniqueID());
+        memberSavingsParseQuery.whereEqualTo("memberGoalLocalUniqueID", memberGoal.getLocalUniqueID());
         memberSavingsParseQuery.findInBackground(new FindCallback<MemberSavings>() {
             @Override
             public void done(List<MemberSavings> parseMemberSavings, ParseException e) {

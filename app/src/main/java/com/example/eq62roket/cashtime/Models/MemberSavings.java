@@ -10,17 +10,17 @@ import com.parse.ParseObject;
 @ParseClassName("ct2_GroupMemberSavings")
 public class MemberSavings extends ParseObject{
     private String localUniqueID, memberName, goalName, period, incomeSource, dateAdded, savingNote;
-    private String savingAmount, memberLocalUniqueID, goalParseId;
+    private String savingAmount, memberLocalUniqueID, memberGoalLocalUniqueID;
 
     public MemberSavings() {
     }
 
-    public String getGoalParseId() {
-        return goalParseId;
+    public String getMemberGoalLocalUniqueID() {
+        return memberGoalLocalUniqueID;
     }
 
-    public void setGoalParseId(String goalParseId) {
-        this.goalParseId = goalParseId;
+    public void setMemberGoalLocalUniqueID(String memberGoalLocalUniqueID) {
+        this.memberGoalLocalUniqueID = memberGoalLocalUniqueID;
     }
 
     public String getMemberLocalUniqueID() {

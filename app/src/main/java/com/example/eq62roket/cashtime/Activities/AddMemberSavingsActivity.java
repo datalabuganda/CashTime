@@ -230,7 +230,7 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
                         newMemberSaving.setPeriod(selectedPeriod);
                         newMemberSaving.setIncomeSource(selectedIncomeSource);
                         newMemberSaving.setDateAdded(dateToday);
-                        newMemberSaving.setGoalParseId(memberGoalLocalUniqueID);
+                        newMemberSaving.setMemberGoalLocalUniqueID(memberGoalLocalUniqueID);
                         newMemberSaving.setMemberLocalUniqueID(memberLocalUniqueID);
                         if (note.trim().equals("")){
                             newMemberSaving.setSavingNote("No Notes");

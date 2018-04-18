@@ -23,7 +23,6 @@ import android.widget.EditText;
 import com.example.eq62roket.cashtime.Activities.EditGroupMemberIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.GroupMembersIncomeListActivity;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
@@ -74,7 +73,7 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
                         editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
                         editGroupMemberIncomeIntent.putExtra("memberIncomePeriod",groupMemberIncome.getPeriod());
                         editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
-                        editGroupMemberIncomeIntent.putExtra("memberParseId", groupMemberIncome.getParseId());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeLocalUniqueID", groupMemberIncome.getLocalUniqueID());
                         startActivity(editGroupMemberIncomeIntent);
                         getActivity().finish();
                     }

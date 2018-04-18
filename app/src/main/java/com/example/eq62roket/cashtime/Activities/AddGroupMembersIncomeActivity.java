@@ -160,7 +160,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             groupMemberIncome.setPeriod(groupMemberIncomeIncomePeriod);
             groupMemberIncome.setNotes(groupMemberIncomeNotes);
             groupMemberIncome.setMemberUserName(groupMemberUsername);
-            groupMemberIncome.setMemberParseId(groupMemberLocalUniqueID);
+            groupMemberIncome.setMemberLocalUniqueID(groupMemberLocalUniqueID);
             groupMemberIncome.setUserId(currentUser);
 
             Log.d("Income", "groupMemberUserName: " + groupMemberIncome.getMemberUserName());

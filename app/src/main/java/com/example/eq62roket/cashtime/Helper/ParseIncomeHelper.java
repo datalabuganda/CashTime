@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -64,19 +63,22 @@ public class ParseIncomeHelper {
 
     public void saveGroupMemberIncomeToParseDb(MembersIncome groupMemberIncome){
         MembersIncome newGroupMemberIncome = new MembersIncome();
+        newGroupMemberIncome.put("memberIncomeLocalUniqueID", new CashTimeUtils().getUUID());
         newGroupMemberIncome.put("memberIncomeSource", groupMemberIncome.getSource());
         newGroupMemberIncome.put("memberIncomeAmount", groupMemberIncome.getAmount());
         newGroupMemberIncome.put("memberIncomeNotes", groupMemberIncome.getNotes());
         newGroupMemberIncome.put("memberIncomePeriod", groupMemberIncome.getPeriod());
         newGroupMemberIncome.put("memberUsername", groupMemberIncome.getMemberUserName());
-        newGroupMemberIncome.put("memberParseId", groupMemberIncome.getMemberParseId());
+        newGroupMemberIncome.put("memberLocalUniqueID", groupMemberIncome.getMemberLocalUniqueID());
         newGroupMemberIncome.put("createdById", groupMemberIncome.getUserId());
-        newGroupMemberIncome.saveInBackground();
+        newGroupMemberIncome.pinInBackground();
+        newGroupMemberIncome.saveEventually();
 
     }
 
     public void getGroupMemberIncomeMemberFromParseDb(final ParseIncomeHelper.OnReturnedGroupMemberIncomeListener onReturnedGroupMemberIncomeListener){
         ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
+        groupMemberIncomeQuery.fromLocalDatastore();
         groupMemberIncomeQuery.addDescendingOrder("updatedAt");
         groupMemberIncomeQuery.whereEqualTo("createdById", currentUserId);
         groupMemberIncomeQuery.findInBackground(new FindCallback<MembersIncome>() {
@@ -91,7 +93,7 @@ public class ParseIncomeHelper {
                         newGroupMemberIncome.setPeriod(retrievedGroupMemberIncome.get("memberIncomePeriod").toString());
                         newGroupMemberIncome.setMemberUserName(retrievedGroupMemberIncome.get("memberUsername").toString());
                         newGroupMemberIncome.setUserId(retrievedGroupMemberIncome.get("createdById").toString());
-                        newGroupMemberIncome.setParseId(retrievedGroupMemberIncome.getObjectId());
+                        newGroupMemberIncome.setLocalUniqueID(retrievedGroupMemberIncome.get("memberIncomeLocalUniqueID").toString());
 
                         groupMemberIncomeList.add(newGroupMemberIncome);
                     }
@@ -109,32 +111,39 @@ public class ParseIncomeHelper {
 
     public void updateGroupMemberIncomeInParseDb(final MembersIncome groupMemberIncomeToUpdate){
         ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
-        groupMemberIncomeQuery.getInBackground(groupMemberIncomeToUpdate.getParseId(), new GetCallback<MembersIncome>() {
+        groupMemberIncomeQuery.fromLocalDatastore();
+        groupMemberIncomeQuery.whereEqualTo("memberIncomeLocalUniqueID", groupMemberIncomeToUpdate.getLocalUniqueID());
+        groupMemberIncomeQuery.findInBackground(new FindCallback<MembersIncome>() {
             @Override
-            public void done(MembersIncome groupMemberIncome, ParseException e) {
+            public void done(List<MembersIncome> groupMemberIncomes, ParseException e) {
                 if (e == null) {
-                    groupMemberIncome.put("memberIncomeSource", groupMemberIncomeToUpdate.getSource());
-                    groupMemberIncome.put("memberIncomeAmount", groupMemberIncomeToUpdate.getAmount());
-                    groupMemberIncome.put("memberIncomeNotes", groupMemberIncomeToUpdate.getNotes());
-                    groupMemberIncome.put("memberIncomePeriod", groupMemberIncomeToUpdate.getPeriod());
-                    groupMemberIncome.saveInBackground();
-
+                    if (groupMemberIncomes.size() == 1){
+                        groupMemberIncomes.get(0).put("memberIncomeSource", groupMemberIncomeToUpdate.getSource());
+                        groupMemberIncomes.get(0).put("memberIncomeAmount", groupMemberIncomeToUpdate.getAmount());
+                        groupMemberIncomes.get(0).put("memberIncomeNotes", groupMemberIncomeToUpdate.getNotes());
+                        groupMemberIncomes.get(0).put("memberIncomePeriod", groupMemberIncomeToUpdate.getPeriod());
+                        groupMemberIncomes.get(0).pinInBackground();
+                        groupMemberIncomes.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
-
         });
     }
 
     public void deleteGroupMemberIncomeFromParseDb(MembersIncome groupMemberIncomeToDelete){
-        ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
-        groupMemberIncomeQuery.getInBackground(groupMemberIncomeToDelete.getParseId(), new GetCallback<MembersIncome>() {
+        final ParseQuery<MembersIncome> groupMemberIncomeQuery = ParseQuery.getQuery("ct2_MemberIncome");
+        groupMemberIncomeQuery.fromLocalDatastore();
+        groupMemberIncomeQuery.whereEqualTo("memberIncomeLocalUniqueID", groupMemberIncomeToDelete.getLocalUniqueID());
+        groupMemberIncomeQuery.findInBackground(new FindCallback<MembersIncome>() {
             @Override
-            public void done(MembersIncome groupMemberIncome, ParseException e) {
+            public void done(List<MembersIncome> groupMemberIncomes, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Should delete now: ");
-                    groupMemberIncome.deleteInBackground();
+                    if (groupMemberIncomes.size() == 1){
+                        groupMemberIncomes.get(0).unpinInBackground();
+                        groupMemberIncomes.get(0).deleteEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

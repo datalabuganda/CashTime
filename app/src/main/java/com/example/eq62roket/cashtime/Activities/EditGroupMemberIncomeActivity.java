@@ -31,7 +31,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
     EditText groupMemberIncomeAmount, groupMemberIncomeSource, groupMemberIncomePeriod, groupMemberIncomeNotes;
     Button groupMemberIncomeDeleteBtn, groupMemberIncomeUpdateBtn;
 
-    private String groupMemberIncomeParseId = "";
+    private String memberIncomeLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     @Override
@@ -56,9 +56,9 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
         final String source0fIncome = intent.getStringExtra("memberIncomeSource");
         final String notesAboutIncome = intent.getStringExtra("memberIncomeNotes");
         final String periodOfIncome = intent.getStringExtra("memberIncomePeriod");
-        groupMemberIncomeParseId = intent.getStringExtra("memberParseId");
+        memberIncomeLocalUniqueID = intent.getStringExtra("memberIncomeLocalUniqueID");
 
-        Log.d(" member parse id", "onCreate: " + groupMemberIncomeParseId);
+        Log.d(" member parse id", "onCreate: " + memberIncomeLocalUniqueID);
 
 
         groupMemberIncomeSource.setText(source0fIncome);
@@ -84,7 +84,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         MembersIncome groupMemberIncomeToDelete = new MembersIncome();
-                        groupMemberIncomeToDelete.setParseId(groupMemberIncomeParseId);
+                        groupMemberIncomeToDelete.setLocalUniqueID(memberIncomeLocalUniqueID);
                         mParseHelper.deleteGroupMemberIncomeFromParseDb(groupMemberIncomeToDelete);
                         startTabbedIncomeActivity();
                         Toast.makeText(EditGroupMemberIncomeActivity.this, "Income deleted successfully", Toast.LENGTH_SHORT).show();
@@ -154,8 +154,8 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
             membersIncome.setNotes(notesAboutIncome);
             membersIncome.setPeriod(periodOfIncome);
 
-            if (!groupMemberIncomeParseId.equals("")){
-                membersIncome.setParseId(groupMemberIncomeParseId);
+            if (!memberIncomeLocalUniqueID.equals("")){
+                membersIncome.setLocalUniqueID(memberIncomeLocalUniqueID);
             }
             mParseHelper.updateGroupMemberIncomeInParseDb(membersIncome);
 

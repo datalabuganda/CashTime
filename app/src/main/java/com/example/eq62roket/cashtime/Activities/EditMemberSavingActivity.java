@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -36,7 +34,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
     private String selectedPeriod;
     private String selectedIncomeSource;
     private ParseHelper mParseHelper;
-    private String memberSavingParseId;
+    private String memberSavingLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         String notes = intent.getStringExtra("savingNote");
         String period = intent.getStringExtra("savingPeriod");
         String sourceOfIncome = intent.getStringExtra("incomeSource");
-        memberSavingParseId = intent.getStringExtra("memberSavingParseId");
+        memberSavingLocalUniqueID = intent.getStringExtra("memberSavingLocalUniqueID");
 
         // Prepopulate goalName and memberName
         goalName.setText(nameOfGoal);
@@ -92,19 +90,11 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MemberSavings memberSavingToDelete = new MemberSavings();
-                        memberSavingToDelete.setParseId(memberSavingParseId);
-                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete, new DeleteSavingListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                startTabbedSavingActivity();
-                                Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        memberSavingToDelete.setLocalUniqueID(memberSavingLocalUniqueID);
+                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete);
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditMemberSavingActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -210,7 +200,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
             }
             if (!selectedPeriod.equals("")){
                 MemberSavings memberSavingToUpdate = new MemberSavings();
-                memberSavingToUpdate.setParseId(memberSavingParseId);
+                memberSavingToUpdate.setLocalUniqueID(memberSavingLocalUniqueID);
                 memberSavingToUpdate.setSavingAmount(amountSaved);
                 memberSavingToUpdate.setPeriod(selectedPeriod);
                 memberSavingToUpdate.setIncomeSource(selectedIncomeSource);
@@ -219,18 +209,11 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                 } else {
                     memberSavingToUpdate.setSavingNote(note);
                 }
-                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate, new UpdateSavingListener() {
-                    @Override
-                    public void onResponse(String updateMessage) {
-                        startTabbedSavingActivity();
-                        Toast.makeText(EditMemberSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
-                    }
+                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate);
 
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(EditMemberSavingActivity.this, "Error Occured While Deleting " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                startTabbedSavingActivity();
+                Toast.makeText(EditMemberSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
+
             }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();

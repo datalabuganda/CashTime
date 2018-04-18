@@ -84,7 +84,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
                             editMemberGoalIntent.putExtra("groupMemberGoalAmount", membersGoals.getMemberGoalAmount());
                             editMemberGoalIntent.putExtra("groupMemberGoalDeadline", membersGoals.getMemberGoalDueDate());
                             editMemberGoalIntent.putExtra("groupMemberGoalNotes", membersGoals.getMemberGoalNotes());
-                            editMemberGoalIntent.putExtra("groupMemberParseId", membersGoals.getParseId());
+                            editMemberGoalIntent.putExtra("memberGoalLocalUniqueID", membersGoals.getLocalUniqueID());
                             startActivity(editMemberGoalIntent);
                         }
                     });

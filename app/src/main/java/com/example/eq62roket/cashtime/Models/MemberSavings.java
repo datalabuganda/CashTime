@@ -9,8 +9,8 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_GroupMemberSavings")
 public class MemberSavings extends ParseObject{
-    private String parseId, memberName, goalName, period, incomeSource, dateAdded, savingNote;
-    private String savingAmount, memberParseId, goalParseId;
+    private String localUniqueID, memberName, goalName, period, incomeSource, dateAdded, savingNote;
+    private String savingAmount, memberLocalUniqueID, goalParseId;
 
     public MemberSavings() {
     }
@@ -23,20 +23,20 @@ public class MemberSavings extends ParseObject{
         this.goalParseId = goalParseId;
     }
 
-    public String getMemberParseId() {
-        return memberParseId;
+    public String getMemberLocalUniqueID() {
+        return memberLocalUniqueID;
     }
 
-    public void setMemberParseId(String memberParseId) {
-        this.memberParseId = memberParseId;
+    public void setMemberLocalUniqueID(String memberLocalUniqueID) {
+        this.memberLocalUniqueID = memberLocalUniqueID;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getSavingNote() {

@@ -54,9 +54,9 @@ public class MemberSavingToGoalsActivity extends AppCompatActivity implements Se
                             // show Add Member Saving Form
                             Intent intent = new Intent(MemberSavingToGoalsActivity.this, AddMemberSavingsActivity.class);
                             intent.putExtra("goalName", membersGoals.getMemberGoalName());
-                            intent.putExtra("goalParseId", membersGoals.getParseId());
+                            intent.putExtra("memberGoalLocalUniqueID", membersGoals.getLocalUniqueID());
                             intent.putExtra("memberName",membersGoals.getMemberName());
-                            intent.putExtra("memberParseId", membersGoals.getMemberParseId());
+                            intent.putExtra("memberLocalUniqueID", membersGoals.getMemberLocalUniqueID());
                             intent.putExtra("memberGoalAmount", membersGoals.getMemberGoalAmount());
                             intent.putExtra("memberGoalDueDate", membersGoals.getMemberGoalDueDate());
                             startActivity(intent);

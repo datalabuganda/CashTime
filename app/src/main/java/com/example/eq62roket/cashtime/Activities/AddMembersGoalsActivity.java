@@ -17,7 +17,6 @@ import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
-import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
@@ -146,7 +145,7 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                 newMembersGoal.setMemberGoalName(nameOfGoal);
                 newMembersGoal.setMemberGoalDueDate(goalDeadline);
                 newMembersGoal.setMemberName(nameOfMember);
-                newMembersGoal.setMemberParseId(groupMemberLocalUniqueID);
+                newMembersGoal.setMemberLocalUniqueID(groupMemberLocalUniqueID);
                 if (goalNotes.isEmpty()){
                     newMembersGoal.setMemberGoalNotes("No Notes Added");
                 }else {
@@ -159,18 +158,11 @@ public class AddMembersGoalsActivity extends AppCompatActivity {
                     newMembersGoal.setMemberGoalStatus("incomplete");
                     newMembersGoal.setCompleteDate("");
                 }
+                new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal);
 
-                new ParseHelper(this).saveMemberGoalsToParseDb(newMembersGoal, new SaveGoalListener() {
-                    @Override
-                    public void onResponse(String saveMessage) {
-                        startTabbedGoalsActivity();
-                        Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(context, "Error " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                startTabbedGoalsActivity();
+                Toast.makeText(context, "Member Goal " + newMembersGoal.getMemberGoalName() + " saved", Toast.LENGTH_SHORT).show();
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }

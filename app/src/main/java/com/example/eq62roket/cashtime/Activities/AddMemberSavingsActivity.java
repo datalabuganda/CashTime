@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
@@ -38,8 +37,8 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
     private String selectedPeriod;
     private String selectedIncomeSource;
     private String nameOfMember;
-    private String memberParseId;
-    private String goalParseId, memberGoalAmount, memberGoalDueDate;
+    private String memberLocalUniqueID;
+    private String memberGoalLocalUniqueID, memberGoalAmount, memberGoalDueDate;
     private ParseHelper mParseHelper;
 
     @Override
@@ -61,8 +60,8 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
         nameOfMember = intent.getStringExtra("memberName");
-        memberParseId = intent.getStringExtra("memberParseId");
-        goalParseId = intent.getStringExtra("goalParseId");
+        memberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
+        memberGoalLocalUniqueID = intent.getStringExtra("memberGoalLocalUniqueID");
         memberGoalAmount = intent.getStringExtra("memberGoalAmount");
         memberGoalDueDate = intent.getStringExtra("memberGoalDueDate");
 
@@ -157,10 +156,10 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
                 selectedIncomeSource != null) {
 
             final MembersGoals membersGoal = new MembersGoals();
-            membersGoal.setParseId(goalParseId);
+            membersGoal.setLocalUniqueID(memberGoalLocalUniqueID);
             membersGoal.setMemberGoalDueDate(memberGoalDueDate);
             membersGoal.setMemberGoalAmount(memberGoalAmount);
-            membersGoal.setMemberParseId(memberParseId);
+            membersGoal.setMemberLocalUniqueID(memberLocalUniqueID);
             new ParseHelper(AddMemberSavingsActivity.this).
                     getTotalMemberSavingsFromParseDb(membersGoal, new OnReturnedMemberSavingsSumListener() {
                 @Override
@@ -192,8 +191,8 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
                             Date memberGoalDueDate = simpleDateFormat.parse(membersGoal.getMemberGoalDueDate());
                             Date todayZdate = simpleDateFormat.parse(dateToday);
                             MembersGoals completedmemberGoal = new MembersGoals();
-                            completedmemberGoal.setParseId(goalParseId);
-                            completedmemberGoal.setMemberParseId(memberParseId);
+                            completedmemberGoal.setLocalUniqueID(memberGoalLocalUniqueID);
+                            completedmemberGoal.setMemberLocalUniqueID(memberLocalUniqueID);
 
                             if ( amountRemaining == 0 && todayZdate.before(memberGoalDueDate) ){
                                 completedmemberGoal.setMemberGoalStatus("completed");
@@ -231,30 +230,23 @@ public class AddMemberSavingsActivity extends AppCompatActivity {
                         newMemberSaving.setPeriod(selectedPeriod);
                         newMemberSaving.setIncomeSource(selectedIncomeSource);
                         newMemberSaving.setDateAdded(dateToday);
-                        newMemberSaving.setGoalParseId(goalParseId);
-                        newMemberSaving.setMemberParseId(memberParseId);
+                        newMemberSaving.setGoalParseId(memberGoalLocalUniqueID);
+                        newMemberSaving.setMemberLocalUniqueID(memberLocalUniqueID);
                         if (note.trim().equals("")){
                             newMemberSaving.setSavingNote("No Notes");
                         }else {
                             newMemberSaving.setSavingNote(note);
                         }
-                        mParseHelper.saveMemberSavingsToParseDb(newMemberSaving, new AddSavingListener() {
-                            @Override
-                            public void onResponse(String savedMessage) {
-                                startTabbedSavingActivity();
-                                Toast.makeText(AddMemberSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
+                        mParseHelper.saveMemberSavingsToParseDb(newMemberSaving);
 
-                                // TODO: 3/21/18 ======>>>>> award user points
-                                // Award user 3 point for saving
-                                User user = new User();
-                                user.setPoints(3);
-                            }
+                        startTabbedSavingActivity();
+                        Toast.makeText(AddMemberSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(AddMemberSavingsActivity.this, "Error Occurred While Saving " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        // TODO: 3/21/18 ======>>>>> award user points
+                        // Award user 3 point for saving
+                        User user = new User();
+                        user.setPoints(3);
+
                     }
                 }
 

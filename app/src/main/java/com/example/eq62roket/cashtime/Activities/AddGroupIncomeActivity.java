@@ -146,7 +146,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setAmount(amount);
             groupIncome.setPeriod(period);
             groupIncome.setNotes(notes);
-            groupIncome.setGroupParseId(groupLocalUniqueID);
+            groupIncome.setGroupLocalUniqueID(groupLocalUniqueID);
             groupIncome.setGroupName(groupName);
             groupIncome.setUserId(currentUserId);
 

@@ -33,7 +33,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
     EditText groupIncomeSource, groupIncomeAmount, groupIncomeNotes, groupIncomePeriod;
     Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
 
-    private String groupIncomeParseId = "";
+    private String groupIncomeLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     @Override
@@ -57,7 +57,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         String notesAboutIncome = intent.getStringExtra("groupIncomeNotes");
         String periodOfIncome= intent.getStringExtra("groupIncomePeriod");
         String nameOfGroup = intent.getStringExtra("groupName");
-        groupIncomeParseId = intent.getStringExtra("groupIncomeParseId");
+        groupIncomeLocalUniqueID = intent.getStringExtra("groupIncomeLocalUniqueID");
 
         groupIncomeSource.setText(source0fIncome);
         groupIncomeAmount.setText(amountOfIncome);
@@ -82,7 +82,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GroupIncome groupIncomeToDelete = new GroupIncome();
-                        groupIncomeToDelete.setParseId(groupIncomeParseId);
+                        groupIncomeToDelete.setLocalUniqueID(groupIncomeLocalUniqueID);
                         mParseHelper.deleteGroupIncomeFromParseDb(groupIncomeToDelete);
                         startTabbedIncomeActivity();
                         Toast.makeText(EditGroupIncomeActivity.this, "Group income deleted successfully", Toast.LENGTH_SHORT).show();
@@ -152,8 +152,8 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setSource(source0fIncome);
             groupIncome.setNotes(notesAboutIncome);
             groupIncome.setPeriod(periodOfIncome);
-            if (!groupIncomeParseId.equals("")){
-                groupIncome.setParseId(groupIncomeParseId);
+            if (!groupIncomeLocalUniqueID.equals("")){
+                groupIncome.setLocalUniqueID(groupIncomeLocalUniqueID);
             }
             mParseHelper.updateGroupIncomeInParseDb(groupIncome);
 

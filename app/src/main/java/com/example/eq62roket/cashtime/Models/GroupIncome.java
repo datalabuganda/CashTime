@@ -8,11 +8,19 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_GroupIncome")
 public class GroupIncome extends ParseObject {
-    String parseId, source, period, amount, notes, userId, groupName;
-    String groupParseId, groupIncomeParseId;
+    String localUniqueID, source, period, amount, notes, userId, groupName;
+    String groupLocalUniqueID;
 
-    public String getGroupParseId() {
-        return groupParseId;
+    public GroupIncome() {
+        super();
+    }
+
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
+    }
+
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
     }
 
     public String getGroupName() {
@@ -23,17 +31,6 @@ public class GroupIncome extends ParseObject {
         this.groupName = groupName;
     }
 
-    public void setGroupParseId(String groupParseId) {
-        this.groupParseId = groupParseId;
-    }
-
-    public String getGroupIncomeParseId() {
-        return groupIncomeParseId;
-    }
-
-    public void setGroupIncomeParseId(String groupIncomeParseId) {
-        this.groupIncomeParseId = groupIncomeParseId;
-    }
 
     public String getUserId() {
         return userId;
@@ -43,12 +40,12 @@ public class GroupIncome extends ParseObject {
         this.userId = userId;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getSource() {
@@ -83,7 +80,4 @@ public class GroupIncome extends ParseObject {
         this.notes = notes;
     }
 
-    public GroupIncome() {
-        super();
-    }
 }

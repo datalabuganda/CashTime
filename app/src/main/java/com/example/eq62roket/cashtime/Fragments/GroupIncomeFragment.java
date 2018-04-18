@@ -71,7 +71,7 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
                         editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
                         editGroupIncomeIntent.putExtra("groupIncomePeriod",groupIncome.getPeriod());
                         editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
-                        editGroupIncomeIntent.putExtra("groupIncomeParseId", groupIncome.getParseId());
+                        editGroupIncomeIntent.putExtra("groupIncomeLocalUniqueID", groupIncome.getLocalUniqueID());
                         startActivity(editGroupIncomeIntent);
                         getActivity().finish();
                     }

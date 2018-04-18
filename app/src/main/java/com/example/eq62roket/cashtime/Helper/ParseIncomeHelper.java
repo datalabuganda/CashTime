@@ -47,7 +47,7 @@ public class ParseIncomeHelper {
     }
 
 
-    private static final String TAG = "ParseHelper";
+    private static final String TAG = "ParseIncomeHelper";
     private final List<MembersIncome> groupMemberIncomeList = new ArrayList<>();
     private final List<GroupIncome> groupIncomeList = new ArrayList<>();
 
@@ -146,41 +146,47 @@ public class ParseIncomeHelper {
 
     public void saveGroupIncomeToParseDb(GroupIncome groupIncome){
         GroupIncome newGroupIncome = new GroupIncome();
+        newGroupIncome.put("groupIncomeLocalUniqueID", new CashTimeUtils().getUUID());
         newGroupIncome.put("groupIncomeSource", groupIncome.getSource());
         newGroupIncome.put("groupIncomeAmount", groupIncome.getAmount());
         newGroupIncome.put("groupIncomeNotes", groupIncome.getNotes());
         newGroupIncome.put("groupIncomePeriod", groupIncome.getPeriod());
         newGroupIncome.put("groupName", groupIncome.getGroupName());
-        newGroupIncome.put("groupParseId", groupIncome.getGroupParseId());
+        newGroupIncome.put("groupLocalUniqueID", groupIncome.getGroupLocalUniqueID());
         newGroupIncome.put("createdById", groupIncome.getUserId());
-        newGroupIncome.saveInBackground();
+        newGroupIncome.pinInBackground();
+        newGroupIncome.saveEventually();
 
     }
 
 
     public void updateGroupIncomeInParseDb(final GroupIncome groupIncomeToUpdate){
-        ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
-        groupIncomeQuery.getInBackground(groupIncomeToUpdate.getParseId(), new GetCallback<GroupIncome>() {
+        final ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
+        groupIncomeQuery.fromLocalDatastore();
+        groupIncomeQuery.whereEqualTo("groupIncomeLocalUniqueID", groupIncomeToUpdate.getLocalUniqueID());
+        groupIncomeQuery.findInBackground(new FindCallback<GroupIncome>() {
             @Override
-            public void done(GroupIncome groupMemberIncome, ParseException e) {
+            public void done(List<GroupIncome> groupMemberIncomes, ParseException e) {
                 if (e == null) {
-                    groupMemberIncome.put("groupIncomeSource", groupIncomeToUpdate.getSource());
-                    groupMemberIncome.put("groupIncomeAmount", groupIncomeToUpdate.getAmount());
-                    groupMemberIncome.put("groupIncomeNotes", groupIncomeToUpdate.getNotes());
-                    groupMemberIncome.put("groupIncomePeriod", groupIncomeToUpdate.getPeriod());
-                    groupMemberIncome.put("createdById", currentUserId);
-                    groupMemberIncome.saveInBackground();
-
+                    if (groupMemberIncomes.size() == 1){
+                        groupMemberIncomes.get(0).put("groupIncomeSource", groupIncomeToUpdate.getSource());
+                        groupMemberIncomes.get(0).put("groupIncomeAmount", groupIncomeToUpdate.getAmount());
+                        groupMemberIncomes.get(0).put("groupIncomeNotes", groupIncomeToUpdate.getNotes());
+                        groupMemberIncomes.get(0).put("groupIncomePeriod", groupIncomeToUpdate.getPeriod());
+                        groupMemberIncomes.get(0).put("createdById", currentUserId);
+                        groupMemberIncomes.get(0).pinInBackground();
+                        groupMemberIncomes.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
-
         });
     }
 
     public void getGroupIncomeFromParseDb(final ParseIncomeHelper.OnReturnedGroupIncomeListener onReturnedGroupIncomeListener){
         ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
+        groupIncomeQuery.fromLocalDatastore();
         groupIncomeQuery.addDescendingOrder("updatedAt");
         groupIncomeQuery.whereEqualTo("createdById", currentUserId);
         groupIncomeQuery.findInBackground(new FindCallback<GroupIncome>() {
@@ -194,7 +200,7 @@ public class ParseIncomeHelper {
                         newGroupIncome.setNotes(retrievedGroupIncome.get("groupIncomeNotes").toString());
                         newGroupIncome.setPeriod(retrievedGroupIncome.get("groupIncomePeriod").toString());
                         newGroupIncome.setGroupName(retrievedGroupIncome.get("groupName").toString());
-                        newGroupIncome.setParseId(retrievedGroupIncome.getObjectId());
+                        newGroupIncome.setLocalUniqueID(retrievedGroupIncome.get("groupIncomeLocalUniqueID").toString());
 
                         groupIncomeList.add(newGroupIncome);
                     }
@@ -210,10 +216,11 @@ public class ParseIncomeHelper {
 
     }
 
-    public void getTotalGroupIncomeFromParseDb(String groupParseId){
+    public void getTotalGroupIncomeFromParseDb(String groupLocalUniqueID){
         ParseQuery<GroupIncome> groupIncomeParseQuery = ParseQuery.getQuery("ct2_GroupIncome");
+        groupIncomeParseQuery.fromLocalDatastore();
         groupIncomeParseQuery.whereEqualTo("createdById", currentUserId);
-        groupIncomeParseQuery.whereEqualTo("groupParseId", groupParseId);
+        groupIncomeParseQuery.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
         groupIncomeParseQuery.addDescendingOrder("updatedAt");
         groupIncomeParseQuery.findInBackground(new FindCallback<GroupIncome>() {
             @Override
@@ -233,12 +240,17 @@ public class ParseIncomeHelper {
 
     public void deleteGroupIncomeFromParseDb(GroupIncome groupIncomeToDelete){
         ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");
-        groupIncomeQuery.getInBackground(groupIncomeToDelete.getParseId(), new GetCallback<GroupIncome>() {
+        groupIncomeQuery.fromLocalDatastore();
+        groupIncomeQuery.whereEqualTo("groupIncomeLocalUniqueID", groupIncomeToDelete.getLocalUniqueID());
+        groupIncomeQuery.findInBackground(new FindCallback<GroupIncome>() {
             @Override
-            public void done(GroupIncome groupIncome, ParseException e) {
+            public void done(List<GroupIncome> groupIncomes, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Should delete now: ");
-                    groupIncome.deleteInBackground();
+                    if (groupIncomes.size() == 1){
+                        Log.d(TAG, "deleted: " );
+                        groupIncomes.get(0).unpinInBackground();
+                        groupIncomes.get(0).deleteEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

@@ -143,7 +143,7 @@ public class AddGroupExpenditureActivity extends AppCompatActivity {
             groupExpenditures.setNotes(groupExpenditureNotes);
             groupExpenditures.setDate(groupExpenditureDate);
             groupExpenditures.setAmount(groupExpenditureAmount);
-            groupExpenditures.setGroupParseId(groupLocalUniqueID);
+            groupExpenditures.setGroupLocalUniqueID(groupLocalUniqueID);
             groupExpenditures.setGroupName(groupName);
             groupExpenditures.setUserId(currentUserId);
 

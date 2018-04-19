@@ -69,7 +69,7 @@ public class BarriersFragment extends Fragment {
                             editBarrierIntent.putExtra("barrierGoalName", barrier.getGoalName());
                             editBarrierIntent.putExtra("barrierName", barrier.getBarrierName());
                             editBarrierIntent.putExtra("barrierNotes", barrier.getBarrierText());
-                            editBarrierIntent.putExtra("barrierParseId", barrier.getParseId());
+                            editBarrierIntent.putExtra("barrierLocalUniqueID", barrier.getLocalUniqueID());
                             startActivity(editBarrierIntent);
                             getActivity().finish();
                         }

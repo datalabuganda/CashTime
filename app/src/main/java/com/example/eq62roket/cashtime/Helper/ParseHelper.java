@@ -3,7 +3,6 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
@@ -11,21 +10,16 @@ import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
-import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.Models.Tip;
-import com.parse.DeleteCallback;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -615,31 +609,25 @@ public class ParseHelper {
         });
     }
 
-    public void saveGroupBarrierToParseDb(Barrier barrierToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
+    public void saveGroupBarrierToParseDb(Barrier barrierToSave){
         Barrier newBarrier = new Barrier();
+        newBarrier.put("barrierLocalUniqueID", new CashTimeUtils().getUUID());
         newBarrier.put("userId", currentUserId);
         newBarrier.put("groupGoalName", barrierToSave.getGoalName());
         newBarrier.put("barrierName", barrierToSave.getBarrierName());
         newBarrier.put("barrierNotes", barrierToSave.getBarrierText());
         newBarrier.put("tipGiven", barrierToSave.isTipGiven());
         newBarrier.put("barrierDateAdded", barrierToSave.getDateAdded());
-        newBarrier.put("groupId", barrierToSave.getGroupId());
-        newBarrier.put("groupGoalParseId", barrierToSave.getGroupGoalParseId());
-        newBarrier.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null){
-                    saveBarrierAndTipListener.onResponse("saved");
-                }else {
-                    saveBarrierAndTipListener.onFailure(e.getMessage());
-                }
-            }
-        });
+        newBarrier.put("groupLocalUniqueID", barrierToSave.getGroupLocalUniqueID());
+        newBarrier.put("groupGoalLocalUniqueID", barrierToSave.getGroupGoalLocalUniqueID());
+        newBarrier.pinInBackground();
+        newBarrier.saveEventually();
     }
 
     public void getGroupBarriersFromParseDb(final OnReturnedGroupBarrierListener onReturnedGroupBarrierListener){
         final List<Barrier> barrierList = new ArrayList<>();
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
+        barrierParseQuery.fromLocalDatastore();
         barrierParseQuery.whereEqualTo("userId", currentUserId);
         barrierParseQuery.addDescendingOrder("updatedAt");
         barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
@@ -653,7 +641,7 @@ public class ParseHelper {
                         barrier.setBarrierText(retrievedBarrier.get("barrierNotes").toString());
                         barrier.setTipGiven((Boolean) retrievedBarrier.get("tipGiven"));
                         barrier.setDateAdded(retrievedBarrier.get("barrierDateAdded").toString());
-                        barrier.setParseId(retrievedBarrier.getObjectId());
+                        barrier.setLocalUniqueID(retrievedBarrier.get("barrierLocalUniqueID").toString());
 
                         barrierList.add(barrier);
                     }
@@ -668,27 +656,22 @@ public class ParseHelper {
         });
     }
 
-    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
+    public void updateGroupBarriersInParseDb(final Barrier barrierToUpdate){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
-        barrierParseQuery.getInBackground(barrierToUpdate.getParseId(), new GetCallback<Barrier>() {
+        barrierParseQuery.fromLocalDatastore();
+        barrierParseQuery.whereEqualTo("barrierLocalUniqueID", barrierToUpdate.getLocalUniqueID());
+        barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
             @Override
-            public void done(Barrier parseBarrier, ParseException e) {
+            public void done(List<Barrier> parseBarrier, ParseException e) {
                 if (e == null) {
-                    parseBarrier.put("barrierName", barrierToUpdate.getBarrierName());
-                    parseBarrier.put("barrierNotes", barrierToUpdate.getBarrierText());
-                    parseBarrier.put("tipGiven", barrierToUpdate.isTipGiven());
-                    parseBarrier.put("barrierDateAdded", barrierToUpdate.getDateAdded());
-                    parseBarrier.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null){
-                                updateBarrierAndTipListener.onResponse("updated");
-                            }else {
-                                updateBarrierAndTipListener.onFailure(e.getMessage());
-                            }
-                        }
-                    });
-
+                    if (parseBarrier.size() == 1){
+                        parseBarrier.get(0).put("barrierName", barrierToUpdate.getBarrierName());
+                        parseBarrier.get(0).put("barrierNotes", barrierToUpdate.getBarrierText());
+                        parseBarrier.get(0).put("tipGiven", barrierToUpdate.isTipGiven());
+                        parseBarrier.get(0).put("barrierDateAdded", barrierToUpdate.getDateAdded());
+                        parseBarrier.get(0).pinInBackground();
+                        parseBarrier.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -696,22 +679,18 @@ public class ParseHelper {
         });
     }
 
-    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
+    public void deleteGroupBarrierFromParseDb(Barrier barrierToDelete){
         ParseQuery<Barrier> barrierParseQuery = ParseQuery.getQuery("ct2_Barriers");
-        barrierParseQuery.getInBackground(barrierToDelete.getParseId(), new GetCallback<Barrier>() {
+        barrierParseQuery.fromLocalDatastore();
+        barrierParseQuery.whereEqualTo("barrierLocalUniqueID", barrierToDelete.getLocalUniqueID());
+        barrierParseQuery.findInBackground(new FindCallback<Barrier>() {
             @Override
-            public void done(Barrier parseBarrier, ParseException e) {
+            public void done(List<Barrier> parseBarriers, ParseException e) {
                 if (e == null) {
-                    parseBarrier.deleteInBackground(new DeleteCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null){
-                                deleteBarrierAndTipListener.onResponse("deleted");
-                            }else {
-                                deleteBarrierAndTipListener.onFailure(e.getMessage());
-                            }
-                        }
-                    });
+                    if (parseBarriers.size() == 1){
+                        parseBarriers.get(0).unpinInBackground();
+                        parseBarriers.get(0).deleteEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
@@ -719,30 +698,25 @@ public class ParseHelper {
         });
     }
 
-    public void saveTipToParseDb(Tip tipToSave, final SaveBarrierAndTipListener saveBarrierAndTipListener){
+    public void saveTipToParseDb(Tip tipToSave){
         Tip newTip = new Tip();
+        newTip.put("tipLocalUniqueID", new CashTimeUtils().getUUID());
         newTip.put("userId", currentUserId);
         newTip.put("groupGoalName", tipToSave.getGoalName());
         newTip.put("tipNotes", tipToSave.getIntroText());
         newTip.put("dateAdded", tipToSave.getDateAdded());
         newTip.put("dateModified", tipToSave.getDateModified());
-        newTip.put("groupParseId", tipToSave.getGroupParseId());
-        newTip.put("groupGoalParseId", tipToSave.getGroupGoalParseId());
-        newTip.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null){
-                    saveBarrierAndTipListener.onResponse("saved");
-                }else {
-                    saveBarrierAndTipListener.onFailure(e.getMessage());
-                }
-            }
-        });
+        newTip.put("groupLocalUniqueID", tipToSave.getGroupLocalUniqueID());
+        newTip.put("groupGoalLocalUniqueID", tipToSave.getGroupGoalLocalUniqueID());
+        newTip.pinInBackground();
+        newTip.saveEventually();
+
     }
 
     public void getAllTipsFromParseDb(final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
+        tipParseQuery.fromLocalDatastore();
         tipParseQuery.whereEqualTo("userId", currentUserId);
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
@@ -755,7 +729,7 @@ public class ParseHelper {
                         tip.setIntroText(retrievedTip.get("tipNotes").toString());
                         tip.setDateAdded(retrievedTip.get("dateAdded").toString());
                         tip.setDateModified(retrievedTip.get("dateModified").toString());
-                        tip.setTipParseId(retrievedTip.getObjectId());
+                        tip.setLocalUniqueID(retrievedTip.get("tipLocalUniqueID").toString());
 
                         tipList.add(tip);
                     }
@@ -774,6 +748,7 @@ public class ParseHelper {
     public void getTipsOfParticularGoalFromParseDb(String nameOfGoal, final OnReturnedTipsListener onReturnedTipsListener){
         final List<Tip> tipList = new ArrayList<>();
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
+        tipParseQuery.fromLocalDatastore();
         tipParseQuery.addDescendingOrder("updatedAt");
         tipParseQuery.whereEqualTo("groupGoalName", nameOfGoal);
         tipParseQuery.findInBackground(new FindCallback<Tip>() {
@@ -786,7 +761,7 @@ public class ParseHelper {
                         tip.setIntroText(retrievedTip.get("tipNotes").toString());
                         tip.setDateAdded(retrievedTip.get("dateAdded").toString());
                         tip.setDateModified(retrievedTip.get("dateModified").toString());
-                        tip.setTipParseId(retrievedTip.getObjectId());
+                        tip.setLocalUniqueID(retrievedTip.get("tipLocalUniqueID").toString());
 
                         tipList.add(tip);
                     }
@@ -801,25 +776,20 @@ public class ParseHelper {
         });
     }
 
-    public void updateTipsInParseDb(final Tip tipToUpdate, final UpdateBarrierAndTipListener updateBarrierAndTipListener){
+    public void updateTipsInParseDb(final Tip tipToUpdate){
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
-        tipParseQuery.getInBackground(tipToUpdate.getTipParseId(), new GetCallback<Tip>() {
+        tipParseQuery.fromLocalDatastore();
+        tipParseQuery.whereEqualTo("tipLocalUniqueID", tipToUpdate.getLocalUniqueID());
+        tipParseQuery.findInBackground(new FindCallback<Tip>() {
             @Override
-            public void done(Tip parseTip, ParseException e) {
+            public void done(List<Tip> parseTips, ParseException e) {
                 if (e == null) {
-                    parseTip.put("tipNotes", tipToUpdate.getIntroText());
-                    parseTip.put("dateModified", tipToUpdate.getDateModified());
-                    parseTip.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null){
-                                updateBarrierAndTipListener.onResponse("updated");
-                            }else {
-                                updateBarrierAndTipListener.onFailure(e.getMessage());
-                            }
-                        }
-                    });
-
+                    if (parseTips.size() == 1){
+                        parseTips.get(0).put("tipNotes", tipToUpdate.getIntroText());
+                        parseTips.get(0).put("dateModified", tipToUpdate.getDateModified());
+                        parseTips.get(0).pinInBackground();
+                        parseTips.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
@@ -827,22 +797,18 @@ public class ParseHelper {
         });
     }
 
-    public void deleteTipFromParseDb(Tip tipToDelete, final DeleteBarrierAndTipListener deleteBarrierAndTipListener){
+    public void deleteTipFromParseDb(Tip tipToDelete){
         ParseQuery<Tip> tipParseQuery = ParseQuery.getQuery("ct2_Tips");
-        tipParseQuery.getInBackground(tipToDelete.getTipParseId(), new GetCallback<Tip>() {
+        tipParseQuery.fromLocalDatastore();
+        tipParseQuery.whereEqualTo("tipLocalUniqueID", tipToDelete.getLocalUniqueID());
+        tipParseQuery.findInBackground(new FindCallback<Tip>() {
             @Override
-            public void done(Tip parseTip, ParseException e) {
+            public void done(List<Tip> parseTips, ParseException e) {
                 if (e == null) {
-                    parseTip.deleteInBackground(new DeleteCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null){
-                                deleteBarrierAndTipListener.onResponse("deleted");
-                            }else {
-                                deleteBarrierAndTipListener.onFailure(e.getMessage());
-                            }
-                        }
-                    });
+                    if (parseTips.size() == 1){
+                        parseTips.get(0).unpinInBackground();
+                        parseTips.get(0).deleteEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

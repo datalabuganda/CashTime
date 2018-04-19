@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -30,7 +28,7 @@ public class EditTipActivity extends AppCompatActivity {
     private Button btnUpdate, btnDelete;
 
     private ParseHelper mParseHelper;
-    private String tipParseId;
+    private String tipLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class EditTipActivity extends AppCompatActivity {
         final String nameOfGoal = editTipIntent.getStringExtra("nameOfGoal");
         final String tip = editTipIntent.getStringExtra("tipText");
         String addedDate = editTipIntent.getStringExtra("tipAddDate");
-        tipParseId = editTipIntent.getStringExtra("tipParseId");
+        tipLocalUniqueID = editTipIntent.getStringExtra("tipLocalUniqueID");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit " + nameOfGoal);
@@ -71,19 +69,12 @@ public class EditTipActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Tip tipToDelete = new Tip();
-                        tipToDelete.setTipParseId(tipParseId);
-                        mParseHelper.deleteTipFromParseDb(tipToDelete, new DeleteBarrierAndTipListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                startTabbedBarriersTipsActivity();
-                                Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        tipToDelete.setLocalUniqueID(tipLocalUniqueID);
+                        mParseHelper.deleteTipFromParseDb(tipToDelete);
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditTipActivity.this, "Error While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        startTabbedBarriersTipsActivity();
+                        Toast.makeText(EditTipActivity.this, "Tip deleted successfully", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -112,22 +103,14 @@ public class EditTipActivity extends AppCompatActivity {
             String dateToday = simpleDateFormat.format(today);
 
             final Tip tipToUpdate = new Tip();
-            tipToUpdate.setTipParseId(tipParseId);
+            tipToUpdate.setLocalUniqueID(tipLocalUniqueID);
             tipToUpdate.setIntroText(tipNotes.getText().toString());
             tipToUpdate.setDateModified(dateToday);
+            mParseHelper.updateTipsInParseDb(tipToUpdate);
 
-            mParseHelper.updateTipsInParseDb(tipToUpdate, new UpdateBarrierAndTipListener() {
-                @Override
-                public void onResponse(String updateMessage) {
-                    startTabbedBarriersTipsActivity();
-                    Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
-                }
+            startTabbedBarriersTipsActivity();
+            Toast.makeText(EditTipActivity.this, "Tip for " + tipToUpdate.getIntroText() + " updated Successfully", Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(EditTipActivity.this, "Error While Updating " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -24,7 +23,7 @@ public class AddBarrierActivity extends AppCompatActivity {
     private Button btnCancel, btnSave;
     private EditText barrierNotes, barrierName;
     private TextView goalName;
-    private String groupId, groupGoalLocalUniqueID;
+    private String groupLocalUniqueID, groupGoalLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class AddBarrierActivity extends AppCompatActivity {
 
         Intent addBarrierIntent = getIntent();
         String nameOfGoal = addBarrierIntent.getStringExtra("goalName");
-        groupId = addBarrierIntent.getStringExtra("groupId");
+        groupLocalUniqueID = addBarrierIntent.getStringExtra("groupLocalUniqueID");
         groupGoalLocalUniqueID = addBarrierIntent.getStringExtra("groupGoalLocalUniqueID");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
@@ -76,23 +75,15 @@ public class AddBarrierActivity extends AppCompatActivity {
             newBarrier.setGoalName(goalName.getText().toString());
             newBarrier.setBarrierName(barrierName.getText().toString());
             newBarrier.setBarrierText(barrierNotes.getText().toString());
-            newBarrier.setGroupId(groupId);
-            newBarrier.setGroupGoalParseId(groupGoalLocalUniqueID);
+            newBarrier.setGroupLocalUniqueID(groupLocalUniqueID);
+            newBarrier.setGroupGoalLocalUniqueID(groupGoalLocalUniqueID);
             newBarrier.setDateAdded(dateToday);
             newBarrier.setTipGiven(false);
+            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier);
 
-            new ParseHelper(AddBarrierActivity.this).saveGroupBarrierToParseDb(newBarrier, new SaveBarrierAndTipListener() {
-                @Override
-                public void onResponse(String saveMessage) {
-                    startTabbedBarriersTipsctivity();
-                    Toast.makeText(AddBarrierActivity.this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();
-                }
+            startTabbedBarriersTipsctivity();
+            Toast.makeText(AddBarrierActivity.this, "Good to save " + newBarrier.getBarrierName(), Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(AddBarrierActivity.this, "Error Occurred While Saving Barrier " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }

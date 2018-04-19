@@ -241,6 +241,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalMemberExpenditure(){
         int sumOfExpenditure = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         try {
             List<ParseObject> results = query.find();
@@ -258,6 +259,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalMemberIncome(){
         int sumOfIncome = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         try {
             List<ParseObject> results = query.find();
@@ -275,6 +277,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalMemberSavings(){
         int totalSavings = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupMemberSavings");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         try {
             List<ParseObject> results = query.find();
@@ -291,6 +294,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalLoan(){
         int sumOfLoan = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Loan");
         try {
@@ -307,6 +311,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalSalary(){
         int sumOfSalary = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Salary");
         try {
@@ -324,6 +329,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalSavings(){
         int sumOfSavings = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Savings");
         try {
@@ -341,6 +347,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalInvestment(){
         int sumOfInvestment = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Investment");
         try {
@@ -351,12 +358,14 @@ public class MemberAnalysisActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Log.d(TAG, "totalInvestment: " + sumOfInvestment);
         return sumOfInvestment;
     }
 
     public int totalWage(){
         int sumOfWage = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Wage");
         try {
@@ -373,6 +382,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalDonation(){
         int sumOfDonation = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberIncome");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMemberIncomeSource", "Donation");
         try {
@@ -390,6 +400,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalRent(){
         int sumOfRent = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Rent");
         try {
@@ -406,6 +417,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalFood(){
         int sumOfFood = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Food");
         try {
@@ -422,6 +434,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalMedical(){
         int sumOfInvestment = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Medical");
         try {
@@ -438,6 +451,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalTransport(){
         int sumOfWage = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Wage");
         try {
@@ -454,6 +468,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalLeisure(){
         int sumOfDonation = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Leisure");
         try {
@@ -470,6 +485,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalOthers(){
         int sumOfDonation = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Others");
         try {
@@ -486,6 +502,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalCommunication() {
         int sumOfCommunication = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Communication");
         try {
@@ -502,6 +519,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalEntertainment() {
         int sumOfEntertainment = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Entertainment");
         try {
@@ -518,6 +536,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalGift() {
         int sumOfGift = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Gift");
         try {
@@ -534,6 +553,7 @@ public class MemberAnalysisActivity extends AppCompatActivity {
     public int totalClothes() {
         int sumOfClothes = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberExpenditure");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupMemberLocalUniqueID", groupMemberLocalUniqueID);
         query.whereContains("groupMembersExpenditureCategory", "Clothes");
         try {

@@ -19,7 +19,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
     EditText mGroupExpenditureCategory, mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
     Button groupExpenditureDeleteBtn, groupExpenditureUpdateBtn;
 
-    private String groupMemberExpenditureParseId = "";
+    private String memberExpenditureLocalUniqueID = "";
     private ParseExpenditureHelper mParseHelper;
 
     @Override
@@ -43,7 +43,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
         String groupMemberExpenditureAmount = intent.getStringExtra("memberExpenditureAmount");
         String groupMemberExpenditureDate = intent.getStringExtra("memberExpenditureDate");
         String groupMemberExpenditureNotes = intent.getStringExtra("memberExpenditureNotes");
-        groupMemberExpenditureParseId = intent.getStringExtra("memberExpenditureParseId");
+        memberExpenditureLocalUniqueID = intent.getStringExtra("memberExpenditureLocalUniqueID");
 
 
         mGroupExpenditureCategory.setText(groupMemberExpenditureCategory);
@@ -69,7 +69,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GroupMemberExpenditure groupMemberExpenditureToDelete = new GroupMemberExpenditure();
-                        groupMemberExpenditureToDelete.setParseId(groupMemberExpenditureParseId);
+                        groupMemberExpenditureToDelete.setLocalUniqueID(memberExpenditureLocalUniqueID);
                         mParseHelper.deleteGroupMembersExpenditureFromParseDb(groupMemberExpenditureToDelete);
                         startTabbedExpenditureActivity();
                         Toast.makeText(EditGroupMemberExpenditureActivity.this, "Expenditure deleted successfully", Toast.LENGTH_SHORT).show();
@@ -109,8 +109,8 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
             groupMemberExpenditure.setAmount(groupMemberExpenditureAmount);
             groupMemberExpenditure.setDate(groupMemberExpenditureDate);
             groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
-            if (!groupMemberExpenditureParseId.equals("")){
-                groupMemberExpenditure.setParseId(groupMemberExpenditureParseId);
+            if (!memberExpenditureLocalUniqueID.equals("")){
+                groupMemberExpenditure.setLocalUniqueID(memberExpenditureLocalUniqueID);
             }
             mParseHelper.updateGroupMembersExpenditureInParseDb(groupMemberExpenditure);
 

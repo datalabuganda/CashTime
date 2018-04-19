@@ -20,19 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupMembersExpendituresActivity;
-import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupMemberExpenditureActivity;
 import com.example.eq62roket.cashtime.Activities.GroupMembersExpenditureListActivity;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
-import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 import com.example.eq62roket.cashtime.adapters.GroupMemberExpenditureAdapter;
-import com.example.eq62roket.cashtime.adapters.GroupMembersIncomeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +71,7 @@ public class MembersExpendituresFragment extends Fragment implements SearchView.
                         editGroupMemberExpenditureIntent.putExtra("memberExpenditureAmount", groupMemberExpenditure.getAmount());
                         editGroupMemberExpenditureIntent.putExtra("memberExpenditureNotes",groupMemberExpenditure.getNotes());
                         editGroupMemberExpenditureIntent.putExtra("memberExpenditureDate", groupMemberExpenditure.getDate());
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureParseId", groupMemberExpenditure.getParseId());
+                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureLocalUniqueID", groupMemberExpenditure.getLocalUniqueID());
                         startActivity(editGroupMemberExpenditureIntent);
                         getActivity().finish();
                     }

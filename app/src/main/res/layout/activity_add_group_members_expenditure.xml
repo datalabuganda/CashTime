@@ -33,12 +33,33 @@
                     android:id="@+id/membersExpenditureName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nimukama Probuse"
+                    android:text="etwin himself"
                     android:textSize="16sp"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/money"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <EditText
+                    android:id="@+id/membersExpenditureAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Member Expenditure Amount"
+                    android:inputType="number"
+                    android:layout_margin="5dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -61,57 +82,36 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/money"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/membersExpenditureAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:inputType="number"
-                    android:layout_margin="5dp"/>
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@drawable/calendar"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_marginRight="5dp"/>-->
 
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
+                    <!--<EditText-->
+                        <!--android:id="@+id/membersExpenditureDate"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="02/23/2018"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:layout_marginTop="15dp"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:layout_marginBottom="15dp"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/calendar"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"/>
+                <!--</android.support.design.widget.TextInputLayout>-->
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/membersExpenditureDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="02/23/2018"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
+            <!--</LinearLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

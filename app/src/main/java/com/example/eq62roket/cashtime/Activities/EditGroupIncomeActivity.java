@@ -47,7 +47,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         groupIncomeDeleteBtn = (Button) findViewById(R.id.editGroupIncomeDeleteBtn);
         groupIncomeUpdateBtn = (Button) findViewById(R.id.editGroupIncomeUpdateBtn);
         materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomePeriod);
-        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomeSource);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupExpenditureCategory);
 
         getSelectedPeriod();
         getSelectedIncomeSource(getIncomeSources());

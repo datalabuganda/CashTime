@@ -1,7 +1,5 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +19,8 @@ import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class AddGroupIncomeActivity extends AppCompatActivity {
     private static final String TAG = "AddGroupIncomeActivity";
@@ -33,12 +28,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     private Button groupIncomeSaveBtn, groupIncomeCancelBtn;
     private TextView mGroupName;
     private MaterialBetterSpinner materialPeriodSpinner;
-    private Integer REQUEST_CAMERA=1, SELECT_FILE=0;
-    private Calendar myCalendar = Calendar.getInstance();
-    private Context context = this;
-    private String dateFormat = "dd/MM/yyyy";
-    private DatePickerDialog.OnDateSetListener date;
-    private SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
     private String groupLocalUniqueID = "";
     private String selectedPeriod;

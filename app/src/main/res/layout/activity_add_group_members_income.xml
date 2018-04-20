@@ -33,12 +33,32 @@
                     android:id="@+id/memberIncomeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nimukama Probuse"
+                    android:text="etwin himself"
                     android:textSize="16sp"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginBottom="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/money"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <EditText
+                    android:id="@+id/memberIncomeAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Member Income Amount"
+                    android:inputType="number"
+                    android:layout_margin="5dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -68,44 +88,18 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/money"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"/>
-
-                <EditText
-                    android:id="@+id/memberIncomeAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:inputType="number"
-                    android:layout_margin="5dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:src="@drawable/calendar"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:hint="Select Period"
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/membersIncomePeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Period"
-                    android:textSize="16sp"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="15dp"/>
+                    android:hint="Select Income Period"
+                    android:layout_margin="5dp"/>
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

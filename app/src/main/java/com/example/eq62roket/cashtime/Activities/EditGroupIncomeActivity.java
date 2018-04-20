@@ -6,34 +6,33 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditGroupIncomeActivity extends AppCompatActivity {
 
-    ImageView groupGoalImage;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
-    Calendar myCalendar = Calendar.getInstance();
-    Context context = this;
-    String dateFormat = "dd/MM/yyyy";
-    DatePickerDialog.OnDateSetListener date;
-    SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-    EditText groupIncomeSource, groupIncomeAmount, groupIncomeNotes, groupIncomePeriod;
-    Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
+    private Context context = this;
+    private DatePickerDialog.OnDateSetListener date;
+    private EditText groupIncomeAmount, groupIncomeNotes;
+    private Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
+    private MaterialBetterSpinner materialPeriodSpinner, materialIncomeSourceSpinner;
 
     private String groupIncomeLocalUniqueID = "";
+    private String selectedPeriod;
+    private String selectedIncomeSource;
     private ParseIncomeHelper mParseHelper;
 
     @Override
@@ -43,14 +42,16 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
 
         mParseHelper = new ParseIncomeHelper(this);
 
-        groupIncomeSource = (EditText) findViewById(R.id.editGroupIncomeSource);
         groupIncomeAmount = (EditText) findViewById(R.id.editGroupIncomeAmount);
         groupIncomeNotes = (EditText) findViewById(R.id.editGroupIncomeNotes);
-        groupIncomePeriod = (EditText) findViewById(R.id.editGroupIncomePeriod);
         groupIncomeDeleteBtn = (Button) findViewById(R.id.editGroupIncomeDeleteBtn);
         groupIncomeUpdateBtn = (Button) findViewById(R.id.editGroupIncomeUpdateBtn);
+        materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomePeriod);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomeSource);
 
-        // get Intent data
+        getSelectedPeriod();
+        getSelectedIncomeSource(getIncomeSources());
+
         Intent intent = getIntent();
         String amountOfIncome = intent.getStringExtra("groupIncomeAmount");
         final String source0fIncome = intent.getStringExtra("groupIncomeSource");
@@ -59,10 +60,8 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         String nameOfGroup = intent.getStringExtra("groupName");
         groupIncomeLocalUniqueID = intent.getStringExtra("groupIncomeLocalUniqueID");
 
-        groupIncomeSource.setText(source0fIncome);
         groupIncomeAmount.setText(amountOfIncome);
         groupIncomeNotes.setText(notesAboutIncome);
-        groupIncomePeriod.setText(periodOfIncome);
 
         groupIncomeUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +73,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         groupIncomeDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // start a dialog fragment
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
@@ -99,59 +95,97 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
                         "Deleting Group Income '" + source0fIncome + "' Can not be undone." + "Are You Sure You want to delete this income?").setTitle("Delete Group Income");
 
 
-                // Create the AlertDialog
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
 
             }
         });
 
-        date = new DatePickerDialog.OnDateSetListener() {
+    }
 
+    public void getSelectedPeriod(){
+        List<String> periods = new ArrayList<>();
+        periods.add("Daily");
+        periods.add("Weekly");
+        periods.add("Monthly");
+
+        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                periods
+        );
+        materialPeriodSpinner.setAdapter(periodAdapter);
+
+        materialPeriodSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
-        };
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        groupIncomePeriod.setOnClickListener(new View.OnClickListener() {
+            }
 
             @Override
-            public void onClick(View v) {
-                new DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void afterTextChanged(Editable editable) {
+                selectedPeriod = editable.toString();
             }
         });
 
+    }
+
+    public void getSelectedIncomeSource(List<String> incomeSourcesList){
+        ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                incomeSourcesList
+        );
+        materialIncomeSourceSpinner.setAdapter(incomeSourcesAdapter);
+
+        materialIncomeSourceSpinner.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedIncomeSource = editable.toString();
+            }
+        });
 
     }
 
-    private void updateDate() {
-        groupIncomePeriod.setText(sdf.format(myCalendar.getTime()));
+    public List<String> getIncomeSources(){
+        List<String> incomeSourcesList = new ArrayList<>();
+        incomeSourcesList.add("Donation");
+        incomeSourcesList.add("Investment");
+        incomeSourcesList.add("Loan");
+        incomeSourcesList.add("Salary");
+        incomeSourcesList.add("Saving");
+        incomeSourcesList.add("Wage");
+
+        return incomeSourcesList;
     }
 
     private void updateGroupIncome(){
-        // add new group goal to db
-        if ( !groupIncomeSource.getText().toString().equals("") &&
-                !groupIncomeAmount.getText().toString().equals("") &&
-                !groupIncomePeriod.getText().toString().equals("")){
+        if ( !groupIncomeAmount.getText().toString().equals("") &&
+                selectedIncomeSource != null && selectedPeriod != null){
             String amountOfIncome = groupIncomeAmount.getText().toString();
-            String source0fIncome = groupIncomeSource.getText().toString();
             String notesAboutIncome = groupIncomeNotes.getText().toString();
-            String periodOfIncome = groupIncomePeriod.getText().toString();
 
 
             GroupIncome groupIncome = new GroupIncome();
             groupIncome.setAmount(amountOfIncome);
-            groupIncome.setSource(source0fIncome);
+            groupIncome.setSource(selectedIncomeSource);
             groupIncome.setNotes(notesAboutIncome);
-            groupIncome.setPeriod(periodOfIncome);
+            groupIncome.setPeriod(selectedPeriod);
             if (!groupIncomeLocalUniqueID.equals("")){
                 groupIncome.setLocalUniqueID(groupIncomeLocalUniqueID);
             }

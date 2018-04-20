@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,28 +22,19 @@ import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private static String TAG = "AddGroupMembersIncomeActivity";
-    TextView groupMemberUserName;
-    EditText memberIncomeSource, memberIncomeNotes, membersIncomeAmount;
-
-    Button memberIncomeSaveButton, memberIncomeCancelButton;
-
-    TextView memberIncomePeriod;
-    Integer REQUEST_CAMERA=1, SELECT_FILE=0;
-    Calendar myCalendar = Calendar.getInstance();
-    Context context = this;
-    String dateFormat = "dd/MM/yyyy";
-    DatePickerDialog.OnDateSetListener date;
-    SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-
+    private TextView groupMemberUserName;
+    private EditText memberIncomeSource, memberIncomeNotes, membersIncomeAmount;
+    private Button memberIncomeSaveButton, memberIncomeCancelButton;
+    private MaterialBetterSpinner materialPeriodSpinner;
+    private Context context = this;
+    private DatePickerDialog.OnDateSetListener date;
     private String groupMemberLocalUniqueID = "";
+    private String selectedPeriod;
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
@@ -56,12 +48,11 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         groupMemberUserName = (TextView)findViewById(R.id.memberIncomeName);
         memberIncomeSource = (EditText) findViewById(R.id.memberIncomeSource);
-        memberIncomePeriod = (TextView) findViewById(R.id.membersIncomePeriod);
         memberIncomeNotes = (EditText)findViewById(R.id.memberIncomeNotes);
         membersIncomeAmount = (EditText)findViewById(R.id.memberIncomeAmount);
-
         memberIncomeSaveButton = (Button)findViewById(R.id.memberIncomeSaveButton);
         memberIncomeCancelButton = (Button) findViewById(R.id.memberIncomeCancelBtn);
+        materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.membersIncomePeriod);
 
 
         ArrayAdapter<String> incomeSourceAdapter = new ArrayAdapter<String>(
@@ -70,7 +61,8 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
                 incomeSources
         );
 
-        MaterialBetterSpinner materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.memberIncomeSource);
+        MaterialBetterSpinner materialIncomeSourceSpinner = (MaterialBetterSpinner)
+                findViewById(R.id.memberIncomeSource);
         materialIncomeSourceSpinner.setAdapter(incomeSourceAdapter);
 
 
@@ -95,35 +87,40 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             }
         });
 
-        // init - set date to current date
-        long currentdate = System.currentTimeMillis();
-        String dateString = sdf.format(currentdate);
+        groupMemberIncomeCategory();
+        getSelectedPeriod();
 
+    }
 
-        date = new DatePickerDialog.OnDateSetListener() {
+    public void getSelectedPeriod(){
+        List<String> periods = new ArrayList<>();
+        periods.add("Daily");
+        periods.add("Weekly");
+        periods.add("Monthly");
 
+        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                periods
+        );
+        materialPeriodSpinner.setAdapter(periodAdapter);
+
+        materialPeriodSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
-        };
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        memberIncomePeriod.setOnClickListener(new View.OnClickListener() {
+            }
 
             @Override
-            public void onClick(View v) {
-                new DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void afterTextChanged(Editable editable) {
+                selectedPeriod = editable.toString();
             }
         });
-
-        groupMemberIncomeCategory();
 
     }
 
@@ -138,17 +135,13 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
         materialIncomeSourceSpinner.setAdapter(incomeSourceAdapter);
     }
 
-    private void updateDate() {
-        memberIncomePeriod.setText(sdf.format(myCalendar.getTime()));
-    }
 
     private void saveGroupMembersIncome(){
         if ( !membersIncomeAmount.getText().toString().equals("") &&
                 !memberIncomeSource.getText().toString().equals("") &&
-                !memberIncomePeriod.getText().toString().equals("")){
+                selectedPeriod != null){
             String groupMemberIncomeSource = memberIncomeSource.getText().toString();
             String groupMemberIncomeAmount = membersIncomeAmount.getText().toString();
-            String groupMemberIncomeIncomePeriod = memberIncomePeriod.getText().toString();
             String groupMemberIncomeNotes = memberIncomeNotes.getText().toString();
             String groupMemberUsername = groupMemberUserName.getText().toString();
             String currentUser = ParseUser.getCurrentUser().getObjectId();
@@ -157,7 +150,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             MembersIncome groupMemberIncome = new MembersIncome();
             groupMemberIncome.setSource(groupMemberIncomeSource);
             groupMemberIncome.setAmount(groupMemberIncomeAmount);
-            groupMemberIncome.setPeriod(groupMemberIncomeIncomePeriod);
+            groupMemberIncome.setPeriod(selectedPeriod);
             groupMemberIncome.setNotes(groupMemberIncomeNotes);
             groupMemberIncome.setMemberUserName(groupMemberUsername);
             groupMemberIncome.setMemberLocalUniqueID(groupMemberLocalUniqueID);
@@ -180,28 +173,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
         tabbedIncomeIntent.putExtra("position", "1");
         startActivity(tabbedIncomeIntent);
         finish();
-    }
-
-
-    public static Date addDay(Date d, int days) {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(d);
-        cal.add(Calendar.DAY_OF_YEAR, days);
-        return  cal.getTime();
-    }
-
-    public static Date addWeek(Date date, int numberOfDays) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DAY_OF_YEAR, numberOfDays);
-        return cal.getTime();
-    }
-
-    public static Date addMonth(Date date, int i) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.MONTH, i);
-        return cal.getTime();
     }
 
 }

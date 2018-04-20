@@ -17,24 +17,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/goal"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"/>
-                <EditText
-                    android:id="@+id/editGroupIncomeSource"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Income Source"
-                    android:layout_margin="5dp"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,11 +33,30 @@
                     android:id="@+id/editGroupIncomeAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Amount"
+                    android:hint="Enter Group Income Amount"
                     android:inputType="number"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/goal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/editGroupIncomeSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Income Source"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,24 +69,15 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.design.widget.TextInputLayout
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/editGroupIncomePeriod"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/editGroupIncomePeriod"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="02/23/2018"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
-
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:hint="Select Income Period"
+                    android:layout_margin="5dp"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

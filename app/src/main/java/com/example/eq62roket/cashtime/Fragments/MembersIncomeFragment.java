@@ -1,17 +1,24 @@
 package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.eq62roket.cashtime.Activities.EditGroupMemberIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.GroupMembersIncomeListActivity;
@@ -21,10 +28,11 @@ import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupMembersIncomeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class MembersIncomeFragment extends Fragment {
+public class MembersIncomeFragment extends Fragment implements SearchView.OnQueryTextListener{
     private static final String TAG = "GroupMembersActivity";
 
     private List<User> mGroupMemberUsers = null;
@@ -61,11 +69,11 @@ public class MembersIncomeFragment extends Fragment {
                     @Override
                     public void onGroupMemberClick(MembersIncome groupMemberIncome) {
                         Intent editGroupMemberIncomeIntent = new Intent(getActivity(), EditGroupMemberIncomeActivity.class);
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeSource", groupMemberIncome.getSource());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeAmount", groupMemberIncome.getAmount());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomePeriod",groupMemberIncome.getDueDate());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeNotes", groupMemberIncome.getNotes());
-                        editGroupMemberIncomeIntent.putExtra("groupMemberIncomeParseId", groupMemberIncome.getParseId());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeSource", groupMemberIncome.getSource());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomePeriod",groupMemberIncome.getPeriod());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
+                        editGroupMemberIncomeIntent.putExtra("memberIncomeLocalUniqueID", groupMemberIncome.getLocalUniqueID());
                         startActivity(editGroupMemberIncomeIntent);
                         getActivity().finish();
                     }
@@ -91,4 +99,50 @@ public class MembersIncomeFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.member_income, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.members_income_search);
+
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(menuItem);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<MembersIncome> newList = new ArrayList<>();
+        for (MembersIncome membersIncome : membersIncomes){
+            String name = membersIncome.getMemberUserName().toLowerCase();
+            String incomeSource = membersIncome.getSource().toLowerCase();
+            String notes = membersIncome.getNotes().toLowerCase();
+            String period = membersIncome.getPeriod().toLowerCase();
+            if (name.contains(newText)){
+                newList.add(membersIncome);
+            }
+            if (incomeSource.contains(newText)){
+                newList.add(membersIncome);
+            }
+            if (notes.contains(newText)){
+                newList.add(membersIncome);
+            }
+            if (period.contains(newText)){
+                newList.add(membersIncome);
+            }
+        }
+        mAdapter.setFilter(newList);
+        return true;
+    }
 }

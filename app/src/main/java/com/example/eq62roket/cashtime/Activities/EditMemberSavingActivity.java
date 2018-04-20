@@ -5,21 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteSavingListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateSavingListener;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,15 +28,13 @@ import java.util.Locale;
 
 public class EditMemberSavingActivity extends AppCompatActivity {
 
-    private Spinner periodSpinner, incomeSourcesSpinner;
+    private MaterialBetterSpinner materialIncomeSourceSpinner, materialPeriodSpinner;
     private EditText savingAmount, savingNote;
     private TextView goalName, memberName;
-
     private String selectedPeriod;
     private String selectedIncomeSource;
-
     private ParseHelper mParseHelper;
-    private String memberSavingParseId;
+    private String memberSavingLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +43,8 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
         mParseHelper = new ParseHelper(EditMemberSavingActivity.this);
 
-        periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
-        incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
+        materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.select_period_spinner);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.select_income_spinner);
         goalName = (TextView) findViewById(R.id.goalName);
         memberName = (TextView) findViewById(R.id.memberName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
@@ -62,7 +59,7 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         String notes = intent.getStringExtra("savingNote");
         String period = intent.getStringExtra("savingPeriod");
         String sourceOfIncome = intent.getStringExtra("incomeSource");
-        memberSavingParseId = intent.getStringExtra("memberSavingParseId");
+        memberSavingLocalUniqueID = intent.getStringExtra("memberSavingLocalUniqueID");
 
         // Prepopulate goalName and memberName
         goalName.setText(nameOfGoal);
@@ -93,19 +90,11 @@ public class EditMemberSavingActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MemberSavings memberSavingToDelete = new MemberSavings();
-                        memberSavingToDelete.setParseId(memberSavingParseId);
-                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete, new DeleteSavingListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                startTabbedSavingActivity();
-                                Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        memberSavingToDelete.setLocalUniqueID(memberSavingLocalUniqueID);
+                        mParseHelper.deleteMemberSavingFromParseDb(memberSavingToDelete);
+                        startTabbedSavingActivity();
+                        Toast.makeText(EditMemberSavingActivity.this, "Saving deleted successfully", Toast.LENGTH_SHORT).show();
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditMemberSavingActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -132,21 +121,26 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         periods.add("Monthly");
 
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, periods
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                periods
         );
-        periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        periodSpinner.setAdapter(periodAdapter);
+        materialPeriodSpinner.setAdapter(periodAdapter);
 
-        periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialPeriodSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Get selected period
-                selectedPeriod = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedPeriod = editable.toString();
             }
         });
 
@@ -154,22 +148,29 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
     public void selectIncomeSource(List<String> incomeSourcesList){
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, incomeSourcesList
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                incomeSourcesList
         );
-        incomeSourcesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        incomeSourcesSpinner.setAdapter(incomeSourcesAdapter);
+        materialIncomeSourceSpinner.setAdapter(incomeSourcesAdapter);
 
-        incomeSourcesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialIncomeSourceSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedIncomeSource = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedIncomeSource = editable.toString();
             }
         });
+
 
     }
 
@@ -179,7 +180,9 @@ public class EditMemberSavingActivity extends AppCompatActivity {
 
         if ( !savingAmount.getText().toString().equals("")
                 && !goalName.getText().toString().equals("")
-                && !memberName.getText().toString().equals("")){
+                && !memberName.getText().toString().equals("")
+                && selectedPeriod != null
+                && selectedIncomeSource != null){
 
             String amountSaved = savingAmount.getText().toString();
             String note = savingNote.getText().toString();
@@ -197,28 +200,20 @@ public class EditMemberSavingActivity extends AppCompatActivity {
             }
             if (!selectedPeriod.equals("")){
                 MemberSavings memberSavingToUpdate = new MemberSavings();
-                memberSavingToUpdate.setParseId(memberSavingParseId);
+                memberSavingToUpdate.setLocalUniqueID(memberSavingLocalUniqueID);
                 memberSavingToUpdate.setSavingAmount(amountSaved);
                 memberSavingToUpdate.setPeriod(selectedPeriod);
                 memberSavingToUpdate.setIncomeSource(selectedIncomeSource);
-                memberSavingToUpdate.setDateAdded(dateToday);
                 if (note.trim().equals("")){
                     memberSavingToUpdate.setSavingNote("No notes");
                 } else {
                     memberSavingToUpdate.setSavingNote(note);
                 }
-                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate, new UpdateSavingListener() {
-                    @Override
-                    public void onResponse(String updateMessage) {
-                        startTabbedSavingActivity();
-                        Toast.makeText(EditMemberSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
-                    }
+                mParseHelper.updateMemberSavingInParseDb(memberSavingToUpdate);
 
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(EditMemberSavingActivity.this, "Error Occured While Deleting " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                startTabbedSavingActivity();
+                Toast.makeText(EditMemberSavingActivity.this, "Saving Updated", Toast.LENGTH_SHORT).show();
+
             }
         } else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();

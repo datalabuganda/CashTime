@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteBarrierAndTipListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
 import com.example.eq62roket.cashtime.R;
 
@@ -25,7 +23,7 @@ public class EditBarrierActivity extends AppCompatActivity {
     private EditText barrierNotes, goalName, barrierName;
 
     private ParseHelper mParseHelper;
-    private String barrierParseId;
+    private String barrierLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class EditBarrierActivity extends AppCompatActivity {
         String nameOfGoal = editBarrierIntent.getStringExtra("barrierGoalName");
         final String nameOfBarrier = editBarrierIntent.getStringExtra("barrierName");
         String barrierText = editBarrierIntent.getStringExtra("barrierNotes");
-        barrierParseId = editBarrierIntent.getStringExtra("barrierParseId");
+        barrierLocalUniqueID = editBarrierIntent.getStringExtra("barrierLocalUniqueID");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,27 +62,15 @@ public class EditBarrierActivity extends AppCompatActivity {
         barrierDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // start a dialog fragment
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(view.getContext());
-                // Add the buttons
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Barrier barrierToDelete = new Barrier();
-                        barrierToDelete.setParseId(barrierParseId);
+                        barrierToDelete.setLocalUniqueID(barrierLocalUniqueID);
+                        mParseHelper.deleteGroupBarrierFromParseDb(barrierToDelete);
 
-                        mParseHelper.deleteGroupBarrierFromParseDb(barrierToDelete, new DeleteBarrierAndTipListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                startTabbedBarriersTipsActivity();
-                                Toast.makeText(EditBarrierActivity.this, "Barrier deleted successfully", Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(EditBarrierActivity.this, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        startTabbedBarriersTipsActivity();
+                        Toast.makeText(EditBarrierActivity.this, "Barrier deleted successfully", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -97,7 +83,6 @@ public class EditBarrierActivity extends AppCompatActivity {
                         "Deleting Barrier '" + nameOfBarrier + "' Can not be undone." + "Are You Sure You want to delete this Barrier?").setTitle("Delete Barrier   ");
 
 
-                // Create the AlertDialog
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
             }
@@ -114,25 +99,16 @@ public class EditBarrierActivity extends AppCompatActivity {
             String dateToday = simpleDateFormat.format(today);
 
             final Barrier barrierToUpdate = new Barrier();
-            barrierToUpdate.setParseId(barrierParseId);
+            barrierToUpdate.setLocalUniqueID(barrierLocalUniqueID);
             barrierToUpdate.setGoalName(goalName.getText().toString());
             barrierToUpdate.setBarrierName(barrierName.getText().toString());
             barrierToUpdate.setBarrierText(barrierNotes.getText().toString());
             barrierToUpdate.setDateAdded(dateToday);
             barrierToUpdate.setTipGiven(false);
+            mParseHelper.updateGroupBarriersInParseDb(barrierToUpdate);
 
-            mParseHelper.updateGroupBarriersInParseDb(barrierToUpdate, new UpdateBarrierAndTipListener() {
-                @Override
-                public void onResponse(String updateMessage) {
-                    startTabbedBarriersTipsActivity();
-                    Toast.makeText(EditBarrierActivity.this, "Barrier " + barrierToUpdate.getBarrierName() + " saved", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(EditBarrierActivity.this, "Error Occurred While Updating " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
+            startTabbedBarriersTipsActivity();
+            Toast.makeText(EditBarrierActivity.this, "Barrier " + barrierToUpdate.getBarrierName() + " saved", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }

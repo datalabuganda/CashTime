@@ -29,16 +29,10 @@
                     android:layout_marginRight="5dp"/>
                 <EditText
                     android:id="@+id/editGroupIncomeSource"
-                    android:layout_width="260dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Income Source"
                     android:layout_margin="5dp"/>
-                <ImageView
-                    android:id="@+id/addIncomeSource"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/category"/>
 
             </LinearLayout>
 
@@ -58,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount"
+                    android:inputType="number"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
@@ -121,8 +116,7 @@
                     android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
-                    android:backgroundTint="@color/red"
-                    android:textColor="#fff"
+                    android:textColor="@color/red"
                     android:text="Delete"/>
 
                 <Button

@@ -40,7 +40,7 @@ public class GoalTipsActivity extends AppCompatActivity {
                         editTipIntent.putExtra("nameOfGoal", tip.getGoalName());
                         editTipIntent.putExtra("tipText", tip.getIntroText());
                         editTipIntent.putExtra("tipAddDate", tip.getDateAdded());
-                        editTipIntent.putExtra("tipParseId", tip.getTipParseId());
+                        editTipIntent.putExtra("tipLocalUniqueID", tip.getLocalUniqueID());
                         startActivity(editTipIntent);
                         finish();
                     }

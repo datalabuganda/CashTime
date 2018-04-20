@@ -56,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount"
+                    android:inputType="number"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 
@@ -71,13 +72,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.v7.widget.AppCompatSpinner
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/select_period_spinner"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Saving Period"
+                    android:layout_margin="5dp"/>
 
-                </android.support.v7.widget.AppCompatSpinner>
             </LinearLayout>
 
             <LinearLayout
@@ -91,13 +92,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.v7.widget.AppCompatSpinner
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/select_income_spinner"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Income Source"
+                    android:layout_margin="5dp"/>
 
-                </android.support.v7.widget.AppCompatSpinner>
             </LinearLayout>
 
             <LinearLayout

@@ -1,19 +1,17 @@
 package com.example.eq62roket.cashtime.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
-import com.example.eq62roket.cashtime.Helper.ParseUserHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupMemberListener;
 import com.example.eq62roket.cashtime.Models.GroupMember;
-import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MembersAdapter;
 
@@ -41,14 +39,7 @@ public class GroupMembersIncomeListActivity extends AppCompatActivity {
                     public void onGroupMemberClick(GroupMember groupMember) {
                         Intent editUserIntent = new Intent(GroupMembersIncomeListActivity.this, AddGroupMembersIncomeActivity.class);
                         editUserIntent.putExtra("userName", groupMember.getMemberUsername());
-                        editUserIntent.putExtra("phoneNumber", groupMember.getMemberPhoneNumber());
-                        editUserIntent.putExtra("business",groupMember.getMemberBusiness());
-                        editUserIntent.putExtra("gender", groupMember.getMemberGender());
-                        editUserIntent.putExtra("nationality", groupMember.getMemberNationality());
-                        editUserIntent.putExtra("location", groupMember.getMemberLocation());
-                        editUserIntent.putExtra("educationLevel", groupMember.getMemberEducationLevel());
-                        editUserIntent.putExtra("household",groupMember.getMemberHousehold());
-                        editUserIntent.putExtra("parseId", groupMember.getMemberParseId());
+                        editUserIntent.putExtra("groupMemberLocalUniqueID", groupMember.getLocalUniqueID());
 
                         startActivity(editUserIntent);
                         finish();

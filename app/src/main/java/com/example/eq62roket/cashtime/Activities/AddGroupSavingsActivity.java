@@ -3,22 +3,23 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
+import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.AddSavingListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,14 +29,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class AddGroupSavingsActivity extends AppCompatActivity {
+
     private static final String TAG = "AddGroupSavingsActivity";
-    private Spinner periodSpinner, incomeSourcesSpinner;
+    private MaterialBetterSpinner materialIncomeSourceSpinner, materialPeriodSpinner;
     private EditText savingAmount, savingNote;
     private TextView goalName;
     private String selectedPeriod;
     private String selectedIncomeSource;
-    private String groupParseId;
-    private String groupGoalParseId;
+    private String groupLocalUniqueID;
+    private String groupGoalLocalUniqueID;
     private String groupGoalAmount;
     private String groupGoalDueDate;
     private ParseHelper mParseHelper;
@@ -47,8 +49,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         mParseHelper = new ParseHelper(AddGroupSavingsActivity.this);
 
-        periodSpinner = (Spinner) findViewById(R.id.select_period_spinner);
-        incomeSourcesSpinner = (Spinner) findViewById(R.id.select_income_spinner);
+        materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.select_period_spinner);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.select_income_spinner);
         goalName = (TextView) findViewById(R.id.goalName);
         savingAmount = (EditText) findViewById(R.id.savingAmount);
         savingNote = (EditText) findViewById(R.id.savingNote);
@@ -57,8 +59,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String nameOfGoal = intent.getStringExtra("goalName");
-        groupParseId = intent.getStringExtra("groupParseId");
-        groupGoalParseId = intent.getStringExtra("groupGoalParseId");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
+        groupGoalLocalUniqueID = intent.getStringExtra("groupGoalLocalUniqueID");
         groupGoalAmount = intent.getStringExtra("groupGoalAmount");
         groupGoalDueDate = intent.getStringExtra("groupGoalDueDate");
 
@@ -91,21 +93,26 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         periods.add("Monthly");
 
         ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, periods
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                periods
         );
-        periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        periodSpinner.setAdapter(periodAdapter);
+        materialPeriodSpinner.setAdapter(periodAdapter);
 
-        periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialPeriodSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Get selected period
-                selectedPeriod = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedPeriod = editable.toString();
             }
         });
 
@@ -113,20 +120,26 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     public void selectIncomeSource(List<String> incomeSourcesList){
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, incomeSourcesList
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                incomeSourcesList
         );
-        incomeSourcesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        incomeSourcesSpinner.setAdapter(incomeSourcesAdapter);
+        materialIncomeSourceSpinner.setAdapter(incomeSourcesAdapter);
 
-        incomeSourcesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialIncomeSourceSpinner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedIncomeSource = adapterView.getItemAtPosition(i).toString();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                selectedIncomeSource = editable.toString();
             }
         });
 
@@ -136,12 +149,14 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         final String[] savingPeriod = {""};
         final String nameOfGoal = goalName.getText().toString();
 
-        if ( !savingAmount.getText().toString().equals("")
-                && !goalName.getText().toString().equals("") ){
+        if ( !savingAmount.getText().toString().equals("") &&
+                !goalName.getText().toString().equals("") &&
+                selectedPeriod != null &&
+                selectedIncomeSource != null){
 
             final GroupGoals groupGoal = new GroupGoals();
-            groupGoal.setGroupId(groupParseId);
-            groupGoal.setParseId(groupGoalParseId);
+            groupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
+            groupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
             groupGoal.setAmount(groupGoalAmount);
             groupGoal.setDueDate(groupGoalDueDate);
             mParseHelper.getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
@@ -149,6 +164,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                 public void onResponse(int groupGoalTotalSavings) {
                     String amountSaved = savingAmount.getText().toString();
                     String note = savingNote.getText().toString();
+
+                    new ParseIncomeHelper(AddGroupSavingsActivity.this).getTotalGroupIncomeFromParseDb(groupLocalUniqueID);
 
                     int groupGoalTotalCost = Integer.parseInt(groupGoal.getAmount());
                     int amountToSave = Integer.valueOf(amountSaved);
@@ -175,8 +192,8 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             Date groupGoalDueDate = simpleDateFormat.parse(groupGoal.getDueDate());
                             Date todayZdate = simpleDateFormat.parse(dateToday);
                             GroupGoals completedGroupGoal = new GroupGoals();
-                            completedGroupGoal.setParseId(groupGoalParseId);
-                            completedGroupGoal.setGroupId(groupParseId);
+                            completedGroupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
+                            completedGroupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
 
                             if ( amountRemaining == 0 && todayZdate.before(groupGoalDueDate) ){
                                 completedGroupGoal.setGroupGoalStatus("completed");
@@ -213,32 +230,18 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             newGroupSaving.setIncomeSource(selectedIncomeSource);
                             newGroupSaving.setPeriod(selectedPeriod);
                             newGroupSaving.setDateAdded(dateToday);
-                            newGroupSaving.setGroupParseId(groupParseId);
-                            newGroupSaving.setGroupGoalParseId(groupGoalParseId);
+                            newGroupSaving.setGroupLocalUniqueID(groupLocalUniqueID);
+                            newGroupSaving.setGroupGoalLocalUniqueID(groupGoalLocalUniqueID);
                             if (note.trim().equals("")){
                                 newGroupSaving.setNotes("No notes");
                             }else {
                                 newGroupSaving.setNotes(note);
                             }
+                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving);
+                            // TODO: 3/29/18 ====> award the user 3 points
+                            startTabbedSavingActivity();
+                            Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
 
-                            mParseHelper.saveGroupSavingsToParseDb(newGroupSaving, new AddSavingListener() {
-                                @Override
-                                public void onResponse(String savedMessage) {
-                                    startTabbedSavingActivity();
-                                    Toast.makeText(AddGroupSavingsActivity.this, "Saving recorded", Toast.LENGTH_SHORT).show();
-
-                                    // TODO: 3/29/18 ====> award the user 3 points
-                                    //                // Award user 3 point for saving
-                                    //                User user = new User();
-                                    //                user.setPoints(3);
-
-                                }
-
-                                @Override
-                                public void onFailure(String error) {
-                                    Toast.makeText(AddGroupSavingsActivity.this, "Error Occurred while saving " + error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
                         }
                     }
 
@@ -258,9 +261,12 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     public List<String> getIncomeSources(){
         List<String> incomeSourcesList = new ArrayList<>();
-        incomeSourcesList.add("Salary");
+        incomeSourcesList.add("Donation");
+        incomeSourcesList.add("Investment");
         incomeSourcesList.add("Loan");
-        incomeSourcesList.add("Investments");
+        incomeSourcesList.add("Salary");
+        incomeSourcesList.add("Saving");
+        incomeSourcesList.add("Wage");
 
         return incomeSourcesList;
     }

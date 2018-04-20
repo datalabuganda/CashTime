@@ -4,19 +4,16 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
 
@@ -36,7 +33,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
     EditText groupIncomeSource, groupIncomeAmount, groupIncomeNotes, groupIncomePeriod;
     Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
 
-    private String groupIncomeParseId = "";
+    private String groupIncomeLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     @Override
@@ -60,7 +57,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         String notesAboutIncome = intent.getStringExtra("groupIncomeNotes");
         String periodOfIncome= intent.getStringExtra("groupIncomePeriod");
         String nameOfGroup = intent.getStringExtra("groupName");
-        groupIncomeParseId = intent.getStringExtra("groupIncomeParseId");
+        groupIncomeLocalUniqueID = intent.getStringExtra("groupIncomeLocalUniqueID");
 
         groupIncomeSource.setText(source0fIncome);
         groupIncomeAmount.setText(amountOfIncome);
@@ -85,7 +82,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GroupIncome groupIncomeToDelete = new GroupIncome();
-                        groupIncomeToDelete.setParseId(groupIncomeParseId);
+                        groupIncomeToDelete.setLocalUniqueID(groupIncomeLocalUniqueID);
                         mParseHelper.deleteGroupIncomeFromParseDb(groupIncomeToDelete);
                         startTabbedIncomeActivity();
                         Toast.makeText(EditGroupIncomeActivity.this, "Group income deleted successfully", Toast.LENGTH_SHORT).show();
@@ -155,8 +152,8 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
             groupIncome.setSource(source0fIncome);
             groupIncome.setNotes(notesAboutIncome);
             groupIncome.setPeriod(periodOfIncome);
-            if (!groupIncomeParseId.equals("")){
-                groupIncome.setParseId(groupIncomeParseId);
+            if (!groupIncomeLocalUniqueID.equals("")){
+                groupIncome.setLocalUniqueID(groupIncomeLocalUniqueID);
             }
             mParseHelper.updateGroupIncomeInParseDb(groupIncome);
 
@@ -171,6 +168,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(EditGroupIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("position", "0");
         startActivity(tabbedIncomeIntent);
         finish();
     }

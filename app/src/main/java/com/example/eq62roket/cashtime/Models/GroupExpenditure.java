@@ -6,33 +6,33 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/28/18.
  */
-@ParseClassName("GroupExpenditure")
+@ParseClassName("ct2_GroupExpenditure")
 public class GroupExpenditure extends ParseObject {
-    String category, categoryId, dueDate, amount, notes, groupName;
-    String groupParseId, groupExpenditureParseId, parseId, userId;
+    private String category, categoryId, date, amount, notes, groupName;
+    private String groupLocalUniqueID, localUniqueID, userId;
 
     public String getGroupName() {
         return groupName;
+    }
+
+    public String getLocalUniqueID() {
+        return localUniqueID;
+    }
+
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
-    public String getGroupParseId() {
-        return groupParseId;
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
     }
 
-    public void setGroupParseId(String groupParseId) {
-        this.groupParseId = groupParseId;
-    }
-
-    public String getGroupExpenditureParseId() {
-        return groupExpenditureParseId;
-    }
-
-    public void setGroupExpenditureParseId(String groupExpenditureParseId) {
-        this.groupExpenditureParseId = groupExpenditureParseId;
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
     }
 
     public String getUserId() {
@@ -43,13 +43,6 @@ public class GroupExpenditure extends ParseObject {
         this.userId = userId;
     }
 
-    public String getParseId() {
-        return parseId;
-    }
-
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
-    }
 
     public String getCategoryId() {
         return categoryId;
@@ -67,12 +60,12 @@ public class GroupExpenditure extends ParseObject {
         this.category = category;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAmount() {

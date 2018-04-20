@@ -62,6 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/add_amount"
+                        android:inputType="number"
                         android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -134,8 +135,7 @@
 
 
                     <Button
-                        android:backgroundTint="@color/red"
-                        android:textColor="#fff"
+                        android:textColor="@color/red"
                         android:id="@+id/groupDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"

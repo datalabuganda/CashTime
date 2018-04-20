@@ -2,9 +2,11 @@ package com.example.eq62roket.cashtime.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.IncomeToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
@@ -48,7 +53,7 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
         fabGroupIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GroupIncomeFragment.this.getContext(),IncomeToGroupActivity.class);
+                Intent intent = new Intent(GroupIncomeFragment.this.getContext(), IncomeToGroupActivity.class);
                 startActivity(intent);
             }
         });
@@ -66,7 +71,7 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
                         editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
                         editGroupIncomeIntent.putExtra("groupIncomePeriod",groupIncome.getPeriod());
                         editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
-                        editGroupIncomeIntent.putExtra("groupIncomeParseId", groupIncome.getParseId());
+                        editGroupIncomeIntent.putExtra("groupIncomeLocalUniqueID", groupIncome.getLocalUniqueID());
                         startActivity(editGroupIncomeIntent);
                         getActivity().finish();
                     }
@@ -94,6 +99,22 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group_income, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.group_income_search);
+
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(menuItem);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
@@ -104,7 +125,16 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
         ArrayList<GroupIncome> newList = new ArrayList<>();
         for (GroupIncome groupIncome : groupIncome){
             String source = groupIncome.getSource().toLowerCase();
+            String notes = groupIncome.getNotes().toLowerCase();
+            String groupName = groupIncome.getGroupName().toLowerCase();
+            String period = groupIncome.getPeriod().toLowerCase();
             if (source.contains(newText)){
+                newList.add(groupIncome);
+            }else if (notes.contains(newText)){
+                newList.add(groupIncome);
+            }else if (groupName.contains(newText)){
+                newList.add(groupIncome);
+            }else if (period.contains(newText)){
                 newList.add(groupIncome);
             }
         }

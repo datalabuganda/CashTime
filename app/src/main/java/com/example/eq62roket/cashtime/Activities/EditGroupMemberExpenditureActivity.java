@@ -1,27 +1,17 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
 
@@ -29,7 +19,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
     EditText mGroupExpenditureCategory, mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
     Button groupExpenditureDeleteBtn, groupExpenditureUpdateBtn;
 
-    private String groupMemberExpenditureParseId = "";
+    private String memberExpenditureLocalUniqueID = "";
     private ParseExpenditureHelper mParseHelper;
 
     @Override
@@ -49,11 +39,11 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
 
         // get Intent data
         Intent intent = getIntent();
-        final String groupMemberExpenditureCategory = intent.getStringExtra("groupMembersExpenditureCategory");
-        String groupMemberExpenditureAmount = intent.getStringExtra("groupMembersExpenditureAmount");
-        String groupMemberExpenditureDate = intent.getStringExtra("groupMembersExpenditureDate");
-        String groupMemberExpenditureNotes = intent.getStringExtra("groupMembersExpenditureNotes");
-        groupMemberExpenditureParseId = intent.getStringExtra("groupMembersExpenditureParseId");
+        final String groupMemberExpenditureCategory = intent.getStringExtra("memberExpenditureCategory");
+        String groupMemberExpenditureAmount = intent.getStringExtra("memberExpenditureAmount");
+        String groupMemberExpenditureDate = intent.getStringExtra("memberExpenditureDate");
+        String groupMemberExpenditureNotes = intent.getStringExtra("memberExpenditureNotes");
+        memberExpenditureLocalUniqueID = intent.getStringExtra("memberExpenditureLocalUniqueID");
 
 
         mGroupExpenditureCategory.setText(groupMemberExpenditureCategory);
@@ -79,7 +69,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GroupMemberExpenditure groupMemberExpenditureToDelete = new GroupMemberExpenditure();
-                        groupMemberExpenditureToDelete.setParseId(groupMemberExpenditureParseId);
+                        groupMemberExpenditureToDelete.setLocalUniqueID(memberExpenditureLocalUniqueID);
                         mParseHelper.deleteGroupMembersExpenditureFromParseDb(groupMemberExpenditureToDelete);
                         startTabbedExpenditureActivity();
                         Toast.makeText(EditGroupMemberExpenditureActivity.this, "Expenditure deleted successfully", Toast.LENGTH_SHORT).show();
@@ -117,10 +107,10 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
             GroupMemberExpenditure groupMemberExpenditure = new GroupMemberExpenditure();
             groupMemberExpenditure.setCategory(groupMemberExpenditureCategory);
             groupMemberExpenditure.setAmount(groupMemberExpenditureAmount);
-            groupMemberExpenditure.setDueDate(groupMemberExpenditureDate);
+            groupMemberExpenditure.setDate(groupMemberExpenditureDate);
             groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
-            if (!groupMemberExpenditureParseId.equals("")){
-                groupMemberExpenditure.setParseId(groupMemberExpenditureParseId);
+            if (!memberExpenditureLocalUniqueID.equals("")){
+                groupMemberExpenditure.setLocalUniqueID(memberExpenditureLocalUniqueID);
             }
             mParseHelper.updateGroupMembersExpenditureInParseDb(groupMemberExpenditure);
 
@@ -135,6 +125,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(EditGroupMemberExpenditureActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "1");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

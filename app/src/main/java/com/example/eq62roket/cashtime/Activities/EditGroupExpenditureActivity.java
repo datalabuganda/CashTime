@@ -18,7 +18,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
     EditText mGroupExpenditureCategory, mGroupExpenditureAmount, mGroupExpenditureDate, mGroupExpenditureNotes;
     Button groupExpenditureDeleteBtn, groupExpenditureUpdateBtn;
 
-    private String groupExpenditureParseId = "";
+    private String groupExpenditureLocalUniqueID = "";
     private ParseExpenditureHelper mParseHelper;
 
     @Override
@@ -40,9 +40,9 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String groupExpenditureCategory = intent.getStringExtra("groupExpenditureCategory");
         String groupExpenditureAmount = intent.getStringExtra("groupExpenditureAmount");
-        String groupExpenditureDate = intent.getStringExtra("groupExpenditureDueDate");
+        String groupExpenditureDate = intent.getStringExtra("groupExpenditureDate");
         String groupExpenditureNotes = intent.getStringExtra("groupExpenditureNotes");
-        groupExpenditureParseId = intent.getStringExtra("groupExpenditureParseId");
+        groupExpenditureLocalUniqueID = intent.getStringExtra("groupExpenditureLocalUniqueID");
 
 
         mGroupExpenditureCategory.setText(groupExpenditureCategory);
@@ -68,7 +68,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GroupExpenditure groupExpenditureToDelete = new GroupExpenditure();
-                        groupExpenditureToDelete.setParseId(groupExpenditureParseId);
+                        groupExpenditureToDelete.setLocalUniqueID(groupExpenditureLocalUniqueID);
                         mParseHelper.deleteGroupExpenditureFromParseDb(groupExpenditureToDelete);
                         startTabbedExpenditureActivity();
                         Toast.makeText(EditGroupExpenditureActivity.this, "Expenditure deleted successfully", Toast.LENGTH_SHORT).show();
@@ -105,10 +105,10 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
             GroupExpenditure groupExpenditure = new GroupExpenditure();
             groupExpenditure.setCategory(groupExpenditureCategory);
             groupExpenditure.setAmount(groupExpenditureAmount);
-            groupExpenditure.setDueDate(groupExpenditureDate);
+            groupExpenditure.setDate(groupExpenditureDate);
             groupExpenditure.setNotes(groupExpenditureNotes);
-            if (!groupExpenditureParseId.equals("")){
-                groupExpenditure.setParseId(groupExpenditureParseId);
+            if (!groupExpenditureLocalUniqueID.equals("")){
+                groupExpenditure.setLocalUniqueID(groupExpenditureLocalUniqueID);
             }
             mParseHelper.updateGroupExpenditureInParseDb(groupExpenditure);
 
@@ -123,6 +123,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(EditGroupExpenditureActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "0");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

@@ -6,9 +6,9 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/28/18.
  */
-@ParseClassName("GroupMembersIncome")
+@ParseClassName("ct2_MemberIncome")
 public class MembersIncome extends ParseObject {
-    String parseId, memberParseId, memberUserName, source, dueDate, amount, notes, userId;
+    String localUniqueID, memberLocalUniqueID, memberUserName, source, period, amount, notes, userId;
 
     public String getUserId() {
         return userId;
@@ -18,24 +18,24 @@ public class MembersIncome extends ParseObject {
         this.userId = userId;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getSource() {
         return source;
     }
 
-    public String getMemberParseId() {
-        return memberParseId;
+    public String getMemberLocalUniqueID() {
+        return memberLocalUniqueID;
     }
 
-    public void setMemberParseId(String memberParseId) {
-        this.memberParseId = memberParseId;
+    public void setMemberLocalUniqueID(String memberLocalUniqueID) {
+        this.memberLocalUniqueID = memberLocalUniqueID;
     }
 
     public String getMemberUserName() {
@@ -50,12 +50,12 @@ public class MembersIncome extends ParseObject {
         this.source = source;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public String getAmount() {

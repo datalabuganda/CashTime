@@ -3,19 +3,17 @@ package com.example.eq62roket.cashtime.Activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
@@ -32,8 +30,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     Button groupIncomeSaveBtn, groupIncomeCancelBtn;
     TextView mGroupName;
 
-    ImageView addIncomeSourceIcon;
-
     TextView incomePeriod;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
@@ -42,7 +38,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date;
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
-    private String groupParseId = "";
+    private String groupLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
@@ -57,37 +53,19 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         incomePeriod = (TextView) findViewById(R.id.groupIncomePeriod);
         incomeNotes = (EditText)findViewById(R.id.groupIncomeNotes);
         mGroupName = (TextView) findViewById(R.id.groupNameIncome);
-        addIncomeSourceIcon = (ImageView)findViewById(R.id.addIncomeSourceIcon);
-
-        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent incomeSourceIntent = new Intent(AddGroupIncomeActivity.this, AddIncomeSourceActivity.class);
-                startActivity(incomeSourceIntent);
-            }
-        });
 
         groupIncomeSaveBtn = (Button)findViewById(R.id.groupIncomeSaveBtn);
         groupIncomeCancelBtn = (Button)findViewById(R.id.groupIncomeCancelBtn);
 
         Intent intent = getIntent();
         String groupName = intent.getStringExtra("groupName");
-        groupParseId = intent.getStringExtra("groupParseId");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
 
         Log.d(TAG, "username " + groupName);
-        Log.d(TAG, "parseId " + groupParseId);
+        Log.d(TAG, "groupLocalUniqueID " + groupLocalUniqueID);
 
         mGroupName.setText(groupName);
 
-        addIncomeSourceIcon = (ImageView) findViewById(R.id.addIncomeSourceIcon);
-
-        addIncomeSourceIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent incomeSourceIntent = new Intent(AddGroupIncomeActivity.this, AddIncomeSourceActivity.class);
-                startActivity(incomeSourceIntent);
-            }
-        });
 
         groupIncomeSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +92,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -127,7 +104,6 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -165,22 +141,14 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
             String groupName = mGroupName.getText().toString();
             String currentUserId = ParseUser.getCurrentUser().getObjectId();
 
-
-            Log.d(TAG, "source: " + source);
-            Log.d(TAG, "amount: " + amount);
-            Log.d(TAG, "notes: " + notes);
-            Log.d(TAG, "period: " + period);
-
             GroupIncome groupIncome = new GroupIncome();
             groupIncome.setSource(source);
             groupIncome.setAmount(amount);
             groupIncome.setPeriod(period);
             groupIncome.setNotes(notes);
-            groupIncome.setGroupParseId(groupParseId);
+            groupIncome.setGroupLocalUniqueID(groupLocalUniqueID);
             groupIncome.setGroupName(groupName);
             groupIncome.setUserId(currentUserId);
-
-            Log.d(TAG, "saveGroupIncome: " + groupIncome.getAmount());
 
             new ParseIncomeHelper(this).saveGroupIncomeToParseDb(groupIncome);
             startTabbedIncomeActivity();
@@ -194,6 +162,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(AddGroupIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("position", "0");
         startActivity(tabbedIncomeIntent);
         finish();
     }

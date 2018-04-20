@@ -4,14 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
@@ -32,7 +31,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
     EditText groupMemberIncomeAmount, groupMemberIncomeSource, groupMemberIncomePeriod, groupMemberIncomeNotes;
     Button groupMemberIncomeDeleteBtn, groupMemberIncomeUpdateBtn;
 
-    private String groupMemberIncomeParseId = "";
+    private String memberIncomeLocalUniqueID = "";
     private ParseIncomeHelper mParseHelper;
 
     @Override
@@ -53,11 +52,14 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
 
         // get Intent data
         Intent intent = getIntent();
-        final String amountOfIncome = intent.getStringExtra("groupMemberIncomeAmount");
-        final String source0fIncome = intent.getStringExtra("groupMemberIncomeSource");
-        final String notesAboutIncome = intent.getStringExtra("groupMemberIncomeNotes");
-        final String periodOfIncome= intent.getStringExtra("groupMemberIncomePeriod");
-        groupMemberIncomeParseId = intent.getStringExtra("groupIncomeParseId");
+        final String amountOfIncome = intent.getStringExtra("memberIncomeAmount");
+        final String source0fIncome = intent.getStringExtra("memberIncomeSource");
+        final String notesAboutIncome = intent.getStringExtra("memberIncomeNotes");
+        final String periodOfIncome = intent.getStringExtra("memberIncomePeriod");
+        memberIncomeLocalUniqueID = intent.getStringExtra("memberIncomeLocalUniqueID");
+
+        Log.d(" member parse id", "onCreate: " + memberIncomeLocalUniqueID);
+
 
         groupMemberIncomeSource.setText(source0fIncome);
         groupMemberIncomeAmount.setText(amountOfIncome);
@@ -82,7 +84,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         MembersIncome groupMemberIncomeToDelete = new MembersIncome();
-                        groupMemberIncomeToDelete.setParseId(groupMemberIncomeParseId);
+                        groupMemberIncomeToDelete.setLocalUniqueID(memberIncomeLocalUniqueID);
                         mParseHelper.deleteGroupMemberIncomeFromParseDb(groupMemberIncomeToDelete);
                         startTabbedIncomeActivity();
                         Toast.makeText(EditGroupMemberIncomeActivity.this, "Income deleted successfully", Toast.LENGTH_SHORT).show();
@@ -150,10 +152,10 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
             membersIncome.setAmount(amountOfIncome);
             membersIncome.setSource(source0fIncome);
             membersIncome.setNotes(notesAboutIncome);
-            membersIncome.setDueDate(periodOfIncome);
+            membersIncome.setPeriod(periodOfIncome);
 
-            if (!groupMemberIncomeParseId.equals("")){
-                membersIncome.setParseId(groupMemberIncomeParseId);
+            if (!memberIncomeLocalUniqueID.equals("")){
+                membersIncome.setLocalUniqueID(memberIncomeLocalUniqueID);
             }
             mParseHelper.updateGroupMemberIncomeInParseDb(membersIncome);
 
@@ -168,6 +170,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
 
     public void startTabbedIncomeActivity(){
         Intent tabbedIncomeIntent = new Intent(EditGroupMemberIncomeActivity.this, TabbedIncomeActivity.class);
+        tabbedIncomeIntent.putExtra("position", "1");
         startActivity(tabbedIncomeIntent);
         finish();
     }

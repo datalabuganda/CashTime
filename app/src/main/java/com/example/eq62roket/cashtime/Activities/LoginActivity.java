@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                             mProgressDialogHelper.dismissProgressDialog();
                             Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(loginIntent);
-                            Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                            finish();
+                            Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
 
                         }
 

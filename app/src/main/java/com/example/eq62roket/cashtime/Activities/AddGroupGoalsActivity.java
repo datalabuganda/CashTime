@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.PeriodHelper;
-import com.example.eq62roket.cashtime.Interfaces.SaveGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -37,7 +36,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
     private SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
     private EditText groupGoalNote, groupGoalAmount, groupGoalName;
     private Button groupCancelBtn, groupSaveBtn;
-    private String groupParseId, groupName;
+    private String groupLocalUniqueID, groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_group_goals);
 
         Intent groupDetailsIntent = getIntent();
-        groupParseId = groupDetailsIntent.getStringExtra("groupParseId");
+        groupLocalUniqueID = groupDetailsIntent.getStringExtra("groupLocalUniqueID");
         groupName = groupDetailsIntent.getStringExtra("groupName");
 
         ActionBar actionBar = getSupportActionBar();
@@ -126,7 +125,7 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
                 groupGoals.setAmount(costOfGoal);
                 groupGoals.setName(nameOfGoal);
                 groupGoals.setDueDate(goalDeadline);
-                groupGoals.setGroupId(groupParseId);
+                groupGoals.setGroupLocalUniqueID(groupLocalUniqueID);
                 groupGoals.setGroupName(groupName);
                 if (goalNotes.trim().equals("")){
                     groupGoals.setNotes("No notes");
@@ -140,18 +139,10 @@ public class AddGroupGoalsActivity extends AppCompatActivity {
                     groupGoals.setGroupGoalStatus("incomplete");
                     groupGoals.setCompletedDate("");
                 }
-                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals, new SaveGoalListener() {
-                    @Override
-                    public void onResponse(String saveMessage) {
-                        startTabbedGoalsActivity();
-                        Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
-                    }
+                new ParseHelper(this).saveGroupGoalsToParseDb(groupGoals);
+                startTabbedGoalsActivity();
+                Toast.makeText(context, "Group Goal " + groupGoals.getName() + " saved", Toast.LENGTH_SHORT).show();
 
-                    @Override
-                    public void onFailure(String error) {
-                        Toast.makeText(context, "Error While Saving Goal " + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
             } catch (ParseException e) {
                 e.printStackTrace();
             }

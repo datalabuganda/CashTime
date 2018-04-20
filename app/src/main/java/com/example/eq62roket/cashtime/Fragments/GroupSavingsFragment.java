@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import com.example.eq62roket.cashtime.adapters.GroupSavingsAdapter;
 import java.util.List;
 
 
-public class GroupSavingsFragment extends Fragment {
+public class GroupSavingsFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private static final String TAG = "GroupSavingsFragment";
 
@@ -72,7 +73,7 @@ public class GroupSavingsFragment extends Fragment {
                             intent.putExtra("groupGoalName", groupSavings.getGoalName());
                             intent.putExtra("groupSavingAmount", groupSavings.getAmount());
                             intent.putExtra("groupSavingNote", groupSavings.getNotes());
-                            intent.putExtra("groupSavingParseId", groupSavings.getParseId());
+                            intent.putExtra("groupSavingLocalUniqueID", groupSavings.getLocalUniqueID());
                             startActivity(intent);
                         }
                     });
@@ -90,5 +91,15 @@ public class GroupSavingsFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

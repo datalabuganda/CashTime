@@ -48,7 +48,7 @@ public class IncomeToGroupActivity extends AppCompatActivity {
                         @Override
                         public void onGroupSelected(Group group) {
                             Intent groupDetailsIntent = new Intent(IncomeToGroupActivity.this, AddGroupIncomeActivity.class);
-                            groupDetailsIntent.putExtra("groupParseId", group.getGroupParseId());
+                            groupDetailsIntent.putExtra("groupLocalUniqueID", group.getLocalUniqueID());
                             groupDetailsIntent.putExtra("groupName", group.getGroupName());
 //                        groupDetailsIntent.putExtra("groupCentreName", group.getGroupCentreName());
 //                        groupDetailsIntent.putExtra("groupLocation", group.getLocationOfGroup());

@@ -30,17 +30,10 @@
                     android:layout_marginRight="5dp"/>
                 <EditText
                     android:id="@+id/editGroupMemberIncomeSource"
-                    android:layout_width="260dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Income Source"
                     android:layout_margin="5dp"/>
-                <ImageView
-                    android:id="@+id/addIncomeSource"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/category"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -59,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount"
+                    android:inputType="number"
                     android:layout_margin="5dp"/>
             </LinearLayout>
 

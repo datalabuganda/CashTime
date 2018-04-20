@@ -1,9 +1,11 @@
 package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,21 +13,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupExpenditureActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupExpenditureActivity;
-import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
 import com.example.eq62roket.cashtime.Activities.ExpenditureToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupExpenditureAdapter;
-import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,9 +68,9 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
                         Intent editGroupExpenditureIntent = new Intent(getActivity(), EditGroupExpenditureActivity.class);
                         editGroupExpenditureIntent.putExtra("groupExpenditureCategory", groupExpenditure.getCategory());
                         editGroupExpenditureIntent.putExtra("groupExpenditureAmount", groupExpenditure.getAmount());
-                        editGroupExpenditureIntent.putExtra("groupExpenditureDueDate",groupExpenditure.getDueDate());
+                        editGroupExpenditureIntent.putExtra("groupExpenditureDate",groupExpenditure.getDate());
                         editGroupExpenditureIntent.putExtra("groupExpenditureNotes", groupExpenditure.getNotes());
-                        editGroupExpenditureIntent.putExtra("groupExpenditureParseId", groupExpenditure.getParseId());
+                        editGroupExpenditureIntent.putExtra("groupExpenditureLocalUniqueID", groupExpenditure.getLocalUniqueID());
                         startActivity(editGroupExpenditureIntent);
                         getActivity().finish();
                     }
@@ -94,6 +96,23 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group_expenditure, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.group_expenditure_search);
+
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(menuItem);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -102,6 +121,25 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        newText = newText.toLowerCase();
+        ArrayList<GroupExpenditure> newList = new ArrayList<>();
+        for (GroupExpenditure groupExpenditures : groupExpenditures){
+            String name = groupExpenditures.getGroupName().toLowerCase();
+            String category = groupExpenditures.getCategory().toLowerCase();
+            String amount = groupExpenditures.getAmount().toLowerCase();
+            String date = groupExpenditures.getDate().toLowerCase();
+            if (name.contains(newText)){
+                newList.add(groupExpenditures);
+            }else if (category.contains(newText)){
+                newList.add(groupExpenditures);
+            }else if (amount.contains(newText)){
+                newList.add(groupExpenditures);
+            }else if (date.contains(newText)){
+                newList.add(groupExpenditures);
+            }
+        }
+        mAdapter.setFilter(newList);
+        return true;
+
     }
 }

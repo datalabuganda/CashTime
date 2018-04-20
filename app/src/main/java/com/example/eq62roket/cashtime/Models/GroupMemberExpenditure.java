@@ -6,20 +6,24 @@ import com.parse.ParseObject;
 /**
  * Created by eq62roket on 3/28/18.
  */
-@ParseClassName("GroupMembersExpenditure")
+@ParseClassName("ct2_MemberExpenditure")
 public class GroupMemberExpenditure extends ParseObject {
-    String parseId, memberParseId, memberUserName, category, dueDate, amount, notes, userId;
+    String localUniqueID, memberParseId, memberUserName, category, date, amount, notes, userId;
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public String getParseId() {
-        return parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMemberParseId() {
@@ -38,10 +42,6 @@ public class GroupMemberExpenditure extends ParseObject {
         this.memberUserName = memberUserName;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -50,12 +50,12 @@ public class GroupMemberExpenditure extends ParseObject {
         this.category = category;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getAmount() {

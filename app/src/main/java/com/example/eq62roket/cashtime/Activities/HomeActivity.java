@@ -20,6 +20,8 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "HomeActivity";
 
+    // TODO: 4/18/18 Add restore functionality....if there is internet...restore user data from online db
+
     private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,20 +163,12 @@ public class HomeActivity extends AppCompatActivity
             Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settingsIntent);
 
-        } if (id == R.id.transactions) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, TabbedTransactionsActivity.class);
-            startActivity(transactionsIntent);
+        }else if (id == R.id.logout) {
+            ParseUser.logOut();
 
-        }if (id == R.id.incomeSources) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, IncomeSourcesActivity.class);
-            startActivity(transactionsIntent);
-
-        }
-        if (id == R.id.expenditureCategories) {
-            Intent transactionsIntent = new Intent(HomeActivity.this, ExpenditureCategoriesActivity.class);
-            startActivity(transactionsIntent);
-
-        }else if (id == R.id.nav_send) {
+            Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
 
         }
 

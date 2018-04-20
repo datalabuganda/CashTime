@@ -25,6 +25,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="60dp"
                 android:ems="10"
+                android:maxLength="30"
                 android:hint="Username"
                 android:textColorHint="#999999"
                 android:textColor="#ffffff"
@@ -40,7 +41,7 @@
                 android:layout_marginTop="13dp"
                 android:ems="10"
                 android:hint="Phone Number"
-                android:inputType="textPersonName"
+                android:inputType="phone"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -53,8 +54,9 @@
                 android:layout_below="@+id/userPhoneNumber"
                 android:layout_marginTop="18dp"
                 android:ems="10"
+                android:maxLength="2"
                 android:hint="Household Composition"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -126,7 +128,7 @@
                 android:layout_marginTop="12dp"
                 android:ems="10"
                 android:hint="Location"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:textColor="#ffffff"
                 android:textColorHint="#999999" />
 
@@ -142,18 +144,18 @@
 
                     <Button
                         android:id="@+id/btnDelete"
-                        android:layout_width="170dp"
+                        android:layout_width="135dp"
                         android:layout_height="60dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="5dp"
                         android:text="@string/delete"
-                        android:textColor="#fff"
-                        android:backgroundTint="@color/red"/>
+                        android:textColor="@color/red"/>
 
                     <Button
                         android:id="@+id/btnUpdate"
-                        android:layout_width="170dp"
-                        android:layout_marginLeft="2dp"
+                        android:layout_width="135dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_height="60dp"
+                        android:layout_marginRight="20dp"
                         android:text="@string/update_btn"/>
                 </LinearLayout>
             </LinearLayout>

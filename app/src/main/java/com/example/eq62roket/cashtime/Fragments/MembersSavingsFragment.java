@@ -78,7 +78,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment {
                             intent.putExtra("savingPeriod", memberSavings.getPeriod());
                             intent.putExtra("incomeSource", memberSavings.getIncomeSource());
                             intent.putExtra("savingNote", memberSavings.getSavingNote());
-                            intent.putExtra("memberSavingParseId", memberSavings.getParseId());
+                            intent.putExtra("memberSavingLocalUniqueID", memberSavings.getLocalUniqueID());
                             startActivity(intent);
                         }
                     });

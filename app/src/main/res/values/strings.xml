@@ -58,6 +58,10 @@
     <string name="no_group_barriers_msg">No Group Barriers Added. Click + button to add a Barrier</string>
     <string name="no_group_savings_msg">No Group Savings Added. Click + button to add a Saving</string>
     <string name="no_tips_msg">No Tips Added. Click + button to add a Tip</string>
+    <string name="add_member_income_msg">No Income Added. Click + button to add an Income</string>
+    <string name="add_member_expenditure_msg">No Expenditure Added. Click + button to add an Expenditure</string>
+    <string name="add_group_income_msg">No Income Added. Click + button to add an Income</string>
+    <string name="add_group_expenditure_msg">No Expenditure Added. Click + button to add an Expenditure</string>
 
 
     <!--level of education array-->

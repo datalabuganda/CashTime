@@ -72,12 +72,18 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/memberIncomeAmount"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/memberIncomeAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -91,12 +97,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:hint="Select Period"
                     android:id="@+id/membersIncomePeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Period"
                     android:textSize="16sp"
                     android:layout_marginTop="15dp"
                     android:textColor="@color/black"
@@ -117,12 +122,18 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/memberIncomeNotes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Option)"
-                    android:layout_margin="5dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/memberIncomeNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Option)"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout

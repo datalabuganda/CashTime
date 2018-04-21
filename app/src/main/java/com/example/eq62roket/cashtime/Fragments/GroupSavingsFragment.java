@@ -1,27 +1,35 @@
 package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditGroupSavingActivity;
 import com.example.eq62roket.cashtime.Activities.GroupSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsListener;
+import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupSavingsAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +40,7 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
     private RecyclerView mRecyclerView;
     private TextView emptyView;
     private GroupSavingsAdapter mGroupSavingsAdapter;
+    private List<GroupSavings> groupSavings = null;
 
     private FloatingActionButton mFloatingActionButton;
 
@@ -41,6 +50,7 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_group_savings, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
@@ -94,12 +104,46 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group_savings, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.group_savings_search);
+
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(menuItem);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        newText = newText.toLowerCase();
+        ArrayList<GroupSavings> newList = new ArrayList<>();
+        for (GroupSavings groupSavings : groupSavings){
+            String source = groupSavings.getIncomeSource().toLowerCase();
+            String notes = groupSavings.getNotes().toLowerCase();
+            String goalName = groupSavings.getGoalName().toLowerCase();
+            String period = groupSavings.getPeriod().toLowerCase();
+            if (source.contains(newText)){
+                newList.add(groupSavings);
+            }else if (notes.contains(newText)){
+                newList.add(groupSavings);
+            }else if (goalName.contains(newText)){
+                newList.add(groupSavings);
+            }else if (period.contains(newText)){
+                newList.add(groupSavings);
+            }
+        }
+        mGroupSavingsAdapter.setFilter(newList);
+        return true;
     }
 }

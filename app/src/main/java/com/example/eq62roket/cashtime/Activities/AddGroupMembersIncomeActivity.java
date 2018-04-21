@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
@@ -32,11 +33,11 @@ import java.util.Locale;
 public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private static String TAG = "AddGroupMembersIncomeActivity";
     TextView groupMemberUserName;
-    EditText memberIncomeSource, memberIncomeNotes, membersIncomeAmount;
+    EditText memberIncomeSource, memberIncomeNotes, membersIncomeAmount, memberIncomePeriod;
 
     Button memberIncomeSaveButton, memberIncomeCancelButton;
+    PeriodHelper periodHelper;
 
-    TextView memberIncomePeriod;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
     Calendar myCalendar = Calendar.getInstance();
     Context context = this;
@@ -48,6 +49,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
+    public static String[] incomePeriods = {"Weekly", "Monthly"};
 
     @SuppressLint("LongLogTag")
     @Override
@@ -58,7 +60,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         groupMemberUserName = (TextView)findViewById(R.id.memberIncomeName);
         memberIncomeSource = (EditText) findViewById(R.id.memberIncomeSource);
-        memberIncomePeriod = (TextView) findViewById(R.id.membersIncomePeriod);
+        memberIncomePeriod = (EditText) findViewById(R.id.membersIncomePeriod);
         memberIncomeNotes = (EditText)findViewById(R.id.memberIncomeNotes);
         membersIncomeAmount = (EditText)findViewById(R.id.memberIncomeAmount);
 
@@ -97,38 +99,13 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             }
         });
 
-        // init - set date to current date
-        long currentdate = System.currentTimeMillis();
-        String dateString = sdf.format(currentdate);
-
-
-        date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
-            }
-
-        };
-
-        memberIncomePeriod.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
 
         groupMemberIncomeCategory();
+        groupMembersIncomePeriods();
 
+    }
+
+    public void incomePeriod(String Daily, String Monthly){
     }
 
     public void groupMemberIncomeCategory(){
@@ -142,9 +119,18 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
         materialIncomeSourceSpinner.setAdapter(incomeSourceAdapter);
     }
 
-    private void updateDate() {
-        memberIncomePeriod.setText(sdf.format(myCalendar.getTime()));
+    public void groupMembersIncomePeriods(){
+        ArrayAdapter<String> incomePeriodsAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.support_simple_spinner_dropdown_item,
+                incomePeriods
+        );
+
+        MaterialBetterSpinner materialIncomePeriosSpinner = (MaterialBetterSpinner) findViewById(R.id.groupIncomePeriod);
+        materialIncomePeriosSpinner.setAdapter(incomePeriodsAdapter);
+
     }
+
 
     private void saveGroupMembersIncome(){
         if ( !membersIncomeAmount.getText().toString().equals("") &&

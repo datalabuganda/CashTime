@@ -71,13 +71,18 @@
                     android:src="@drawable/money"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-
-                <EditText
-                    android:id="@+id/membersExpenditureAmount"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/membersExpenditureAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
 
@@ -122,12 +127,16 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/membersExpenditureNotes"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Option)"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/membersExpenditureNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Option)"
+                        android:layout_margin="5dp"/>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout

@@ -3,8 +3,11 @@ package com.example.eq62roket.cashtime.Helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
+import com.example.eq62roket.cashtime.Models.MemberSavings;
+import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -204,6 +207,25 @@ public class ParseIncomeHelper {
 
         });
 
+    }
+
+    public void getTotalGroupIncomeFromParseDb(GroupIncome groupIncome, final OnReturnedGroupSumOfIncomeListener onReturnedGroupSumOfIncomeListener){
+        ParseQuery<GroupIncome> groupIncomeParseQuery = ParseQuery.getQuery("ct2_GroupIncome");
+        groupIncomeParseQuery.whereEqualTo("groupParseId", groupIncome.getGroupParseId());
+        groupIncomeParseQuery.whereEqualTo("groupIncomeParseId", groupIncome.getParseId());
+        groupIncomeParseQuery.findInBackground(new FindCallback<GroupIncome>() {
+            @Override
+            public void done(List<GroupIncome> parseGroupIncome, ParseException e) {
+                if (e == null){
+                    int totalGroupIncome = 0;
+                    for (GroupIncome groupIncome : parseGroupIncome){
+                        totalGroupIncome += Integer.valueOf(groupIncome.getString("groupIncomeAmount"));
+                    }onReturnedGroupSumOfIncomeListener.onResponse(totalGroupIncome);
+                }else {
+                    onReturnedGroupSumOfIncomeListener.onFailure(e.getMessage());
+                }
+            }
+        });
     }
 
     public void deleteGroupIncomeFromParseDb(GroupIncome groupIncomeToDelete){

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.AddGroupMembersExpendituresActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
@@ -45,15 +46,18 @@ public class MembersExpendituresFragment extends Fragment implements SearchView.
     List<GroupMemberExpenditure> groupMemberExpenditures = null;
     private RecyclerView recyclerView;
     private GroupMemberExpenditureAdapter mAdapter;
+    private TextView emptyView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_members_expenditures, container, false);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.members_expenditures_recycler_view);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
 
         fabMembersExpenditures = (FloatingActionButton) rootView.findViewById(R.id.fabMemberExpenditures);
 
@@ -68,30 +72,38 @@ public class MembersExpendituresFragment extends Fragment implements SearchView.
         new ParseExpenditureHelper(getActivity()).getGroupMembersExpenditureFromParseDb(new ParseExpenditureHelper.OnReturnedGroupMembersExpenditureListener() {
             @Override
             public void onResponse(List<GroupMemberExpenditure> groupMemberExpenditureList) {
-                groupMemberExpenditures = groupMemberExpenditureList;
+                if (groupMemberExpenditureList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter = new GroupMemberExpenditureAdapter(groupMemberExpenditureList, new GroupMemberExpenditureAdapter.OnGoalClickListener() {
-                    @Override
-                    public void onGoalClick(GroupMemberExpenditure groupMemberExpenditure) {
-                        Intent editGroupMemberExpenditureIntent = new Intent(getActivity(), EditGroupMemberExpenditureActivity.class);
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureCategory", groupMemberExpenditure.getCategory());
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureAmount", groupMemberExpenditure.getAmount());
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureNotes",groupMemberExpenditure.getNotes());
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureDate", groupMemberExpenditure.getDate());
-                        editGroupMemberExpenditureIntent.putExtra("memberExpenditureParseId", groupMemberExpenditure.getParseId());
-                        startActivity(editGroupMemberExpenditureIntent);
-                        getActivity().finish();
-                    }
+                    groupMemberExpenditures = groupMemberExpenditureList;
+
+                    mAdapter = new GroupMemberExpenditureAdapter(groupMemberExpenditureList, new GroupMemberExpenditureAdapter.OnGoalClickListener() {
+                        @Override
+                        public void onGoalClick(GroupMemberExpenditure groupMemberExpenditure) {
+                            Intent editGroupMemberExpenditureIntent = new Intent(getActivity(), EditGroupMemberExpenditureActivity.class);
+                            editGroupMemberExpenditureIntent.putExtra("memberExpenditureCategory", groupMemberExpenditure.getCategory());
+                            editGroupMemberExpenditureIntent.putExtra("memberExpenditureAmount", groupMemberExpenditure.getAmount());
+                            editGroupMemberExpenditureIntent.putExtra("memberExpenditureNotes", groupMemberExpenditure.getNotes());
+                            editGroupMemberExpenditureIntent.putExtra("memberExpenditureDate", groupMemberExpenditure.getDate());
+                            editGroupMemberExpenditureIntent.putExtra("memberExpenditureParseId", groupMemberExpenditure.getParseId());
+                            startActivity(editGroupMemberExpenditureIntent);
+                            getActivity().finish();
+                        }
 
 
-                });
+                    });
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                mAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(mAdapter);
+                }
 
             }
 

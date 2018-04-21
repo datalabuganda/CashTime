@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -55,6 +56,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     private String groupParseId;
     private String nameOfGroup;
     private ParseGroupHelper mParseGroupHelper;
+    private ParseExpenditureHelper eParseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +126,6 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         labels.add("Wage");
         labels.add("Investment");
         labels.add("Savings");
-
-
 
         /***************** x axis label design ********************/
         final XAxis xAxis = incomeBarChart.getXAxis();
@@ -296,6 +296,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
 
     /********************************** Total Group Income ****************************************/
     public int totalGroupIncome(){
+
         int sumOfIncome = 0;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupIncome");
         query.whereEqualTo("groupParseId", groupParseId);

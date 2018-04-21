@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
+import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.Models.GroupMember;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.parse.FindCallback;
@@ -28,6 +29,11 @@ public class ParseExpenditureHelper {
 
     public interface OnReturnedGroupMembersExpenditureListener{
         void onResponse(List<GroupMemberExpenditure> groupMembersExpendituresList);
+        void onFailure(String error);
+    }
+
+    public interface OnReturnedGroupSumOfExpenditureListener{
+        void onResponse(int sumOfGroupExpenditure);
         void onFailure(String error);
     }
 
@@ -87,6 +93,42 @@ public class ParseExpenditureHelper {
             }
 
         });
+    }
+
+    public void getTotalGroupExpenditureFromParseDb(GroupExpenditure groupExpenditure, final ParseExpenditureHelper.OnReturnedGroupSumOfExpenditureListener onReturnedGroupSumOfExpenditureListener){
+        ParseQuery<GroupExpenditure> groupExpenditureParseQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
+        groupExpenditureParseQuery.whereEqualTo("groupParseId", groupExpenditure.getGroupParseId());
+        groupExpenditureParseQuery.whereEqualTo("groupExpenditureParseId", groupExpenditure.getParseId());
+        groupExpenditureParseQuery.findInBackground(new FindCallback<GroupExpenditure>() {
+            @Override
+            public void done(List<GroupExpenditure> parseGroupExpenditure, ParseException e) {
+                if (e == null){
+                    int totalGroupExpenditure = 0;
+                    for (GroupExpenditure groupExpenditure : parseGroupExpenditure){
+                        totalGroupExpenditure += Integer.valueOf(groupExpenditure.getString("groupExpenditureAmount"));
+                    }onReturnedGroupSumOfExpenditureListener.onResponse(totalGroupExpenditure);
+                }else {
+                    onReturnedGroupSumOfExpenditureListener.onFailure(e.getMessage());
+                }
+            }
+        });
+    }
+
+    public int totalGroupExpenditure(GroupExpenditure groupExpenditure, final ParseExpenditureHelper.OnReturnedGroupSumOfExpenditureListener onReturnedGroupSumOfExpenditureListener){
+        int sumOfExpenditure = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
+        query.whereEqualTo("groupParseId", groupExpenditure.getGroupParseId());
+        query.whereEqualTo("groupExpenditureParseId", groupExpenditure.getParseId());
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfExpenditure += Integer.parseInt(results.get(i).getString("groupExpenditureAmount"));
+            }onReturnedGroupSumOfExpenditureListener.onResponse(sumOfExpenditure);
+        } catch (ParseException e) {
+            onReturnedGroupSumOfExpenditureListener.onFailure(e.getMessage());
+            e.printStackTrace();
+        }
+        return sumOfExpenditure;
     }
 
     public void updateGroupExpenditureInParseDb(final GroupExpenditure groupExpenditureToUpdate){

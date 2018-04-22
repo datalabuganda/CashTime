@@ -72,7 +72,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
+        groupMemberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -169,7 +169,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             Toast.makeText(context, "Group Member Income Saved " + groupMemberIncome.getAmount() + " saved", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Income Amount, Source and Period fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 

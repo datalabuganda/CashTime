@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Models.Barrier;
+import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +73,9 @@ public class BarrierAdapter extends RecyclerView.Adapter<BarrierAdapter.TipViewH
         return mBarrierList.size();
     }
 
-
-
-
+    public void setFilter(ArrayList<Barrier> newList) {
+        mBarrierList = new ArrayList<>();
+        mBarrierList.addAll(newList);
+        notifyDataSetChanged();
+    }
 }

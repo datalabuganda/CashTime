@@ -57,7 +57,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
+        groupMemberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -108,7 +108,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
             groupMemberExpenditure.setDate(new PeriodHelper().getDateToday());
             groupMemberExpenditure.setMemberUserName(groupMemberUsername);
-            groupMemberExpenditure.setMemberParseId(groupMemberLocalUniqueID);
+            groupMemberExpenditure.setMemberLocalUniqueID(groupMemberLocalUniqueID);
             groupMemberExpenditure.setUserId(currentUser);
 
             new ParseExpenditureHelper(this).saveGroupMembersExpenditureToParseDb(groupMemberExpenditure);
@@ -117,7 +117,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             Toast.makeText(AddGroupMembersExpendituresActivity.this, "Group Income " + groupMemberExpenditure.getCategory() + " saved", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(AddGroupMembersExpendituresActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddGroupMembersExpendituresActivity.this, "Income Amount, Source and Period fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 

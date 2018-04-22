@@ -148,7 +148,7 @@ public class ParseExpenditureHelper {
         newGroupMembersExpenditure.put("memberExpenditureNotes", groupMembersExpenditure.getNotes());
         newGroupMembersExpenditure.put("memberExpenditureDate", groupMembersExpenditure.getDate());
         newGroupMembersExpenditure.put("memberUsername", groupMembersExpenditure.getMemberUserName());
-        newGroupMembersExpenditure.put("groupMemberLocalUniqueID", groupMembersExpenditure.getMemberParseId());
+        newGroupMembersExpenditure.put("memberLocalUniqueID", groupMembersExpenditure.getMemberLocalUniqueID());
         newGroupMembersExpenditure.put("createdById", groupMembersExpenditure.getUserId());
         newGroupMembersExpenditure.pinInBackground();
         newGroupMembersExpenditure.saveEventually();

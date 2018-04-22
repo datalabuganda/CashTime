@@ -70,7 +70,7 @@ public class ParseIncomeHelper {
         newGroupMemberIncome.put("memberIncomeNotes", groupMemberIncome.getNotes());
         newGroupMemberIncome.put("memberIncomePeriod", groupMemberIncome.getPeriod());
         newGroupMemberIncome.put("memberUsername", groupMemberIncome.getMemberUserName());
-        newGroupMemberIncome.put("groupMemberLocalUniqueID", groupMemberIncome.getMemberLocalUniqueID());
+        newGroupMemberIncome.put("memberLocalUniqueID", groupMemberIncome.getMemberLocalUniqueID());
         newGroupMemberIncome.put("createdById", groupMemberIncome.getUserId());
         newGroupMemberIncome.pinInBackground();
         newGroupMemberIncome.saveEventually();

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.SaveBarrierAndTipListener;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 
@@ -19,12 +18,13 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddTipsActivity extends AppCompatActivity {
+    private static final String TAG = "AddTipsActivity";
 
     private Button btnCancel, btnSave;
     private EditText tipText;
     private TextView goalName;
 
-    private String groupGoalParseId, groupParseId;
+    private String groupGoalLocalUniqueID, groupLocalUniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class AddTipsActivity extends AppCompatActivity {
 
         Intent addTipsIntent = getIntent();
         String nameOfGoal = addTipsIntent.getStringExtra("goalName");
-        groupParseId = addTipsIntent.getStringExtra("groupParseId");
-        groupGoalParseId = addTipsIntent.getStringExtra("groupGoalParseId");
+        groupLocalUniqueID = addTipsIntent.getStringExtra("groupLocalUniqueID");
+        groupGoalLocalUniqueID = addTipsIntent.getStringExtra("groupGoalLocalUniqueID");
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,21 +75,13 @@ public class AddTipsActivity extends AppCompatActivity {
             newTip.setIntroText(tipText.getText().toString());
             newTip.setDateAdded(dateToday);
             newTip.setDateModified(dateToday);
-            newTip.setGroupParseId(groupParseId);
-            newTip.setGroupGoalParseId(groupGoalParseId);
+            newTip.setGroupLocalUniqueID(groupLocalUniqueID);
+            newTip.setGroupGoalLocalUniqueID(groupGoalLocalUniqueID);
+            new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip);
 
-            new ParseHelper(AddTipsActivity.this).saveTipToParseDb(newTip, new SaveBarrierAndTipListener() {
-                @Override
-                public void onResponse(String saveMessage) {
-                    startTabbedBarriersTipsActivity();
-                    Toast.makeText(AddTipsActivity.this, "Tip " + newTip.getGoalName() + " saved", Toast.LENGTH_SHORT).show();
-                }
+            startTabbedBarriersTipsActivity();
+            Toast.makeText(AddTipsActivity.this, "Tip " + newTip.getGoalName() + " saved", Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(AddTipsActivity.this, "Error While Saving " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
         }else {
             Toast.makeText(this, "All fields are required.", Toast.LENGTH_SHORT).show();
         }

@@ -8,7 +8,7 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_MemberGoals")
 public class MembersGoals extends ParseObject {
-    String parseId, memberName,memberParseId, memberGoalName, completeDate,
+    String localUniqueID, memberName,memberLocalUniqueID, memberGoalName, completeDate,
             memberGoalAmount, memberGoalDueDate, memberGoalStatus, memberGoalNotes;
 
     public MembersGoals() {
@@ -22,20 +22,20 @@ public class MembersGoals extends ParseObject {
         this.completeDate = completeDate;
     }
 
-    public String getMemberParseId() {
-        return memberParseId;
+    public String getMemberLocalUniqueID() {
+        return memberLocalUniqueID;
     }
 
-    public void setMemberParseId(String memberParseId) {
-        this.memberParseId = memberParseId;
+    public void setMemberLocalUniqueID(String memberLocalUniqueID) {
+        this.memberLocalUniqueID = memberLocalUniqueID;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getMemberGoalNotes() {

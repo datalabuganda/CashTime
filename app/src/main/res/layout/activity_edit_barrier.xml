@@ -89,7 +89,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,16 +100,20 @@
                         android:id="@+id/barrierDeleteBtn"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
-                        android:layout_marginRight="2dp"
-                        android:text="@string/delete_barrier"
+                        android:layout_marginRight="1dp"
                         android:textColor="#fff"
+                        android:background="@color/red"
+                        android:text="@string/delete"
                         android:backgroundTint="@color/red"/>
 
                     <Button
                         android:id="@+id/barrierUpdateBtn"
                         android:layout_width="170dp"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="1dp"
                         android:layout_height="60dp"
+                        android:textColor="#fff"
+                        android:background="@color/green"
+                        android:textAlignment="center"
                         android:text="@string/update_barrier"/>
                 </LinearLayout>
             </LinearLayout>

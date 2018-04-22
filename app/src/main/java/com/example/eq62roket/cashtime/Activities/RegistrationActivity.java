@@ -7,7 +7,6 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseRegistrationHelper;
@@ -89,6 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             mProgressDialogHelper.dismissProgressDialog();
                             Intent homeIntent = new Intent(RegistrationActivity.this, LoginActivity.class);
                             startActivity(homeIntent);
+                            finish();
                             Toast.makeText(RegistrationActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
                         }
 

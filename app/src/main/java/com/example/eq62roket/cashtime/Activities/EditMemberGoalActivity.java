@@ -14,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -38,7 +36,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
     private EditText memberGoalName, memberGoalAmount, memberGoalNote;
 
     private ParseHelper mParseHelper;
-    private String memberGoalParseId = "";
+    private String memberGoalLocalUniqueID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,7 @@ public class EditMemberGoalActivity extends AppCompatActivity {
         String goalAmount = intent.getStringExtra("groupMemberGoalAmount");
         String goalDeadline = intent.getStringExtra("groupMemberGoalDeadline");
         String goalNotes = intent.getStringExtra("groupMemberGoalNotes");
-        memberGoalParseId = intent.getStringExtra("groupMemberParseId");
+        memberGoalLocalUniqueID = intent.getStringExtra("memberGoalLocalUniqueID");
 
         // prepopulate memberName
         memberName.setText(nameOfMember);
@@ -86,19 +84,11 @@ public class EditMemberGoalActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MembersGoals memberGoalToDelete = new MembersGoals();
-                        memberGoalToDelete.setParseId(memberGoalParseId);
-                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete, new DeleteGoalListener() {
-                            @Override
-                            public void onResponse(String deleteMessage) {
-                                startTabbedGoalsActivity();
-                                Toast.makeText(EditMemberGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
-                            }
+                        memberGoalToDelete.setLocalUniqueID(memberGoalLocalUniqueID);
+                        mParseHelper.deleteMemberGoalFromParseDb(memberGoalToDelete);
 
-                            @Override
-                            public void onFailure(String error) {
-                                Toast.makeText(context, "Error deleting goal " + error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        startTabbedGoalsActivity();
+                        Toast.makeText(EditMemberGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -161,23 +151,14 @@ public class EditMemberGoalActivity extends AppCompatActivity {
             membersGoalToUpdate.setMemberGoalName(nameOfGoal);
             membersGoalToUpdate.setMemberGoalDueDate(goalDeadline);
             membersGoalToUpdate.setMemberGoalNotes(goalNotes);
-            membersGoalToUpdate.setParseId(memberGoalParseId);
+            membersGoalToUpdate.setLocalUniqueID(memberGoalLocalUniqueID);
+            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate);
 
-            mParseHelper.updateMemberGoalInParseDb(membersGoalToUpdate, new UpdateGoalListener() {
-                @Override
-                public void onResponse(String updateMessage) {
-                    startTabbedGoalsActivity();
-                    Toast.makeText(
-                            context,
-                            "Group Goal " + membersGoalToUpdate.getMemberGoalName() + " saved",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(context, "Error Updating Member Goal " + error , Toast.LENGTH_SHORT).show();
-                }
-            });
+            startTabbedGoalsActivity();
+            Toast.makeText(
+                    context,
+                    "Group Goal " + membersGoalToUpdate.getMemberGoalName() + " saved",
+                    Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }

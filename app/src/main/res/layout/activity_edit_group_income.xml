@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,6 +17,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,16 +25,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/goal"
-                    android:layout_marginTop="15dp"
+                    android:src="@drawable/group"
                     android:layout_marginRight="5dp"/>
-                <EditText
-                    android:id="@+id/editGroupIncomeSource"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Income Source"
-                    android:layout_margin="5dp"/>
 
+                    <TextView
+                        android:id="@+id/groupName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group Name"
+                        android:inputType="number"
+                        android:layout_margin="5dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -46,15 +47,44 @@
                     android:src="@drawable/money"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-
-                <EditText
-                    android:id="@+id/editGroupIncomeAmount"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editGroupIncomeAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Group Income Amount"
+                        android:inputType="number"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/goal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/editGroupIncomeSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Income Source"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,25 +96,21 @@
                     android:src="@drawable/calendar"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/editGroupIncomePeriod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="02/23/2018"
-                        android:textSize="16sp"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="15dp"/>
+                        android:hint="Select Income Period"
+                        android:layout_margin="5dp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,12 +122,18 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/editGroupIncomeNotes"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Option)"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editGroupIncomeNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Option)"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -112,19 +144,24 @@
 
                 <Button
                     android:id="@+id/editGroupIncomeDeleteBtn"
-                    android:layout_width="180dp"
+                    android:layout_width="170dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
-                    android:textColor="@color/red"
-                    android:text="Delete"/>
+                    android:textColor="#fff"
+                    android:background="@color/red"
+                    android:text="@string/delete"
+                    android:backgroundTint="@color/red"/>
 
                 <Button
                     android:id="@+id/editGroupIncomeUpdateBtn"
-                    android:layout_width="180dp"
+                    android:layout_width="170dp"
                     android:layout_marginLeft="1dp"
                     android:layout_height="60dp"
-                    android:text="Update"/>
+                    android:text="Update"
+                    android:textColor="#fff"
+                    android:background="@color/green"
+                    android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</ScrollView>

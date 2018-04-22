@@ -21,18 +21,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupExpenditureActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupExpenditureActivity;
-import com.example.eq62roket.cashtime.Activities.EditGroupGoalActivity;
 import com.example.eq62roket.cashtime.Activities.ExpenditureToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
-import com.example.eq62roket.cashtime.Models.MembersGoals;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupExpenditureAdapter;
-import com.example.eq62roket.cashtime.adapters.GroupGoalsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +65,7 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
         new ParseExpenditureHelper(getActivity()).getGroupExpenditureFromParseDb(new ParseExpenditureHelper.OnReturnedGroupExpenditureListener() {
             @Override
             public void onResponse(List<GroupExpenditure> groupExpendituresList) {
+
                 if (groupExpendituresList.isEmpty()){
                     recyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
@@ -88,7 +83,8 @@ public class GroupExpendituresFragment extends Fragment implements SearchView.On
                             editGroupExpenditureIntent.putExtra("groupExpenditureAmount", groupExpenditure.getAmount());
                             editGroupExpenditureIntent.putExtra("groupExpenditureDate", groupExpenditure.getDate());
                             editGroupExpenditureIntent.putExtra("groupExpenditureNotes", groupExpenditure.getNotes());
-                            editGroupExpenditureIntent.putExtra("groupExpenditureParseId", groupExpenditure.getParseId());
+                            editGroupExpenditureIntent.putExtra("groupExpenditureLocalUniqueID", groupExpenditure.getLocalUniqueID());
+                            editGroupExpenditureIntent.putExtra("groupName", groupExpenditure.getGroupName());
                             startActivity(editGroupExpenditureIntent);
                             getActivity().finish();
                         }

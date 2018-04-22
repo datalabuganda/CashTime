@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.example.eq62roket.cashtime.Activities.EditGroupMemberIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.GroupMembersIncomeListActivity;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
@@ -67,6 +66,7 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
         new ParseIncomeHelper(getActivity()).getGroupMemberIncomeMemberFromParseDb(new ParseIncomeHelper.OnReturnedGroupMemberIncomeListener() {
             @Override
             public void onResponse(List<MembersIncome> groupMembersIncomeList) {
+
                 if (groupMembersIncomeList.isEmpty()){
                     mRecyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
@@ -84,7 +84,8 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
                             editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
                             editGroupMemberIncomeIntent.putExtra("memberIncomePeriod", groupMemberIncome.getPeriod());
                             editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
-                            editGroupMemberIncomeIntent.putExtra("memberParseId", groupMemberIncome.getParseId());
+                            editGroupMemberIncomeIntent.putExtra("memberIncomeLocalUniqueID", groupMemberIncome.getLocalUniqueID());
+                            editGroupMemberIncomeIntent.putExtra("memberUsername", groupMemberIncome.getMemberUserName());
                             startActivity(editGroupMemberIncomeIntent);
                             getActivity().finish();
                         }

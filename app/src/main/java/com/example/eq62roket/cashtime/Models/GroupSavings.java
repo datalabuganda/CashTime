@@ -8,42 +8,42 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_GroupSavings")
 public class GroupSavings extends ParseObject {
-    private String parseId, goalName, period, incomeSource, notes, dateAdded;
-    private String amount, groupParseId, userId, groupGoalParseId;
+    private String localUniqueID, goalName, period, incomeSource, notes, dateAdded;
+    private String amount, groupLocalUniqueID, userId, groupGoalLocalUniqueID;
 
     public GroupSavings() {
     }
 
-    public String getGroupParseId() {
-        return groupParseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setGroupParseId(String groupParseId) {
-        this.groupParseId = groupParseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
+    }
+
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
+    }
+
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public String getGroupGoalParseId() {
-        return groupGoalParseId;
+    public String getGroupGoalLocalUniqueID() {
+        return groupGoalLocalUniqueID;
     }
 
-    public void setGroupGoalParseId(String groupGoalParseId) {
-        this.groupGoalParseId = groupGoalParseId;
+    public void setGroupGoalLocalUniqueID(String groupGoalLocalUniqueID) {
+        this.groupGoalLocalUniqueID = groupGoalLocalUniqueID;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getParseId() {
-        return parseId;
-    }
-
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
     }
 
     public String getDateAdded() {

@@ -40,6 +40,7 @@ public class ParseRegistrationHelper {
         parseUser.put("userLocation", newUser.getLocation());
         parseUser.put("isLeader", newUser.getIsLeader());
         parseUser.put("userPoints", newUser.getPoints());
+        parseUser.pinInBackground();
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -55,12 +56,14 @@ public class ParseRegistrationHelper {
 
     public void updateIsLeaderFlagInParseDb(final User userToUpdate){
         ParseQuery<ParseUser> parseUserParseQuery = ParseUser.getQuery();
+        parseUserParseQuery.fromLocalDatastore();
         parseUserParseQuery.getInBackground(userToUpdate.getParseId(), new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 if (e == null){
                     parseUser.put("isLeader", userToUpdate.getIsLeader());
-                    parseUser.saveInBackground();
+                    parseUser.pinInBackground();
+                    parseUser.saveEventually();
                 }else {
                     Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }

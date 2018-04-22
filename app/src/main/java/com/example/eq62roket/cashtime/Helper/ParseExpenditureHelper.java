@@ -4,13 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
-import com.example.eq62roket.cashtime.Models.GroupIncome;
-import com.example.eq62roket.cashtime.Models.GroupMember;
+
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -43,32 +40,36 @@ public class ParseExpenditureHelper {
 
 
     private Context mContext;
+    private String currentUserID;
     private ParseExpenditureHelper.OnReturnedGroupExpenditureListener mOnReturnedGroupExpenditureListener;
     private ParseExpenditureHelper.OnReturnedGroupMembersExpenditureListener mOnReturnedGroupMembersExpenditureListener;
 
     public ParseExpenditureHelper(Context context){
         mContext = context;
+        currentUserID = ParseUser.getCurrentUser().getObjectId();
     }
 
     /**********************************  Group Expenditure Parse Helper *****************************/
     public void saveGroupExpenditureToParseDb(GroupExpenditure groupExpenditure){
         GroupExpenditure newGroupExpenditure = new GroupExpenditure();
+        newGroupExpenditure.put("groupExpenditureLocalUniqueID", new CashTimeUtils().getUUID());
         newGroupExpenditure.put("groupExpenditureCategory", groupExpenditure.getCategory());
         newGroupExpenditure.put("groupExpenditureAmount", groupExpenditure.getAmount());
         newGroupExpenditure.put("groupExpenditureNotes", groupExpenditure.getNotes());
         newGroupExpenditure.put("groupExpenditureDate", groupExpenditure.getDate());
         newGroupExpenditure.put("groupName", groupExpenditure.getGroupName());
-        newGroupExpenditure.put("groupParseId", groupExpenditure.getGroupParseId());
+        newGroupExpenditure.put("groupLocalUniqueID", groupExpenditure.getGroupLocalUniqueID());
         newGroupExpenditure.put("createdById", groupExpenditure.getUserId());
-        newGroupExpenditure.saveInBackground();
+        newGroupExpenditure.pinInBackground();
+        newGroupExpenditure.saveEventually();
 
     }
 
     public void getGroupExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupExpenditureListener onReturnedGroupExpenditureListener){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
-        String currentUser = ParseUser.getCurrentUser().getObjectId();
+        groupExpenditureQuery.fromLocalDatastore();
         groupExpenditureQuery.addDescendingOrder("updatedAt");
-        groupExpenditureQuery.whereEqualTo("createdById", currentUser);
+        groupExpenditureQuery.whereEqualTo("createdById", currentUserID);
         groupExpenditureQuery.findInBackground(new FindCallback<GroupExpenditure>() {
             @Override
             public void done(List<GroupExpenditure> parseGroupExpenditure, ParseException e) {
@@ -80,7 +81,7 @@ public class ParseExpenditureHelper {
                         newGroupExpenditure.setNotes(retrievedGroupExpenditure.get("groupExpenditureNotes").toString());
                         newGroupExpenditure.setDate(retrievedGroupExpenditure.get("groupExpenditureDate").toString());
                         newGroupExpenditure.setGroupName(retrievedGroupExpenditure.get("groupName").toString());
-                        newGroupExpenditure.setParseId(retrievedGroupExpenditure.getObjectId());
+                        newGroupExpenditure.setLocalUniqueID(retrievedGroupExpenditure.get("groupExpenditureLocalUniqueID").toString());
 
                         groupExpenditureList.add(newGroupExpenditure);
                     }
@@ -95,72 +96,44 @@ public class ParseExpenditureHelper {
         });
     }
 
-    public void getTotalGroupExpenditureFromParseDb(GroupExpenditure groupExpenditure, final ParseExpenditureHelper.OnReturnedGroupSumOfExpenditureListener onReturnedGroupSumOfExpenditureListener){
-        ParseQuery<GroupExpenditure> groupExpenditureParseQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
-        groupExpenditureParseQuery.whereEqualTo("groupParseId", groupExpenditure.getGroupParseId());
-        groupExpenditureParseQuery.whereEqualTo("groupExpenditureParseId", groupExpenditure.getParseId());
-        groupExpenditureParseQuery.findInBackground(new FindCallback<GroupExpenditure>() {
-            @Override
-            public void done(List<GroupExpenditure> parseGroupExpenditure, ParseException e) {
-                if (e == null){
-                    int totalGroupExpenditure = 0;
-                    for (GroupExpenditure groupExpenditure : parseGroupExpenditure){
-                        totalGroupExpenditure += Integer.valueOf(groupExpenditure.getString("groupExpenditureAmount"));
-                    }onReturnedGroupSumOfExpenditureListener.onResponse(totalGroupExpenditure);
-                }else {
-                    onReturnedGroupSumOfExpenditureListener.onFailure(e.getMessage());
-                }
-            }
-        });
-    }
-
-    public int totalGroupExpenditure(GroupExpenditure groupExpenditure, final ParseExpenditureHelper.OnReturnedGroupSumOfExpenditureListener onReturnedGroupSumOfExpenditureListener){
-        int sumOfExpenditure = 0;
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupExpenditure");
-        query.whereEqualTo("groupParseId", groupExpenditure.getGroupParseId());
-        query.whereEqualTo("groupExpenditureParseId", groupExpenditure.getParseId());
-        try {
-            List<ParseObject> results = query.find();
-            for (int i = 0; i < results.size(); i++){
-                sumOfExpenditure += Integer.parseInt(results.get(i).getString("groupExpenditureAmount"));
-            }onReturnedGroupSumOfExpenditureListener.onResponse(sumOfExpenditure);
-        } catch (ParseException e) {
-            onReturnedGroupSumOfExpenditureListener.onFailure(e.getMessage());
-            e.printStackTrace();
-        }
-        return sumOfExpenditure;
-    }
 
     public void updateGroupExpenditureInParseDb(final GroupExpenditure groupExpenditureToUpdate){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
-        groupExpenditureQuery.getInBackground(groupExpenditureToUpdate.getParseId(), new GetCallback<GroupExpenditure>() {
+        groupExpenditureQuery.fromLocalDatastore();
+        groupExpenditureQuery.whereEqualTo("groupExpenditureLocalUniqueID", groupExpenditureToUpdate.getLocalUniqueID());
+        groupExpenditureQuery.findInBackground(new FindCallback<GroupExpenditure>() {
             @Override
-            public void done(GroupExpenditure groupExpenditure, ParseException e) {
+            public void done(List<GroupExpenditure> groupExpenditures, ParseException e) {
                 if (e == null) {
-                    groupExpenditure.put("groupExpenditureCategory", groupExpenditureToUpdate.getCategory());
-                    groupExpenditure.put("groupExpenditureAmount", groupExpenditureToUpdate.getAmount());
-                    groupExpenditure.put("groupExpenditureNotes", groupExpenditureToUpdate.getNotes());
-                    groupExpenditure.put("groupExpenditureDate", groupExpenditureToUpdate.getDate());
-                    groupExpenditure.saveInBackground();
-
+                    if (groupExpenditures.size() == 1){
+                        groupExpenditures.get(0).put("groupExpenditureCategory", groupExpenditureToUpdate.getCategory());
+                        groupExpenditures.get(0).put("groupExpenditureAmount", groupExpenditureToUpdate.getAmount());
+                        groupExpenditures.get(0).put("groupExpenditureNotes", groupExpenditureToUpdate.getNotes());
+                        groupExpenditures.get(0).put("groupExpenditureDate", groupExpenditureToUpdate.getDate());
+                        groupExpenditures.get(0).pinInBackground();
+                        groupExpenditures.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
-
         });
     }
 
     public void deleteGroupExpenditureFromParseDb(GroupExpenditure groupExpenditureToDelete){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
-        groupExpenditureQuery.getInBackground(groupExpenditureToDelete.getParseId(), new GetCallback<GroupExpenditure>() {
+        groupExpenditureQuery.fromLocalDatastore();
+        groupExpenditureQuery.whereEqualTo("groupExpenditureLocalUniqueID", groupExpenditureToDelete.getLocalUniqueID());
+        groupExpenditureQuery.findInBackground(new FindCallback<GroupExpenditure>() {
             @Override
-            public void done(GroupExpenditure groupExpenditure, ParseException e) {
+            public void done(List<GroupExpenditure> groupExpenditures, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Should delete now: ");
-                    groupExpenditure.deleteInBackground();
+                    if (groupExpenditures.size() == 1){
+                        groupExpenditures.get(0).unpinInBackground();
+                        groupExpenditures.get(0).deleteEventually();
+                    }
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });
@@ -169,21 +142,23 @@ public class ParseExpenditureHelper {
     /******************************** Members Expenditure Parse Helper ******************************/
     public void saveGroupMembersExpenditureToParseDb(GroupMemberExpenditure groupMembersExpenditure){
         GroupMemberExpenditure newGroupMembersExpenditure = new GroupMemberExpenditure();
+        newGroupMembersExpenditure.put("memberExpenditureLocalUniqueID", new CashTimeUtils().getUUID());
         newGroupMembersExpenditure.put("memberExpenditureCategory", groupMembersExpenditure.getCategory());
         newGroupMembersExpenditure.put("memberExpenditureAmount", groupMembersExpenditure.getAmount());
         newGroupMembersExpenditure.put("memberExpenditureNotes", groupMembersExpenditure.getNotes());
         newGroupMembersExpenditure.put("memberExpenditureDate", groupMembersExpenditure.getDate());
         newGroupMembersExpenditure.put("memberUsername", groupMembersExpenditure.getMemberUserName());
-        newGroupMembersExpenditure.put("memberParseId", groupMembersExpenditure.getMemberParseId());
+        newGroupMembersExpenditure.put("groupMemberLocalUniqueID", groupMembersExpenditure.getMemberParseId());
         newGroupMembersExpenditure.put("createdById", groupMembersExpenditure.getUserId());
-        newGroupMembersExpenditure.saveInBackground();
+        newGroupMembersExpenditure.pinInBackground();
+        newGroupMembersExpenditure.saveEventually();
     }
 
     public void getGroupMembersExpenditureFromParseDb(final ParseExpenditureHelper.OnReturnedGroupMembersExpenditureListener onReturnedGroupMembersExpenditureListener){
         ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
-        String currentUser = ParseUser.getCurrentUser().getObjectId();
+        groupMemberExpenditureQuery.fromLocalDatastore();
         groupMemberExpenditureQuery.addDescendingOrder("updatedAt");
-        groupMemberExpenditureQuery.whereEqualTo("createdById", currentUser);
+        groupMemberExpenditureQuery.whereEqualTo("createdById", currentUserID);
         groupMemberExpenditureQuery.findInBackground(new FindCallback<GroupMemberExpenditure>() {
             @Override
             public void done(List<GroupMemberExpenditure> parseGroupMemberExpenditure, ParseException e) {
@@ -195,7 +170,7 @@ public class ParseExpenditureHelper {
                         newGroupMembersExpenditure.setNotes(retrievedGroupMemberExpenditure.get("memberExpenditureNotes").toString());
                         newGroupMembersExpenditure.setDate(retrievedGroupMemberExpenditure.get("memberExpenditureDate").toString());
                         newGroupMembersExpenditure.setMemberUserName(retrievedGroupMemberExpenditure.get("memberUsername").toString());
-                        newGroupMembersExpenditure.setParseId(retrievedGroupMemberExpenditure.getObjectId());
+                        newGroupMembersExpenditure.setLocalUniqueID(retrievedGroupMemberExpenditure.get("memberExpenditureLocalUniqueID").toString());
 
                         groupMembersExpenditureList.add(newGroupMembersExpenditure);
                     }
@@ -213,34 +188,41 @@ public class ParseExpenditureHelper {
 
     public void updateGroupMembersExpenditureInParseDb(final GroupMemberExpenditure groupMembersExpenditureToUpdate){
         ParseQuery<GroupMemberExpenditure> groupMembersExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
-        groupMembersExpenditureQuery.getInBackground(groupMembersExpenditureToUpdate.getParseId(), new GetCallback<GroupMemberExpenditure>() {
+        groupMembersExpenditureQuery.fromLocalDatastore();
+        groupMembersExpenditureQuery.whereEqualTo("memberExpenditureLocalUniqueID", groupMembersExpenditureToUpdate.getLocalUniqueID());
+        groupMembersExpenditureQuery.findInBackground(new FindCallback<GroupMemberExpenditure>() {
             @Override
-            public void done(GroupMemberExpenditure groupMemberExpenditure, ParseException e) {
+            public void done(List<GroupMemberExpenditure> groupMemberExpenditures, ParseException e) {
                 if (e == null) {
-                    groupMemberExpenditure.put("memberExpenditureCategory", groupMembersExpenditureToUpdate.getCategory());
-                    groupMemberExpenditure.put("memberExpenditureAmount", groupMembersExpenditureToUpdate.getAmount());
-                    groupMemberExpenditure.put("memberExpenditureNotes", groupMembersExpenditureToUpdate.getNotes());
-                    groupMemberExpenditure.put("memberExpenditureDate", groupMembersExpenditureToUpdate.getDate());
-                    groupMemberExpenditure.saveInBackground();
-
+                    if (groupMemberExpenditures.size() == 1){
+                        groupMemberExpenditures.get(0).put("memberExpenditureCategory", groupMembersExpenditureToUpdate.getCategory());
+                        groupMemberExpenditures.get(0).put("memberExpenditureAmount", groupMembersExpenditureToUpdate.getAmount());
+                        groupMemberExpenditures.get(0).put("memberExpenditureNotes", groupMembersExpenditureToUpdate.getNotes());
+                        groupMemberExpenditures.get(0).put("memberExpenditureDate", groupMembersExpenditureToUpdate.getDate());
+                        groupMemberExpenditures.get(0).pinInBackground();
+                        groupMemberExpenditures.get(0).saveEventually();
+                    }
                 }else {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
             }
-
         });
     }
 
     public void deleteGroupMembersExpenditureFromParseDb(GroupMemberExpenditure groupMembersExpenditureToDelete){
         ParseQuery<GroupMemberExpenditure> groupMemberExpenditureQuery = ParseQuery.getQuery("ct2_MemberExpenditure");
-        groupMemberExpenditureQuery.getInBackground(groupMembersExpenditureToDelete.getParseId(), new GetCallback<GroupMemberExpenditure>() {
+        groupMemberExpenditureQuery.fromLocalDatastore();
+        groupMemberExpenditureQuery.whereEqualTo("memberExpenditureLocalUniqueID", groupMembersExpenditureToDelete.getLocalUniqueID());
+        groupMemberExpenditureQuery.findInBackground(new FindCallback<GroupMemberExpenditure>() {
             @Override
-            public void done(GroupMemberExpenditure groupMemberExpenditure, ParseException e) {
+            public void done(List<GroupMemberExpenditure> groupMemberExpenditures, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Should delete now: ");
-                    groupMemberExpenditure.deleteInBackground();
+                    if (groupMemberExpenditures.size() == 1){
+                        groupMemberExpenditures.get(0).unpinInBackground();
+                        groupMemberExpenditures.get(0).deleteEventually();
+                    }
                 }else {
-                    Log.d(TAG, "Error Occured: " + e.getMessage());
+                    Log.d(TAG, "Error Occurred: " + e.getMessage());
                 }
             }
         });

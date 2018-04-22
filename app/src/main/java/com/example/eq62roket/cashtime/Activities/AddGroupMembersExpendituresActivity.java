@@ -3,33 +3,29 @@ package com.example.eq62roket.cashtime.Activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
     private static String TAG = "AddGroupMembersExpendituresActivity";
-    EditText membersExpenditureCategory, membersExpenditureAmount, membersExpenditureDate,
-        membersExpenditureNotes;
+    EditText membersExpenditureCategory, membersExpenditureAmount, membersExpenditureNotes;
     TextView groupMemberUserName;
     Button membersExpenditureCancelBtn, membersExpenditureSaveBtn;
 
@@ -40,7 +36,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
 
-    private String groupMemberParseId = "";
+    private String groupMemberLocalUniqueID = "";
     private ParseExpenditureHelper mParseHelper;
 
     public static String[] expenditureCategories = {"Rent", "Food", "Medical", "Transport", "Leisure", "Others",
@@ -52,27 +48,16 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_members_expenditure);
 
-
         membersExpenditureCategory = (EditText)findViewById(R.id.membersExpenditureCategory);
         membersExpenditureAmount = (EditText)findViewById(R.id.membersExpenditureAmount);
-        membersExpenditureDate = (EditText) findViewById(R.id.membersExpenditureDate);
         membersExpenditureNotes = (EditText)findViewById(R.id.membersExpenditureNotes);
-
         groupMemberUserName = (TextView)findViewById(R.id.membersExpenditureName);
-
         membersExpenditureSaveBtn = (Button)findViewById(R.id.memberExpenditureSaveButton);
         membersExpenditureCancelBtn = (Button)findViewById(R.id.memberExpenditureCancelButton);
 
-        Calendar ca = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        membersExpenditureDate.setText(format.format(ca.getTime()));
-
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberParseId = intent.getStringExtra("parseId");
-
-        Log.d(TAG, "username " + memberUserName);
-        Log.d(TAG, "parseId " + groupMemberParseId);
+        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -92,36 +77,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             }
         });
 
-        date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
-            }
-
-        };
-
-        membersExpenditureDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(context, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-
         groupMemberExpenditureCategory();
-    }
-    private void updateDate() {
-        membersExpenditureDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     public void groupMemberExpenditureCategory(){
@@ -142,7 +98,6 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             String groupMemberExpenditureCategory = membersExpenditureCategory.getText().toString();
             String groupMemberExpenditureAmount = membersExpenditureAmount.getText().toString();
             String groupMemberExpenditureNotes = membersExpenditureNotes.getText().toString();
-            String groupMemberExpenditureDate = membersExpenditureDate.getText().toString();
             String groupMemberUsername = groupMemberUserName.getText().toString();
             String currentUser = ParseUser.getCurrentUser().getObjectId();
 
@@ -151,12 +106,10 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
             groupMemberExpenditure.setCategory(groupMemberExpenditureCategory);
             groupMemberExpenditure.setAmount(groupMemberExpenditureAmount);
             groupMemberExpenditure.setNotes(groupMemberExpenditureNotes);
-            groupMemberExpenditure.setDate(groupMemberExpenditureDate);
+            groupMemberExpenditure.setDate(new PeriodHelper().getDateToday());
             groupMemberExpenditure.setMemberUserName(groupMemberUsername);
-            groupMemberExpenditure.setMemberParseId(groupMemberParseId);
+            groupMemberExpenditure.setMemberParseId(groupMemberLocalUniqueID);
             groupMemberExpenditure.setUserId(currentUser);
-
-            Log.d(TAG, "memberUserName: " + groupMemberExpenditure.getMemberUserName());
 
             new ParseExpenditureHelper(this).saveGroupMembersExpenditureToParseDb(groupMemberExpenditure);
             startTabbedExpenditureActivity();
@@ -170,6 +123,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
 
     public void startTabbedExpenditureActivity(){
         Intent tabbedExpenditureIntent = new Intent(AddGroupMembersExpendituresActivity.this, TabbedExpenditureActivity.class);
+        tabbedExpenditureIntent.putExtra("position", "1");
         startActivity(tabbedExpenditureIntent);
         finish();
     }

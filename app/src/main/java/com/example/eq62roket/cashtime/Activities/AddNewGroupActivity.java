@@ -44,7 +44,7 @@ public class AddNewGroupActivity extends AppCompatActivity {
                     String locationOfGroup = groupLocation.getText().toString().trim();
                     String groupCentreName = groupCenter.getText().toString().trim();
 
-                    String currentUserId = ParseUser.getCurrentUser().getObjectId();
+                    final String currentUserId = ParseUser.getCurrentUser().getObjectId();
                     String dateToday = new PeriodHelper().getDateToday();
 
                     Group groupTosave = new Group();
@@ -55,19 +55,19 @@ public class AddNewGroupActivity extends AppCompatActivity {
                     groupTosave.setGroupCentreName(groupCentreName);
                     groupTosave.setLocationOfGroup(locationOfGroup);
                     groupTosave.setGroupMemberCount(1);
-
                     new ParseGroupHelper(AddNewGroupActivity.this).saveNewGroupToParseDb(groupTosave);
 
-                    User groupLeaderUser = new User();
-                    groupLeaderUser.setParseId(currentUserId);
-                    groupLeaderUser.setIsLeader(true);
+                    User groupLeader = new User();
+                    groupLeader.setParseId(currentUserId);
+                    groupLeader.setIsLeader(true);
                     new ParseRegistrationHelper(AddNewGroupActivity.this)
-                            .updateIsLeaderFlagInParseDb(groupLeaderUser);
+                            .updateIsLeaderFlagInParseDb(groupLeader);
 
                     Intent groupIntent = new Intent(AddNewGroupActivity.this, GroupsActivity.class);
                     startActivity(groupIntent);
                     finish();
                     Toast.makeText(AddNewGroupActivity.this, "Your group has been created", Toast.LENGTH_SHORT).show();
+
                 }else {
                     Toast.makeText(AddNewGroupActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }

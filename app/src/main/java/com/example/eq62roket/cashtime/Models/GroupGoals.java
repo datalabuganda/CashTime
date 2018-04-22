@@ -9,24 +9,36 @@ import com.parse.ParseObject;
  */
 @ParseClassName("ct2_GroupGoals")
 public class GroupGoals extends ParseObject {
-    String parseId, name, dueDate, amount, completedDate,
-            notes, groupGoalStatus, groupId, groupName;
+    private String name, dueDate, amount, completedDate,
+            notes, groupGoalStatus, groupLocalUniqueID, groupName, localUniqueID;
 
 
     public GroupGoals() {
         super();
     }
 
+    public String getLocalUniqueID() {
+        return localUniqueID;
+    }
+
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
+    }
+
     public String getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(String completedDate) {
-        this.completedDate = completedDate;
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
+    }
+
+    public void setCompletedDate(String completedDate) {
+        this.completedDate = completedDate;
     }
 
     public String getGroupName() {
@@ -35,18 +47,6 @@ public class GroupGoals extends ParseObject {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getParseId() {
-        return parseId;
-    }
-
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
     }
 
     public String getGroupGoalStatus() {

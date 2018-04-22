@@ -10,36 +10,36 @@ import com.parse.ParseObject;
 @ParseClassName("ct2_Tips")
 public class Tip extends ParseObject{
     private String goalName;
-    private String tipParseId;
+    private String localUniqueID;
     private String introText;
     private String dateAdded;
-    private String dateModified, groupGoalParseId, groupParseId;
+    private String dateModified, groupGoalLocalUniqueID, groupLocalUniqueID;
 
     public Tip() {
     }
 
-    public String getGroupGoalParseId() {
-        return groupGoalParseId;
+    public String getGroupGoalLocalUniqueID() {
+        return groupGoalLocalUniqueID;
     }
 
-    public void setGroupGoalParseId(String groupGoalParseId) {
-        this.groupGoalParseId = groupGoalParseId;
+    public void setGroupGoalLocalUniqueID(String groupGoalLocalUniqueID) {
+        this.groupGoalLocalUniqueID = groupGoalLocalUniqueID;
     }
 
-    public String getGroupParseId() {
-        return groupParseId;
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
     }
 
-    public void setGroupParseId(String groupParseId) {
-        this.groupParseId = groupParseId;
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
     }
 
-    public String getTipParseId() {
-        return tipParseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setTipParseId(String tipParseId) {
-        this.tipParseId = tipParseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getDateModified() {

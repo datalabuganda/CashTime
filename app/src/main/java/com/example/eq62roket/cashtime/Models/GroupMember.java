@@ -11,10 +11,27 @@ import com.parse.ParseObject;
 public class GroupMember extends ParseObject {
     private String memberUsername, memberPhoneNumber, memberHousehold,
             memberBusiness, memberGender, memberEducationLevel, groupName,
-            memberNationality, memberLocation, memberParseId, memberGroupId;
+            memberNationality, memberLocation, memberGroupLocalUniqueId,
+            localUniqueID;
     private long memberPoints;
 
     public GroupMember() {
+    }
+
+    public String getMemberGroupLocalUniqueId() {
+        return memberGroupLocalUniqueId;
+    }
+
+    public void setMemberGroupLocalUniqueId(String memberGroupLocalUniqueId) {
+        this.memberGroupLocalUniqueId = memberGroupLocalUniqueId;
+    }
+
+    public String getLocalUniqueID() {
+        return localUniqueID;
+    }
+
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getGroupName() {
@@ -87,22 +104,6 @@ public class GroupMember extends ParseObject {
 
     public void setMemberLocation(String memberLocation) {
         this.memberLocation = memberLocation;
-    }
-
-    public String getMemberParseId() {
-        return memberParseId;
-    }
-
-    public void setMemberParseId(String memberParseId) {
-        this.memberParseId = memberParseId;
-    }
-
-    public String getMemberGroupId() {
-        return memberGroupId;
-    }
-
-    public void setMemberGroupId(String memberGroupId) {
-        this.memberGroupId = memberGroupId;
     }
 
     public long getMemberPoints() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,13 +71,19 @@
                     android:src="@drawable/money"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
-
-                <EditText
-                    android:id="@+id/savingAmount"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/savingAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Amount"
+                        android:inputType="number"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
 
@@ -92,13 +98,18 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/select_period_spinner"
-                    android:layout_margin="5dp"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.AppCompatSpinner>
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/select_period_spinner"
+                        android:layout_width="260dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Saving Period"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -112,13 +123,18 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"/>
 
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/select_income_spinner"
-                    android:layout_margin="5dp"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.AppCompatSpinner>
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/select_income_spinner"
+                        android:layout_width="260dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Source Of Income"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -132,18 +148,24 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"/>
 
-                <EditText
-                    android:id="@+id/savingNote"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes (Optionaal)"
-                    android:layout_margin="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/savingNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Notes (Optional)"
+                        android:layout_margin="5dp"/>
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,23 +173,26 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:backgroundTint="@color/red"
-                        android:textColor="#fff"
                         android:id="@+id/btnCancel"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="1dp"
+                        android:textColor="#fff"
+                        android:background="@color/red"
                         android:text="Cancel"/>
 
                     <Button
                         android:id="@+id/btnSave"
                         android:layout_width="170dp"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="1dp"
                         android:layout_height="60dp"
-                        android:text="Save"/>
+                        android:text="Save"
+                        android:textColor="#fff"
+                        android:background="@color/green"
+                        android:textAlignment="center"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</ScrollView>

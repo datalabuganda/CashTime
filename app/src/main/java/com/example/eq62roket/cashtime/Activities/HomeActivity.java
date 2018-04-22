@@ -20,6 +20,8 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "HomeActivity";
 
+    // TODO: 4/18/18 Add restore functionality....if there is internet...restore user data from online db
+
     private CardView goalsCardView, analyticsCardView, tipsCardView, profileCardView, expenditureCardView, incomeCardView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +168,7 @@ public class HomeActivity extends AppCompatActivity
 
             Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(loginIntent);
+            finish();
 
         }
 

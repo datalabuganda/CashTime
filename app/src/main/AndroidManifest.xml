@@ -32,16 +32,15 @@
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="@string/oxfam_app_id" />
-        <!--<meta-data-->
-            <!--android:name="com.parse.CLIENT_KEY"-->
-            <!--android:value="@string/back4app_client_key" />-->
         <activity
             android:name=".Activities.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".Activities.SettingsActivity"
+            android:parentActivityName=".Activities.HomeActivity"
+            android:label="Settings"/>
         <activity
             android:name=".Activities.GroupMembersActivity"
             android:label="All Group Members"
@@ -77,7 +76,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
-        <activity android:name=".Activities.CalendarActivity" />
+        <activity android:name=".Activities.CalendarActivity"
+            android:parentActivityName=".Activities.HomeActivity"
+            android:label="Calendar"/>
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
@@ -109,8 +110,12 @@
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.EditMemberSavingActivity" />
-        <activity android:name=".Activities.EditGroupSavingActivity" />
+        <activity android:name=".Activities.EditMemberSavingActivity"
+            android:parentActivityName=".Activities.TabbedSavingActivity"
+            android:label="Edit Member Savings"/>
+        <activity android:name=".Activities.EditGroupSavingActivity"
+            android:parentActivityName=".Activities.TabbedSavingActivity"
+            android:label="Edit Group Savings"/>
         <activity android:name=".Activities.EditGroupGoalActivity" />
         <activity android:name=".Activities.EditMemberGoalActivity" />
         <activity
@@ -184,7 +189,7 @@
             android:label="Select a member"/>
         <activity android:name=".Activities.EditGroupIncomeActivity"
             android:parentActivityName=".Activities.TabbedIncomeActivity"
-            android:label="Edit Income"/>
+            android:label="Edit Group Income"/>
         <activity android:name=".Activities.EditGroupMemberExpenditureActivity"
             android:parentActivityName=".Activities.TabbedExpenditureActivity"
             android:label="Edit Income"/>

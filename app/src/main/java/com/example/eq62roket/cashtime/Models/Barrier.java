@@ -9,35 +9,35 @@ import com.parse.ParseObject;
 
 @ParseClassName("ct2_Barriers")
 public class Barrier extends ParseObject{
-    private String parseId, goalName, barrierName,
-            barrierText, dateAdded, groupId, groupGoalParseId;
+    private String localUniqueID, goalName, barrierName,
+            barrierText, dateAdded, groupLocalUniqueID, groupGoalLocalUniqueID;
     boolean tipGiven;
 
     public Barrier() {
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getGroupLocalUniqueID() {
+        return groupLocalUniqueID;
     }
 
-    public String getGroupGoalParseId() {
-        return groupGoalParseId;
+    public void setGroupLocalUniqueID(String groupLocalUniqueID) {
+        this.groupLocalUniqueID = groupLocalUniqueID;
     }
 
-    public void setGroupGoalParseId(String groupGoalParseId) {
-        this.groupGoalParseId = groupGoalParseId;
+    public String getGroupGoalLocalUniqueID() {
+        return groupGoalLocalUniqueID;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setGroupGoalLocalUniqueID(String groupGoalLocalUniqueID) {
+        this.groupGoalLocalUniqueID = groupGoalLocalUniqueID;
     }
 
-    public String getParseId() {
-        return parseId;
+    public String getLocalUniqueID() {
+        return localUniqueID;
     }
 
-    public void setParseId(String parseId) {
-        this.parseId = parseId;
+    public void setLocalUniqueID(String localUniqueID) {
+        this.localUniqueID = localUniqueID;
     }
 
     public String getDateAdded() {

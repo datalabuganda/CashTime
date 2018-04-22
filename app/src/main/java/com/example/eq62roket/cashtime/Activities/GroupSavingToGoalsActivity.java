@@ -48,9 +48,9 @@ public class GroupSavingToGoalsActivity extends AppCompatActivity {
                         public void onGoalClick(GroupGoals groupGoals) {
                             Intent intent = new Intent(GroupSavingToGoalsActivity.this, AddGroupSavingsActivity.class);
                             intent.putExtra("goalName", groupGoals.getName());
-                            intent.putExtra("groupParseId", groupGoals.getGroupId());
+                            intent.putExtra("groupLocalUniqueID", groupGoals.getGroupLocalUniqueID());
                             intent.putExtra("groupGoalAmount", groupGoals.getAmount());
-                            intent.putExtra("groupGoalParseId", groupGoals.getParseId());
+                            intent.putExtra("groupGoalLocalUniqueID", groupGoals.getLocalUniqueID());
                             intent.putExtra("groupGoalDueDate", groupGoals.getDueDate());
                             startActivity(intent);
                             finish();

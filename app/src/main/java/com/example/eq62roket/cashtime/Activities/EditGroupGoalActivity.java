@@ -14,9 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
-import com.example.eq62roket.cashtime.Interfaces.DeleteGoalListener;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupSavingsSumListener;
-import com.example.eq62roket.cashtime.Interfaces.UpdateGoalListener;
 import com.example.eq62roket.cashtime.Models.GroupGoals;
 import com.example.eq62roket.cashtime.R;
 
@@ -36,8 +34,8 @@ public class EditGroupGoalActivity extends AppCompatActivity {
     EditText groupGoalNote, groupGoalAmount, groupGoalName;
     Button groupDeleteBtn, groupUpdateBtn;
 
-    private String groupGoalParseId = "";
-    private String groupParseId;
+    private String groupGoalLocalUniqueID = "";
+    private String groupLocalUniqueID;
     private ParseHelper mParseHelper;
     private int mGroupGoalTotalSaving;
 
@@ -61,8 +59,8 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         String costOfGoal = intent.getStringExtra("groupGoalAmount");
         String goalDeadline = intent.getStringExtra("groupGoalDeadline");
         String goalNote = intent.getStringExtra("groupGoalNotes");
-        groupGoalParseId = intent.getStringExtra("groupGoalParseId");
-        groupParseId = intent.getStringExtra("groupParseId");
+        groupGoalLocalUniqueID = intent.getStringExtra("groupGoalLocalUniqueID");
+        groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
 
         groupGoalName.setText(nameOfGoal);
         groupGoalAmount.setText(costOfGoal);
@@ -70,8 +68,8 @@ public class EditGroupGoalActivity extends AppCompatActivity {
         groupGoalNote.setText(goalNote);
 
         GroupGoals groupGoal = new GroupGoals();
-        groupGoal.setParseId(groupGoalParseId);
-        groupGoal.setGroupId(groupParseId);
+        groupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
+        groupGoal.setGroupLocalUniqueID(groupLocalUniqueID);
 
         new ParseHelper(EditGroupGoalActivity.this).getTotalGroupSavingsFromParseDb(groupGoal, new OnReturnedGroupSavingsSumListener() {
             @Override
@@ -86,19 +84,12 @@ public class EditGroupGoalActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int id) {
 
                             GroupGoals groupGoalToDelete = new GroupGoals();
-                            groupGoalToDelete.setParseId(groupGoalParseId);
-                            mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete, new DeleteGoalListener() {
-                                @Override
-                                public void onResponse(String deleteMessage) {
-                                    startTabbedGoalsActivity();
-                                    Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
-                                }
+                            groupGoalToDelete.setLocalUniqueID(groupGoalLocalUniqueID);
+                            mParseHelper.deleteGroupGoalFromParseDb(groupGoalToDelete);
 
-                                @Override
-                                public void onFailure(String error) {
-                                    Toast.makeText(context, "Error Occurred While Deleting " + error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            startTabbedGoalsActivity();
+                            Toast.makeText(EditGroupGoalActivity.this, "Goal deleted successfully", Toast.LENGTH_SHORT).show();
+
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -174,25 +165,19 @@ public class EditGroupGoalActivity extends AppCompatActivity {
             groupGoal.setAmount(costOfGoal);
             groupGoal.setName(nameOfGoal);
             groupGoal.setDueDate(goalDeadline);
-            if (!groupGoalParseId.equals("")){
-                groupGoal.setParseId(groupGoalParseId);
+            if (!groupGoalLocalUniqueID.equals("")){
+                groupGoal.setLocalUniqueID(groupGoalLocalUniqueID);
             }
             if (goalNotes.trim().equals("")){
                 groupGoal.setNotes("No notes");
             }else {
                 groupGoal.setNotes(goalNotes);
             }
-            mParseHelper.updateGroupGoalInParseDb(groupGoal, new UpdateGoalListener() {
-                @Override
-                public void onResponse(String updateMessage) {
-                    startTabbedGoalsActivity();
-                    Toast.makeText(context, "Group Goal " + groupGoal.getName() + " Updated", Toast.LENGTH_SHORT).show();
-                }
-                @Override
-                public void onFailure(String error) {
-                    Toast.makeText(context, "Error occurred while updating " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
+            mParseHelper.updateGroupGoalInParseDb(groupGoal);
+
+            startTabbedGoalsActivity();
+            Toast.makeText(context, "Group Goal " + groupGoal.getName() + " Updated", Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
         }

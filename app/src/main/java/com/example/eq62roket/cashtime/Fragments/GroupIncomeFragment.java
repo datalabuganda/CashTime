@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Activities.AddGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.EditGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.IncomeToGroupActivity;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
@@ -60,7 +59,7 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
         fabGroupIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GroupIncomeFragment.this.getContext(),IncomeToGroupActivity.class);
+                Intent intent = new Intent(GroupIncomeFragment.this.getContext(), IncomeToGroupActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,7 +84,8 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
                             editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
                             editGroupIncomeIntent.putExtra("groupIncomePeriod", groupIncome.getPeriod());
                             editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
-                            editGroupIncomeIntent.putExtra("groupIncomeParseId", groupIncome.getParseId());
+                            editGroupIncomeIntent.putExtra("groupName", groupIncome.getGroupName());
+                            editGroupIncomeIntent.putExtra("groupIncomeLocalUniqueID", groupIncome.getLocalUniqueID());
                             startActivity(editGroupIncomeIntent);
                             getActivity().finish();
                         }

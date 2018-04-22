@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,13 +21,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Activities.AddNewGroupActivity;
 import com.example.eq62roket.cashtime.Activities.GroupAnalysisActivity;
 import com.example.eq62roket.cashtime.Helper.ParseGroupHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupsListener;
 import com.example.eq62roket.cashtime.Models.Group;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.GroupAdapter;
+
 import java.util.List;
 
 public class GroupAnalysisFragment extends Fragment implements SearchView.OnQueryTextListener{
@@ -65,7 +64,7 @@ public class GroupAnalysisFragment extends Fragment implements SearchView.OnQuer
                         @Override
                         public void onGroupSelected(Group group) {
                             Intent groupDetailsIntent = new Intent(getActivity(), GroupAnalysisActivity.class);
-                            groupDetailsIntent.putExtra("groupParseId", group.getGroupParseId());
+                            groupDetailsIntent.putExtra("groupLocalUniqueID", group.getLocalUniqueID());
                             groupDetailsIntent.putExtra("groupName", group.getGroupName());
                             groupDetailsIntent.putExtra("groupCentreName", group.getGroupCentreName());
                             groupDetailsIntent.putExtra("groupLocation", group.getLocationOfGroup());

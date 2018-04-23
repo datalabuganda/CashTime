@@ -135,22 +135,24 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment impl
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<MemberSavings> newList = new ArrayList<>();
-        for (MemberSavings memberSavings : mMemberSavings){
-            String source = memberSavings.getIncomeSource().toLowerCase();
-            String notes = memberSavings.getSavingNote().toLowerCase();
-            String goalName = memberSavings.getGoalName().toLowerCase();
-            String period = memberSavings.getPeriod().toLowerCase();
-            if (source.contains(newText)){
-                newList.add(memberSavings);
-            }else if (notes.contains(newText)){
-                newList.add(memberSavings);
-            }else if (goalName.contains(newText)){
-                newList.add(memberSavings);
-            }else if (period.contains(newText)){
-                newList.add(memberSavings);
+        if (mMemberSavings != null){
+            for (MemberSavings memberSavings : mMemberSavings){
+                String source = memberSavings.getIncomeSource().toLowerCase();
+                String notes = memberSavings.getSavingNote().toLowerCase();
+                String goalName = memberSavings.getGoalName().toLowerCase();
+                String period = memberSavings.getPeriod().toLowerCase();
+                if (source.contains(newText)){
+                    newList.add(memberSavings);
+                }else if (notes.contains(newText)){
+                    newList.add(memberSavings);
+                }else if (goalName.contains(newText)){
+                    newList.add(memberSavings);
+                }else if (period.contains(newText)){
+                    newList.add(memberSavings);
+                }
             }
+            mMemberSavingsAdapter.setFilter(newList);
         }
-        mMemberSavingsAdapter.setFilter(newList);
         return true;
     }
 }

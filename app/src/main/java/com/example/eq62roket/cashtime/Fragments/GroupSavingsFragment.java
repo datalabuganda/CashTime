@@ -128,22 +128,24 @@ public class GroupSavingsFragment extends Fragment implements SearchView.OnQuery
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<GroupSavings> newList = new ArrayList<>();
-        for (GroupSavings groupSavings : mGroupSavings){
-            String source = groupSavings.getIncomeSource().toLowerCase();
-            String notes = groupSavings.getNotes().toLowerCase();
-            String goalName = groupSavings.getGoalName().toLowerCase();
-            String period = groupSavings.getPeriod().toLowerCase();
-            if (source.contains(newText)){
-                newList.add(groupSavings);
-            }else if (notes.contains(newText)){
-                newList.add(groupSavings);
-            }else if (goalName.contains(newText)){
-                newList.add(groupSavings);
-            }else if (period.contains(newText)){
-                newList.add(groupSavings);
+        if (mGroupSavings != null){
+            for (GroupSavings groupSavings : mGroupSavings){
+                String source = groupSavings.getIncomeSource().toLowerCase();
+                String notes = groupSavings.getNotes().toLowerCase();
+                String goalName = groupSavings.getGoalName().toLowerCase();
+                String period = groupSavings.getPeriod().toLowerCase();
+                if (source.contains(newText)){
+                    newList.add(groupSavings);
+                }else if (notes.contains(newText)){
+                    newList.add(groupSavings);
+                }else if (goalName.contains(newText)){
+                    newList.add(groupSavings);
+                }else if (period.contains(newText)){
+                    newList.add(groupSavings);
+                }
             }
+            mGroupSavingsAdapter.setFilter(newList);
         }
-        mGroupSavingsAdapter.setFilter(newList);
         return true;
     }
 }

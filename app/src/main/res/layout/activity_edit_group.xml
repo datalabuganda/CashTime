@@ -13,7 +13,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <EditText
                 android:id="@+id/groupName"
@@ -48,18 +51,22 @@
 
                 <Button
                     android:id="@+id/groupDeleteBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:text="Delete"
-                    android:backgroundTint="@color/red"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="1dp"
                     android:textColor="#fff"
-                    android:layout_marginLeft="30dp"/>
+                    android:background="@color/red"
+                    android:text="@string/delete"
+                    android:backgroundTint="@color/red"/>
                 <Button
                     android:id="@+id/groupUpdateBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_height="60dp"
                     android:text="Update"
-                    android:layout_marginLeft="30dp"/>
+                    android:textColor="#fff"
+                    android:background="@color/green"
+                    android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

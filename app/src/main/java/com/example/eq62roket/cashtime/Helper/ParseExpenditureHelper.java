@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
+
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -25,6 +26,11 @@ public class ParseExpenditureHelper {
 
     public interface OnReturnedGroupMembersExpenditureListener{
         void onResponse(List<GroupMemberExpenditure> groupMembersExpendituresList);
+        void onFailure(String error);
+    }
+
+    public interface OnReturnedGroupSumOfExpenditureListener{
+        void onResponse(int sumOfGroupExpenditure);
         void onFailure(String error);
     }
 
@@ -90,6 +96,7 @@ public class ParseExpenditureHelper {
         });
     }
 
+
     public void updateGroupExpenditureInParseDb(final GroupExpenditure groupExpenditureToUpdate){
         ParseQuery<GroupExpenditure> groupExpenditureQuery = ParseQuery.getQuery("ct2_GroupExpenditure");
         groupExpenditureQuery.fromLocalDatastore();
@@ -141,7 +148,7 @@ public class ParseExpenditureHelper {
         newGroupMembersExpenditure.put("memberExpenditureNotes", groupMembersExpenditure.getNotes());
         newGroupMembersExpenditure.put("memberExpenditureDate", groupMembersExpenditure.getDate());
         newGroupMembersExpenditure.put("memberUsername", groupMembersExpenditure.getMemberUserName());
-        newGroupMembersExpenditure.put("memberParseId", groupMembersExpenditure.getMemberParseId());
+        newGroupMembersExpenditure.put("memberLocalUniqueID", groupMembersExpenditure.getMemberLocalUniqueID());
         newGroupMembersExpenditure.put("createdById", groupMembersExpenditure.getUserId());
         newGroupMembersExpenditure.pinInBackground();
         newGroupMembersExpenditure.saveEventually();

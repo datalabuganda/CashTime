@@ -13,33 +13,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/groupName"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Group Name"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="18dp"/>
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/groupName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Group Name"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="18dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Center"
+                    android:textSize="18dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/groupCenter"/>
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Center"
-                android:textSize="18dp"
-                android:layout_margin="10dp"
-                android:id="@+id/groupCenter"/>
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Group Location"
-                android:textSize="18dp"
-                android:layout_margin="10dp"
-                android:id="@+id/groupLocation"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Group Location"
+                    android:textSize="18dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/groupLocation"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,16 +64,20 @@
 
                 <Button
                     android:id="@+id/groupCancelBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="1dp"
+                    android:textColor="#fff"
+                    android:background="@color/red"
+                    android:text="Cancel"/>
                 <Button
                     android:id="@+id/groupSaveBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:text="Save"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="1dp"
+                    android:textColor="#fff"
+                    android:background="@color/green"
+                    android:text="Save"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

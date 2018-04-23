@@ -146,7 +146,9 @@ public class GroupMembersActivity extends AppCompatActivity implements SearchVie
                 groupMemberUsers.add(groupMemberUser);
             }
         }
-        mMembersAdapter.setFilter(groupMemberUsers);
+        if (groupMemberUsers.size() > 0){
+            mMembersAdapter.setFilter(groupMemberUsers);
+        }
         return true;
     }
 

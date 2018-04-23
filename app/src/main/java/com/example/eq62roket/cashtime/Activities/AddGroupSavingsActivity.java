@@ -66,9 +66,9 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
         goalName.setText(nameOfGoal);
 
-        getSelectPeriod();
+        getSelectedPeriod();
 
-        selectIncomeSource(getIncomeSources());
+        getSelectedIncomeSource(getIncomeSources());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
         });
     }
 
-    public void getSelectPeriod(){
+    public void getSelectedPeriod(){
         List<String> periods = new ArrayList<>();
         periods.add("Daily");
         periods.add("Weekly");
@@ -118,7 +118,7 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
 
     }
 
-    public void selectIncomeSource(List<String> incomeSourcesList){
+    public void getSelectedIncomeSource(List<String> incomeSourcesList){
         ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item,
@@ -216,11 +216,11 @@ public class AddGroupSavingsActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        if (selectedPeriod == "Daily"){
+                        if (selectedPeriod.equals("Daily")){
                             savingPeriod[0] = new PeriodHelper().getDailyDate();
-                        }else if (selectedPeriod == "Weekly"){
+                        }else if (selectedPeriod.equals("Weekly")){
                             savingPeriod[0] = new PeriodHelper().getWeeklyDate();
-                        }else if (selectedPeriod == "Monthly"){
+                        }else if (selectedPeriod.equals("Monthly")){
                             savingPeriod[0] = new PeriodHelper().getMonthlyDate();
                         }
                         if (!selectedPeriod.equals("")){

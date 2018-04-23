@@ -1,22 +1,12 @@
 package com.example.eq62roket.cashtime.Activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
-import com.example.eq62roket.cashtime.Helper.ParseUserHelper;
-import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.Models.User;
 import com.example.eq62roket.cashtime.R;
-import com.example.eq62roket.cashtime.adapters.GroupExpenditureAdapter;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -109,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfGroups = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_Groups");
+        query.fromLocalDatastore();
         query.whereEqualTo("groupLeaderId", currentUserId);
         try {
             List<ParseObject> results = query.find();
@@ -126,6 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("userId", currentUserId);
         try {
             List<ParseObject> results = query.find();
@@ -143,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfIncompleteGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("userId", currentUserId);
         query.whereContains("goalStatus", "incomplete");
         try {
@@ -161,6 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfCompleteGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("userId", currentUserId);
         query.whereContains("goalStatus", "completed");
         try {
@@ -179,6 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfFailedGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("userId", currentUserId);
         query.whereContains("goalStatus", "failed");
         try {
@@ -197,6 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfGroupMembers = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupMembers");
+        query.fromLocalDatastore();
         query.whereEqualTo("memberCreatorId", currentUserId);
         try {
             List<ParseObject> results = query.find();
@@ -214,6 +210,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfIncompleteGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("savingCreatorId", currentUserId);
 //        query.whereContains("memberGoalStatus", "incomplete");
         try {
@@ -233,6 +230,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfCompleteGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("savingCreatorId", currentUserId);
         query.whereContains("memberGoalStatus", "completed");
         try {
@@ -251,6 +249,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfIncompleteGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("savingCreatorId", currentUserId);
         query.whereContains("memberGoalStatus", "incomplete");
         try {
@@ -269,6 +268,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfFailedGroupGoals = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_MemberGoals");
+        query.fromLocalDatastore();
         query.whereEqualTo("savingCreatorId", currentUserId);
         query.whereContains("memberGoalStatus", "failed");
         try {
@@ -288,6 +288,7 @@ public class ProfileActivity extends AppCompatActivity {
         int numberOfTips = 0;
         String currentUserId = ParseUser.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_Tips");
+        query.fromLocalDatastore();
         query.whereEqualTo("userId", currentUserId);
         try {
             List<ParseObject> results = query.find();

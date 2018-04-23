@@ -1,17 +1,24 @@
 package com.example.eq62roket.cashtime.Fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.GoalTipsActivity;
@@ -22,10 +29,11 @@ import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.TipsAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class TipsFragment extends Fragment {
+public class TipsFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private static final String TAG = "GroupSavingsFragment";
 
@@ -35,9 +43,12 @@ public class TipsFragment extends Fragment {
 
     private FloatingActionButton mFloatingActionButton;
 
+    List<Tip> tips = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         View rootView = inflater.inflate(R.layout.activity_tips, container, false);
@@ -61,6 +72,7 @@ public class TipsFragment extends Fragment {
                     mRecyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
+                    tips = tipsList;
                     emptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
 
@@ -87,5 +99,40 @@ public class TipsFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.tips, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.tips_search);
+
+        SearchView searchView=(SearchView) MenuItemCompat.getActionView(menuItem);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setBackgroundColor(Color.WHITE);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(Color.GRAY);
+
+        searchView.setOnQueryTextListener(this);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<Tip> newList = new ArrayList<>();
+        for (Tip tips : tips){
+            String notes = tips.getIntroText().toLowerCase();
+            if (notes.contains(newText)){
+                newList.add(tips);
+            }
+        }
+        mTipsAdapter.setFilter(newList);
+        return true;
     }
 }

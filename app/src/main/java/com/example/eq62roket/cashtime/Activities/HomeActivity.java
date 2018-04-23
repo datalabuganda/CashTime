@@ -164,8 +164,8 @@ public class HomeActivity extends AppCompatActivity
             startActivity(settingsIntent);
 
         }else if (id == R.id.logout) {
+            // TODO: 4/23/18 check for internet connection before logging out user 
             ParseUser.logOut();
-
             Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish();

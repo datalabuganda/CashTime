@@ -24,7 +24,6 @@ import com.example.eq62roket.cashtime.Activities.EditMemberSavingActivity;
 import com.example.eq62roket.cashtime.Activities.MemberSavingToGoalsActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedMemberSavingsListener;
-import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.MemberSavingsAdapter;
@@ -40,7 +39,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment impl
     private MemberSavingsAdapter mMemberSavingsAdapter;
     private RecyclerView mRecyclerView;
     private TextView emptyView;
-    private List<MemberSavings> memberSavings = null;
+    private List<MemberSavings> mMemberSavings = null;
 
     private FloatingActionButton mFloatingActionButton;
 
@@ -75,6 +74,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment impl
                     mRecyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
                 }else {
+                    mMemberSavings = memberSavingsList;
                     emptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
 
@@ -135,7 +135,7 @@ public class MembersSavingsFragment extends android.support.v4.app.Fragment impl
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
         ArrayList<MemberSavings> newList = new ArrayList<>();
-        for (MemberSavings memberSavings : memberSavings){
+        for (MemberSavings memberSavings : mMemberSavings){
             String source = memberSavings.getIncomeSource().toLowerCase();
             String notes = memberSavings.getSavingNote().toLowerCase();
             String goalName = memberSavings.getGoalName().toLowerCase();

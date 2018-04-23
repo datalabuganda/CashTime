@@ -25,8 +25,6 @@ import com.example.eq62roket.cashtime.Activities.GoalTipsActivity;
 import com.example.eq62roket.cashtime.Activities.TipsToGroupGoalsActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedTipsListener;
-import com.example.eq62roket.cashtime.Models.MemberSavings;
-import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.TipsAdapter;
@@ -74,6 +72,7 @@ public class TipsFragment extends Fragment implements SearchView.OnQueryTextList
                     mRecyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
+                    tips = tipsList;
                     emptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
 

@@ -25,7 +25,6 @@ import com.example.eq62roket.cashtime.Activities.EditBarrierActivity;
 import com.example.eq62roket.cashtime.Helper.ParseHelper;
 import com.example.eq62roket.cashtime.Interfaces.OnReturnedGroupBarrierListener;
 import com.example.eq62roket.cashtime.Models.Barrier;
-import com.example.eq62roket.cashtime.Models.Tip;
 import com.example.eq62roket.cashtime.R;
 import com.example.eq62roket.cashtime.adapters.BarrierAdapter;
 
@@ -72,6 +71,8 @@ public class BarriersFragment extends Fragment implements SearchView.OnQueryText
                     mRecyclerView.setVisibility(View.GONE);
                     emptyView.setVisibility(View.VISIBLE);
                 }else {
+                    barriers = barrierList;
+
                     emptyView.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
 

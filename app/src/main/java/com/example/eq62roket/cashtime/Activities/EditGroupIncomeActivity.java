@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
@@ -29,6 +32,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
     private EditText groupIncomeAmount, groupIncomeNotes;
     private Button groupIncomeDeleteBtn, groupIncomeUpdateBtn;
     private MaterialBetterSpinner materialPeriodSpinner, materialIncomeSourceSpinner;
+    private TextView groupName;
 
     private String groupIncomeLocalUniqueID = "";
     private String selectedPeriod;
@@ -47,7 +51,8 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         groupIncomeDeleteBtn = (Button) findViewById(R.id.editGroupIncomeDeleteBtn);
         groupIncomeUpdateBtn = (Button) findViewById(R.id.editGroupIncomeUpdateBtn);
         materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomePeriod);
-        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupExpenditureCategory);
+        materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupIncomeSource);
+        groupName = (TextView)findViewById(R.id.groupName);
 
         getSelectedPeriod();
         getSelectedIncomeSource(getIncomeSources());
@@ -60,8 +65,15 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
         String nameOfGroup = intent.getStringExtra("groupName");
         groupIncomeLocalUniqueID = intent.getStringExtra("groupIncomeLocalUniqueID");
 
+        Log.d("group name", "onCreate: " + nameOfGroup);
+
         groupIncomeAmount.setText(amountOfIncome);
         groupIncomeNotes.setText(notesAboutIncome);
+        groupName.setText(nameOfGroup);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Edit " + nameOfGroup + "'s" + " " + "Income");
+        actionBar.setHomeButtonEnabled(true);
 
         groupIncomeUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +208,7 @@ public class EditGroupIncomeActivity extends AppCompatActivity {
             Toast.makeText(context, "Group Income " + groupIncome.getSource() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Income amount and source are required", Toast.LENGTH_SHORT).show();
         }
     }
 

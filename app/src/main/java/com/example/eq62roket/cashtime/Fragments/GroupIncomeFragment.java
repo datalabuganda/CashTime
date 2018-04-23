@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditGroupIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.IncomeToGroupActivity;
@@ -39,14 +40,19 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
     List<GroupIncome> groupIncome = null;
     private RecyclerView recyclerView;
     private GroupIncomeAdapter mAdapter;
+    private TextView emptyView;
+
+    public static String[] incomePeriods = {"Weekly", "Monthly"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_group_income, container, false);
         fabGroupIncome = (FloatingActionButton) rootView.findViewById(R.id.fabGroupIncome);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.group_income_recycler_view);
 
 
@@ -61,29 +67,38 @@ public class GroupIncomeFragment extends Fragment implements SearchView.OnQueryT
         new ParseIncomeHelper(getActivity()).getGroupIncomeFromParseDb(new ParseIncomeHelper.OnReturnedGroupIncomeListener() {
             @Override
             public void onResponse(List<GroupIncome> groupIncomeList) {
-                groupIncome = groupIncomeList;
+                if (groupIncomeList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter = new GroupIncomeAdapter(groupIncomeList, new GroupIncomeAdapter.OnGroupClickListener() {
-                    @Override
-                    public void onGroupClick(GroupIncome groupIncome) {
-                        Intent editGroupIncomeIntent = new Intent(getActivity(), EditGroupIncomeActivity.class);
-                        editGroupIncomeIntent.putExtra("groupIncomeSource", groupIncome.getSource());
-                        editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
-                        editGroupIncomeIntent.putExtra("groupIncomePeriod",groupIncome.getPeriod());
-                        editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
-                        editGroupIncomeIntent.putExtra("groupIncomeLocalUniqueID", groupIncome.getLocalUniqueID());
-                        startActivity(editGroupIncomeIntent);
-                        getActivity().finish();
-                    }
+                    groupIncome = groupIncomeList;
 
-                });
+                    mAdapter = new GroupIncomeAdapter(groupIncomeList, new GroupIncomeAdapter.OnGroupClickListener() {
+                        @Override
+                        public void onGroupClick(GroupIncome groupIncome) {
+                            Intent editGroupIncomeIntent = new Intent(getActivity(), EditGroupIncomeActivity.class);
+                            editGroupIncomeIntent.putExtra("groupIncomeSource", groupIncome.getSource());
+                            editGroupIncomeIntent.putExtra("groupIncomeAmount", groupIncome.getAmount());
+                            editGroupIncomeIntent.putExtra("groupIncomePeriod", groupIncome.getPeriod());
+                            editGroupIncomeIntent.putExtra("groupIncomeNotes", groupIncome.getNotes());
+                            editGroupIncomeIntent.putExtra("groupName", groupIncome.getGroupName());
+                            editGroupIncomeIntent.putExtra("groupIncomeLocalUniqueID", groupIncome.getLocalUniqueID());
+                            startActivity(editGroupIncomeIntent);
+                            getActivity().finish();
+                        }
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    });
 
-                mAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(mAdapter);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(mAdapter);
+                }
 
             }
 

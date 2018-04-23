@@ -3,13 +3,16 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
@@ -30,6 +33,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
     private String memberExpenditureLocalUniqueID = "";
     private String selectedExpenditureCategory;
     private ParseExpenditureHelper mParseHelper;
+    private TextView memberName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
         groupExpenditureDeleteBtn = (Button)findViewById(R.id.editGroupMemberExpenditureDeleteButton);
         groupExpenditureUpdateBtn = (Button)findViewById(R.id.editGroupMemberExpenditureUpdateButton);
         materialExpenditureCategorySpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupMemberExpenditureCategory);
+        memberName = (TextView)findViewById(R.id.memberName);
 
         Intent intent = getIntent();
         final String groupMemberExpenditureCategory = intent.getStringExtra("memberExpenditureCategory");
@@ -50,9 +55,15 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
         String groupMemberExpenditureDate = intent.getStringExtra("memberExpenditureDate");
         String groupMemberExpenditureNotes = intent.getStringExtra("memberExpenditureNotes");
         memberExpenditureLocalUniqueID = intent.getStringExtra("memberExpenditureLocalUniqueID");
+        String nameOfMember = intent.getStringExtra("memberUsername");
 
         mGroupExpenditureAmount.setText(groupMemberExpenditureAmount);
         mGroupExpenditureNotes.setText(groupMemberExpenditureNotes);
+        memberName.setText(nameOfMember);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Edit " + nameOfMember + "'s" + " " + "Expenditure");
+        actionBar.setHomeButtonEnabled(true);
 
         groupExpenditureUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +107,12 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
     }
 
     public void getSelectedExpenditureCategory(List<String> expenditureCategories){
-        ArrayAdapter<String> incomeSourcesAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> expenditureCategoriesAdapter = new ArrayAdapter<String>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item,
                 expenditureCategories
         );
-        materialExpenditureCategorySpinner.setAdapter(incomeSourcesAdapter);
+        materialExpenditureCategorySpinner.setAdapter(expenditureCategoriesAdapter);
 
         materialExpenditureCategorySpinner.addTextChangedListener(new TextWatcher() {
             @Override
@@ -158,7 +169,7 @@ public class EditGroupMemberExpenditureActivity extends AppCompatActivity {
             Toast.makeText(EditGroupMemberExpenditureActivity.this, "Group Expenditure " + groupMemberExpenditure.getCategory() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(EditGroupMemberExpenditureActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditGroupMemberExpenditureActivity.this, "Expenditure amount and category are required", Toast.LENGTH_SHORT).show();
         }
     }
 

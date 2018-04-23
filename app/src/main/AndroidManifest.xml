@@ -38,7 +38,9 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.SettingsActivity" />
+        <activity android:name=".Activities.SettingsActivity"
+            android:parentActivityName=".Activities.HomeActivity"
+            android:label="Settings"/>
         <activity
             android:name=".Activities.GroupMembersActivity"
             android:label="All Group Members"
@@ -74,7 +76,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
-        <activity android:name=".Activities.CalendarActivity" />
+        <activity android:name=".Activities.CalendarActivity"
+            android:parentActivityName=".Activities.HomeActivity"
+            android:label="Calendar"/>
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
@@ -106,8 +110,12 @@
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.EditMemberSavingActivity" />
-        <activity android:name=".Activities.EditGroupSavingActivity" />
+        <activity android:name=".Activities.EditMemberSavingActivity"
+            android:parentActivityName=".Activities.TabbedSavingActivity"
+            android:label="Edit Member Savings"/>
+        <activity android:name=".Activities.EditGroupSavingActivity"
+            android:parentActivityName=".Activities.TabbedSavingActivity"
+            android:label="Edit Group Savings"/>
         <activity android:name=".Activities.EditGroupGoalActivity" />
         <activity android:name=".Activities.EditMemberGoalActivity" />
         <activity
@@ -136,9 +144,13 @@
             android:name=".Activities.EditBarrierActivity"
             android:label="Edit Barrier"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AddGroupExpenditureActivity" />
+        <activity android:name=".Activities.AddGroupExpenditureActivity"
+            android:parentActivityName=".Activities.ExpenditureToGroupActivity"
+            android:label="Add Group Expenditure"/>
         <activity android:name=".Activities.GroupMemberIncomeTransactionsActivity" />
-        <activity android:name=".Activities.AddGroupMembersIncomeActivity" />
+        <activity android:name=".Activities.AddGroupMembersIncomeActivity"
+            android:parentActivityName=".Activities.GroupMembersIncomeListActivity"
+            android:label="Add Member Income"/>
         <activity
             android:name=".Activities.TabbedExpenditureActivity"
             android:label="@string/title_activity_tabbed_expenditure"
@@ -149,8 +161,12 @@
             android:label="@string/title_activity_tabbed_income"
             android:parentActivityName=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AddGroupMembersExpendituresActivity" />
-        <activity android:name=".Activities.AddGroupIncomeActivity" />
+        <activity android:name=".Activities.AddGroupMembersExpendituresActivity"
+            android:label="Add Member Expenditure"
+            android:parentActivityName=".Activities.GroupMembersExpenditureListActivity"/>
+        <activity android:name=".Activities.AddGroupIncomeActivity"
+            android:parentActivityName=".Activities.IncomeToGroupActivity"
+            android:label="Add Group Income"/>
         <activity android:name=".Activities.GroupExpendituresAnalysisActivity" />
         <activity android:name=".Activities.GroupIncomeAnalysisActivity" />
         <activity android:name=".Activities.MembersExpenditureAnalysisActivity" />
@@ -158,15 +174,25 @@
         <activity
             android:name=".Activities.MemberGoalSelectMemberActivity"
             android:label="Select A Group Member" />
-        <activity android:name=".Activities.EditGroupExpenditureActivity" />
-        <activity android:name=".Activities.EditGroupMemberIncomeActivity" />
+        <activity android:name=".Activities.EditGroupExpenditureActivity"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
+        <activity android:name=".Activities.EditGroupMemberIncomeActivity"
+            android:parentActivityName=".Activities.TabbedIncomeActivity"/>
         <activity android:name=".Activities.GroupMembersExpenditureListActivity"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity"
             android:label="Select a member"/>
         <activity android:name=".Activities.GroupMembersExpenditureActivity"
+            android:label="Select a member"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
+        <activity android:name=".Activities.GroupMembersIncomeListActivity"
+            android:parentActivityName=".Activities.TabbedIncomeActivity"
             android:label="Select a member"/>
-        <activity android:name=".Activities.GroupMembersIncomeListActivity" />
-        <activity android:name=".Activities.EditGroupIncomeActivity" />
-        <activity android:name=".Activities.EditGroupMemberExpenditureActivity" />
+        <activity android:name=".Activities.EditGroupIncomeActivity"
+            android:parentActivityName=".Activities.TabbedIncomeActivity"
+            android:label="Edit Group Income"/>
+        <activity android:name=".Activities.EditGroupMemberExpenditureActivity"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity"
+            android:label="Edit Income"/>
         <activity android:name=".Activities.AddIncomeSourceActivity" />
         <activity android:name=".Activities.AddExpenditureCategoryActivity" />
         <activity android:name=".Activities.IncomeSourcesActivity" />
@@ -177,7 +203,8 @@
             android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.EditGroupMemberActivity"
-            android:label="Edit Group Member" />
+            android:label="Edit Group Member"
+            android:parentActivityName=".Activities.GroupMembersActivity"/>
         <activity
             android:name=".Activities.EditGroupActivity"
             android:label="Edit Group" />
@@ -185,9 +212,11 @@
             android:name=".Activities.GoalsToGroupActivity"
             android:label="Select A Group" />
         <activity android:name=".Activities.IncomeToGroupActivity"
-            android:label="Select a group"/>
+            android:label="Select a group"
+            android:parentActivityName=".Activities.TabbedIncomeActivity"/>
         <activity android:name=".Activities.ExpenditureToGroupActivity"
-            android:label="Select a group"/>
+            android:label="Select a group"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
         <activity android:name=".Activities.EditIncomeSourceActivity" />
         <activity android:name=".Activities.EditExpenditureCategoryActivity" />
         <activity android:name=".Activities.GroupAnalysisActivity"

@@ -7,22 +7,29 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.TextView;
 import android.widget.Toast;
-
+;
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.Models.GroupIncome;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddGroupIncomeActivity extends AppCompatActivity {
+
     private static final String TAG = "AddGroupIncomeActivity";
     private EditText incomeSource, incomeAmount,incomeNotes;
     private Button groupIncomeSaveBtn, groupIncomeCancelBtn;
@@ -34,7 +41,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
-
+    public static String[] incomePeriods = {"Weekly", "Monthly"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,7 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
         incomeSource = (EditText)findViewById(R.id.groupIncomeSource);
         incomeAmount = (EditText)findViewById(R.id.groupIncomeAmount);
+
         incomeNotes = (EditText)findViewById(R.id.groupIncomeNotes);
         mGroupName = (TextView) findViewById(R.id.groupNameIncome);
         materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.groupIncomePeriod);
@@ -51,6 +59,10 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String groupName = intent.getStringExtra("groupName");
         groupLocalUniqueID = intent.getStringExtra("groupLocalUniqueID");
+
+        final GroupExpenditure groupExpenditure = new GroupExpenditure();
+//        groupExpenditure.setGroupParseId(groupParseId);
+
 
         Log.d(TAG, "username " + groupName);
         Log.d(TAG, "groupLocalUniqueID " + groupLocalUniqueID);
@@ -122,6 +134,13 @@ public class AddGroupIncomeActivity extends AppCompatActivity {
 
     }
 
+
+    public String getDateToday(){
+        Date today = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        String dateToday = simpleDateFormat.format(today);
+        return dateToday;
+    }
 
     private void saveGroupIncome(){
         if ( !incomeSource.getText().toString().equals("") &&

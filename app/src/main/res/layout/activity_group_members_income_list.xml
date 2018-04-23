@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.eq62roket.cashtime.Activities.GroupMembersIncomeListActivity">
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="@string/no_members_msg" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/group_member_income_list_recycler_view"
         android:layout_width="match_parent"

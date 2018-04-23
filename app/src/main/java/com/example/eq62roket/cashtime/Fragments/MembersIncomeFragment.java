@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Activities.EditGroupMemberIncomeActivity;
 import com.example.eq62roket.cashtime.Activities.GroupMembersIncomeListActivity;
@@ -37,6 +38,7 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
 
     private List<User> mGroupMemberUsers = null;
     private RecyclerView mRecyclerView;
+    private TextView emptyView;
     FloatingActionButton fabMembersIncome;
 
     List<MembersIncome> membersIncomes = null;
@@ -45,13 +47,14 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_members_income, container, false);
         fabMembersIncome = (FloatingActionButton) rootView.findViewById(R.id.fabMembersIncome);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.members_income_recycler_view);
-
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         fabMembersIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,29 +66,39 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
         new ParseIncomeHelper(getActivity()).getGroupMemberIncomeMemberFromParseDb(new ParseIncomeHelper.OnReturnedGroupMemberIncomeListener() {
             @Override
             public void onResponse(List<MembersIncome> groupMembersIncomeList) {
-                membersIncomes = groupMembersIncomeList;
 
-                mAdapter = new GroupMembersIncomeAdapter(groupMembersIncomeList, new GroupMembersIncomeAdapter.OnGroupMemberClickListener() {
-                    @Override
-                    public void onGroupMemberClick(MembersIncome groupMemberIncome) {
-                        Intent editGroupMemberIncomeIntent = new Intent(getActivity(), EditGroupMemberIncomeActivity.class);
-                        editGroupMemberIncomeIntent.putExtra("memberIncomeSource", groupMemberIncome.getSource());
-                        editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
-                        editGroupMemberIncomeIntent.putExtra("memberIncomePeriod",groupMemberIncome.getPeriod());
-                        editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
-                        editGroupMemberIncomeIntent.putExtra("memberIncomeLocalUniqueID", groupMemberIncome.getLocalUniqueID());
-                        startActivity(editGroupMemberIncomeIntent);
-                        getActivity().finish();
-                    }
+                if (groupMembersIncomeList.isEmpty()){
+                    mRecyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
 
-                });
+                    membersIncomes = groupMembersIncomeList;
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mAdapter = new GroupMembersIncomeAdapter(groupMembersIncomeList, new GroupMembersIncomeAdapter.OnGroupMemberClickListener() {
+                        @Override
+                        public void onGroupMemberClick(MembersIncome groupMemberIncome) {
+                            Intent editGroupMemberIncomeIntent = new Intent(getActivity(), EditGroupMemberIncomeActivity.class);
+                            editGroupMemberIncomeIntent.putExtra("memberIncomeSource", groupMemberIncome.getSource());
+                            editGroupMemberIncomeIntent.putExtra("memberIncomeAmount", groupMemberIncome.getAmount());
+                            editGroupMemberIncomeIntent.putExtra("memberIncomePeriod", groupMemberIncome.getPeriod());
+                            editGroupMemberIncomeIntent.putExtra("memberIncomeNotes", groupMemberIncome.getNotes());
+                            editGroupMemberIncomeIntent.putExtra("memberIncomeLocalUniqueID", groupMemberIncome.getLocalUniqueID());
+                            editGroupMemberIncomeIntent.putExtra("memberUsername", groupMemberIncome.getMemberUserName());
+                            startActivity(editGroupMemberIncomeIntent);
+                            getActivity().finish();
+                        }
 
-                mAdapter.notifyDataSetChanged();
-                mRecyclerView.setAdapter(mAdapter);
+                    });
+
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    mAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(mAdapter);
+                }
 
             }
 
@@ -131,14 +144,11 @@ public class MembersIncomeFragment extends Fragment implements SearchView.OnQuer
             String period = membersIncome.getPeriod().toLowerCase();
             if (name.contains(newText)){
                 newList.add(membersIncome);
-            }
-            if (incomeSource.contains(newText)){
+            }else if (incomeSource.contains(newText)){
                 newList.add(membersIncome);
-            }
-            if (notes.contains(newText)){
+            }else if (notes.contains(newText)){
                 newList.add(membersIncome);
-            }
-            if (period.contains(newText)){
+            }else if (period.contains(newText)){
                 newList.add(membersIncome);
             }
         }

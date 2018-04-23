@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Models.GroupMemberExpenditure;
 import com.example.eq62roket.cashtime.R;
 
@@ -48,7 +50,7 @@ public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final GroupMemberExpenditure groupMemberExpenditure, final GroupMemberExpenditureAdapter.OnGoalClickListener onGoalClickListener){
         category.setText(groupMemberExpenditure.getCategory());
-        amount.setText(groupMemberExpenditure.getAmount());
+        amount.setText(new CashTimeUtils().currencyFormatter(groupMemberExpenditure.getAmount()));
         date.setText(groupMemberExpenditure.getDate());
         notes.setText(groupMemberExpenditure.getNotes());
         username.setText(groupMemberExpenditure.getMemberUserName());

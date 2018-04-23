@@ -45,6 +45,7 @@ public class MembersGoalsFragment extends Fragment implements SearchView.OnQuery
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Inflate the layout for this fragment

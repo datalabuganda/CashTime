@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
+import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private static String TAG = "AddGroupMembersIncomeActivity";
+
     private TextView groupMemberUserName;
     private EditText memberIncomeSource, memberIncomeNotes, membersIncomeAmount;
     private Button memberIncomeSaveButton, memberIncomeCancelButton;
@@ -38,6 +40,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     private ParseIncomeHelper mParseHelper;
 
     public static String[] incomeSources = {"Loan", "Investment", "Salary", "Wage", "Donation", "Savings"};
+    public static String[] incomePeriods = {"Weekly", "Monthly"};
 
     @SuppressLint("LongLogTag")
     @Override
@@ -48,6 +51,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         groupMemberUserName = (TextView)findViewById(R.id.memberIncomeName);
         memberIncomeSource = (EditText) findViewById(R.id.memberIncomeSource);
+
         memberIncomeNotes = (EditText)findViewById(R.id.memberIncomeNotes);
         membersIncomeAmount = (EditText)findViewById(R.id.memberIncomeAmount);
         memberIncomeSaveButton = (Button)findViewById(R.id.memberIncomeSaveButton);
@@ -68,7 +72,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
+        groupMemberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -136,6 +140,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
     }
 
 
+
     private void saveGroupMembersIncome(){
         if ( !membersIncomeAmount.getText().toString().equals("") &&
                 !memberIncomeSource.getText().toString().equals("") &&
@@ -164,7 +169,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             Toast.makeText(context, "Group Member Income Saved " + groupMemberIncome.getAmount() + " saved", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Income Amount, Source and Period fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 

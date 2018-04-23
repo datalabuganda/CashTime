@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
 import com.example.eq62roket.cashtime.Models.GroupExpenditure;
 import com.example.eq62roket.cashtime.R;
 
@@ -41,7 +42,7 @@ public class GroupExpenditureAdapter extends RecyclerView.Adapter<GroupExpenditu
 
         public void bind(final GroupExpenditure groupExpenditure, final OnGroupExpenditureClickListener onGroupExpenditureClickListener){
             category.setText(groupExpenditure.getCategory());
-            amount.setText(groupExpenditure.getAmount());
+            amount.setText(new CashTimeUtils().currencyFormatter(groupExpenditure.getAmount()));
             notes.setText(groupExpenditure.getNotes());
             duedate.setText(groupExpenditure.getDate());
             groupName.setText(groupExpenditure.getGroupName());

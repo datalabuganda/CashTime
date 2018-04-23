@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
+import com.example.eq62roket.cashtime.Models.GroupSavings;
 import com.example.eq62roket.cashtime.Models.MemberSavings;
 import com.example.eq62roket.cashtime.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,6 +78,12 @@ public class MemberSavingsAdapter extends RecyclerView.Adapter<MemberSavingsAdap
     @Override
     public int getItemCount() {
         return mMemberSavings.size();
+    }
+
+    public void setFilter(ArrayList<MemberSavings> memberSavings){
+        mMemberSavings = new ArrayList<>();
+        mMemberSavings.addAll(memberSavings);
+        notifyDataSetChanged();
     }
 
 }

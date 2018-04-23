@@ -70,7 +70,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -78,20 +78,22 @@
                     android:orientation="horizontal">
 
                     <Button
-
                         android:id="@+id/btnCancel"
                         android:layout_width="170dp"
                         android:layout_height="60dp"
-                        android:layout_marginRight="2dp"
-                        android:text="@string/tip_cancel"
+                        android:layout_marginRight="1dp"
                         android:textColor="#fff"
-                        android:backgroundTint="@color/red"/>
+                        android:background="@color/red"
+                        android:text="Cancel"/>
 
                     <Button
                         android:id="@+id/btnSave"
                         android:layout_width="170dp"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="1dp"
                         android:layout_height="60dp"
+                        android:textColor="#fff"
+                        android:background="@color/green"
+                        android:textAlignment="center"
                         android:text="@string/tip_save"/>
                 </LinearLayout>
             </LinearLayout>

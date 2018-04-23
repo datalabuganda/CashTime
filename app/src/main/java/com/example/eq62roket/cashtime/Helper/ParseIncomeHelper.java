@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.eq62roket.cashtime.Models.GroupIncome;
+
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -246,6 +247,8 @@ public class ParseIncomeHelper {
             }
         });
     }
+
+
 
     public void deleteGroupIncomeFromParseDb(GroupIncome groupIncomeToDelete){
         ParseQuery<GroupIncome> groupIncomeQuery = ParseQuery.getQuery("ct2_GroupIncome");

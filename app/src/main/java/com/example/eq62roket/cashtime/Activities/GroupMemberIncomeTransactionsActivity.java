@@ -25,7 +25,7 @@ public class GroupMemberIncomeTransactionsActivity extends AppCompatActivity imp
     private RecyclerView recyclerView;
     private GroupMembersIncomeAdapter mAdapter;
     private FloatingActionButton gmitfab;
-    private TextView membersText;
+    private TextView membersText, emptyView;
 
     private static String TAG = "GroupMemberIncomeTransactionsActivity";
 
@@ -40,6 +40,8 @@ public class GroupMemberIncomeTransactionsActivity extends AppCompatActivity imp
 
         gmitfab = (FloatingActionButton) findViewById(R.id.gmitfab);
         recyclerView = (RecyclerView) findViewById(R.id.group_member_list_income_recycler_view);
+        emptyView = (TextView)findViewById(R.id.empty_view);
+
 
         Intent intent = getIntent();
         groupMemberIncomeParseId = intent.getStringExtra("groupMembersParseId");
@@ -56,26 +58,33 @@ public class GroupMemberIncomeTransactionsActivity extends AppCompatActivity imp
         new ParseIncomeHelper(this).getGroupMemberIncomeMemberFromParseDb(new ParseIncomeHelper.OnReturnedGroupMemberIncomeListener() {
             @Override
             public void onResponse(List<MembersIncome> incomeList) {
+                if (incomeList.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setVisibility(View.VISIBLE);
+                }else {
+                    emptyView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                mAdapter = new GroupMembersIncomeAdapter(incomeList, new GroupMembersIncomeAdapter.OnGroupMemberClickListener() {
-                    @Override
-                    public void onGroupMemberClick(MembersIncome groupMemberIncome) {
-                        Intent incomeIntent = new Intent(GroupMemberIncomeTransactionsActivity.this, AddGroupMembersIncomeActivity.class);
-                        incomeIntent.putExtra("source", groupMemberIncome.getSource());
-                        incomeIntent.putExtra("amount", groupMemberIncome.getAmount());
+                    mAdapter = new GroupMembersIncomeAdapter(incomeList, new GroupMembersIncomeAdapter.OnGroupMemberClickListener() {
+                        @Override
+                        public void onGroupMemberClick(MembersIncome groupMemberIncome) {
+                            Intent incomeIntent = new Intent(GroupMemberIncomeTransactionsActivity.this, AddGroupMembersIncomeActivity.class);
+                            incomeIntent.putExtra("source", groupMemberIncome.getSource());
+                            incomeIntent.putExtra("amount", groupMemberIncome.getAmount());
 
-                        startActivity(incomeIntent);
-                        finish();
-                    }
+                            startActivity(incomeIntent);
+                            finish();
+                        }
 
 
-                });
+                    });
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                recyclerView.setAdapter(mAdapter);
+                    recyclerView.setAdapter(mAdapter);
+                }
 
             }
 

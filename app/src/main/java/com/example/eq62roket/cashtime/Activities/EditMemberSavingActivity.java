@@ -3,6 +3,7 @@ package com.example.eq62roket.cashtime.Activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -66,6 +67,10 @@ public class EditMemberSavingActivity extends AppCompatActivity {
         memberName.setText(nameOfMember);
         savingAmount.setText(amountSaved);
         savingNote.setText(notes);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Edit " + nameOfMember + "'s" + " " + "Saving");
+        actionBar.setHomeButtonEnabled(true);
 
 
         // get selected period

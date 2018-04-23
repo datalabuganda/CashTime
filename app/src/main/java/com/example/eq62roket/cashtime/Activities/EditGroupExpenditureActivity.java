@@ -2,6 +2,7 @@ package com.example.eq62roket.cashtime.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseExpenditureHelper;
@@ -26,6 +28,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
     private EditText mGroupExpenditureAmount, mGroupExpenditureNotes;
     private Button groupExpenditureDeleteBtn, groupExpenditureUpdateBtn;
     private MaterialBetterSpinner materialExpenditureCategorySpinner;
+    private TextView groupName;
 
     private String groupExpenditureLocalUniqueID = "";
     private String selectedExpenditureCategory;
@@ -43,6 +46,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
         groupExpenditureDeleteBtn = (Button)findViewById(R.id.editGroupExpenditureDeleteButton);
         groupExpenditureUpdateBtn = (Button)findViewById(R.id.editGroupExpenditureUpdateButton);
         materialExpenditureCategorySpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupExpenditureCategory);
+        groupName = (TextView)findViewById(R.id.groupName);
 
         // get Intent data
         Intent intent = getIntent();
@@ -51,9 +55,15 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
         String groupExpenditureDate = intent.getStringExtra("groupExpenditureDate");
         String groupExpenditureNotes = intent.getStringExtra("groupExpenditureNotes");
         groupExpenditureLocalUniqueID = intent.getStringExtra("groupExpenditureLocalUniqueID");
+        String nameOfGroup = intent.getStringExtra("groupName");
 
         mGroupExpenditureAmount.setText(groupExpenditureAmount);
         mGroupExpenditureNotes.setText(groupExpenditureNotes);
+        groupName.setText(nameOfGroup);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Edit " + nameOfGroup + "'s" + " " + "Expenditure");
+        actionBar.setHomeButtonEnabled(true);
 
         getSelectedExpenditureCategory(getExpenditureCategories());
 
@@ -159,7 +169,7 @@ public class EditGroupExpenditureActivity extends AppCompatActivity {
             Toast.makeText(EditGroupExpenditureActivity.this, "Group Expenditure " + groupExpenditure.getCategory() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(EditGroupExpenditureActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditGroupExpenditureActivity.this, "Expenditure amount and category are required", Toast.LENGTH_SHORT).show();
         }
     }
 

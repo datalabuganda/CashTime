@@ -11,10 +11,12 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <EditText
                 android:id="@+id/sourceName"
@@ -32,19 +34,23 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:backgroundTint="@color/red"
-                    android:textColor="#fff"
                     android:id="@+id/DeleteBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:text="Delete"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="1dp"
+                    android:textColor="#fff"
+                    android:background="@color/red"
+                    android:text="@string/delete"
+                    android:backgroundTint="@color/red"/>
                 <Button
                     android:id="@+id/UpdateBtn"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_height="60dp"
                     android:text="Update"
-                    android:layout_marginLeft="30dp"/>
+                    android:textColor="#fff"
+                    android:background="@color/green"
+                    android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

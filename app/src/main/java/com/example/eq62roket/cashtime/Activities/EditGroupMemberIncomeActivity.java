@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
@@ -28,6 +30,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
     private Button groupMemberIncomeDeleteBtn, groupMemberIncomeUpdateBtn;
     private ParseIncomeHelper mParseHelper;
     private MaterialBetterSpinner materialPeriodSpinner, materialIncomeSourceSpinner;
+    private TextView memberName;
 
     private String memberIncomeLocalUniqueID = "";
     private String selectedPeriod;
@@ -46,6 +49,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
         groupMemberIncomeUpdateBtn = (Button) findViewById(R.id.editGroupMemberIncomeUpdateBtn);
         materialPeriodSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupMemberIncomePeriod);
         materialIncomeSourceSpinner = (MaterialBetterSpinner) findViewById(R.id.editGroupMemberIncomeSource);
+        memberName = (TextView)findViewById(R.id.memberName);
 
         getSelectedPeriod();
         getSelectedIncomeSource(getIncomeSources());
@@ -56,9 +60,15 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
         final String notesAboutIncome = intent.getStringExtra("memberIncomeNotes");
         final String periodOfIncome = intent.getStringExtra("memberIncomePeriod");
         memberIncomeLocalUniqueID = intent.getStringExtra("memberIncomeLocalUniqueID");
+        String nameOfMember = intent.getStringExtra("memberUsername");
 
         groupMemberIncomeAmount.setText(amountOfIncome);
         groupMemberIncomeNotes.setText(notesAboutIncome);
+        memberName.setText(nameOfMember);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Edit " + nameOfMember +"'s" + " " + "Income");
+        actionBar.setHomeButtonEnabled(true);
 
         groupMemberIncomeUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +204,7 @@ public class EditGroupMemberIncomeActivity extends AppCompatActivity {
             Toast.makeText(context, "Member Income " + membersIncome.getSource() + " Updated", Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Income amount and source are required", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -44,6 +44,7 @@ public class MembersAnalysisFragment extends Fragment implements SearchView.OnQu
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         View rootView = inflater.inflate(R.layout.fragment_members_analysis, container, false);
 
@@ -58,7 +59,7 @@ public class MembersAnalysisFragment extends Fragment implements SearchView.OnQu
                     public void onGroupMemberClick(GroupMember groupMember) {
                         Intent editUserIntent = new Intent(getActivity(), MemberAnalysisActivity.class);
                         editUserIntent.putExtra("userName", groupMember.getMemberUsername());
-                        editUserIntent.putExtra("groupMemberLocalUniqueID", groupMember.getLocalUniqueID());
+                        editUserIntent.putExtra("memberLocalUniqueID", groupMember.getLocalUniqueID());
 
                         startActivity(editUserIntent);
                         getActivity().finish();

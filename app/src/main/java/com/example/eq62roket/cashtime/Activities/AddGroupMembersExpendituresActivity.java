@@ -57,7 +57,7 @@ public class AddGroupMembersExpendituresActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
+        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 

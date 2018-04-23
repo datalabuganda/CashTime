@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.Helper.ParseIncomeHelper;
-import com.example.eq62roket.cashtime.Helper.PeriodHelper;
 import com.example.eq62roket.cashtime.Models.MembersIncome;
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
@@ -72,7 +70,7 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String memberUserName = intent.getStringExtra("userName");
-        groupMemberLocalUniqueID = intent.getStringExtra("memberLocalUniqueID");
+        groupMemberLocalUniqueID = intent.getStringExtra("groupMemberLocalUniqueID");
 
         groupMemberUserName.setText(memberUserName);
 
@@ -160,8 +158,6 @@ public class AddGroupMembersIncomeActivity extends AppCompatActivity {
             groupMemberIncome.setMemberUserName(groupMemberUsername);
             groupMemberIncome.setMemberLocalUniqueID(groupMemberLocalUniqueID);
             groupMemberIncome.setUserId(currentUser);
-
-            Log.d("Income", "groupMemberUserName: " + groupMemberIncome.getMemberUserName());
 
             new ParseIncomeHelper(this).saveGroupMemberIncomeToParseDb(groupMemberIncome);
             startTabbedIncomeActivity();

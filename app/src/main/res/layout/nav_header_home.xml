@@ -32,10 +32,12 @@
             android:layout_marginLeft="10dp">
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Arua Bee Farmers"/>
             <TextView
+                android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0703686543"

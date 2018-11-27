@@ -16,6 +16,7 @@ import com.example.eq62roket.cashtime.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -37,7 +38,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
     private static final String TAG = "GroupAnalysisActivity";
     TextView totalGroupExpenditure, totalGroupIncome, totalGroupSavings;
     PieChart pieChart;
-    BarChart incomeBarChart, expenditureBarChart;
+    BarChart incomeBarChart, expenditureBarChart, savingsBarChart;
 
     private String groupLocalUniqueID;
     private String nameOfGroup;
@@ -67,8 +68,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         pieChart = (PieChart) findViewById(R.id.groupPieChart);
         incomeBarChart = (BarChart) findViewById(R.id.groupBarGraph);
         expenditureBarChart = (BarChart) findViewById(R.id.expenditureBarGraph);
-
-        Log.d(TAG, "onCreate: ");
+        savingsBarChart = (BarChart) findViewById(R.id.savingsBarGraph);
 
         String totalIncome = String.valueOf(this.totalGroupIncome());
         String totalExpenditure = String.valueOf(this.totalGroupExpenditure());
@@ -79,17 +79,76 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         totalGroupSavings.setText(new CashTimeUtils().currencyFormatter(totalSavings));
 
 
-
         totalGroupExpenditure();
+        totalGroupSavings();
         totalGroupIncome();
         pieChart();
         totalLoan();
 
         IncomeBarGraph();
         ExpenditureBarGraph();
+        SavingsBarGraph();
 
 
     }
+    /*******************************************Savings BarGraph*************************************/
+    public void SavingsBarGraph(){
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        int totalLoan = this.totalSavingsLoan();
+        int totalSalary = this.totalSavingsSalary();
+        int totalDonation = this.totalSavingsDonation();
+        int totalWage = this.totalSavingsWage();
+        int totalInvestment = this.totalSavingsInvestment();
+        int totalSavings = this.totalSavingsSavings();
+
+        entries.add(new BarEntry(0, totalLoan));
+        entries.add(new BarEntry(1, totalSalary));
+        entries.add(new BarEntry(2, totalDonation));
+        entries.add(new BarEntry(3, totalWage));
+        entries.add(new BarEntry(4, totalInvestment));
+        entries.add(new BarEntry(5, totalSavings));
+
+        BarDataSet barDataSet = new BarDataSet(entries, "Savings");
+        final ArrayList<String> labels = new ArrayList<>();
+        labels.add("Loan");
+        labels.add("Salary");
+        labels.add("Donation");
+        labels.add("Wage");
+        labels.add("Investment");
+        labels.add("Savings");
+
+        /************************************ x axis label design ***********************************/
+        final XAxis xAxis = savingsBarChart.getXAxis();
+        xAxis.setLabelCount(entries.size());
+        xAxis.setXOffset(40000);
+        xAxis.setGranularity(1f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setCenterAxisLabels(false);
+        xAxis.setTextColor(Color.RED);
+        savingsBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        savingsBarChart.getDescription().setEnabled(false);
+
+        BarData barData = new BarData(barDataSet);
+
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        savingsBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        savingsBarChart.setTouchEnabled(false);
+        savingsBarChart.setDragEnabled(false);
+        savingsBarChart.setScaleEnabled(true);
+        savingsBarChart.setVisibleXRangeMaximum(1);
+        savingsBarChart.setData(barData);
+
+        savingsBarChart.setDescription(null);    // Hide the description
+        savingsBarChart.getAxisRight().setDrawLabels(false);
+
+        savingsBarChart.getLegend().setEnabled(true);   // Hide the legend
+
+    }
+
+
+
     /*******************************************Income BarGraph*************************************/
     public void IncomeBarGraph(){
         ArrayList<BarEntry> entries = new ArrayList<>();
@@ -120,7 +179,7 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         final XAxis xAxis = incomeBarChart.getXAxis();
         xAxis.setLabelCount(entries.size());
         xAxis.setXOffset(40000);
-        xAxis.setLabelRotationAngle(30);
+//        xAxis.setLabelRotationAngle(90);
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(true);
         xAxis.setDrawGridLines(false);
@@ -143,7 +202,10 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         incomeBarChart.setDescription(null);    // Hide the description
         incomeBarChart.getAxisRight().setDrawLabels(false);
 
-        incomeBarChart.getLegend().setEnabled(false);   // Hide the legend
+        incomeBarChart.getLegend().setEnabled(true);   // Hide the legend
+//        incomeBarChart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+//        incomeBarChart.getLegend().setWordWrapEnabled(true);
+//        incomeBarChart.getLegend().setTextSize(2);
     }
 
     /******************************************Expenditure BarGraph*********************************/
@@ -176,20 +238,20 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         final ArrayList<String> labels = new ArrayList<>();
         labels.add("Rent");
         labels.add("Food");
-        labels.add("Medical");
-        labels.add("Transport");
+        labels.add("Medic");
+        labels.add("Trans");
         labels.add("Leisure");
         labels.add("Others");
-        labels.add("Comm't");
-        labels.add("Ent'mt");
+        labels.add("Comm");
+        labels.add("Ent");
         labels.add("Gift");
-        labels.add("Leisure");
+        labels.add("Clothes");
 
         /************************************* x axis **************************************/
         final XAxis xAxis = expenditureBarChart.getXAxis();
         xAxis.setCenterAxisLabels(true);
         expenditureBarChart.getRendererXAxis().getPaintAxisLabels().setTextAlign(Paint.Align.LEFT);
-        xAxis.setLabelRotationAngle(30);
+//        xAxis.setLabelRotationAngle(30);
         xAxis.setLabelCount(entries.size());
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
@@ -211,7 +273,12 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         expenditureBarChart.setDescription(null);    // Hide the description
         expenditureBarChart.getAxisRight().setDrawLabels(false);
 
-        expenditureBarChart.getLegend().setEnabled(false);   // Hide the legend
+        expenditureBarChart.getLegend().setEnabled(true);   // Hide the legend
+//        expenditureBarChart.getLegend().setOrientation(Legend.LegendOrientation.HORIZONTAL);
+//        expenditureBarChart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+//        expenditureBarChart.getLegend().setWordWrapEnabled(true);
+//        expenditureBarChart.getLegend().setTextSize(2);
+
     }
 
     /*********************************Income and Expenditure PieChart****************************/
@@ -225,7 +292,9 @@ public class GroupAnalysisActivity extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(1f);
         pieChart.setDescription(null);    // Hide the description
 
-        pieChart.getLegend().setEnabled(false);   // Hide the legend
+        pieChart.getLegend().setEnabled(true);   // Hide the legend
+        pieChart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        pieChart.getLegend().setTextSize(2);
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
 
@@ -302,6 +371,115 @@ public class GroupAnalysisActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return sumOfIncome;
+    }
+
+    /****************************** Total Group Savings by Source *********************************/
+    public int totalSavingsLoan(){
+        int sumOfLoan = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Loan");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfLoan += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "totalLoan: " + sumOfLoan);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfLoan;
+    }
+
+    public int totalSavingsSavings(){
+        int sumOfSavings = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Savings");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfSavings += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "totalSavings: " + sumOfSavings);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfSavings;
+    }
+
+    public int totalSavingsSalary(){
+        int sumOfSalary = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Salary");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfSalary += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "sumOfSalary: " + sumOfSalary);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfSalary;
+    }
+
+    public int totalSavingsInvestment(){
+        int sumOfInvestment = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Investment");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfInvestment += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "sumOfInvestment: " + sumOfInvestment);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfInvestment;
+    }
+
+    public int totalSavingsWage(){
+        int sumOfWage = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Wage");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfWage += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "sumOfWage: " + sumOfWage);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfWage;
+    }
+
+    public int totalSavingsDonation(){
+        int sumOfDonation = 0;
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("ct2_GroupSavings");
+        query.fromLocalDatastore();
+        query.whereEqualTo("groupLocalUniqueID", groupLocalUniqueID);
+        query.whereContains("groupSavingIncomeSource", "Donation");
+        try {
+            List<ParseObject> results = query.find();
+            for (int i = 0; i < results.size(); i++){
+                sumOfDonation += Integer.parseInt(results.get(i).getString("groupSavingAmount"));
+                Log.d(TAG, "sumOfDonation: " + sumOfDonation);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sumOfDonation;
     }
 
     /****************************** Total Income by Source ****************************************/

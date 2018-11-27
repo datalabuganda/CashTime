@@ -1,9 +1,11 @@
 package com.example.eq62roket.cashtime.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
@@ -18,6 +20,8 @@ import java.util.List;
  */
 
 public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.MyViewHolder>{
+    private static final String TAG = "GroupIncomeAdapter";
+
 
     public interface OnGroupClickListener {
         void onGroupClick(GroupIncome groupIncome);
@@ -29,14 +33,18 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView source, amount, period, notes, groupName;
+        public ImageView collapse, expand;
 
         public MyViewHolder(View view) {
             super(view);
+
             source = (TextView) view.findViewById(R.id.groupIncomeSource);
             amount = (TextView) view.findViewById(R.id. groupIncomeAmount);
             period = (TextView) view.findViewById(R.id.groupIncomePeriod);
             notes = (TextView)view.findViewById(R.id.groupIncomeNotes);
             groupName =(TextView)view.findViewById(R.id.groupIncomeName);
+            collapse = view.findViewById(R.id.collapse);
+            expand = view.findViewById(R.id.expand);
 
         }
 
@@ -46,6 +54,7 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
             notes.setText(groupIncome.getNotes());
             period.setText(groupIncome.getPeriod());
             groupName.setText(groupIncome.getGroupName());
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,8 +81,28 @@ public class GroupIncomeAdapter extends RecyclerView.Adapter<GroupIncomeAdapter.
     }
 
     @Override
-    public void onBindViewHolder(GroupIncomeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final GroupIncomeAdapter.MyViewHolder holder, int position) {
         holder.bind(mGroupIncomes.get(position), mOnGroupClickListener);
+        holder.notes.setMaxLines(2);
+
+        holder.expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(100);
+                holder.expand.setVisibility(View.GONE);
+                holder.collapse.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.collapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(2);
+                holder.expand.setVisibility(View.VISIBLE);
+                holder.collapse.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     @Override

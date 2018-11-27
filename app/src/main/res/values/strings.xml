@@ -40,6 +40,7 @@
     <string name="cancel_barrier">Cancel</string>
     <string name="title_activity_tabbed_expenditure">Expenditure</string>
     <string name="title_activity_tabbed_income">Income</string>
+    <string name="terms_of_service">I agree to the Terms of Service and Privacy Policy</string>
 
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="oxfam_server_url">http://oxfamdataservice.org/parse/</string>
@@ -73,7 +74,76 @@
     <string name="select_level_of_education">Select Level Of Education</string>
     <string name="select_country_of_birth">Select Country Of Birth</string>
     <string name="where_does_member_live">Where does Member live?</string>
+    <string name="title_activity_help">Help</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
+    <string name="title_activity_version">Version</string>
+    <string name="title_activity_license">License</string>
+    <string name="title_activity_terms_of_service">Terms of Service</string>
     <string name="submit">Submit</string>
+    <string name="new_group">Creating a new group</string>
+    <string name="add_member">Adding member to group</string>
+    <string name="group_savings">"
+        Click Savings on home page \n
+        Click green plus (+) on button right corner  \n
+        Select a group whose savings you want to add  \n
+        fill in the form then click save to submit the saving"</string>
+    <string name="member_savings">"
+        Click Savings from home page \n
+        Click green plus (+) on button right corner \n
+        Select a group member whose savings you want to add \n
+        Fill in the form then click save to submit the saving"</string>
+    <string name="group_income">"
+        Select Income from home page \n
+        Click green plus (+) on button right corner  \n
+        Select group whose income is to be added \n
+        Fill in the form and click save"</string>
+    <string name="members_income">"
+        Select income from home page \n
+        Swipe to member’s income \n
+        Click green plus (+) on button right corner  \n
+        Select group member whose income is to be added \n
+        Fill in the form and click save"</string>
+    <string name="group_expenditure">"
+        Select expenditure from home page \n
+        Click green plus (+) on button right corner  \n
+        Select group whose income is to be added \n
+        Fill in the form and click save"</string>
+    <string name="members_expenditure">"
+        Select expenditure from home page \n
+        Swipe to member’s expenditure \n
+        Click green plus (+) on button right corner \n
+        Select group member  \n
+        Fill in the form and click save"</string>
+    <string name="group_analytics">"
+        Select analytics from the home page \n
+        Select group whose analytics you want to view"</string>
+    <string name="members_analytics">"
+        Select analytics from the home page \n
+        Swipe to Members Analytics \n
+        Select group member to view analytics"</string>
+    <string name="add_new_group">"
+        Select Groups from drawer menu \n
+        Click green plus (+) on button right corner  \n
+        Fill in the form and click save"</string>
+    <string name="add_member_to_group">"
+        Select Groups from drawer menu \n
+        Select group to add member \n
+        Click green plus (+) on button right corner  \n
+        Fill in the form \n
+        Click Submit to add member to group"</string>
+    <string name="group_goals">"
+        Click Goals on home  \n
+        Click green plus (+) on button right corner \n
+        Select group whose goal you want to create \n
+        Add goal name, amount, deadline, some notes \n
+        Click Save button to create a goal"</string>
+    <string name="member_goals">"
+        Click Goals on home \n
+        Swipe to Members Goals \n
+        Click green plus (+) on button right corner  \n
+        Select group member \n
+        Fill in the form with goal amount, deadline and some notes
+        And click save to create a goal"</string>
 
     <!--level of education array-->
     <string-array name="level_of_education">

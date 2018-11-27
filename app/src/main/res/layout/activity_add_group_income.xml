@@ -148,21 +148,21 @@
 
                 <Button
                     android:id="@+id/groupIncomeCancelBtn"
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
                     android:textColor="#fff"
-                    android:background="@color/red"
+                    android:background="@drawable/cancel_button_background"
                     android:text="Cancel"/>
 
                 <Button
                     android:id="@+id/groupIncomeSaveBtn"
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_marginLeft="1dp"
                     android:layout_height="60dp"
                     android:text="Save"
                     android:textColor="#fff"
-                    android:background="@color/green"
+                    android:background="@drawable/save_button_background"
                     android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>

@@ -1,8 +1,10 @@
 package com.example.eq62roket.cashtime.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Models.User;
@@ -19,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
             numberOfGroups, numberOfGroupGoals, numberOfMemberGoals, numberOfCompletedGroupGoals,
             numberOfIncompleteGroupGoals, numberOfFailedGroupGoals, numberOfMembersCompletedGoals,
             numberOfMembersIncompleteGoals,  numberOfGroupMembers, numberOfMembersFailedGoals,
-            numberOfTips;
+            numberOfTips, editProfile;
 
     List<User> users = null;
 
@@ -43,16 +45,20 @@ public class ProfileActivity extends AppCompatActivity {
         numberOfMembersIncompleteGoals = (TextView)findViewById(R.id.incompleteMembersGoals);
         numberOfMembersFailedGoals = (TextView)findViewById(R.id.failedMembersGoals);
         numberOfTips = (TextView)findViewById(R.id.tips);
-
-
+        editProfile = findViewById(R.id.editProfile);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null){
-            String username = currentUser.getString("username");
-            String phone = currentUser.getString("userPhone");
-            String location = currentUser.getString("userLocation");
-            String business = currentUser.getString("userBusiness");
-            String nationality = currentUser.getString("userNationality");
+            final String username = currentUser.getString("username");
+            final String phone = currentUser.getString("userPhone");
+            final String location = currentUser.getString("userLocation");
+            final String business = currentUser.getString("userBusiness");
+            final String nationality = currentUser.getString("userNationality");
+
+            final String household = currentUser.getString("userHousehold");
+            final String gender = currentUser.getString("userGender");
+            final String education = currentUser.getString("userEducationLevel");
+
             int totalGroups = this.totalNumberOfGroups();
             int totalGroupMembers = this.totalNumberOfGroupMembers();
             int totalGroupGoals = this.totalNumberOfGroupGoals();
@@ -82,6 +88,24 @@ public class ProfileActivity extends AppCompatActivity {
             numberOfMemberGoals.setText(Integer.toString(totalMembersGoals));
             numberOfTips.setText(Integer.toString(totalTips));
 
+            editProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String currentUserId = ParseUser.getCurrentUser().getObjectId();
+                    Intent editProfileIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                    editProfileIntent.putExtra("objectId", currentUserId);
+                    editProfileIntent.putExtra("userLocation", location);
+                    editProfileIntent.putExtra("userPhone", phone);
+                    editProfileIntent.putExtra("userEducationLevel", education);
+                    editProfileIntent.putExtra("userBusiness", business);
+                    editProfileIntent.putExtra("userGender", gender);
+                    editProfileIntent.putExtra("userNationality", nationality);
+                    editProfileIntent.putExtra("userHousehold", household);
+                    editProfileIntent.putExtra("username", username);
+                    startActivity(editProfileIntent);
+                }
+            });
+
         }
         totalNumberOfGroups();
         totalNumberOfGroupGoals();
@@ -94,6 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
         totalNumberOfFailedMembersGoals();
         totalNumberOfMembersGoals();
     }
+
 
     public int totalNumberOfGroups(){
         int numberOfGroups = 0;
@@ -282,7 +307,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    /********************************* Total Number Of Tips ********************************/
+    /********************************* Total Number Of Tips ************************************************/
 
     public int totalNumberOfTips(){
         int numberOfTips = 0;

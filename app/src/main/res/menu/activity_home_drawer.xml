@@ -21,6 +21,11 @@
             android:id="@+id/settings"
             android:icon="@drawable/settings"
             android:title="Settings" />
+
+        <item
+            android:id="@+id/help"
+            android:icon="@drawable/help"
+            android:title="Help" />
     </group>
 
     <item android:title="Logout">

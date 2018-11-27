@@ -32,22 +32,25 @@
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="@string/oxfam_app_id" />
+
         <activity
             android:name=".Activities.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.SettingsActivity"
-            android:parentActivityName=".Activities.HomeActivity"
-            android:label="Settings"/>
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.GroupMembersActivity"
             android:label="All Group Members"
             android:parentActivityName=".Activities.GroupsActivity" />
         <activity
             android:name=".Activities.AddNewMemberActivity"
-            android:label="Add Member" />
+            android:label="Add Member"
+            android:parentActivityName=".Activities.GroupsActivity"/>
         <activity android:name=".Activities.EditGoalActivity" />
         <activity android:name=".Activities.MembersGoalsActivity" />
         <activity
@@ -59,8 +62,9 @@
             android:name=".Activities.AddGroupGoalsActivity"
             android:label="Add Group Goal"
             android:parentActivityName=".Activities.TabbedGoalsActivity" />
-        <activity android:name=".Activities.ProfileActivity"
-            android:parentActivityName=".Activities.HomeActivity"/>
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.TipsActivity"
             android:label="Tips" />
@@ -76,9 +80,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.SavingsActivity" />
         <activity android:name=".Activities.AddSavingsActivity" />
-        <activity android:name=".Activities.CalendarActivity"
-            android:parentActivityName=".Activities.HomeActivity"
-            android:label="Calendar"/>
+        <activity
+            android:name=".Activities.CalendarActivity"
+            android:label="Calendar"
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.TabbedSavingActivity"
             android:label="Savings"
@@ -95,7 +100,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.IncomeActivity" />
         <activity android:name=".Activities.ExpenditureActivity" />
-        <activity android:name=".Activities.EditProfileActivity" />
+        <activity android:name=".Activities.EditProfileActivity"
+            android:label="Edit Your Profile"
+            android:parentActivityName=".Activities.ProfileActivity" />
         <activity
             android:name=".Activities.AddMembersGoalsActivity"
             android:label="Add A Member Goal" />
@@ -110,12 +117,14 @@
         <activity
             android:name=".Activities.AddMemberSavingsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.EditMemberSavingActivity"
-            android:parentActivityName=".Activities.TabbedSavingActivity"
-            android:label="Edit Member Savings"/>
-        <activity android:name=".Activities.EditGroupSavingActivity"
-            android:parentActivityName=".Activities.TabbedSavingActivity"
-            android:label="Edit Group Savings"/>
+        <activity
+            android:name=".Activities.EditMemberSavingActivity"
+            android:label="Edit Member Savings"
+            android:parentActivityName=".Activities.TabbedSavingActivity" />
+        <activity
+            android:name=".Activities.EditGroupSavingActivity"
+            android:label="Edit Group Savings"
+            android:parentActivityName=".Activities.TabbedSavingActivity" />
         <activity android:name=".Activities.EditGroupGoalActivity" />
         <activity android:name=".Activities.EditMemberGoalActivity" />
         <activity
@@ -144,13 +153,15 @@
             android:name=".Activities.EditBarrierActivity"
             android:label="Edit Barrier"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AddGroupExpenditureActivity"
-            android:parentActivityName=".Activities.ExpenditureToGroupActivity"
-            android:label="Add Group Expenditure"/>
+        <activity
+            android:name=".Activities.AddGroupExpenditureActivity"
+            android:label="Add Group Expenditure"
+            android:parentActivityName=".Activities.ExpenditureToGroupActivity" />
         <activity android:name=".Activities.GroupMemberIncomeTransactionsActivity" />
-        <activity android:name=".Activities.AddGroupMembersIncomeActivity"
-            android:parentActivityName=".Activities.GroupMembersIncomeListActivity"
-            android:label="Add Member Income"/>
+        <activity
+            android:name=".Activities.AddGroupMembersIncomeActivity"
+            android:label="Add Member Income"
+            android:parentActivityName=".Activities.GroupMembersIncomeListActivity" />
         <activity
             android:name=".Activities.TabbedExpenditureActivity"
             android:label="@string/title_activity_tabbed_expenditure"
@@ -161,12 +172,14 @@
             android:label="@string/title_activity_tabbed_income"
             android:parentActivityName=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AddGroupMembersExpendituresActivity"
+        <activity
+            android:name=".Activities.AddGroupMembersExpendituresActivity"
             android:label="Add Member Expenditure"
-            android:parentActivityName=".Activities.GroupMembersExpenditureListActivity"/>
-        <activity android:name=".Activities.AddGroupIncomeActivity"
-            android:parentActivityName=".Activities.IncomeToGroupActivity"
-            android:label="Add Group Income"/>
+            android:parentActivityName=".Activities.GroupMembersExpenditureListActivity" />
+        <activity
+            android:name=".Activities.AddGroupIncomeActivity"
+            android:label="Add Group Income"
+            android:parentActivityName=".Activities.IncomeToGroupActivity" />
         <activity android:name=".Activities.GroupExpendituresAnalysisActivity" />
         <activity android:name=".Activities.GroupIncomeAnalysisActivity" />
         <activity android:name=".Activities.MembersExpenditureAnalysisActivity" />
@@ -174,25 +187,32 @@
         <activity
             android:name=".Activities.MemberGoalSelectMemberActivity"
             android:label="Select A Group Member" />
-        <activity android:name=".Activities.EditGroupExpenditureActivity"
-            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
-        <activity android:name=".Activities.EditGroupMemberIncomeActivity"
-            android:parentActivityName=".Activities.TabbedIncomeActivity"/>
-        <activity android:name=".Activities.GroupMembersExpenditureListActivity"
-            android:parentActivityName=".Activities.TabbedExpenditureActivity"
-            android:label="Select a member"/>
-        <activity android:name=".Activities.GroupMembersExpenditureActivity"
+        <activity
+            android:name=".Activities.EditGroupExpenditureActivity"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity" />
+        <activity
+            android:name=".Activities.EditGroupMemberIncomeActivity"
+            android:parentActivityName=".Activities.TabbedIncomeActivity" />
+        <activity
+            android:name=".Activities.GroupMembersExpenditureListActivity"
             android:label="Select a member"
-            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
-        <activity android:name=".Activities.GroupMembersIncomeListActivity"
-            android:parentActivityName=".Activities.TabbedIncomeActivity"
-            android:label="Select a member"/>
-        <activity android:name=".Activities.EditGroupIncomeActivity"
-            android:parentActivityName=".Activities.TabbedIncomeActivity"
-            android:label="Edit Group Income"/>
-        <activity android:name=".Activities.EditGroupMemberExpenditureActivity"
-            android:parentActivityName=".Activities.TabbedExpenditureActivity"
-            android:label="Edit Income"/>
+            android:parentActivityName=".Activities.TabbedExpenditureActivity" />
+        <activity
+            android:name=".Activities.GroupMembersExpenditureActivity"
+            android:label="Select a member"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity" />
+        <activity
+            android:name=".Activities.GroupMembersIncomeListActivity"
+            android:label="Select a member"
+            android:parentActivityName=".Activities.TabbedIncomeActivity" />
+        <activity
+            android:name=".Activities.EditGroupIncomeActivity"
+            android:label="Edit Group Income"
+            android:parentActivityName=".Activities.TabbedIncomeActivity" />
+        <activity
+            android:name=".Activities.EditGroupMemberExpenditureActivity"
+            android:label="Edit Income"
+            android:parentActivityName=".Activities.TabbedExpenditureActivity" />
         <activity android:name=".Activities.AddIncomeSourceActivity" />
         <activity android:name=".Activities.AddExpenditureCategoryActivity" />
         <activity android:name=".Activities.IncomeSourcesActivity" />
@@ -204,25 +224,45 @@
         <activity
             android:name=".Activities.EditGroupMemberActivity"
             android:label="Edit Group Member"
-            android:parentActivityName=".Activities.GroupMembersActivity"/>
+            android:parentActivityName=".Activities.GroupMembersActivity" />
         <activity
             android:name=".Activities.EditGroupActivity"
             android:label="Edit Group" />
         <activity
             android:name=".Activities.GoalsToGroupActivity"
             android:label="Select A Group" />
-        <activity android:name=".Activities.IncomeToGroupActivity"
+        <activity
+            android:name=".Activities.IncomeToGroupActivity"
             android:label="Select a group"
-            android:parentActivityName=".Activities.TabbedIncomeActivity"/>
-        <activity android:name=".Activities.ExpenditureToGroupActivity"
+            android:parentActivityName=".Activities.TabbedIncomeActivity" />
+        <activity
+            android:name=".Activities.ExpenditureToGroupActivity"
             android:label="Select a group"
-            android:parentActivityName=".Activities.TabbedExpenditureActivity"/>
+            android:parentActivityName=".Activities.TabbedExpenditureActivity" />
         <activity android:name=".Activities.EditIncomeSourceActivity" />
         <activity android:name=".Activities.EditExpenditureCategoryActivity" />
-        <activity android:name=".Activities.GroupAnalysisActivity"
-            android:parentActivityName=".Activities.TabbedAnalysisActivity"/>
-        <activity android:name=".Activities.MemberAnalysisActivity"
-            android:parentActivityName=".Activities.TabbedAnalysisActivity"></activity>
+        <activity
+            android:name=".Activities.GroupAnalysisActivity"
+            android:parentActivityName=".Activities.TabbedAnalysisActivity" />
+        <activity
+            android:name=".Activities.MemberAnalysisActivity"
+            android:parentActivityName=".Activities.TabbedAnalysisActivity" />
+        <activity
+            android:name=".Activities.HelpActivity"
+            android:label="@string/title_activity_help"
+            android:parentActivityName=".Activities.HomeActivity" />
+        <activity android:name=".Activities.PrivacyPolicyActivity"
+            android:label="@string/title_activity_privacy_policy"
+            android:parentActivityName=".Activities.SettingsActivity"/>
+        <activity android:name=".Activities.TermsOfServiceActivity"
+            android:label="@string/title_activity_terms_of_service"
+            android:parentActivityName=".Activities.SettingsActivity"/>
+        <activity android:name=".Activities.VersionsActivity"
+            android:label="@string/title_activity_version"
+            android:parentActivityName=".Activities.SettingsActivity"/>
+        <activity android:name=".Activities.LicenseActivity"
+            android:label="@string/title_activity_license"
+            android:parentActivityName=".Activities.SettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -9,9 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eq62roket.cashtime.R;
 import com.parse.ParseUser;
@@ -19,6 +22,7 @@ import com.parse.ParseUser;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "HomeActivity";
+    private TextView userName, telephone;
 
     // TODO: 4/18/18 Add restore functionality....if there is internet...restore user data from online db
 
@@ -30,7 +34,20 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View view = navigationView.getHeaderView(0);
+
+        userName = view.findViewById(R.id.user_name);
+        telephone = view.findViewById(R.id.phone_number);
+
         ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            String username = currentUser.getString("username");
+            String phone = currentUser.getString("userPhone");
+
+            userName.setText(username);
+            telephone.setText(phone);
+        }
 
         if (currentUser != null){
         }else {
@@ -102,7 +119,6 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -159,13 +175,17 @@ public class HomeActivity extends AppCompatActivity
             Intent calendarIntent = new Intent(HomeActivity.this, CalendarActivity.class);
             startActivity(calendarIntent);
 
-        }         if (id == R.id.settings) {
+        } else if (id == R.id.settings) {
             Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settingsIntent);
+        } else if (id == R.id.help){
+            Intent helpIntent = new Intent(HomeActivity.this, HelpActivity.class);
+            startActivity(helpIntent);
 
         }else if (id == R.id.logout) {
             // TODO: 4/23/18 check for internet connection before logging out user 
             ParseUser.logOut();
+            Toast.makeText(getApplicationContext(), "Your have been logged out", Toast.LENGTH_SHORT).show();
             Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish();

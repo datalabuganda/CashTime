@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Group Goals"
                             android:textSize="16sp"
@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Complete Group Goals"
                             android:textSize="16sp"
@@ -240,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Incomplete Group Goals"
                             android:textSize="16sp"
@@ -264,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Failed Group Goals"
                             android:textSize="16sp"
@@ -315,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Group Members Goals"
                             android:textSize="16sp"
@@ -339,7 +339,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Complete Group Members Goals"
                             android:textSize="16sp"
@@ -363,7 +363,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Incomplete Group Members Goals"
                             android:textSize="16sp"
@@ -387,7 +387,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
                             android:text="Failed Group Members Goals"
                             android:textSize="16sp"

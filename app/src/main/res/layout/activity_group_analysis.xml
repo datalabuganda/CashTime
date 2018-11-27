@@ -59,7 +59,8 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
@@ -69,10 +70,11 @@
                                     android:text="Income:"/>
 
                                 <TextView
+                                    android:textSize="14dp"
                                     android:id="@+id/totalGroupIncome"
-                                    android:layout_width="70dp"
+                                    android:layout_width="90dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="Income"
+                                    android:hint="1000000000"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="5dp"
                                     android:textColor="@color/red"
@@ -81,15 +83,16 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="USh"
+                                    android:text="UGX"
                                     android:textColor="@color/green"
                                     android:textStyle="bold"/>
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:layout_marginRight="10dp"
                                 android:layout_marginTop="5dp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
                                 <TextView
@@ -97,10 +100,11 @@
                                     android:layout_height="wrap_content"
                                     android:text="Expenditure:"/>
                                 <TextView
+                                    android:textSize="14dp"
                                     android:id="@+id/totalGroupExpenditure"
-                                    android:layout_width="70dp"
+                                    android:layout_width="90dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="10000000"
+                                    android:hint="1000000000"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="5dp"
                                     android:textColor="@color/red"
@@ -108,14 +112,15 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="USh"
+                                    android:text="UGX"
                                     android:textColor="@color/green"
                                     android:textStyle="bold"/>
                             </LinearLayout>
 
                             <LinearLayout
+                                android:layout_marginRight="10dp"
                                 android:layout_marginTop="5dp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
                                 <TextView
@@ -123,10 +128,11 @@
                                     android:layout_height="wrap_content"
                                     android:text="Savings:"/>
                                 <TextView
+                                    android:textSize="14dp"
                                     android:id="@+id/totalGroupSavings"
-                                    android:layout_width="70dp"
+                                    android:layout_width="90dp"
                                     android:layout_height="wrap_content"
-                                    android:hint="10000000"
+                                    android:hint="1000000000"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="5dp"
                                     android:textColor="@color/red"
@@ -134,7 +140,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="USh"
+                                    android:text="UGX"
                                     android:textColor="@color/green"
                                     android:textStyle="bold"/>
                             </LinearLayout>
@@ -143,6 +149,32 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Savings Analysis"
+                        android:textColor="@color/red"
+                        android:textStyle="bold"
+                        android:textSize="20dp"/>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/savingsBarGraph"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"></com.github.mikephil.charting.charts.BarChart>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:layout_marginTop="5dp"

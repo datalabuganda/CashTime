@@ -44,7 +44,6 @@ public class GroupsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent createGroupIntent = new Intent(GroupsActivity.this, AddNewGroupActivity.class);
                 startActivity(createGroupIntent);
-                finish();
             }
         });
 

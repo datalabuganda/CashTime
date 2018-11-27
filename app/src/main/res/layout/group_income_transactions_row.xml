@@ -10,54 +10,48 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/group"/>
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/group" />
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/groupIncomeName"
-                        android:layout_width="200dp"
+                        android:layout_width="255dp"
                         android:layout_height="wrap_content"
                         android:text="Name"
-                        android:textSize="18sp"
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/groupIncomeAmount"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/groupIncomePeriod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1000,000"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:textColor="@color/red" />
-
-                    <TextView
-                        android:layout_marginLeft="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="USh"
-                        android:textSize="14sp"
-                        android:textColor="@color/red" />
+                        android:layout_gravity="right"
+                        android:text="12/3/2018"
+                        android:textColor="@color/red"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -65,23 +59,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/groupIncomeSource"
-                        android:layout_width="210dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="Source"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/groupIncomePeriod"
+                        android:id="@+id/groupIncomeSource"
+                        android:layout_width="195dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Source"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/groupIncomeAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12/3/2018"
-                        android:layout_marginTop="5dp"
-                        android:textSize="12sp"
-                        android:textColor="@color/red" />
+                        android:layout_gravity="right"
+                        android:text="1000,000,000"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="UGX"
+                        android:textColor="@color/red"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -93,25 +98,25 @@
                         android:id="@+id/groupIncomeNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Notes"
                         android:layout_marginTop="5dp"
-                        android:textSize="14sp"
-                        android:ellipsize="end"/>
+                        android:ellipsize="end"
+                        android:text="Notes"
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/collapse"
-                        android:visibility="gone"
-                        android:layout_gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/collapse"/>
+                        android:layout_gravity="right"
+                        android:src="@drawable/collapse"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/expand"
-                        android:layout_gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/expand"/>
+                        android:layout_gravity="right"
+                        android:src="@drawable/expand" />
 
                 </LinearLayout>
 

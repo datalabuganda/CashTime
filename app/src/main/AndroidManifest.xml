@@ -64,6 +64,7 @@
             android:parentActivityName=".Activities.TabbedGoalsActivity" />
         <activity
             android:name=".Activities.ProfileActivity"
+            android:label="Profile"
             android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.TipsActivity"
@@ -106,7 +107,9 @@
         <activity
             android:name=".Activities.AddMembersGoalsActivity"
             android:label="Add A Member Goal" />
-        <activity android:name=".Activities.AddNewGroupActivity" />
+        <activity android:name=".Activities.AddNewGroupActivity"
+            android:label="Add New Group"
+            android:parentActivityName=".Activities.GroupsActivity"/>
         <activity android:name=".Activities.GroupMembersDetailActivity" />
         <activity
             android:name=".Activities.GroupSavingToGoalsActivity"

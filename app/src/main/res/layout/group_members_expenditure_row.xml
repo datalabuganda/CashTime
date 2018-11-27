@@ -35,7 +35,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/groupMembersExpenditureName"
-                        android:layout_width="200dp"
+                        android:layout_width="255dp"
                         android:layout_height="wrap_content"
                         android:text="Name"
                         android:textSize="18sp"
@@ -43,21 +43,14 @@
                         android:textStyle="bold"/>
 
                     <TextView
-                        android:id="@+id/groupMembersExpenditureAmount"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/groupMembersExpenditureDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1000,000"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:textColor="@color/red" />
-
-                    <TextView
-                        android:layout_marginLeft="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="USh"
-                        android:textSize="14sp"
-                        android:textColor="@color/red" />
+                        android:layout_gravity="right"
+                        android:text="12/3/2018"
+                        android:textColor="@color/red"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -67,7 +60,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/groupMembersExpenditureCategory"
-                        android:layout_width="210dp"
+                        android:layout_width="195dp"
                         android:layout_marginTop="5dp"
                         android:layout_height="wrap_content"
                         android:text="Category"
@@ -75,25 +68,54 @@
                         android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/groupMembersExpenditureDate"
+                        android:id="@+id/groupMembersExpenditureAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Notes"
-                        android:layout_marginTop="5dp"
-                        android:textSize="12sp"
-                        android:textColor="@color/red" />
+                        android:layout_gravity="right"
+                        android:text="1000,000,000"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="UGX"
+                        android:textColor="@color/red"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
                     <TextView
-                        android:textStyle="bold"
+                        android:id="@+id/groupMembersExpenditureNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/groupMembersExpenditureNotes"/>
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:text="Notes"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:src="@drawable/collapse"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/expand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:src="@drawable/expand" />
+
                 </LinearLayout>
 
             </LinearLayout>

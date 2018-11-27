@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
@@ -29,6 +30,7 @@ public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembers
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView source, amount, period, groupMemberUserName, notes;
+        public ImageView collapse, expand;
 
         public MyViewHolder(View view) {
             super(view);
@@ -37,6 +39,8 @@ public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembers
             period = (TextView) view.findViewById(R.id.groupMemberIncomePeriod);
             groupMemberUserName = (TextView) view.findViewById(R.id.groupMemberIncomeName);
             notes = (TextView)view.findViewById(R.id.groupMemberIncomeNotes);
+            collapse = view.findViewById(R.id.collapse);
+            expand = view.findViewById(R.id.expand);
 
         }
 
@@ -72,8 +76,28 @@ public class GroupMembersIncomeAdapter extends RecyclerView.Adapter<GroupMembers
     }
 
     @Override
-    public void onBindViewHolder(GroupMembersIncomeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final GroupMembersIncomeAdapter.MyViewHolder holder, int position) {
         holder.bind(mGroupMemberIncomes.get(position), mOnGroupMemberClickListener);
+
+        holder.notes.setMaxLines(2);
+
+        holder.expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(100);
+                holder.expand.setVisibility(View.GONE);
+                holder.collapse.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.collapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(2);
+                holder.expand.setVisibility(View.VISIBLE);
+                holder.collapse.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

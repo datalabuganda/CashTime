@@ -66,7 +66,7 @@
     <string name="add_group_income_msg">No Income Added. Click + button to add an Income</string>
     <string name="add_group_expenditure_msg">No Expenditure Added. Click + button to add an Expenditure</string>
 
-    <string name="username">Usernames</string>
+    <string name="username">Username</string>
     <string name="enter_phone_number">Enter Phone Number e.g 07xxxxxxxx</string>
     <string name="family_size_e_g_3">Enter Family Size e.g 3</string>
     <string name="occupation_e_g_coffee_farmer">Enter Occupation e.g Coffee farmer</string>

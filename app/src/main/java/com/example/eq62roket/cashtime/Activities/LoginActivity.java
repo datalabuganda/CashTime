@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                     String password = loginPassword.getText().toString().trim();
 
                     mProgressDialogHelper.showProgressDialog();
-                    timerDelayRemoveDialog(10000,mProgressDialogHelper);
 
                     User registeredUser = new User();
                     registeredUser.setUserName(username);
@@ -103,41 +102,4 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    public boolean hasActiveInternetConnection(Context context) {
-        if (isNetworkAvailable(context)) {
-            try {
-                HttpURLConnection urlc = (HttpURLConnection)
-                        (new URL("http://clients3.google.com/generate_204")
-                                .openConnection());
-                urlc.setRequestProperty("User-Agent", "Android");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1500);
-                urlc.connect();
-                return (urlc.getResponseCode() == 204 &&
-                        urlc.getContentLength() == 0);
-            } catch (IOException e) {
-                Log.e(TAG, "Error checking internet connection", e);
-            }
-        }else {
-            Log.d(TAG, "No network available!");
-        }
-        return false;
-    }
-
-    public void timerDelayRemoveDialog(long time, final ProgressDialogHelper d){
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                d.dismissProgressDialog();
-                Toast.makeText(getApplicationContext(), "Failed to sign in. Check your internet connection", Toast.LENGTH_LONG).show();
-            }
-        }, time);
-    }
 }

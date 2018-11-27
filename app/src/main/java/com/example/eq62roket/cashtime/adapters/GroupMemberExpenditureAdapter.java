@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eq62roket.cashtime.Helper.CashTimeUtils;
@@ -38,6 +39,8 @@ public class GroupMemberExpenditureAdapter extends RecyclerView.Adapter<GroupMem
 
 public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
     public TextView category, date, amount, username, notes;
+    public ImageView collapse, expand;
+
 
     public GroupMembersViewHolder(View view) {
         super(view);
@@ -46,6 +49,8 @@ public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
         amount = (TextView) view.findViewById(R.id.groupMembersExpenditureAmount);
         username =(TextView)view.findViewById(R.id.groupMembersExpenditureName);
         date = (TextView)view.findViewById(R.id.groupMembersExpenditureDate);
+        collapse = view.findViewById(R.id.collapse);
+        expand = view.findViewById(R.id.expand);
     }
 
     public void bind(final GroupMemberExpenditure groupMemberExpenditure, final GroupMemberExpenditureAdapter.OnGoalClickListener onGoalClickListener){
@@ -75,8 +80,28 @@ public class GroupMembersViewHolder extends RecyclerView.ViewHolder {
     }
 
     @Override
-    public void onBindViewHolder(GroupMemberExpenditureAdapter.GroupMembersViewHolder holder, int position) {
+    public void onBindViewHolder(final GroupMemberExpenditureAdapter.GroupMembersViewHolder holder, int position) {
         holder.bind(groupMemberExpenditureList.get(position), mOnGoalClickListener);
+
+        holder.notes.setMaxLines(2);
+
+        holder.expand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(100);
+                holder.expand.setVisibility(View.GONE);
+                holder.collapse.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.collapse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.notes.setMaxLines(2);
+                holder.expand.setVisibility(View.VISIBLE);
+                holder.collapse.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

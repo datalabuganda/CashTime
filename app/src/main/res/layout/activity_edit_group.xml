@@ -47,27 +47,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/groupDeleteBtn"
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="1dp"
                     android:textColor="#fff"
-                    android:background="@color/red"
-                    android:text="@string/delete"
-                    android:backgroundTint="@color/red"/>
+                    android:background="@drawable/cancel_button_background"
+                    android:text="@string/delete"/>
+
                 <Button
                     android:id="@+id/groupUpdateBtn"
-                    android:layout_width="170dp"
+                    android:layout_width="180dp"
                     android:layout_marginLeft="1dp"
                     android:layout_height="60dp"
                     android:text="Update"
                     android:textColor="#fff"
-                    android:background="@color/green"
-                    android:textAlignment="center"/>
+                    android:background="@drawable/save_button_background"/>
+
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -34,6 +34,7 @@
                         android:textColorHint="#999999"
                         android:textColor="#ffffff"
                         android:inputType="textPersonName" />
+
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -48,7 +49,6 @@
                     android:layout_alignLeft="@+id/username"
                     android:layout_alignStart="@+id/username"
                     android:layout_below="@+id/username"
-                    android:layout_marginTop="13dp"
                     android:ems="10"
                     android:hint="Telephone eg 2567XXXXXXXX"
                     android:maxLength="12"
@@ -69,7 +69,6 @@
                     android:layout_alignLeft="@+id/userPhoneNumber"
                     android:layout_alignStart="@+id/userPhoneNumber"
                     android:layout_below="@+id/userPhoneNumber"
-                    android:layout_marginTop="18dp"
                     android:ems="10"
                     android:hint="Household Composition"
                     android:maxLength="2"
@@ -90,12 +89,12 @@
                     android:layout_alignLeft="@+id/userHousehold"
                     android:layout_alignStart="@+id/userHousehold"
                     android:layout_below="@+id/userHousehold"
-                    android:layout_marginTop="17dp"
                     android:ems="10"
                     android:hint="Business"
                     android:inputType="textPersonName"
                     android:textColor="#ffffff"
                     android:textColorHint="#999999" />
+
             </android.support.design.widget.TextInputLayout>
 
 
@@ -160,13 +159,13 @@
                     android:id="@+id/userLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/userNationality"
-                    android:layout_alignStart="@+id/userNationality"
-                    android:layout_below="@+id/userNationality"
-                    android:layout_marginTop="12dp"
+                    android:layout_alignLeft="@+id/userHousehold"
+                    android:layout_alignStart="@+id/userHousehold"
+                    android:layout_below="@+id/userHousehold"
                     android:ems="10"
                     android:hint="Town, City, Location"
                     android:inputType="textPersonName"
+                    android:textColor="#ffffff"
                     android:textColorHint="#999999" />
             </android.support.design.widget.TextInputLayout>
 
@@ -183,7 +182,6 @@
                     android:layout_alignLeft="@+id/userLocation"
                     android:layout_alignStart="@+id/userLocation"
                     android:layout_below="@+id/userLocation"
-                    android:layout_marginTop="12dp"
                     android:ems="10"
                     android:hint="Password"
                     android:textColor="#ffffff"

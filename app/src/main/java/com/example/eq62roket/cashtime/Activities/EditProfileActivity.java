@@ -28,8 +28,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private String userUniqueID;
 
-    private EditText username, userPhone, userHousehold, userBusiness, userLocation, userPassword,
-            userPasswordConfirm, userEducationLevel, userNationality, userGender;
+    private EditText username, userPhone, userHousehold, userBusiness, userLocation,
+            userEducationLevel, userNationality, userGender;
 
     private CardView userEdit;
 
@@ -63,8 +63,6 @@ public class EditProfileActivity extends AppCompatActivity {
         userEducationLevel = findViewById(R.id.editUserEducationLevel);
         userNationality = findViewById(R.id.editUserNationality);
         userLocation = findViewById(R.id.editUserLocation);
-//        userPassword = (EditText)findViewById(R.id.editUserPassword);
-//        userPasswordConfirm = findViewById(R.id.editUserPasswordConfirm);
         userEdit = findViewById(R.id.editUserBtn);
 
         Intent editProfileIntent = getIntent();
